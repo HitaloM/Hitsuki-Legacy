@@ -94,12 +94,15 @@ err_json: Diga ao mantenedor da ROM para consertar seu json OTA. Estou certo de 
 btn_dl: Clique aqui para baixar
 cmd_example: 'Digite o **codinome** do dispositivo!\nPor exemplo, `/{} tissot`'
 android_help: |
-  *ROMs*
+  *Custom ROMs*
   - /evo <device>: Obtenha a versão mais recente da ROM Evolution X para um dispositivo
   - /los <device>: Receba a versão mais recente da ROM LineageOS para um dispositivo
   - /bootleggers <device>: Receba a versão mais recente da ROM Bootleggers para um dispositivo\n
   *GSI*
   - /phh: Receba as últimas GSIs AOSP do PHH!\n
+  *Firmwares:*
+  - /samcheck <modelo> <csc>: Apenas Samsung - mostra as últimas informações de firmware do dispositivo dado, direto dos servidores da Samsung.
+  - /samget <modelo> <csc>: Apenas Samsung - envia o firmware mais recente do dispositivo dado direto do samfrew, sammobile e sfirmwares.\n
   *Outros*
   - /magisk: Receba as últimas versões do Magisk
   - /twrp <codinome>: Obtém o twrp mais recente para um dispositivo Android através do codinome.
