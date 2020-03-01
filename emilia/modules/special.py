@@ -13,7 +13,6 @@ import pyowm
 from pyowm import timeutils, exceptions
 from googletrans import Translator
 import wikipedia
-from kbbi import KBBI
 import base64
 from bs4 import BeautifulSoup
 from emoji import UNICODE_EMOJI
@@ -35,6 +34,67 @@ from emilia.modules.sql import languages_sql as langsql
 from emilia.modules.languages import tl
 from emilia.modules.helper_funcs.alternate import send_message
 
+
+reactions = ["( ͡° ͜ʖ ͡°)", "¯_(ツ)_/¯", "\'\'̵͇З= ( ▀ ͜͞ʖ▀) =Ε/̵͇/’’", "▄︻̷┻═━一", "( ͡°( ͡° ͜ʖ( ͡° ͜ʖ ͡°)ʖ ͡°) ͡°)",
+             "ʕ•ᴥ•ʔ", "(▀Ĺ̯▀ )", "(ง ͠° ͟ل͜ ͡°)ง", "༼ つ ◕_◕ ༽つ", "ಠ_ಠ", "(づ｡◕‿‿◕｡)づ", "\'\'̵͇З=( ͠° ͟ʖ ͡°)=Ε/̵͇/\'",
+             "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)", "[̲̅$̲̅(̲̅5̲̅)̲̅$̲̅]", "┬┴┬┴┤ ͜ʖ ͡°) ├┬┴┬┴", "( ͡°╭͜ʖ╮͡° )",
+             "(͡ ͡° ͜ つ ͡͡°)", "(• Ε •)", "(ง\'̀-\'́)ง", "(ಥ﹏ಥ)", "﴾͡๏̯͡๏﴿ O\'RLY?", "(ノಠ益ಠ)ノ彡┻━┻",
+             "[̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅]", "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧", "(☞ﾟ∀ﾟ)☞", "| (• ◡•)| (❍ᴥ❍Ʋ)", "(◕‿◕✿)", "(ᵔᴥᵔ)",
+             "(╯°□°)╯︵ ꞰOOQƎƆⱯɟ", "(¬‿¬)", "(☞ﾟヮﾟ)☞ ☜(ﾟヮﾟ☜)", "(づ￣ ³￣)づ", "ლ(ಠ益ಠლ)", "ಠ╭╮ಠ", "\'\'̵͇З=(•_•)=Ε/̵͇/\'\'",
+             "/╲/╭( ͡° ͡° ͜ʖ ͡° ͡°)╮/╱", "(;´༎ຶД༎ຶ)", "♪~ ᕕ(ᐛ)ᕗ", "♥️‿♥️", "༼ つ ͡° ͜ʖ ͡° ༽つ", "༼ つ ಥ_ಥ ༽つ",
+             "(╯°□°）╯︵ ┻━┻", "( ͡ᵔ ͜ʖ ͡ᵔ )", "ヾ(⌐■_■)ノ♪", "~(˘▾˘~)", "◉_◉", "(•◡•) /", "(~˘▾˘)~",
+             "(._.) ( L: ) ( .-. ) ( :L ) (._.)", "༼ʘ̚ل͜ʘ̚༽", "༼ ºل͟º ༼ ºل͟º ༼ ºل͟º ༽ ºل͟º ༽ ºل͟º ༽", "┬┴┬┴┤(･_├┬┴┬┴",
+             "ᕙ(⇀‸↼‶)ᕗ", "ᕦ(Ò_Óˇ)ᕤ", "┻━┻ ︵ヽ(Д´)ﾉ︵ ┻━┻", "⚆ _ ⚆", "(•_•) ( •_•)>⌐■-■ (⌐■_■)", "(｡◕‿‿◕｡)", "ಥ_ಥ",
+             "ヽ༼ຈل͜ຈ༽ﾉ", "⌐╦╦═─", "(☞ຈل͜ຈ)☞", "˙ ͜ʟ˙", "☜(˚▽˚)☞", "(•Ω•)", "(ง°ل͜°)ง", "(｡◕‿◕｡)", "（╯°□°）╯︵( .O.)",
+             ":\')", "┬──┬ ノ( ゜-゜ノ)", "(っ˘ڡ˘Σ)", "ಠ⌣ಠ", "ლ(´ڡლ)", "(°ロ°)☝️", "｡◕‿‿◕｡", "( ಠ ͜ʖರೃ)", "╚(ಠ_ಠ)=┐",
+             "(─‿‿─)", "ƪ(˘⌣˘)Ʃ", "(；一_一)", "(¬_¬)", "( ⚆ _ ⚆ )", "(ʘᗩʘ\')", "☜(⌒▽⌒)☞", "｡◕‿◕｡", "¯(°_O)/¯", "(ʘ‿ʘ)",
+             "ლ,ᔑ•ﺪ͟͠•ᔐ.ლ", "(´・Ω・)", "ಠ~ಠ", "(° ͡ ͜ ͡ʖ ͡ °)", "┬─┬ノ( º _ ºノ)", "(´・Ω・)っ由", "ಠ_ಥ", "Ƹ̵̡Ӝ̵̨Ʒ", "(>ლ)",
+             "ಠ‿↼", "ʘ‿ʘ", "(ღ˘⌣˘ღ)", "ಠOಠ", "ರ_ರ", "(▰˘◡˘▰)", "◔̯◔", "◔ ⌣ ◔", "(✿´‿`)", "¬_¬", "ب_ب", "｡゜(｀Д´)゜｡",
+             "(Ó Ì_Í)=ÓÒ=(Ì_Í Ò)", "°Д°", "( ﾟヮﾟ)", "┬─┬﻿ ︵ /(.□. ）", "٩◔̯◔۶", "≧☉_☉≦", "☼.☼", "^̮^", "(>人<)",
+             "〆(・∀・＠)", "(~_^)", "^̮^", "^̮^", ">_>", "(^̮^)", "(/) (°,,°) (/)", "^̮^", "^̮^", "=U", "(･.◤)"]
+
+reactionhappy = ["\'\'̵͇З= ( ▀ ͜͞ʖ▀) =Ε/̵͇/’’", "ʕ•ᴥ•ʔ", "(づ｡◕‿‿◕｡)づ", "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ ✧ﾟ･: *ヽ(◕ヮ◕ヽ)", "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧",
+                 "(☞ﾟ∀ﾟ)☞", "| (• ◡•)| (❍ᴥ❍Ʋ)", "(◕‿◕✿)", "(ᵔᴥᵔ)", "(☞ﾟヮﾟ)☞ ☜(ﾟヮﾟ☜)", "(づ￣ ³￣)づ", "♪~ ᕕ(ᐛ)ᕗ", "♥️‿♥️",
+                 "༼ つ ͡° ͜ʖ ͡° ༽つ", "༼ つ ಥ_ಥ ༽つ", "ヾ(⌐■_■)ノ♪", "~(˘▾˘~)", "◉_◉", "(•◡•) /", "(~˘▾˘)~", "(｡◕‿‿◕｡)",
+                 "☜(˚▽˚)☞", "(•Ω•)", "(｡◕‿◕｡)", "(っ˘ڡ˘Σ)", "｡◕‿‿◕｡""☜(⌒▽⌒)☞", "｡◕‿◕｡", "(ღ˘⌣˘ღ)", "(▰˘◡˘▰)", "^̮^",
+                 "^̮^", ">_>", "(^̮^)", "^̮^", "^̮^"]
+
+reactionangry = ["▄︻̷┻═━一", "(▀Ĺ̯▀ )", "(ง ͠° ͟ل͜ ͡°)ง", "༼ つ ◕_◕ ༽つ", "ಠ_ಠ", "\'\'̵͇З=( ͠° ͟ʖ ͡°)=Ε/̵͇/\'",
+                 "(ง\'̀-\'́)ง", "(ノಠ益ಠ)ノ彡┻━┻", "(╯°□°)╯︵ ꞰOOQƎƆⱯɟ", "ლ(ಠ益ಠლ)", "ಠ╭╮ಠ", "\'\'̵͇З=(•_•)=Ε/̵͇/\'\'",
+                 "(╯°□°）╯︵ ┻━┻", "┻━┻ ︵ヽ(Д´)ﾉ︵ ┻━┻", "⌐╦╦═─", "（╯°□°）╯︵( .O.)", ":\')", "┬──┬ ノ( ゜-゜ノ)", "ლ(´ڡლ)",
+                 "(°ロ°)☝️", "ლ,ᔑ•ﺪ͟͠•ᔐ.ლ", "┬─┬ノ( º _ ºノ)", "┬─┬﻿ ︵ /(.□. ）"]
+
+
+@run_async
+def react(bot: Bot, update: Update):
+    message = update.effective_message
+    react = random.choice(reactions)
+    if message.reply_to_message:
+        message.reply_to_message.reply_text(react)
+    else:
+        message.reply_text(react)
+
+
+@run_async
+def rhappy(bot: Bot, update: Update):
+    message = update.effective_message
+    rhappy = random.choice(reactionhappy)
+    if message.reply_to_message:
+        message.reply_to_message.reply_text(rhappy)
+    else:
+        message.reply_text(rhappy)
+
+
+@run_async
+def rangry(bot: Bot, update: Update):
+    message = update.effective_message
+    rangry = random.choice(reactionangry)
+    if message.reply_to_message:
+        message.reply_to_message.reply_text(rangry)
+    else:
+        message.reply_text(rangry)
+
+
 @run_async
 def stickerid(bot: Bot, update: Update):
 	spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
@@ -48,58 +108,6 @@ def stickerid(bot: Bot, update: Update):
 		send_message(update.effective_message, tl(update.effective_message, "Tolong balas pesan stiker untuk mendapatkan id stiker"),
 											parse_mode=ParseMode.MARKDOWN)
 
-@run_async
-def getsticker(bot: Bot, update: Update):
-	spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-	if spam == True:
-		return
-	msg = update.effective_message
-	chat_id = update.effective_chat.id
-	if msg.reply_to_message and msg.reply_to_message.sticker:
-		send_message(update.effective_message, "Hai " + "[{}](tg://user?id={})".format(msg.from_user.first_name,
-											msg.from_user.id) + ", Silahkan cek file yang anda minta dibawah ini."
-											"\nTolong gunakan fitur ini dengan bijak!",
-											parse_mode=ParseMode.MARKDOWN)
-		bot.sendChatAction(chat_id, "upload_document")
-		file_id = msg.reply_to_message.sticker.file_id
-		newFile = bot.get_file(file_id)
-		newFile.download('sticker.png')
-		bot.sendDocument(chat_id, document=open('sticker.png', 'rb'))
-		bot.sendChatAction(chat_id, "upload_photo")
-		bot.send_photo(chat_id, photo=open('sticker.png', 'rb'))
-		
-	else:
-		send_message(update.effective_message, "Hai " + "[{}](tg://user?id={})".format(msg.from_user.first_name,
-											msg.from_user.id) + ", Tolong balas pesan stiker untuk mendapatkan gambar stiker",
-											parse_mode=ParseMode.MARKDOWN)
-
-@run_async
-def stiker(bot: Bot, update: Update):
-	spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-	if spam == True:
-		return
-	chat_id = update.effective_chat.id
-	args = update.effective_message.text.split(None, 1)
-	message = update.effective_message
-	message.delete()
-	if message.reply_to_message:
-		bot.sendSticker(chat_id, args[1], reply_to_message_id=message.reply_to_message.message_id)
-	else:
-		bot.sendSticker(chat_id, args[1])
-
-@run_async
-def file(bot: Bot, update: Update):
-	spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-	if spam == True:
-		return
-	chat_id = update.effective_chat.id
-	args = update.effective_message.text.split(None, 1)
-	message = update.effective_message
-	message.delete()
-	if message.reply_to_message:
-		bot.sendDocument(chat_id, args[1], reply_to_message_id=message.reply_to_message.message_id)
-	else:
-		bot.sendDocument(chat_id, args[1])
 
 @run_async
 def getlink(bot: Bot, update: Update, args: List[int]):
@@ -290,81 +298,6 @@ def wiki(bot: Bot, update: Update):
 
 
 @run_async
-def kamusbesarbahasaindonesia(bot: Bot, update: Update):
-	spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-	if spam == True:
-		return
-	msg = update.effective_message
-	chat_id = update.effective_chat.id
-	try:
-		args = update.effective_message.text.split(None, 1)
-		teks = args[1]
-		message = update.effective_message
-		try:
-			api = requests.get('http://kateglo.com/api.php?format=json&phrase='+teks).json()
-		except json.decoder.JSONDecodeError:
-			send_message(update.effective_message, "Hasil tidak ditemukan!", parse_mode=ParseMode.MARKDOWN)
-			return
-		#kamusid = KBBI(teks)
-		parsing = "***Hasil dari kata {} ({}) di {}***\n\n".format(api['kateglo']['phrase'], api['kateglo']['lex_class_name'], api['kateglo']['ref_source_name'])
-		if len(api['kateglo']['definition']) >= 6:
-			jarak = 5
-		else:
-			jarak = len(api['kateglo']['definition'])
-		for x in range(jarak):
-			parsing += "*{}.* {}".format(x+1, api['kateglo']['definition'][x]['def_text'])
-			contoh = api['kateglo']['definition'][x]['sample']
-			if contoh:
-				parsing += "\nContoh: `{}`".format(str(BeautifulSoup(contoh, "lxml")).replace('<html><body><p>', '').replace('</p></body></html>', ''))
-			parsing += "\n\n"
-		send_message(update.effective_message, parsing, parse_mode=ParseMode.MARKDOWN)
-
-	except IndexError:
-		send_message(update.effective_message, "Tulis pesan untuk mencari dari kamus besar bahasa indonesia")
-	except KBBI.TidakDitemukan:
-		send_message(update.effective_message, "Hasil tidak ditemukan")
-	else:
-		return
-
-@run_async
-def kitabgaul(bot: Bot, update: Update):
-	spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-	if spam == True:
-		return
-	msg = update.effective_message
-	chat_id = update.effective_chat.id
-	message = update.effective_message
-	try:
-		args = update.effective_message.text.split(None, 1)
-		teks = args[1]
-	except IndexError:
-		trend = requests.get("https://kitabgaul.com/api/entries;trending").json()
-		best = requests.get("https://kitabgaul.com/api/entries;best").json()
-		tbalas = ""
-		bbalas = ""
-		if len(trend.get('entries')) == 0:
-			return send_message(update.effective_message, "Tidak ada Hasil yang ditampilkan!", parse_mode=ParseMode.MARKDOWN)
-		for x in range(3):
-			tbalas += "*{}. {}*\n*Slug:* `{}`\n*Definisi:* `{}`\n*Contoh:* `{}`\n\n".format(x+1, trend.get('entries')[x].get('word'), trend.get('entries')[x].get('slug'), trend.get('entries')[x].get('definition'), trend.get('entries')[x].get('example'))
-		if len(best.get('entries')) == 0:
-			return send_message(update.effective_message, "Tidak ada Hasil yang ditampilkan!", parse_mode=ParseMode.MARKDOWN)
-		for x in range(3):
-			bbalas += "*{}. {}*\n*Slug:* `{}`\n*Definisi:* `{}`\n*Contoh:* `{}`\n\n".format(x+1, best.get('entries')[x].get('word'), best.get('entries')[x].get('slug'), best.get('entries')[x].get('definition'), best.get('entries')[x].get('example'))
-		balas = "*<== Trending saat ini ==>*\n\n{}*<== Terbaik saat ini ==>*\n\n{}".format(tbalas, bbalas)
-		send_message(update.effective_message, balas, parse_mode=ParseMode.MARKDOWN)
-	kbgaul = requests.get("https://kitabgaul.com/api/entries/{}".format(teks)).json()
-	balas = "*Hasil dari {}*\n\n".format(teks)
-	if len(kbgaul.get('entries')) == 0:
-		return send_message(update.effective_message, "Tidak ada Hasil dari {}".format(teks), parse_mode=ParseMode.MARKDOWN)
-	if len(kbgaul.get('entries')) >= 3:
-		jarak = 3
-	else:
-		jarak = len(kbgaul.get('entries'))
-	for x in range(jarak):
-		balas += "*{}. {}*\n*Slug:* `{}`\n*Definisi:* `{}`\n*Contoh:* `{}`\n\n".format(x+1, kbgaul.get('entries')[x].get('word'), kbgaul.get('entries')[x].get('slug'), kbgaul.get('entries')[x].get('definition'), kbgaul.get('entries')[x].get('example'))
-	send_message(update.effective_message, balas, parse_mode=ParseMode.MARKDOWN)
-
-@run_async
 def urbandictionary(bot: Bot, update: Update, args):
 	spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
 	if spam == True:
@@ -406,34 +339,30 @@ def deEmojify(inputString):
 
 __help__ = "exclusive_help"
 
-__mod_name__ = "💖 Exclusive Emilia 💖"
+__mod_name__ = "🚀 Hitsuki Extras 🚀"
 
 STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
-#GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
 PING_HANDLER = DisableAbleCommandHandler("ping", ping)
-STIKER_HANDLER = CommandHandler("stiker", stiker, filters=Filters.user(OWNER_ID))
-FILE_HANDLER = CommandHandler("file", file, filters=Filters.user(OWNER_ID))
 GETLINK_HANDLER = CommandHandler("getlink", getlink, pass_args=True, filters=Filters.user(OWNER_ID))
 LEAVECHAT_HANDLER = CommandHandler(["leavechat", "leavegroup", "leave"], leavechat, pass_args=True, filters=Filters.user(OWNER_ID))
-RAMALAN_HANDLER = DisableAbleCommandHandler(["ramalan", "fortune"], ramalan)
-TERJEMAH_HANDLER = DisableAbleCommandHandler(["tr", "tl"], terjemah)
+RAMALAN_HANDLER = DisableAbleCommandHandler(["fortune"], ramalan)
+TERJEMAH_HANDLER = DisableAbleCommandHandler(["tr"], terjemah)
 WIKIPEDIA_HANDLER = DisableAbleCommandHandler("wiki", wiki)
-KBBI_HANDLER = DisableAbleCommandHandler("kbbi", kamusbesarbahasaindonesia)
-KBGAUL_HANDLER = DisableAbleCommandHandler("kbgaul", kitabgaul)
 UD_HANDLER = DisableAbleCommandHandler("ud", urbandictionary, pass_args=True)
 LOG_HANDLER = DisableAbleCommandHandler("log", log, filters=Filters.user(OWNER_ID))
+REACT_HANDLER = DisableAbleCommandHandler("react", react)
+RHAPPY_HANDLER = DisableAbleCommandHandler("happy", rhappy)
+RANGRY_HANDLER = DisableAbleCommandHandler("angry", rangry)
 
+dispatcher.add_handler(REACT_HANDLER)
+dispatcher.add_handler(RHAPPY_HANDLER)
+dispatcher.add_handler(RANGRY_HANDLER)
 dispatcher.add_handler(PING_HANDLER)
 dispatcher.add_handler(STICKERID_HANDLER)
-#dispatcher.add_handler(GETSTICKER_HANDLER)
-dispatcher.add_handler(STIKER_HANDLER)
-dispatcher.add_handler(FILE_HANDLER)
 dispatcher.add_handler(GETLINK_HANDLER)
 dispatcher.add_handler(LEAVECHAT_HANDLER)
 dispatcher.add_handler(RAMALAN_HANDLER)
 dispatcher.add_handler(TERJEMAH_HANDLER)
 dispatcher.add_handler(WIKIPEDIA_HANDLER)
-dispatcher.add_handler(KBBI_HANDLER)
-dispatcher.add_handler(KBGAUL_HANDLER)
 dispatcher.add_handler(UD_HANDLER)
 dispatcher.add_handler(LOG_HANDLER)

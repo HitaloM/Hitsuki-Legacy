@@ -8,7 +8,29 @@ feedparser
 pyowm
 googletrans
 wikipedia
-kbbi
-Pillow
 alphabet_detector
 urbandict
+regex
+PyAML
+PyLyrics>=1.1.0
+psutil
+
+#Speed Test
+speedtest-cli>=2.1.2
+
+#TWRP
+bs4
+lxml
+
+#AEX
+hurry.filesize
+
+#Memes from Skitt_Bot
+spongemock>=0.3.4
+zalgo-text
+nltk
+aiohttp>=2.2.5
+Pillow>=4.2.0
+
+jikanpy
+markdown2

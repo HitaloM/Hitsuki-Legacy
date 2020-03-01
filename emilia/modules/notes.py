@@ -523,7 +523,7 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
 	notes = sql.get_all_chat_notes(chat_id)
-	return tl(user_id, "Ada catatan `{}` dalam obrolan ini.").format(len(notes))
+	return tl(user_id, "Ada catatan {} dalam obrolan ini.").format(len(notes))
 
 
 __help__ = "notes_help"

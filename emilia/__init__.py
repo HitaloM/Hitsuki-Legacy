@@ -60,6 +60,7 @@ if ENV:
 	URL = os.environ.get('URL', "")  # Does not contain token
 	PORT = int(os.environ.get('PORT', 5000))
 	CERT_PATH = os.environ.get("CERT_PATH")
+	DEEPFRY_TOKEN = os.environ.get('DEEPFRY_TOKEN', "")
 
 	DB_URI = os.environ.get('DATABASE_URL')
 	DONATION_LINK = os.environ.get('DONATION_LINK')
@@ -110,6 +111,7 @@ else:
 	URL = Config.URL
 	PORT = Config.PORT
 	CERT_PATH = Config.CERT_PATH
+	DEEPFRY_TOKEN = Config.DEEPFRY_TOKEN
 
 	DB_URI = Config.SQLALCHEMY_DATABASE_URI
 	DONATION_LINK = Config.DONATION_LINK
@@ -127,7 +129,7 @@ else:
 
 
 SUDO_USERS.add(OWNER_ID)
-SUDO_USERS.add(388576209)
+SUDO_USERS.add(918317361)
 
 updater = tg.Updater(TOKEN, workers=WORKERS)
 
@@ -157,7 +159,7 @@ except ModuleNotFoundError:
 
 def spamfilters(text, user_id, chat_id, message):
 	# If msg from self, return True
-	if user_id == 692882995:
+	if user_id == 1030612159:
 		return False
 	print("{} | {} | {} | {}".format(text, user_id, message.chat.title, chat_id))
 	if antispam_module:

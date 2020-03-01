@@ -435,8 +435,8 @@ def import_data(bot: Bot, update):
 					os.remove("{}-notimported.txt".format(chat_id))
 				return
 		except Exception as err:
-			send_message(update.effective_message, tl(update.effective_message, "Telah terjadi kesalahan dalam import backup Emilia!\nGabung ke [Grup support](https://t.me/joinchat/Fykz0VTMpqZvlkb8S0JevQ) kami untuk melaporkan dan mengatasi masalah ini!\n\nTerima kasih"), parse_mode="markdown")
-			LOGGER.exception("An error when importing from Emilia base!")
+			send_message(update.effective_message, tl(update.effective_message, "Telah terjadi kesalahan dalam import backup Emilia!"), parse_mode="markdown")
+			LOGGER.exception("An error when importing from Hitsuki base!")
 			return
 
 		try:
@@ -660,7 +660,7 @@ def import_data(bot: Bot, update):
 						os.remove("{}-notimported.txt".format(chat_id))
 					return
 		except Exception as err:
-			send_message(update.effective_message, tl(update.effective_message, "Telah terjadi kesalahan dalam import backup Rose!\nGabung ke [Grup support](https://t.me/joinchat/Fykz0VTMpqZvlkb8S0JevQ) kami untuk melaporkan dan mengatasi masalah ini!\n\nTerima kasih"), parse_mode="markdown")
+			send_message(update.effective_message, tl(update.effective_message, "Telah terjadi kesalahan dalam import backup Rose!"), parse_mode="markdown")
 			LOGGER.exception("An error when importing from Rose base!")
 			return
 
@@ -701,7 +701,7 @@ def import_data(bot: Bot, update):
 				mod.__import_data__(str(chat_id), data)
 		except Exception:
 			send_message(update.effective_message, tl(update.effective_message, "Kesalahan terjadi saat memulihkan data Anda. Prosesnya mungkin tidak lengkap. Jika "
-						   "Anda mengalami masalah dengan ini, pesan @AyraHikari dengan file cadangan Anda, jadi "
+						   "Anda mengalami masalah dengan ini, pesan @HitaloSama dengan file cadangan Anda, jadi "
 						   "masalah bisa di-debug. Pemilik saya akan dengan senang hati membantu, dan setiap bug "
 						   "dilaporkan membuat saya lebih baik! Terima kasih! 🙂"))
 			LOGGER.exception("Impor untuk id chat %s dengan nama %s gagal.", str(chat_id), str(chat.title))
@@ -761,7 +761,7 @@ def export_data(bot: Bot, update: Update, chat_data):
 	# Backup version
 	# Revision: 07/07/2019
 	backup_ver = 1
-	bot_base = "Emilia"
+	bot_base = "Hitsuki"
 
 	# Make sure this backup is for this bot
 	bot_id = bot.id
@@ -930,7 +930,7 @@ def export_data(bot: Bot, update: Update, chat_data):
 
 
 	all_backups = json.dumps(backup, indent=4, cls=SetEncoder)
-	f = open("{}-Emilia.backup".format(chat_id), "w")
+	f = open("{}-Hitsuki.backup".format(chat_id), "w")
 	f.write(str(all_backups))
 	f.close()
 	bot.sendChatAction(current_chat_id, "upload_document")
@@ -939,13 +939,13 @@ def export_data(bot: Bot, update: Update, chat_data):
 		bot.sendMessage(TEMPORARY_DATA, "*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`".format(chat.title, chat_id, tgl), parse_mode=ParseMode.MARKDOWN)
 	except BadRequest:
 		pass
-	send = bot.sendDocument(current_chat_id, document=open('{}-Emilia.backup'.format(chat_id), 'rb'), caption=tl(update.effective_message, "*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`\n\nNote: cadangan ini khusus untuk bot ini, jika di import ke bot lain maka catatan dokumen, video, audio, voice, dan lain-lain akan hilang").format(chat.title, chat_id, tgl), timeout=360, reply_to_message_id=msg.message_id, parse_mode=ParseMode.MARKDOWN)
+	send = bot.sendDocument(current_chat_id, document=open('{}-Hitsuki.backup'.format(chat_id), 'rb'), caption=tl(update.effective_message, "*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`\n\nNote: cadangan ini khusus untuk bot ini, jika di import ke bot lain maka catatan dokumen, video, audio, voice, dan lain-lain akan hilang").format(chat.title, chat_id, tgl), timeout=360, reply_to_message_id=msg.message_id, parse_mode=ParseMode.MARKDOWN)
 	try:
 		# Send to temp data for prevent unexpected issue
 		bot.sendDocument(TEMPORARY_DATA, document=send.document.file_id, caption=tl(update.effective_message, "*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`\n\nNote: cadangan ini khusus untuk bot ini, jika di import ke bot lain maka catatan dokumen, video, audio, voice, dan lain-lain akan hilang").format(chat.title, chat_id, tgl), timeout=360, parse_mode=ParseMode.MARKDOWN)
 	except BadRequest:
 		pass
-	os.remove("{}-Emilia.backup".format(chat_id)) # Cleaning file
+	os.remove("{}-Hitsuki.backup".format(chat_id)) # Cleaning file
 
 
 class SetEncoder(json.JSONEncoder):

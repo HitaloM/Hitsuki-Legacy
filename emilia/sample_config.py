@@ -22,7 +22,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqldbtype://username:pw@hostname:port/db_name'  # needed for any database modules
     MESSAGE_DUMP = None  # needed to make sure 'save from' messages persist
     LOAD = []
-    NO_LOAD = ['translation', 'rss', 'sed', 'weather']
+    NO_LOAD = []
     WEBHOOK = False
     URL = None
 
@@ -40,7 +40,7 @@ class Config(object):
     ALLOW_EXCL = False  # Allow ! commands as well as /
     SPAMMERS = "" # Will not allow to interact with bot
     TEMPORARY_DATA = None # Temporary data for backup module, use int number
-
+    DEEPFRY_TOKEN = None  # Used for facial recognition in the deepfry command
 
 class Production(Config):
     LOGGER = False

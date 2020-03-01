@@ -137,10 +137,10 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             first_name = update.effective_user.first_name
             buttons = InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="🎉 Add me to your group", url="https://t.me/EmiliaHikariBot?startgroup=new")],
+                [[InlineKeyboardButton(text="🎉 Add me to your group", url="https://t.me/LordHitsuki_BOT?startgroup=new")],
                 [InlineKeyboardButton(text="💭 Language", callback_data="main_setlang"), InlineKeyboardButton(text="⚙️ Connect Group", callback_data="main_connect")],
-                [InlineKeyboardButton(text="👥 Support Group", url="https://t.me/EmiliaOfficial"), InlineKeyboardButton(text="🔔 Update Channel", url="https://t.me/AyraBotNews")],
-                [InlineKeyboardButton(text="❓ Help", url="https://t.me/EmiliaHikariBot?start=help"), InlineKeyboardButton(text="💖 Donate", url="http://ayrahikari.github.io/donations.html")]])
+                [InlineKeyboardButton(text="🗒️ Hitalo's Doc", url="https://telegra.ph/HitaloKun-doc-07-15"), InlineKeyboardButton(text="🔔 Update Channel", url="https://t.me/HitsukiNews")],
+                [InlineKeyboardButton(text="❓ Help", url="https://t.me/LordHitsuki_BOT?start=help"), InlineKeyboardButton(text="🚀 Source", url="http://github.com/HitaloKun/Hitsuki/")]])
             update.effective_message.reply_text(
                 tl(update.effective_message, PM_START_TEXT).format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 disable_web_page_preview=True,
@@ -410,7 +410,7 @@ def donate(bot: Bot, update: Update):
     if chat.type == "private":
         update.effective_message.reply_text(tl(update.effective_message, DONATE_STRING), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
-        if OWNER_ID != 388576209 and DONATION_LINK:
+        if OWNER_ID != 918317361 and DONATION_LINK:
             update.effective_message.reply_text(tl(update.effective_message, "Anda juga dapat menyumbang kepada orang yang saat ini menjalankan saya "
                                                 "[disini]({})").format(DONATION_LINK),
                                                 parse_mode=ParseMode.MARKDOWN)
