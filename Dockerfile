@@ -58,7 +58,7 @@ RUN python3 -m ensurepip \
 #
 # Clone repo and prepare working directory
 #
-RUN git clone 'https://github.com/HitaloKun/HitsukiBeta.git' /root/hitsuki
+RUN git clone 'https://github.com/HitaloSama/Hitsuki.git' /root/hitsuki
 RUN mkdir /root/hitsuki/bin/
 WORKDIR /root/hitsuki/
 
@@ -68,4 +68,4 @@ WORKDIR /root/hitsuki/
 RUN pip3 install -r requirements.txt
 RUN pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
 RUN pip3 install python-telegram-bot==11.1.0
-CMD ["python3","-m","emilia"]
+CMD ["python3","-m","hitsuki"]
