@@ -1,12 +1,19 @@
 # Hitsuki - X Edition
 
-A modular Telegram Python bot running on python3 with an sqlalchemy database.
+A modular telegram Python bot running on python3 with an sqlalchemy database.
+
+Originally a simple group management bot with multiple admin features, it has evolved into becoming 
+a basis for modular bots aiming to provide simple plugin expansion via a simple drag and drop.
+
+Can be found as [Hitsuki](https://t.me/LordHitsukiBETA_BOT) on Telegram.
 
 Based on [Emilia Hikari](https://github.com/AyraHikari/EmiliaHikari)
 
 ## Special Credits
 
-Thanks to this user:
-* [Paul Larsen](https://github.com/PaulSonOfLars) - marie creator, inspiration to do many things
-* [Yan Gorobtsov](https://github.com/MrYacha) - for welcome security base and connection base and maybe others
-* [アキト ミズキト](https://github.com/peaktogoo) - for reworked federation, Android module and other things
+Thanks to this users:
+* [@PaulSonOfLars](https://github.com/PaulSonOfLars) - marie creator, inspiration to do many things.
+* [@MrYacha](https://github.com/MrYacha) - for welcome security base and connection base and maybe others.
+* [@RealAkito](https://github.com/RealAkito) - for reworked federation, Android module and other things.
+* [@RaphielGang](https://github.com/RaphielGang) - for the base of the direct link module.
+* [@AvinashReddy3108](https://github.com/AvinashReddy3108) - for the base used in Dockerfile.
