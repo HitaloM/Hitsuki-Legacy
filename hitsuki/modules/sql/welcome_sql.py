@@ -443,4 +443,5 @@ def isWhitelisted(chat_id):
 __load_whitelisted_chats_list()
 
 
-__load_chat_userrestirect()
+__load_chat_userrestrict()
+
