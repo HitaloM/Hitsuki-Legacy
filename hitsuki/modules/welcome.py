@@ -134,19 +134,14 @@ def new_member(bot: Bot, update: Update):
 			# Give the owner a special welcome
 			if OWNER_SPECIAL and new_mem.id == OWNER_ID:
 				if cleanserv:
-					bot.send_message(chat.id, tl(update.effective_message, "The master has gone home! Let's start this party! 😆")
+					bot.send_message(chat.id, tl(update.effective_message, "Master telah pulang! Mari kita mulai pesta ini! 😆"))
 				else:
-					send_message(update.effective_message, tl(update.effective_message, "The master has gone home! Let's start this party! 😆"))
+					send_message(update.effective_message, tl(update.effective_message, "Master telah pulang! Mari kita mulai pesta ini! 😆"))
 				continue
 
+			# Don't welcome yourself
 			elif new_mem.id == bot.id:
-					bot.send_message(
-					MESSAGE_DUMP,
-					"I have been added to {} with ID: <pre>{}</pre>".format(chat.title, chat.id),
-					parse_mode=ParseMode.HTML
-				)
-				bot.send_message(chat.id,
-								"Thanks for adding me into your group! Don't forgot to checkout the HitaloSama's channel (@AndroidRepo)!")
+				continue
 
 			else:
 				# If welcome message is media, send with appropriate function
