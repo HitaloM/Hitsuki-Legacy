@@ -337,7 +337,18 @@ def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')
 
 
-__help__ = "exclusive_help"
+__help__ = """
+ - /stickerid: reply message sticker at PM to get ID sticker
+ - /ping: check the speed of the bot
+ - /fortune: give a fortune
+ - /tr <from>-<to> <text>: translate text written or reply for any language to the intended language,Â or
+ - /tr <to> <text>: translate text written or reply for any language to the intended language
+ - /wiki <text>: search for text written from the wikipedia source
+ - /ud <text>: search from urban dictionary
+ - /react: reacts with normal reactions.
+ - /happy: reacts with happiness.
+ - /angry: reacts angrily.
+"""
 
 __mod_name__ = "🚀 Hitsuki Extras 🚀"
 

@@ -138,7 +138,15 @@ def button(bot, update):
 		update.effective_message.edit_text(tl(query.message, "The language has been changed to {}!").format(LANGS_TEXT.get(set_lang)))
 
 
-__help__ = "language_help"
+__help__ = """"
+This is where translations come in; you can change most of Hitsuki's replies to be in the language of your choice!
+
+Available languages are:
+- ðŸ‡ºðŸ‡¸ English
+
+Available commands are:
+ - /setlang: set your prefered language.
+"""
 
 __mod_name__ = "Languages"
 

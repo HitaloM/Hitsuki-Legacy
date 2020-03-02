@@ -10,6 +10,10 @@ from io import BytesIO
 from pathlib import Path
 from typing import List
 
+import nltk # shitty lib, but it does work
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+
 from PIL import Image
 from spongemock import spongemock
 from telegram import Message, Update, Bot
@@ -20,15 +24,12 @@ from zalgo_text import zalgo
 from deeppyer import deepfry
 from hitsuki import DEEPFRY_TOKEN
 from hitsuki import dispatcher
-from hitsuki.modules.disable import DisableAbleCommandHandler
 
 MAXNUMURL = 'https://raw.githubusercontent.com/atanet90/expression-pack/master/meta'
 WIDE_MAP = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
 WIDE_MAP[0x20] = 0x3000
 
-
 # D A N K modules by @deletescape vvv
-
 
 @run_async
 def owo(bot: Bot, update: Update):
@@ -178,6 +179,46 @@ def bmoji(bot: Bot, update: Update):
         reply_text = message.reply_to_message.text.replace(
             b_char, "🅱️").replace(b_char.upper(), "🅱️")
         message.reply_to_message.reply_text(reply_text)
+
+
+@run_async
+def forbesify(bot: Bot, update: Update):
+    message = update.effective_message
+    if message.reply_to_message:
+        data = message.reply_to_message.text
+    else:
+        data = ''
+
+    data = data.lower()
+    accidentals = ['VB', 'VBD', 'VBG', 'VBN']
+    reply_text = data.split()
+    offset = 0
+
+    # use NLTK to find out where verbs are
+    tagged = dict(nltk.pos_tag(reply_text))
+
+    # let's go through every word and check if it's a verb
+    # if yes, insert ACCIDENTALLY and increase offset
+    for k in range(len(reply_text)):
+        i = reply_text[k + offset]
+        if tagged.get(i) in accidentals:
+            reply_text.insert(k + offset, 'accidentally')
+            offset += 1
+
+    reply_text = string.capwords(' '.join(reply_text))
+    message.reply_to_message.reply_text(reply_text)
+
+
+@run_async
+def spongemocktext(bot: Bot, update: Update):
+    message = update.effective_message
+    if message.reply_to_message:
+        data = message.reply_to_message.text
+    else:
+        data = str('Haha yes, I know how to mock text.')
+
+    reply_text = spongemock.mock(data)
+    message.reply_text(reply_text)
 
 
 @run_async
@@ -331,14 +372,16 @@ __mod_name__ = "Memes and etc."
 COPYPASTA_HANDLER = CommandHandler("copypasta", copypasta)
 CLAPMOJI_HANDLER = CommandHandler("clapmoji", clapmoji)
 BMOJI_HANDLER = CommandHandler("bmoji", bmoji)
-OWO_HANDLER = DisableAbleCommandHandler("owo", owo)
-STRETCH_HANDLER = DisableAbleCommandHandler("stretch", stretch)
-VAPOR_HANDLER = DisableAbleCommandHandler(
+MOCK_HANDLER = CommandHandler("mock", spongemocktext)
+OWO_HANDLER = CommandHandler("owo", owo)
+FORBES_HANDLER = CommandHandler("forbes", forbesify)
+STRETCH_HANDLER = CommandHandler("stretch", stretch)
+VAPOR_HANDLER = CommandHandler(
     "vapor", vapor, pass_args=True, admin_ok=True)
-ZALGO_HANDLER = DisableAbleCommandHandler("zalgofy", zalgotext)
-DEEPFRY_HANDLER = DisableAbleCommandHandler(
+ZALGO_HANDLER = CommandHandler("zalgofy", zalgotext)
+DEEPFRY_HANDLER = CommandHandler(
     "deepfry", deepfryer, admin_ok=True)
-SHOUT_HANDLER = DisableAbleCommandHandler("shout", shout, pass_args=True)
+SHOUT_HANDLER = CommandHandler("shout", shout, pass_args=True)
 DEEPFRY_HANDLER = CommandHandler("deepfry", deepfryer)
 CHINESEMEMES_HANDLER = CommandHandler("dllm", chinesememes, pass_args=True)
 
@@ -351,4 +394,6 @@ dispatcher.add_handler(DEEPFRY_HANDLER)
 dispatcher.add_handler(COPYPASTA_HANDLER)
 dispatcher.add_handler(CLAPMOJI_HANDLER)
 dispatcher.add_handler(BMOJI_HANDLER)
+dispatcher.add_handler(FORBES_HANDLER)
 dispatcher.add_handler(CHINESEMEMES_HANDLER)
+dispatcher.add_handler(MOCK_HANDLER)
