@@ -137,9 +137,9 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             first_name = update.effective_user.first_name
             buttons = InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="📃 HitaloSama's Docs", url="https://telegra.ph/HitaloKun-doc-07-15")],
-                [InlineKeyboardButton(text="🇺🇲 Language", callback_data="main_setlang")]],
-                [InlineKeyboardButton(text="❔ Help", url="https://t.me/LordHitsuki_BOT?start=help"), InlineKeyboardButton(text="🚀 Source", url="http://github.com/HitaloKun/Hitsuki/")]])
+                [[InlineKeyboardButton(text="📃 HitaloSama's Docs", url="https://telegra.ph/HitaloKun-doc-07-15")]
+                [InlineKeyboardButton(text="🇺🇲 Language", callback_data="main_setlang")]]
+                [InlineKeyboardButton(text="❔ Help", url="https://t.me/LordHitsuki_BOT?start=help"), InlineKeyboardButton(text="🚀 Source", url="http://github.com/HitaloSama/Hitsuki/")]]
             update.effective_message.reply_text(
                 tl(update.effective_message, PM_START_TEXT).format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 disable_web_page_preview=True,
