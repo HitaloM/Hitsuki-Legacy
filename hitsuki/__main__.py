@@ -24,11 +24,35 @@ from hitsuki.modules.sql import languages_sql as langsql
 from hitsuki.modules.connection import connect_button
 from hitsuki.modules.languages import set_language
 
-PM_START_TEXT = "start_text"
+PM_START_TEXT = """
+Hi {}! My name is *{}* - I'm here to help you manage your groups!
+Click Help button to find out more about how to use me to my full potential.
 
-HELP_STRINGS = "help_text"#.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
+Follow [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) if you want to keep up with the news, updates and bot downtime!
 
-DONATE_STRING = "donate_text"
+This bot is managed by @HitaloSama
+
+Want to add me to your group? [Click here!](t.me/LordHitsuki_BOT?startgroup=true)
+"""
+
+HELP_STRINGS = """
+Hey there! My name is *Hitsuki*.
+I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of \
+the things I can help you with.
+
+*Main* commands available:
+ - /start: start the bot
+ - /help: PM's you this message.
+ - /help <module name>: PM's you info about that module.
+ - /settings:
+   - in PM: will send you your settings for all supported modules.
+   - in a group: will redirect you to pm, with all that chat's settings.
+
+
+All commands can either be used with / or !.
+
+And the following:
+"""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -397,32 +421,6 @@ def get_settings(bot: Bot, update: Update):
         send_settings(chat.id, user.id, True)
 
 
-@run_async
-def donate(bot: Bot, update: Update):
-    user = update.effective_message.from_user
-    chat = update.effective_chat  # type: Optional[Chat]
-
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
-
-    if chat.type == "private":
-        update.effective_message.reply_text(tl(update.effective_message, DONATE_STRING), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-
-        if OWNER_ID != 918317361 and DONATION_LINK:
-            update.effective_message.reply_text(tl(update.effective_message, "Anda juga dapat menyumbang kepada orang yang saat ini menjalankan saya "
-                                                "[disini]({})").format(DONATION_LINK),
-                                                parse_mode=ParseMode.MARKDOWN)
-
-    else:
-        try:
-            bot.send_message(user.id, tl(update.effective_message, DONATE_STRING), parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-
-            update.effective_message.reply_text(tl(update.effective_message, "Saya sudah PM Anda tentang donasi untuk pencipta saya!"))
-        except Unauthorized:
-            update.effective_message.reply_text(tl(update.effective_message, "Hubungi saya di PM dulu untuk mendapatkan informasi donasi."))
-
-
 def migrate_chats(bot: Bot, update: Update):
     msg = update.effective_message  # type: Optional[Message]
     if msg.migrate_to_chat_id:
@@ -451,8 +449,7 @@ def main():
 
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
-
-    donate_handler = CommandHandler("donate", donate)
+    
     M_CONNECT_BTN_HANDLER = CallbackQueryHandler(m_connect_button, pattern=r"main_connect")
     M_SETLANG_BTN_HANDLER = CallbackQueryHandler(m_change_langs, pattern=r"main_setlang")
 
@@ -465,7 +462,6 @@ def main():
     dispatcher.add_handler(help_callback_handler)
     dispatcher.add_handler(settings_callback_handler)
     dispatcher.add_handler(migrate_handler)
-    dispatcher.add_handler(donate_handler)
     dispatcher.add_handler(M_CONNECT_BTN_HANDLER)
     dispatcher.add_handler(M_SETLANG_BTN_HANDLER)
 
