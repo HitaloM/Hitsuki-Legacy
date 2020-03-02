@@ -102,21 +102,21 @@ def send(update, message, keyboard, backup_message):
 
 @run_async
 def new_member(bot: Bot, update: Update):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    msg = update.effective_message  # type: Optional[Message]
+	chat = update.effective_chat  # type: Optional[Chat]
+	user = update.effective_user  # type: Optional[User]
+	msg = update.effective_message  # type: Optional[Message]
 
-    should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
-    cust_welcome = markdown_to_html(cust_welcome)
+	should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
+	cust_welcome = markdown_to_html(cust_welcome)
 
-    isAllowed = sql.isWhitelisted(str(chat.id))
+	isAllowed = sql.isWhitelisted(str(chat.id))
 
-    if isAllowed or user.id in SUDO_USERS:
-        sql.whitelistChat(str(chat.id))
-    else:
-        msg.reply_text("This group is not whitelisted to use the bot, sorry.")
-        bot.leave_chat(int(chat.id))
-        return
+	if isAllowed or user.id in SUDO_USERS:
+		sql.whitelistChat(str(chat.id))
+	else:
+		msg.reply_text("This group is not whitelisted to use the bot, sorry.")
+		bot.leave_chat(int(chat.id))
+		return
 
 	cleanserv = sql.clean_service(chat.id)
 	if cleanserv:
