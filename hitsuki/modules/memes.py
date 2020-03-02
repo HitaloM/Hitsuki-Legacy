@@ -378,7 +378,7 @@ OWO_HANDLER = CommandHandler("owo", owo)
 FORBES_HANDLER = CommandHandler("forbes", forbesify)
 STRETCH_HANDLER = CommandHandler("stretch", stretch)
 VAPOR_HANDLER = CommandHandler(
-    "vapor", vapor, pass_args=True, admin_ok=True)
+    "vapor", vapor, pass_args=True)
 ZALGO_HANDLER = CommandHandler("zalgofy", zalgotext)
 DEEPFRY_HANDLER = CommandHandler(
     "deepfry", deepfryer, admin_ok=True)
