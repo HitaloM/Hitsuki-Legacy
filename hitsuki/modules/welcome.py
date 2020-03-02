@@ -105,7 +105,8 @@ def new_member(bot: Bot, update: Update):
 	chat = update.effective_chat  # type: Optional[Chat]
 
     isAllowed = sql.isWhitelisted(str(chat.id))
-	if isAllowed or user.id in SUDO_USERS:
+
+    if isAllowed or user.id in SUDO_USERS:
         sql.whitelistChat(str(chat.id))
     else:
         msg.reply_text("Thanks for adding me to your group! But this group is not whitelisted to use the bot, sorry.\n\nFollow my news channel. @HitsukiNews")
