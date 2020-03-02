@@ -87,10 +87,10 @@ def gban(bot: Bot, update: Update, args: List[str]):
         if old_reason:
             send_message(update.effective_message, tl(update.effective_message, "This user has been banned, due to the following reason:\n"
                                "<code>{}</code>\n"
-                               "I have done and corrected it with your new reasons!").format(html.escape(old_reason)),
+                               "I've gone and updated it with your new reason!").format(html.escape(old_reason)),
                                parse_mode=ParseMode.HTML)
         else:
-            send_message(update.effective_message, tl(update.effective_message, "This user has been banned, but no reason has been set; I have done and updated it!"))
+            send_message(update.effective_message, tl(update.effective_message, "This user has been banned, but no reason has been set; I've gone and updated it!"))
 
         return
 
@@ -100,7 +100,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
                  tl(update.effective_message, "{} is gbanning user {} "
                  "because:\n{}").format(mention_html(banner.id, banner.first_name),
-                                       mention_html(user_chat.id, user_chat.first_name), reason or tl(update.effective_message, "Tidak ada alasan yang diberikan")),
+                                       mention_html(user_chat.id, user_chat.first_name), reason or tl(update.effective_message, "No reason given")),
                  html=True)
 
     sql.gban_user(user_id, user_chat.username or user_chat.first_name, reason)
@@ -252,7 +252,7 @@ def gbanstat(bot: Bot, update: Update, args: List[str]):
             update.effective_send_message(update.effective_message, tl(update.effective_message, "I have disabled the global ban on this group. Global bans will not affect your users "
                                                 "again. You will be less protected from trolls and spammers though"))
     else:
-        update.effective_send_message(update.effective_message, tl(update.effective_message, "Berikan saya beberapa argumen untuk memilih pengaturan! on/off, yes/no!\n\n"
+        update.effective_send_message(update.effective_message, tl(update.effective_message, "Give me some arguments for choosing settings! on/off, yes/no!\n\n"
                                             "Your current settings: {}\n"
                                             "When True, any global ban that occur will also occur in your group. "
                                             "When False, they won't, leaving you at the possible mercy of "

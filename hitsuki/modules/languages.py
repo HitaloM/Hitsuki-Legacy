@@ -33,7 +33,7 @@ def tl(message, text):
 	if type(message) == int or type(message) == str and message[1:].isdigit():
 		getlang = sql.get_lang(message)
 		if getlang == 'None' or not getlang:
-			getlang = 'id'
+			getlang = 'en'
 	else:
 		getlang = sql.get_lang(message.chat.id)
 		if getlang == 'None' or not getlang:
@@ -50,18 +50,18 @@ def tl(message, text):
 					getlang = 'en'
 				else:
 					sql.set_lang(message.chat.id, 'id')
-					getlang = 'id'
+					getlang = 'en'
 
 	getlangid = {}
 	for x in LOADED_LANGS_ID:
 		getlangid[x] = x
 
-	if str(getlang) == 'id':
-		get = getattr(FUNC_LANG['id'], 'id')
+	if str(getlang) == 'en':
+		get = getattr(FUNC_LANG['en'], 'en')
 		if text in tuple(get):
 			return get.get(text)
 		if text in ("RUN_STRINGS", "SLAP_TEMPLATES", "ITEMS", "THROW", "HIT", "RAMALAN_STRINGS", "RAMALAN_FIRST"):
-			runstr = getattr(FUNC_LANG['id'], text)
+			runstr = getattr(FUNC_LANG['en'], text)
 			return runstr
 		return text
 	elif str(getlang) in LOADED_LANGS_ID:
@@ -100,7 +100,7 @@ def set_language(bot, update):
 				getlang = 'en'
 			else:
 				sql.set_lang(msg.chat.id, 'id')
-				getlang = 'id'
+				getlang = 'en'
 	loaded_langs = []
 	counter = 0
 
@@ -121,9 +121,9 @@ def set_language(bot, update):
 		if chat.type == "private":
 			chatname = user.first_name
 		else:
-			chatname = tl(update.effective_message, "obrolan saat ini")
+			chatname = tl(update.effective_message, "current chat")
 
-	send_message(update.effective_message, tl(msg, "Bahasa di *{}* saat ini adalah:\n{}.\n\nPilih bahasa:").format(chatname, LANGS_TEXT[getlang]), parse_mode="markdown", reply_markup=keyboard)
+	send_message(update.effective_message, tl(msg, "The language in *{}* is currently:\n{}.\n\nChoose a language:").format(chatname, LANGS_TEXT[getlang]), parse_mode="markdown", reply_markup=keyboard)
 
 @run_async
 @user_admin_no_reply
@@ -135,7 +135,7 @@ def button(bot, update):
 		set_lang = match.group(1)
 		chat = update.effective_chat  # type: Optional[Chat]
 		sql.set_lang(chat.id, set_lang)
-		update.effective_message.edit_text(tl(query.message, "Bahasa telah di ubah ke {}!").format(LANGS_TEXT.get(set_lang)))
+		update.effective_message.edit_text(tl(query.message, "The language has been changed to {}!").format(LANGS_TEXT.get(set_lang)))
 
 
 __help__ = "language_help"
