@@ -139,7 +139,7 @@ def new_member(bot: Bot, update: Update):
 					send_message(update.effective_message, tl(update.effective_message, "The master has gone home! Let's start this party! 😆"))
 				continue
 
-			if new_mem.id == bot.id:
+			elif new_mem.id == bot.id:
 					bot.send_message(
 					MESSAGE_DUMP,
 					"I have been added to {} with ID: <pre>{}</pre>".format(chat.title, chat.id),
