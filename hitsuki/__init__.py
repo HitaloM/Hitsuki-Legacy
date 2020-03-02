@@ -77,7 +77,7 @@ if ENV:
 	TEMPORARY_DATA = os.environ.get('TEMPORARY_DATA', None)
 
 else:
-	from emilia.config import Development as Config
+	from hitsuki.config import Development as Config
 	TOKEN = Config.API_KEY
 	try:
 		OWNER_ID = int(Config.OWNER_ID)
@@ -141,7 +141,7 @@ SUPPORT_USERS = list(SUPPORT_USERS)
 SPAMMERS = list(SPAMMERS)
 
 # Load at end to ensure all prev variables have been set
-from emilia.modules.helper_funcs.handlers import CustomCommandHandler, CustomRegexHandler
+from hitsuki.modules.helper_funcs.handlers import CustomCommandHandler, CustomRegexHandler
 
 # make sure the regex handler can take extra kwargs
 tg.RegexHandler = CustomRegexHandler
@@ -151,7 +151,7 @@ if ALLOW_EXCL:
 
 # Disable this (line 151) if you dont have a antispam script
 try:
-	from emilia.antispam import antispam_restrict_user, antispam_cek_user, detect_user
+	from hitsuki.antispam import antispam_restrict_user, antispam_cek_user, detect_user
 	antispam_module = True
 except ModuleNotFoundError:
 	antispam_module = False
