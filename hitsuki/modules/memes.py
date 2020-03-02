@@ -354,12 +354,13 @@ __help__ = """
 - /owo: OWO de text
 - /stretch: STRETCH de text
 - /vapor: owo vapor dis
-- /mock: mock a text
+- /mock: mocks a replied message lick the spongebob meme.
 - /zalgofy: Reply to a message to g̫̞l̼̦i̎͡tͫ͢c̘ͭh̛̗ it out!
 - /deepfry: For when you're hungry for memes
 - /shout <keyword>: Write anything you want to give loud shout
 - /dllm: Some chinese memes
 - /thonkify <reply>/<args>: turns text into thonk text (only supports letters and none symbols for now).
+ /forbes <reply>: turns a message into a Forbes headline.
 
 *Emojis:*
 - /clapmoji
