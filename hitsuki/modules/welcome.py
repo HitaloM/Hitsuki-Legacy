@@ -104,17 +104,15 @@ def send(update, message, keyboard, backup_message):
 def new_member(bot: Bot, update: Update):
 	chat = update.effective_chat  # type: Optional[Chat]
 
-	should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
-
     isAllowed = sql.isWhitelisted(str(chat.id))
-
 	if isAllowed or user.id in SUDO_USERS:
         sql.whitelistChat(str(chat.id))
     else:
         msg.reply_text("Thanks for adding me to your group! But this group is not whitelisted to use the bot, sorry.\n\nFollow my news channel. @HitsukiNews")
         bot.leave_chat(int(chat.id))
         return
-        
+
+    should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
 	cleanserv = sql.clean_service(chat.id)
 	if cleanserv:
 		new_members = update.effective_message.new_chat_members
