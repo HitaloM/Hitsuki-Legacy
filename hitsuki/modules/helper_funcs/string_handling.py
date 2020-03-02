@@ -265,6 +265,7 @@ def extract_time(message, time_val):
         message.reply_text("Jenis waktu tidak valid ditentukan. Diharapkan m, h, atau d, didapatkan: {}".format(time_val[-1]))
         return ""
 
+
 def make_time(time_val):
     if int(time_val) == 0:
         return "0"
@@ -275,3 +276,10 @@ def make_time(time_val):
     elif int(time_val) >= 86400:
         bantime = str(int(time_val / 24 / 60 / 60)) + "d"
     return bantime
+
+
+def markdown_to_html(text):
+    text = text.replace("*", "**")
+    text = text.replace("`", "```")
+    _html = markdown2.markdown(text)
+    return bleach.clean(_html, tags=['strong', 'em', 'a', 'code', 'pre'], strip=True)[:-1]
