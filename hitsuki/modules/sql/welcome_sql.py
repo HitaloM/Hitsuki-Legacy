@@ -107,13 +107,13 @@ class UserRestrict(BASE):
                     and self.chat_id == other.chat_id
                     and self.user_id == other.user_id)
 
-
 class AllowedChat(BASE):
     __tablename__ = "chat_whitelist"
     chat_id = Column(String(14), primary_key=True)
 
     def __init__(self, chat_id):
         self.chat_id = str(chat_id)  # chat_id is int, make sure it is string
+
 
 
 Welcome.__table__.create(checkfirst=True)
@@ -130,6 +130,7 @@ LEAVE_BTN_LOCK = threading.RLock()
 CS_LOCK = threading.RLock()
 WS_LOCK = threading.RLock()
 UR_LOCK = threading.RLock()
+ALLOWCHATLOCK = threading.RLock()
 
 CHAT_USERRESTRICT = {}
 
@@ -412,14 +413,12 @@ def __load_chat_userrestrict():
     finally:
         SESSION.close()
 
-
-def __load_whitelisted_chats_list():  # load shit to memory to be faster, and reduce disk access
+def __load_whitelisted_chats_list(): #load shit to memory to be faster, and reduce disk access 
     global WHITELIST
     try:
         WHITELIST = {x.chat_id for x in SESSION.query(AllowedChat).all()}
     finally:
         SESSION.close()
-
 
 def whitelistChat(chat_id):
     with ALLOWCHATLOCK:
@@ -429,8 +428,7 @@ def whitelistChat(chat_id):
             SESSION.merge(chat)
         SESSION.commit()
         __load_whitelisted_chats_list()
-
-
+    
 def unwhitelistChat(chat_id):
     with ALLOWCHATLOCK:
         chat = SESSION.query(AllowedChat).get(chat_id)
@@ -439,10 +437,10 @@ def unwhitelistChat(chat_id):
         SESSION.commit()
         __load_whitelisted_chats_list()
 
-
 def isWhitelisted(chat_id):
     return chat_id in WHITELIST
 
 __load_whitelisted_chats_list()
+
 
 __load_chat_userrestirect()
