@@ -377,13 +377,10 @@ MOCK_HANDLER = CommandHandler("mock", spongemocktext)
 OWO_HANDLER = CommandHandler("owo", owo)
 FORBES_HANDLER = CommandHandler("forbes", forbesify)
 STRETCH_HANDLER = CommandHandler("stretch", stretch)
-VAPOR_HANDLER = CommandHandler(
-    "vapor", vapor, pass_args=True)
+VAPOR_HANDLER = CommandHandler("vapor", vapor, pass_args=True)
 ZALGO_HANDLER = CommandHandler("zalgofy", zalgotext)
-DEEPFRY_HANDLER = CommandHandler(
-    "deepfry", deepfryer, admin_ok=True)
-SHOUT_HANDLER = CommandHandler("shout", shout, pass_args=True)
 DEEPFRY_HANDLER = CommandHandler("deepfry", deepfryer)
+SHOUT_HANDLER = CommandHandler("shout", shout, pass_args=True)
 CHINESEMEMES_HANDLER = CommandHandler("dllm", chinesememes, pass_args=True)
 
 dispatcher.add_handler(SHOUT_HANDLER)
