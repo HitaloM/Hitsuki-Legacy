@@ -12,6 +12,7 @@ from telegram.utils.helpers import mention_markdown, mention_html, escape_markdo
 
 import hitsuki.modules.sql.welcome_sql as sql
 from hitsuki import dispatcher, OWNER_ID, LOGGER, spamfilters
+from hitsuki import dispatcher, MESSAGE_DUMP, SUDO_USERS, SUPPORT_USERS
 from hitsuki.modules.helper_funcs.chat_status import user_admin, is_user_ban_protected
 from hitsuki.modules.helper_funcs.filters import CustomFilters
 from hitsuki.modules.helper_funcs.misc import build_keyboard, revert_buttons
