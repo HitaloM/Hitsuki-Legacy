@@ -25,8 +25,8 @@ from hitsuki.modules.connection import connect_button
 from hitsuki.modules.languages import set_language
 
 PM_START_TEXT = """
-Hi {}! My name is *{}* - I'm here to help you manage your groups!
-Click Help button to find out more about how to use me to my full potential.
+Hey there {}! My name is {} - I'm here to help you manage your groups!
+Hit /help to find out more about how to use me to my full potential.
 
 Follow [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) if you want to keep up with the news, updates and bot downtime!
 
@@ -162,8 +162,8 @@ def start(bot: Bot, update: Update, args: List[str]):
             first_name = update.effective_user.first_name
             buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="📃 HitaloSama's Docs", url="https://telegra.ph/HitaloKun-doc-07-15")],
-                [InlineKeyboardButton(text="⚙️ Connect Group", callback_data="main_connect")],
-                [InlineKeyboardButton(text="🇺🇸 Language", callback_data="main_setlang"), InlineKeyboardButton(text="❔ Help", url="https://t.me/LordHitsuki_BOT?start=help")]])
+                [InlineKeyboardButton(text="⚙️ Connections", callback_data="main_connect")],
+                [InlineKeyboardButton(text="🇺🇸 Language", callback_data="main_setlang"), InlineKeyboardButton(text="❔ Help", url="help_back")]])
             update.effective_message.reply_text(
                 tl(update.effective_message, PM_START_TEXT).format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 disable_web_page_preview=True,

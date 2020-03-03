@@ -42,7 +42,7 @@ def no_longer_afk(bot: Bot, update: Update):
 
     res = sql.rm_afk(user.id)
     if res:
-        send_message(update.effective_message, tl(update.effective_message, "{} it's not AFK!").format(update.effective_user.first_name))
+        send_message(update.effective_message, tl(update.effective_message, "{} is no longer AFK!").format(update.effective_user.first_name))
 
 
 @run_async
@@ -81,7 +81,12 @@ def reply_afk(bot: Bot, update: Update):
                     send_message(update.effective_message, res)
 
 
-__help__ = "afk_help"
+__help__ = """
+ - /afk <reason>: mark yourself as AFK.
+ - brb <reason>: same as the afk command - but not a command.
+
+When marked as AFK, any mentions will be replied to with a message to say you're not available!
+"""
 
 __mod_name__ = "AFK"
 

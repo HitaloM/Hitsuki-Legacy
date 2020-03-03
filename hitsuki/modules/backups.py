@@ -749,7 +749,7 @@ def export_data(bot: Bot, update: Update, chat_data):
 	if cek.get('status'):
 		if jam <= int(cek.get('value')):
 			waktu = time.strftime("%H:%M:%S %d/%m/%Y", time.localtime(cek.get('value')))
-			send_message(update.effective_message, tl(update.effective_message, "Anda dapat mencadangan data sekali dalam 12 jam!\n[Orang ini](tg://user?id={}) sudah mencadangan data\nAnda dapat mencadangan data lagi pada `{}`").format(cek.get('user'), waktu), parse_mode=ParseMode.MARKDOWN)
+			send_message(update.effective_message, tl(update.effective_message, "You can backups data once within 12 hours!\n[People](tg://user?Id={}) already Backups data\nYou can backup the data again on {}").format(cek.get('user'), waktu), parse_mode=ParseMode.MARKDOWN)
 			return
 		else:
 			if user.id != OWNER_ID:
@@ -940,10 +940,10 @@ def export_data(bot: Bot, update: Update, chat_data):
 		bot.sendMessage(TEMPORARY_DATA, "*New backup from:*\nChat name: `{}`\nChat ID: `{}`\nOn: `{}`".format(chat.title, chat_id, tgl), parse_mode=ParseMode.MARKDOWN)
 	except BadRequest:
 		pass
-	send = bot.sendDocument(current_chat_id, document=open('{}-Hitsuki.backup'.format(chat_id), 'rb'), caption=tl(update.effective_message, "*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`\n\nNote: cadangan ini khusus untuk bot ini, jika di import ke bot lain maka catatan dokumen, video, audio, voice, dan lain-lain akan hilang").format(chat.title, chat_id, tgl), timeout=360, reply_to_message_id=msg.message_id, parse_mode=ParseMode.MARKDOWN)
+	send = bot.sendDocument(current_chat_id, document=open('{}-Hitsuki.backup'.format(chat_id), 'rb'), caption=tl(update.effective_message, "*Successfully backed up for:*\nChat: `{}`\nChat ID: `{}`\nAt: `{}`\n\nNote: This backup is specific to this bot, if it is imported to another bot then document, video, audio, voice, and other notes will be lost").format(chat.title, chat_id, tgl), timeout=360, reply_to_message_id=msg.message_id, parse_mode=ParseMode.MARKDOWN)
 	try:
 		# Send to temp data for prevent unexpected issue
-		bot.sendDocument(TEMPORARY_DATA, document=send.document.file_id, caption=tl(update.effective_message, "*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`\n\nNote: cadangan ini khusus untuk bot ini, jika di import ke bot lain maka catatan dokumen, video, audio, voice, dan lain-lain akan hilang").format(chat.title, chat_id, tgl), timeout=360, parse_mode=ParseMode.MARKDOWN)
+		bot.sendDocument(TEMPORARY_DATA, document=send.document.file_id, caption=tl(update.effective_message, "Successfully backed up for:*\nChat: `{}`\nChat ID: `{}`\nAt: `{}`\n\nNote: This backup is specific to this bot, if it is imported to another bot then document, video, audio, voice, and other notes will be lost").format(chat.title, chat_id, tgl), timeout=360, parse_mode=ParseMode.MARKDOWN)
 	except BadRequest:
 		pass
 	os.remove("{}-Hitsuki.backup".format(chat_id)) # Cleaning file
@@ -974,9 +974,14 @@ def get_chat(chat_id, chat_data):
 		return {"status": False, "user": None, "value": False}
 
 
-__mod_name__ = "Import/Export"
+__mod_name__ = "Backups"
 
-__help__ = "backups_help"
+__help__ = """
+*Admin only:*
+ - /import: reply to a group butler/marie/rose/Hitsuki backup file to import as much as possible, making the transfer super simple!
+Note that files/photos from other bots can't be imported due to telegram restrictions. Except for Hitsuki backup it self.
+ - /export: export group data, you can do this 12 hours once.
+"""
 
 IMPORT_HANDLER = CommandHandler("import", import_data, filters=Filters.group)
 EXPORT_HANDLER = CommandHandler("export", export_data, pass_chat_data=True)
