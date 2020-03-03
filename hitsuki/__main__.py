@@ -26,7 +26,7 @@ from hitsuki.modules.languages import set_language
 
 PM_START_TEXT = """
 Hey there {}! My name is {} - I'm here to help you manage your groups!
-Hit /help to find out more about how to use me to my full potential.
+Click on Help button to find out more about how to use me to my full potential.
 
 Follow [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) if you want to keep up with the news, updates and bot downtime!
 
