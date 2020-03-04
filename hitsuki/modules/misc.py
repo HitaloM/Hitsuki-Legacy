@@ -404,42 +404,42 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     text = tl(update.effective_message, "<b>User Info</b>:") \
            + "\nID: <code>{}</code>".format(user.id) + \
-           tl(update.effective_message, "\nFirst Name: {}").format(html.escape(user.first_name))
+           tld(update.effective_message, "\nFirst Name: {}").format(html.escape(user.first_name))
 
     if user.last_name:
-        text += tl(update.effective_message, "\nLast Name: {}").format(html.escape(user.last_name))
+        text += tld(update.effective_message, "\nLast Name: {}").format(html.escape(user.last_name))
 
     if user.username:
-        text += tl(update.effective_message, "\nUsername: @{}").format(html.escape(user.username))
+        text += tld(update.effective_message, "\nUsername: @{}").format(html.escape(user.username))
 
-    text += tl(update.effective_message, "\nPermanent user link: {}").format(mention_html(user.id, "link"))
+    text += tld(update.effective_message, "\nPermanent user link: {}").format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += tl(chat.id, "\n\nAy, This guy is my owner. I would never do anything against him!")
+        text += tld(chat.id, "\n\nAy, This guy is my owner. I would never do anything against him!")
     else:
         if user.id == int(918317361):
-            text += tl(chat.id, "\nThis person.... He is my god.")
+            text += tld(chat.id, "\nThis person.... He is my god.")
  
         if user.id in SUDO_USERS:
-            text += tl(chat.id, "\nThis person is one of my sudo users! " \
+            text += tld(chat.id, "\nThis person is one of my sudo users! " \
             "Nearly as powerful as my owner - so watch it.")
         else:
             if user.id in SUPPORT_USERS:
-                text += tl(chat.id, "\nThis person is one of my support users! " \
+                text += tld(chat.id, "\nThis person is one of my support users! " \
                         "Not quite a sudo user, but can still gban you off the map.")
  
             if user.id in WHITELIST_USERS:
-                text += tl(chat.id, "\nThis person has been whitelisted! " \
+                text += tld(chat.id, "\nThis person has been whitelisted! " \
                         "That means I'm not allowed to ban/kick them.")
 
     fedowner = feds_sql.get_user_owner_fed_name(user.id)
     if fedowner:
-        text += tl(update.effective_message, "\n\n<b>This user is the owner of the current federation:</b>\n<code>")
+        text += tld(update.effective_message, "\n\n<b>This user is the owner of the current federation:</b>\n<code>")
         text += "</code>, <code>".join(fedowner)
         text += "</code>"
     # fedadmin = feds_sql.get_user_admin_fed_name(user.id)
     # if fedadmin:
-    #     text += tl(update.effective_message, "\n\nThis user is a fed admin in the current federation:\n")
+    #     text += tld(update.effective_message, "\n\nThis user is a fed admin in the current federation:\n")
     #     text += ", ".join(fedadmin)
 
     for mod in USER_INFO:
@@ -468,7 +468,7 @@ def echo(bot: Bot, update: Update):
             else:
                 bot.send_message(chat_id, text, quote=False, disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(tombol))
         except BadRequest:
-            bot.send_message(chat_id, tl(update.effective_message, "Teks markdown salah!\nJika anda tidak tahu apa itu markdown, silahkan ketik `/markdownhelp` pada PM."), parse_mode="markdown")
+            bot.send_message(chat_id, tld(update.effective_message, "Teks markdown salah!\nJika anda tidak tahu apa itu markdown, silahkan ketik `/markdownhelp` pada PM."), parse_mode="markdown")
             return
 
 
@@ -500,9 +500,9 @@ def markdown_help(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-    send_message(update.effective_message, tl(update.effective_message, "MARKDOWN_HELP").format(dispatcher.bot.first_name), parse_mode=ParseMode.HTML)
-    send_message(update.effective_message, tl(update.effective_message, "Coba teruskan pesan berikut kepada saya, dan Anda akan lihat!"))
-    send_message(update.effective_message, tl(update.effective_message, "/save test Ini adalah tes markdown. _miring_, *tebal*, `kode`, "
+    send_message(update.effective_message, tld(update.effective_message, "MARKDOWN_HELP").format(dispatcher.bot.first_name), parse_mode=ParseMode.HTML)
+    send_message(update.effective_message, tld(update.effective_message, "Coba teruskan pesan berikut kepada saya, dan Anda akan lihat!"))
+    send_message(update.effective_message, tld(update.effective_message, "/save test Ini adalah tes markdown. _miring_, *tebal*, `kode`, "
                                         "[URL](contoh.com) [tombol](buttonurl:github.com) "
                                         "[tombol2](buttonurl:google.com:same)"))
 
@@ -529,7 +529,7 @@ def lyrics(bot: Bot, update: Update, args: List[str]):
         while song[0].endswith(" "):
             song[0] = song[0][:-1]
         try:
-            lyrics = "\n".join(PyLyrics.getLyrics(
+            lyrics = "\n".join(PyLyrics.getldyrics(
                 song[0], song[1]).split("\n")[:20])
         except ValueError as e:
             return update.effective_message.reply_text("Song %s not found :(" % song[1], failed=True)
