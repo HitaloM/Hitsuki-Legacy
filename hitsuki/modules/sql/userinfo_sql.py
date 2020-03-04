@@ -37,7 +37,7 @@ UserBio.__table__.create(checkfirst=True)
 INSERTION_LOCK = threading.RLock()
 
 
-def get_user_me_info(user_id):
+def get_user_bio(user_id):
     userinfo = SESSION.query(UserInfo).get(user_id)
     SESSION.close()
     if userinfo:
@@ -45,7 +45,7 @@ def get_user_me_info(user_id):
     return None
 
 
-def set_user_me_info(user_id, info):
+def set_user_bio(user_id, info):
     with INSERTION_LOCK:
         userinfo = SESSION.query(UserInfo).get(user_id)
         if userinfo:
@@ -56,21 +56,25 @@ def set_user_me_info(user_id, info):
         SESSION.commit()
 
 
-def get_user_bio(user_id):
-    userbio = SESSION.query(UserBio).get(user_id)
-    SESSION.close()
-    if userbio:
-        return userbio.bio
-    return None
-
-
-def set_user_bio(user_id, bio):
+def clear_user_info(user_id):
     with INSERTION_LOCK:
-        userbio = SESSION.query(UserBio).get(user_id)
-        if userbio:
-            userbio.bio = bio
-        else:
-            userbio = UserBio(user_id, bio)
+        curr = SESSION.query(UserInfo).get(user_id)
+        if curr:
+            SESSION.delete(curr)
+            SESSION.commit()
+            return True
 
-        SESSION.add(userbio)
-        SESSION.commit()
+        SESSION.close()
+    return False
+
+
+def clear_user_bio(user_id):
+    with INSERTION_LOCK:
+        curr = SESSION.query(UserBio).get(user_id)
+        if curr:
+            SESSION.delete(curr)
+            SESSION.commit()
+            return True
+
+        SESSION.close()
+    return False
