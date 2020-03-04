@@ -211,6 +211,21 @@ HIT = (
     "bashes",
 )
 
+EMOJI = (
+    "\U0001F923",
+    "\U0001F602",
+    "\U0001F922",
+    "\U0001F605",
+    "\U0001F606",
+    "\U0001F609",
+    "\U0001F60E",
+    "\U0001F929",
+    "\U0001F623",
+    "\U0001F973",
+    "\U0001F9D0",
+    "\U0001F632",
+)
+
 SHRUGS = (
     "┐(´д｀)┌",
     "┐(´～｀)┌",
@@ -289,31 +304,35 @@ def slap(bot: Bot, update: Update, args: List[str]):
     reply_text = msg.reply_to_message.reply_text if msg.reply_to_message else msg.reply_text
 
     # get user who sent message
-    #if msg.from_user.username:
-    #    curr_user = "@" + escape_markdown(msg.from_user.username)
-    #else:
-    curr_user = "{}".format(mention_markdown(msg.from_user.id, msg.from_user.first_name))
+    if msg.from_user.username:
+        curr_user = "@" + escape_markdown(msg.from_user.username)
+    else:
+        curr_user = "[{}](tg://user?id={})".format(msg.from_user.first_name, msg.from_user.id)
 
     user_id = extract_user(update.effective_message, args)
-    if user_id:
+    if user_id == bot.id or user_id == 777000:
+        user1 = "[{}](tg://user?id={})".format(bot.first_name, bot.id)
+        user2 = curr_user
+    elif user_id:
         slapped_user = bot.get_chat(user_id)
         user1 = curr_user
-        #if slapped_user.username:
-        #    user2 = "@" + escape_markdown(slapped_user.username)
-        #else:
-        user2 = "{}".format(mention_markdown(slapped_user.id, slapped_user.first_name))
+        if slapped_user.username:
+            user2 = "@" + escape_markdown(slapped_user.username)
+        else:
+            user2 = "[{}](tg://user?id={})".format(slapped_user.first_name,
 
     # if no target found, bot targets the sender
     else:
-        user1 = "{}".format(mention_markdown(bot.id, bot.first_name))
+        user1 = "[{}](tg://user?id={})".format(bot.first_name, bot.id)
         user2 = curr_user
 
     temp = random.choice(tl(update.effective_message, "SLAP_TEMPLATES"))
     item = random.choice(tl(update.effective_message, "ITEMS"))
     hit = random.choice(tl(update.effective_message, "HIT"))
     throw = random.choice(tl(update.effective_message, "THROW"))
+    emoji = random.choice(EMOJI)
 
-    repl = temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw)
+    repl = temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw, emoji=emoji)
 
     send_message(update.effective_message, repl, parse_mode=ParseMode.MARKDOWN)
 
@@ -360,9 +379,12 @@ def get_id(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def info(bot: Bot, update: Update, args: List[str]):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
     msg = update.effective_message  # type: Optional[Message]
-    user_id = extract_user(update.effective_message, args)
     chat = update.effective_chat  # type: Optional[Chat]
+    user_id = extract_user(update.effective_message, args)
 
     if user_id:
         user = bot.get_chat(user_id)
@@ -373,48 +395,58 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not msg.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        msg.reply_text(tld(chat.id, "I can't extract a user from this."))
+        send_message(update.effective_message, tl(update.effective_message, "Saya tidak dapat mengekstrak pengguna dari ini."))
         return
 
     else:
         return
 
-    text = tld(chat.id, "<b>User info</b>:")
-    text += "\nID: <code>{}</code>".format(user.id)
-    text += tld(chat.id, "\nFirst Name: {}").format(html.escape(user.first_name))
+    text = tl(update.effective_message, "<b>User Info</b>:") \
+           + "\nID: <code>{}</code>".format(user.id) + \
+           tl(update.effective_message, "\nFirst Name: {}").format(html.escape(user.first_name))
 
     if user.last_name:
-        text += tld(chat.id, "\nLast Name: {}").format(html.escape(user.last_name))
+        text += tl(update.effective_message, "\nLast Name: {}").format(html.escape(user.last_name))
 
     if user.username:
-        text += tld(chat.id, "\nUsername: @{}").format(html.escape(user.username))
+        text += tl(update.effective_message, "\nUsername: @{}").format(html.escape(user.username))
 
-    text += tld(chat.id, "\nUser link: {}").format(mention_html(user.id, "link"))
+    text += tl(update.effective_message, "\nPermanent user link: {}").format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += tld(chat.id, "\n\nThis person is my owner - I would never do anything against them!")
+        text += tld(chat.id, "\n\nAy, This guy is my owner. I would never do anything against him!")
     else:
         if user.id == int(918317361):
-            text += tld(chat.id, "\n\nThis person.... He is my god.")
-
+            text += tld(chat.id, "\nThis person.... He is my god.")
+ 
         if user.id in SUDO_USERS:
-            text += tld(chat.id, "\n\nThis person is one of my sudo users! " \
-                                 "Nearly as powerful as my owner - so watch it.")
+            text += tld(chat.id, "\nThis person is one of my sudo users! " \
+            "Nearly as powerful as my owner - so watch it.")
         else:
             if user.id in SUPPORT_USERS:
-                text += tld(chat.id, "\n\nThis person is one of my support users! " \
-                                     "Not quite a sudo user, but can still gban you off the map.")
-
+                text += tld(chat.id, "\nThis person is one of my support users! " \
+                        "Not quite a sudo user, but can still gban you off the map.")
+ 
             if user.id in WHITELIST_USERS:
-                text += tld(chat.id, "\n\nThis person has been whitelisted! " \
-                                     "That means I'm not allowed to ban/kick them.")
+                text += tld(chat.id, "\nThis person has been whitelisted! " \
+                        "That means I'm not allowed to ban/kick them.")
+
+    fedowner = feds_sql.get_user_owner_fed_name(user.id)
+    if fedowner:
+        text += tl(update.effective_message, "\n\n<b>This user is the owner of the current federation:</b>\n<code>")
+        text += "</code>, <code>".join(fedowner)
+        text += "</code>"
+    # fedadmin = feds_sql.get_user_admin_fed_name(user.id)
+    # if fedadmin:
+    #     text += tl(update.effective_message, "\n\nThis user is a fed admin in the current federation:\n")
+    #     text += ", ".join(fedadmin)
 
     for mod in USER_INFO:
         mod_info = mod.__user_info__(user.id, chat.id).strip()
         if mod_info:
             text += "\n\n" + mod_info
 
-    update.effective_message.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    send_message(update.effective_message, text, parse_mode=ParseMode.HTML)
 
 
 @run_async
@@ -477,24 +509,6 @@ def markdown_help(bot: Bot, update: Update):
 @run_async
 def stats(bot: Bot, update: Update):
     update.effective_message.reply_text("Current stats:\n" + "\n".join([mod.__stats__() for mod in STATS]))
-
-
-@run_async
-def ping(bot: Bot, update: Update):
-    tg_api = ping3('api.telegram.org', count=4)
-    google = ping3('google.com', count=4)
-    print(google)
-    text = "*Pong!*\n"
-    text += "Average speed to Telegram bot API server - `{}` ms\n".format(tg_api.rtt_avg_ms)
-    if google.rtt_avg:
-        gspeed = google.rtt_avg
-    else:
-        gspeed = google.rtt_avg
-    text += "Average speed to Google - `{}` ms".format(gspeed)
-    update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
-
-
-LYRICSINFO = "\n[Full Lyrics](http://lyrics.wikia.com/wiki/%s:%s)"
 
 
 @run_async
