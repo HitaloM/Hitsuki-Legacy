@@ -1,35 +1,35 @@
 import html
+import json
 import random
-import re
-import urllib.request
-import urllib.parse
-import time
-
 from datetime import datetime
 from typing import Optional, List
+import time
+import locale
 
 import requests
-
-from random import randint
-from PyLyrics import *
-from requests import get
-from telegram import Message, Chat, Update, Bot, MessageEntity
-from telegram import ParseMode, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.error import BadRequest
+from telegram.error import BadRequest, Unauthorized
+from telegram import Message, Chat, Update, Bot, MessageEntity, InlineKeyboardMarkup
+from telegram import ParseMode
 from telegram.ext import CommandHandler, run_async, Filters
-from telegram.utils.helpers import escape_markdown, mention_html
+from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
 
-from hitsuki import spamfilters
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS
+from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, spamfilters, MAPS_API
 from hitsuki.__main__ import STATS, USER_INFO
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.helper_funcs.filters import CustomFilters
-from hitsuki.modules.languages import tl as tld
+from hitsuki.modules.helper_funcs.msg_types import get_message_type
+from hitsuki.modules.helper_funcs.misc import build_keyboard_alternate
+
 from hitsuki.modules.languages import tl
-from hitsuki.modules.helper_funcs.alternate import send_message
 from hitsuki.modules.sql import languages_sql as lang_sql
 import hitsuki.modules.sql.feds_sql as feds_sql
+from hitsuki.modules.helper_funcs.alternate import send_message
+
+# Change language locale to Indonesia
+# Install language:
+# - sudo apt-get install language-pack-id language-pack-id-base manpages
+# locale.setlocale(locale.LC_TIME, 'id_ID.UTF-8')
 
 RUN_STRINGS = (
     "Where do you think you're going?",
@@ -344,193 +344,6 @@ def slap(bot: Bot, update: Update, args: List[str]):
     reply_text(repl, parse_mode=ParseMode.MARKDOWN)
 
 
-@run_async
-def get_id(bot: Bot, update: Update, args: List[str]):
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
-    user_id = extract_user(update.effective_message, args) 
-    chat = update.effective_chat  # type: Optional[Chat]
-    if user_id:
-        if update.effective_message.reply_to_message and update.effective_message.reply_to_message.forward_from:
-            user1 = update.effective_message.reply_to_message.from_user
-            user2 = update.effective_message.reply_to_message.forward_from
-            update.effective_message.reply_text(tld(chat.id,
-                                                    "The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.").format(
-                escape_markdown(user2.first_name),
-                user2.id,
-                escape_markdown(user1.first_name),
-                user1.id),
-                parse_mode=ParseMode.MARKDOWN)
-        else:
-            user = bot.get_chat(user_id)
-            update.effective_message.reply_text(
-                tld(chat.id, "{}'s id is `{}`.").format(escape_markdown(user.first_name), user.id),
-                parse_mode=ParseMode.MARKDOWN)
-    else:
-        chat = update.effective_chat  # type: Optional[Chat]
-        if chat.type == "private":
-            update.effective_message.reply_text(tld(chat.id, "Your id is `{}`.").format(chat.id),
-                                                parse_mode=ParseMode.MARKDOWN)
-
-        else:
-            update.effective_message.reply_text(tld(chat.id, "This group's id is `{}`.").format(chat.id),
-                                                parse_mode=ParseMode.MARKDOWN)
-
-
-@run_async
-def info(bot: Bot, update: Update, args: List[str]):
-    msg = update.effective_message  # type: Optional[Message]
-    user_id = extract_user(update.effective_message, args)
- 
-    if user_id and int(user_id) != 777000:
-        user = bot.get_chat(user_id)
-    
-    elif user_id and int(user_id) == 777000:
-        msg.reply_text("This is Telegram. Unless you manually entered this reserved account's ID, it is likely a broadcast from a linked channel.")
-        return
-      
-    elif not msg.reply_to_message and not args:
-        user = msg.from_user
- 
-    elif not msg.reply_to_message and (not args or (
-            len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
-        [MessageEntity.TEXT_MENTION]))):
-        msg.reply_text("I can't extract a user from this.")
-        return
-    else:
-        return
- 
-    text = "<b>User info</b>:" \
-           "\nID: <code>{}</code>" \
-           "\nFirst Name: {}".format(user.id, html.escape(user.first_name))
- 
-    if user.last_name:
-        text += "\nLast Name: {}".format(html.escape(user.last_name))
- 
-    if user.username:
-        text += "\nUsername: @{}".format(html.escape(user.username))
- 
-    text += "\nPermanent user link: {}".format(mention_html(user.id, "link"))
- 
-    if user.id == OWNER_ID:
-        text += "\n\nThis person is my owner - I would never do anything against them!"
-    else:
-        if user.id in SUDO_USERS:
-            text += "\nThis person is one of my sudo users! " \
-                    "Nearly as powerful as my owner - so watch it."
-        else:
-            if user.id in SUPPORT_USERS:
-                text += "\nThis person is one of my support users! " \
-                        "Not quite a sudo user, but can still gban you off the map."
- 
-            if user.id in WHITELIST_USERS:
-                text += "\nThis person has been whitelisted! " \
-                        "That means I'm not allowed to ban/kick them."
- 
-    for mod in USER_INFO:
-        mod_info = mod.__user_info__(user.id).strip()
-        if mod_info:
-            text += "\n\n" + mod_info
- 
-    update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
-
-
-@run_async
-def echo(bot: Bot, update: Update):
-    message = update.effective_message
-    chat_id = update.effective_chat.id
-    try:
-        message.delete()
-    except BadRequest:
-        pass
-    # Advanced
-    text, data_type, content, buttons = get_message_type(message)
-    tombol = build_keyboard_alternate(buttons)
-    if str(data_type) in ('Types.BUTTON_TEXT', 'Types.TEXT'):
-        try:
-            if message.reply_to_message:
-                bot.send_message(chat_id, text, parse_mode="markdown", reply_to_message_id=message.reply_to_message.message_id, disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(tombol))
-            else:
-                bot.send_message(chat_id, text, quote=False, disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(tombol))
-        except BadRequest:
-            bot.send_message(chat_id, tld(update.effective_message, "Teks markdown salah!\nJika anda tidak tahu apa itu markdown, silahkan ketik `/markdownhelp` pada PM."), parse_mode="markdown")
-            return
-
-
-@run_async
-def reply_keyboard_remove(bot: Bot, update: Update):
-    reply_keyboard = []
-    reply_keyboard.append([
-        ReplyKeyboardRemove(
-            remove_keyboard=True
-        )
-    ])
-    reply_markup = ReplyKeyboardRemove(
-        remove_keyboard=True
-    )
-    old_message = bot.send_message(
-        chat_id=update.message.chat_id,
-        text='trying',
-        reply_markup=reply_markup,
-        reply_to_message_id=update.message.message_id
-    )
-    bot.delete_message(
-        chat_id=update.message.chat_id,
-        message_id=old_message.message_id
-    )
-
-
-@run_async
-def markdown_help(bot: Bot, update: Update):
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
-    send_message(update.effective_message, tld(update.effective_message, "MARKDOWN_HELP").format(dispatcher.bot.first_name), parse_mode=ParseMode.HTML)
-    send_message(update.effective_message, tld(update.effective_message, "Coba teruskan pesan berikut kepada saya, dan Anda akan lihat!"))
-    send_message(update.effective_message, tld(update.effective_message, "/save test Ini adalah tes markdown. _miring_, *tebal*, `kode`, "
-                                        "[URL](contoh.com) [tombol](buttonurl:github.com) "
-                                        "[tombol2](buttonurl:google.com:same)"))
-
-
-@run_async
-def stats(bot: Bot, update: Update):
-    update.effective_message.reply_text("Current stats:\n" + "\n".join([mod.__stats__() for mod in STATS]))
-
-
-@run_async
-def lyrics(bot: Bot, update: Update, args: List[str]):
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
-    message = update.effective_message
-    text = message.text[len('/lyrics '):]
-    song = " ".join(args).split("- ")
-    reply_text = f'Looks up for lyrics'
-
-    if len(song) == 2:
-        while song[1].startswith(" "):
-            song[1] = song[1][1:]
-        while song[0].startswith(" "):
-            song[0] = song[0][1:]
-        while song[1].endswith(" "):
-            song[1] = song[1][:-1]
-        while song[0].endswith(" "):
-            song[0] = song[0][:-1]
-        try:
-            lyrics = "\n".join(PyLyrics.getldyrics(
-                song[0], song[1]).split("\n")[:20])
-        except ValueError as e:
-            return update.effective_message.reply_text("Song %s not found :(" % song[1], failed=True)
-        else:
-            lyricstext = LYRICSINFO % (song[0].replace(
-                " ", "_"), song[1].replace(" ", "_"))
-            return update.effective_message.reply_text(lyrics + lyricstext, parse_mode="MARKDOWN")
-    else:
-        return update.effective_message.reply_text(
-            "Invalid syntax! Try Artist - Song name. For example, xxxtentacion - look at me", failed=True)
-
-
 BASE_URL = 'https://del.dog'
 
 
@@ -648,36 +461,6 @@ def get_paste_stats(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def snipe(bot: Bot, update: Update, args: List[str]):
-    try:
-        chat_id = str(args[0])
-        del args[0]
-    except TypeError:
-        update.effective_message.reply_text("Please give me a chat to echo to!")
-    to_send = " ".join(args)
-    if len(to_send) >= 2:
-        try:
-            bot.sendMessage(int(chat_id), str(to_send))
-        except TelegramError:
-            LOGGER.warning("Couldn't send to group %s", str(chat_id))
-            update.effective_message.reply_text("Couldn't send the message. Perhaps I'm not part of that group?")
-
-
-def decide(bot: Bot, update: Update):
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
-    chat = update.effective_chat
-    r = randint(1, 100)
-    if r <= 65:
-        update.message.reply_text(tld(chat.id, "Yes."))
-    elif r <= 90:
-        update.message.reply_text(tld(chat.id, "No."))
-    else:
-        update.message.reply_text(tld(chat.id, "Maybe."))
-
-
-@run_async
 def weebify(bot: Bot, update: Update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
@@ -726,21 +509,240 @@ def pat(bot: Bot, update: Update):
         bot.send_photo(chat_id, f'https://headp.at/pats/{urllib.parse.quote(random.choice(pats))}', reply_to_message_id=msg_id)
 
 
-def shell(command):
-    process = Popen(command,stdout=PIPE,shell=True,stderr=PIPE)
-    stdout,stderr = process.communicate()
-    return (stdout,stderr)
+@run_async
+def get_bot_ip(bot: Bot, update: Update):
+    """ Sends the bot's IP address, so as to be able to ssh in if necessary.
+        OWNER ONLY.
+    """
+    res = requests.get("http://ipinfo.io/ip")
+    send_message(update.effective_message, res.text)
 
 
+@run_async
+def get_id(bot: Bot, update: Update, args: List[str]):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+    user_id = extract_user(update.effective_message, args)
+    if user_id:
+        if update.effective_message.reply_to_message and update.effective_message.reply_to_message.forward_from:
+            user1 = update.effective_message.reply_to_message.from_user
+            user2 = update.effective_message.reply_to_message.forward_from
+            send_message(update.effective_message, 
+                tl(update.effective_message, "Pengirim asli, {}, memiliki ID `{}`.\nSi penerus pesan, {}, memiliki ID `{}`.").format(
+                    escape_markdown(user2.first_name),
+                    user2.id,
+                    escape_markdown(user1.first_name),
+                    user1.id),
+                parse_mode=ParseMode.MARKDOWN)
+        else:
+            user = bot.get_chat(user_id)
+            send_message(update.effective_message, tl(update.effective_message, "Id {} adalah `{}`.").format(escape_markdown(user.first_name), user.id),
+                                                parse_mode=ParseMode.MARKDOWN)
+    else:
+        chat = update.effective_chat  # type: Optional[Chat]
+        if chat.type == "private":
+            send_message(update.effective_message, tl(update.effective_message, "Id Anda adalah `{}`.").format(chat.id),
+                                                parse_mode=ParseMode.MARKDOWN)
+
+        else:
+            send_message(update.effective_message, tl(update.effective_message, "Id grup ini adalah `{}`.").format(chat.id),
+                                                parse_mode=ParseMode.MARKDOWN)
+
+
+@run_async
+def info(bot: Bot, update: Update, args: List[str]):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+    msg = update.effective_message  # type: Optional[Message]
+    chat = update.effective_chat  # type: Optional[Chat]
+    user_id = extract_user(update.effective_message, args)
+
+    if user_id:
+        user = bot.get_chat(user_id)
+
+    elif not msg.reply_to_message and not args:
+        user = msg.from_user
+
+    elif not msg.reply_to_message and (not args or (
+            len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
+        [MessageEntity.TEXT_MENTION]))):
+        send_message(update.effective_message, tl(update.effective_message, "Saya tidak dapat mengekstrak pengguna dari ini."))
+        return
+
+    else:
+        return
+
+    text = tl(update.effective_message, "<b>Info Pengguna</b>:") \
+           + "\nID: <code>{}</code>".format(user.id) + \
+           tl(update.effective_message, "\nNama depan: {}").format(html.escape(user.first_name))
+
+    if user.last_name:
+        text += tl(update.effective_message, "\nNama belakang: {}").format(html.escape(user.last_name))
+
+    if user.username:
+        text += tl(update.effective_message, "\nNama pengguna: @{}").format(html.escape(user.username))
+
+    text += tl(update.effective_message, "\nTautan pengguna permanen: {}").format(mention_html(user.id, "link"))
+
+    if user.id == OWNER_ID:
+        text += tl(update.effective_message, "\n\nOrang ini adalah pemilik saya - saya tidak akan pernah melakukan apa pun terhadap mereka!")
+    else:
+        if user.id in SUDO_USERS:
+            text += tl(update.effective_message, "\n\nOrang ini adalah salah satu pengguna sudo saya! " \
+                    "Hampir sama kuatnya dengan pemilik saya - jadi tontonlah.")
+        else:
+            if user.id in SUPPORT_USERS:
+                text += tl(update.effective_message, "\n\nOrang ini adalah salah satu pengguna dukungan saya! " \
+                        "Tidak sekuat pengguna sudo, tetapi masih dapat menyingkirkan Anda dari peta.")
+
+            if user.id in WHITELIST_USERS:
+                text += tl(update.effective_message, "\n\nOrang ini telah dimasukkan dalam daftar putih! " \
+                        "Itu berarti saya tidak diizinkan untuk melarang/menendang mereka.")
+
+    fedowner = feds_sql.get_user_owner_fed_name(user.id)
+    if fedowner:
+        text += tl(update.effective_message, "\n\n<b>Pengguna ini adalah pemilik federasi ini:</b>\n<code>")
+        text += "</code>, <code>".join(fedowner)
+        text += "</code>"
+    # fedadmin = feds_sql.get_user_admin_fed_name(user.id)
+    # if fedadmin:
+    #     text += tl(update.effective_message, "\n\nThis user is a fed admin in the current federation:\n")
+    #     text += ", ".join(fedadmin)
+
+    for mod in USER_INFO:
+        mod_info = mod.__user_info__(user.id, chat.id).strip()
+        if mod_info:
+            text += "\n\n" + mod_info
+
+    send_message(update.effective_message, text, parse_mode=ParseMode.HTML)
+
+
+@run_async
+def get_time(bot: Bot, update: Update, args: List[str]):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+    location = " ".join(args)
+    if location.lower() == bot.first_name.lower():
+        send_message(update.effective_message, tl(update.effective_message, "Selalu ada waktu banned untukku!"))
+        bot.send_sticker(update.effective_chat.id, BAN_STICKER)
+        return
+
+    res = requests.get(GMAPS_LOC, params=dict(address=location, key=MAPS_API))
+    print(res.text)
+
+    if res.status_code == 200:
+        loc = json.loads(res.text)
+        if loc.get('status') == 'OK':
+            lat = loc['results'][0]['geometry']['location']['lat']
+            long = loc['results'][0]['geometry']['location']['lng']
+
+            country = None
+            city = None
+
+            address_parts = loc['results'][0]['address_components']
+            for part in address_parts:
+                if 'country' in part['types']:
+                    country = part.get('long_name')
+                if 'administrative_area_level_1' in part['types'] and not city:
+                    city = part.get('long_name')
+                if 'locality' in part['types']:
+                    city = part.get('long_name')
+
+            if city and country:
+                location = "{}, {}".format(city, country)
+            elif country:
+                location = country
+
+            timenow = int(datetime.utcnow().timestamp())
+            res = requests.get(GMAPS_TIME, params=dict(location="{},{}".format(lat, long), timestamp=timenow))
+            if res.status_code == 200:
+                offset = json.loads(res.text)['dstOffset']
+                timestamp = json.loads(res.text)['rawOffset']
+                time_there = datetime.fromtimestamp(timenow + timestamp + offset).strftime("%H:%M:%S hari %A %d %B")
+                send_message(update.effective_message, "Sekarang pukul {} di {}".format(time_there, location))
+
+
+@run_async
+def get_time_alt(bot: Bot, update: Update, args: List[str]):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+    if args:
+        location = " ".join(args)
+        if location.lower() == bot.first_name.lower():
+            send_message(update.effective_message, "Selalu ada waktu banned untukku!")
+            bot.send_sticker(update.effective_chat.id, BAN_STICKER)
+            return
+
+        res = requests.get('https://dev.virtualearth.net/REST/v1/timezone/?query={}&key={}'.format(location, MAPS_API))
+
+        if res.status_code == 200:
+            loc = res.json()
+            if len(loc['resourceSets'][0]['resources'][0]['timeZoneAtLocation']) == 0:
+                send_message(update.effective_message, tl(update.effective_message, "Lokasi tidak di temukan!"))
+                return
+            placename = loc['resourceSets'][0]['resources'][0]['timeZoneAtLocation'][0]['placeName']
+            localtime = loc['resourceSets'][0]['resources'][0]['timeZoneAtLocation'][0]['timeZone'][0]['convertedTime']['localTime']
+            if lang_sql.get_lang(update.effective_chat.id) == "id":
+                locale.setlocale(locale.LC_TIME, 'id_ID.UTF-8')
+                time = datetime.strptime(localtime, '%Y-%m-%dT%H:%M:%S').strftime("%H:%M:%S hari %A, %d %B")
+            else:
+                time = datetime.strptime(localtime, '%Y-%m-%dT%H:%M:%S').strftime("%H:%M:%S %A, %d %B")
+            send_message(update.effective_message, tl(update.effective_message, "Sekarang pukul `{}` di `{}`").format(time, placename), parse_mode="markdown")
+    else:
+        send_message(update.effective_message, tl(update.effective_message, "Gunakan `/time nama daerah`\nMisal: `/time jakarta`"), parse_mode="markdown")
+
+
+@run_async
+def echo(bot: Bot, update: Update):
+    message = update.effective_message
+    chat_id = update.effective_chat.id
+    try:
+        message.delete()
+    except BadRequest:
+        pass
+    # Advanced
+    text, data_type, content, buttons = get_message_type(message)
+    tombol = build_keyboard_alternate(buttons)
+    if str(data_type) in ('Types.BUTTON_TEXT', 'Types.TEXT'):
+        try:
+            if message.reply_to_message:
+                bot.send_message(chat_id, text, parse_mode="markdown", reply_to_message_id=message.reply_to_message.message_id, disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(tombol))
+            else:
+                bot.send_message(chat_id, text, quote=False, disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(tombol))
+        except BadRequest:
+            bot.send_message(chat_id, tl(update.effective_message, "Teks markdown salah!\nJika anda tidak tahu apa itu markdown, silahkan ketik `/markdownhelp` pada PM."), parse_mode="markdown")
+            return
+
+
+@run_async
+def markdown_help(bot: Bot, update: Update):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+    send_message(update.effective_message, tl(update.effective_message, "MARKDOWN_HELP").format(dispatcher.bot.first_name), parse_mode=ParseMode.HTML)
+    send_message(update.effective_message, tl(update.effective_message, "Coba teruskan pesan berikut kepada saya, dan Anda akan lihat!"))
+    send_message(update.effective_message, tl(update.effective_message, "/save test Ini adalah tes markdown. _miring_, *tebal*, `kode`, "
+                                        "[URL](contoh.com) [tombol](buttonurl:github.com) "
+                                        "[tombol2](buttonurl:google.com:same)"))
+
+
+@run_async
+def stats(bot: Bot, update: Update):
+    send_message(update.effective_message, tl(update.effective_message, "Statistik saat ini:\n") + "\n".join([mod.__stats__() for mod in STATS]))
+
+
+# /ip is for private use
 __help__ = """
 *Group tools:*
  - /id: get the current group id. If used by replying to a message, gets that user's id.
  - /info: get information about a user.
- - /getsticker: reply to a sticker to me to upload its raw PNG file.
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
 
 *Useful tools:*
- - /lyrics: Find your favorite songs lyrics!
  - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
  - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
@@ -750,8 +752,7 @@ __help__ = """
  - /runs: reply a random string from an array of replies.
  - /insults: reply a random string from an array of replies.
  - /slap: slap a user, or get slapped if not a reply.
- - /decide: Randomly answers yes/no/maybe.
- - /status: Shows some bot information
+ - /status: Shows some bot information.
  - /weebify: as a reply to a message, "weebifies" the message.
  - /pat: give a headpat :3
  - /shg or /shrug: pretty self-explanatory.
@@ -760,45 +761,41 @@ __help__ = """
 
 __mod_name__ = "Misc"
 
-ID_HANDLER = CommandHandler("id", get_id, pass_args=True)
-LYRICS_HANDLER = DisableAbleCommandHandler("lyrics", lyrics, pass_args=True)
+ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True)
+IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID))
 
-RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
+TIME_HANDLER = DisableAbleCommandHandler("time", get_time_alt, pass_args=True)
+
+RUNS_HANDLER = DisableAbleCommandHandler(["runs", "lari"], runs)
 SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True)
-INFO_HANDLER = CommandHandler("info", info, pass_args=True)
-
-ECHO_HANDLER = CommandHandler("echo", echo, filters=Filters.user(OWNER_ID))
-MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
-
-STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(OWNER_ID))
+INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True)
 
 PASTE_HANDLER = CommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = CommandHandler("getpaste", get_paste_content, pass_args=True)
 PASTE_STATS_HANDLER = CommandHandler("pastestats", get_paste_stats, pass_args=True)
 
-DECIDE_HANDLER = CommandHandler("decide", decide)
-SNIPE_HANDLER = CommandHandler("snipe", snipe, pass_args=True, filters=CustomFilters.sudo_filter)
+ECHO_HANDLER = CommandHandler("echo", echo, filters=Filters.user(OWNER_ID))
+MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
 
+STATS_HANDLER = CommandHandler("stats", stats, filters=CustomFilters.sudo_filter)
 WEEBIFY_HANDLER = DisableAbleCommandHandler("weebify", weebify, pass_args=True)
 PAT_HANDLER = DisableAbleCommandHandler("pat", pat)
 SHRUG_HANDLER = DisableAbleCommandHandler(["shrug", "shg"], shrug)
 HUG_HANDLER = DisableAbleCommandHandler("hug", hug)
 
-dispatcher.add_handler(SHRUG_HANDLER)
-dispatcher.add_handler(HUG_HANDLER)
-dispatcher.add_handler(PASTE_HANDLER)
-dispatcher.add_handler(GET_PASTE_HANDLER)
-dispatcher.add_handler(PASTE_STATS_HANDLER)
 dispatcher.add_handler(ID_HANDLER)
+dispatcher.add_handler(IP_HANDLER)
+dispatcher.add_handler(TIME_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
 dispatcher.add_handler(INFO_HANDLER)
 dispatcher.add_handler(ECHO_HANDLER)
 dispatcher.add_handler(MD_HELP_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
-dispatcher.add_handler(LYRICS_HANDLER)
-dispatcher.add_handler(DisableAbleCommandHandler("removebotkeyboard", reply_keyboard_remove))
-dispatcher.add_handler(DECIDE_HANDLER)
-dispatcher.add_handler(SNIPE_HANDLER)
 dispatcher.add_handler(WEEBIFY_HANDLER)
 dispatcher.add_handler(PAT_HANDLER)
+dispatcher.add_handler(SHRUG_HANDLER)
+dispatcher.add_handler(HUG_HANDLER)
+dispatcher.add_handler(PASTE_HANDLER)
+dispatcher.add_handler(GET_PASTE_HANDLER)
+dispatcher.add_handler(PASTE_STATS_HANDLER)
