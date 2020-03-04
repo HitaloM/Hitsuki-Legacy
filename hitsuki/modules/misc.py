@@ -320,21 +320,22 @@ def slap(bot: Bot, update: Update, args: List[str]):
             user2 = "@" + escape_markdown(slapped_user.username)
         else:
             user2 = "[{}](tg://user?id={})".format(slapped_user.first_name,
+                                                   slapped_user.id)
 
     # if no target found, bot targets the sender
     else:
         user1 = "[{}](tg://user?id={})".format(bot.first_name, bot.id)
         user2 = curr_user
 
-    temp = random.choice(tl(update.effective_message, "SLAP_TEMPLATES"))
-    item = random.choice(tl(update.effective_message, "ITEMS"))
-    hit = random.choice(tl(update.effective_message, "HIT"))
-    throw = random.choice(tl(update.effective_message, "THROW"))
+    temp = random.choice(SLAP_TEMPLATES)
+    item = random.choice(ITEMS)
+    hit = random.choice(HIT)
+    throw = random.choice(THROW)
     emoji = random.choice(EMOJI)
 
     repl = temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw, emoji=emoji)
 
-    send_message(update.effective_message, repl, parse_mode=ParseMode.MARKDOWN)
+    reply_text(repl, parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
