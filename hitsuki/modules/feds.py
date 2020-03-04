@@ -103,7 +103,7 @@ def new_fed(bot: Bot, update: Update):
 			return
 
 		send_message(update.effective_message, tl(update.effective_message, "*Anda telah berhasil membuat federasi baru!*"\
-											"\nNama: `{}`"\
+											"\nName: `{}`"\
 											"\nID: `{}`"
 											"\n\nGunakan perintah di bawah ini untuk bergabung dengan federasi:"
 											"\n`/joinfed {}`").format(fed_name, fed_id, fed_id), parse_mode=ParseMode.MARKDOWN)
