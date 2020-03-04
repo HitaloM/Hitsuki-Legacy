@@ -384,8 +384,8 @@ def info(bot: Bot, update: Update, args: List[str]):
     if spam == True:
         return
     msg = update.effective_message  # type: Optional[Message]
-    user_id = extract_user(update.effective_message, args)
     chat = update.effective_chat  # type: Optional[Chat]
+    user_id = extract_user(update.effective_message, args)
 
     if user_id:
         user = bot.get_chat(user_id)
@@ -396,50 +396,47 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not msg.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        msg.reply_text(tld(chat.id, "I can't extract a user from this."))
+        send_message(update.effective_message, tl(update.effective_message, "Saya tidak dapat mengekstrak pengguna dari ini."))
         return
 
     else:
         return
 
-    text = tld(chat.id, "<b>User info</b>:")
-    text += "\nID: <code>{}</code>".format(user.id)
-    text += tld(chat.id, "\nFirst Name: {}").format(html.escape(user.first_name))
+    text = tl(update.effective_message, "<b>Info Pengguna</b>:") \
+           + "\nID: <code>{}</code>".format(user.id) + \
+           tl(update.effective_message, "\nNama depan: {}").format(html.escape(user.first_name))
 
     if user.last_name:
-        text += tld(chat.id, "\nLast Name: {}").format(html.escape(user.last_name))
+        text += tl(update.effective_message, "\nNama belakang: {}").format(html.escape(user.last_name))
 
     if user.username:
-        text += tld(chat.id, "\nUsername: @{}").format(html.escape(user.username))
+        text += tl(update.effective_message, "\nNama pengguna: @{}").format(html.escape(user.username))
 
-    text += tld(chat.id, "\nUser link: {}").format(mention_html(user.id, "link"))
+    text += tl(update.effective_message, "\nTautan pengguna permanen: {}").format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += tld(chat.id, "\n\nThis person is my owner - I would never do anything against them!")
+        text += tl(update.effective_message, "\n\nOrang ini adalah pemilik saya - saya tidak akan pernah melakukan apa pun terhadap mereka!")
     else:
-        if user.id == int(918317361):
-            text += tld(chat.id, "\n\nThis person.... He is my god.")
-
         if user.id in SUDO_USERS:
-            text += tld(chat.id, "\n\nThis person is one of my sudo users! " \
-                                 "Nearly as powerful as my owner - so watch it.")
+            text += tl(update.effective_message, "\n\nOrang ini adalah salah satu pengguna sudo saya! " \
+                    "Hampir sama kuatnya dengan pemilik saya - jadi tontonlah.")
         else:
             if user.id in SUPPORT_USERS:
-                text += tld(chat.id, "\n\nThis person is one of my support users! " \
-                                     "Not quite a sudo user, but can still gban you off the map.")
+                text += tl(update.effective_message, "\n\nOrang ini adalah salah satu pengguna dukungan saya! " \
+                        "Tidak sekuat pengguna sudo, tetapi masih dapat menyingkirkan Anda dari peta.")
 
             if user.id in WHITELIST_USERS:
-                text += tld(chat.id, "\n\nThis person has been whitelisted! " \
-                                     "That means I'm not allowed to ban/kick them.")
+                text += tl(update.effective_message, "\n\nOrang ini telah dimasukkan dalam daftar putih! " \
+                        "Itu berarti saya tidak diizinkan untuk melarang/menendang mereka.")
 
     fedowner = feds_sql.get_user_owner_fed_name(user.id)
     if fedowner:
-        text += tld(update.effective_message, "\n\n<b>This user is the owner of the current federation:</b>\n<code>")
+        text += tl(update.effective_message, "\n\n<b>Pengguna ini adalah pemilik federasi ini:</b>\n<code>")
         text += "</code>, <code>".join(fedowner)
         text += "</code>"
     # fedadmin = feds_sql.get_user_admin_fed_name(user.id)
     # if fedadmin:
-    #     text += tld(update.effective_message, "\n\nThis user is a fed admin in the current federation:\n")
+    #     text += tl(update.effective_message, "\n\nThis user is a fed admin in the current federation:\n")
     #     text += ", ".join(fedadmin)
 
     for mod in USER_INFO:
@@ -447,7 +444,7 @@ def info(bot: Bot, update: Update, args: List[str]):
         if mod_info:
             text += "\n\n" + mod_info
 
-    update.effective_message.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    send_message(update.effective_message, text, parse_mode=ParseMode.HTML)
 
 
 @run_async
