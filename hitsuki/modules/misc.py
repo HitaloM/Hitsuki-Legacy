@@ -384,8 +384,8 @@ def info(bot: Bot, update: Update, args: List[str]):
     if spam == True:
         return
     msg = update.effective_message  # type: Optional[Message]
-    chat = update.effective_chat  # type: Optional[Chat]
     user_id = extract_user(update.effective_message, args)
+    chat = update.effective_chat  # type: Optional[Chat]
 
     if user_id:
         user = bot.get_chat(user_id)
@@ -396,41 +396,41 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not msg.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        send_message(update.effective_message, tl(update.effective_message, "Saya tidak dapat mengekstrak pengguna dari ini."))
+        msg.reply_text(tld(chat.id, "I can't extract a user from this."))
         return
 
     else:
         return
 
-    text = tl(update.effective_message, "<b>User Info</b>:") \
-           + "\nID: <code>{}</code>".format(user.id) + \
-           tld(update.effective_message, "\nFirst Name: {}").format(html.escape(user.first_name))
+    text = tld(chat.id, "<b>User info</b>:")
+    text += "\nID: <code>{}</code>".format(user.id)
+    text += tld(chat.id, "\nFirst Name: {}").format(html.escape(user.first_name))
 
     if user.last_name:
-        text += tld(update.effective_message, "\nLast Name: {}").format(html.escape(user.last_name))
+        text += tld(chat.id, "\nLast Name: {}").format(html.escape(user.last_name))
 
     if user.username:
-        text += tld(update.effective_message, "\nUsername: @{}").format(html.escape(user.username))
+        text += tld(chat.id, "\nUsername: @{}").format(html.escape(user.username))
 
-    text += tld(update.effective_message, "\nPermanent user link: {}").format(mention_html(user.id, "link"))
+    text += tld(chat.id, "\nUser link: {}").format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += tld(chat.id, "\n\nAy, This guy is my owner. I would never do anything against him!")
+        text += tld(chat.id, "\n\nThis person is my owner - I would never do anything against them!")
     else:
         if user.id == int(918317361):
-            text += tld(chat.id, "\nThis person.... He is my god.")
- 
+            text += tld(chat.id, "\n\nThis person.... He is my god.")
+
         if user.id in SUDO_USERS:
-            text += tld(chat.id, "\nThis person is one of my sudo users! " \
-            "Nearly as powerful as my owner - so watch it.")
+            text += tld(chat.id, "\n\nThis person is one of my sudo users! " \
+                                 "Nearly as powerful as my owner - so watch it.")
         else:
             if user.id in SUPPORT_USERS:
-                text += tld(chat.id, "\nThis person is one of my support users! " \
-                        "Not quite a sudo user, but can still gban you off the map.")
- 
+                text += tld(chat.id, "\n\nThis person is one of my support users! " \
+                                     "Not quite a sudo user, but can still gban you off the map.")
+
             if user.id in WHITELIST_USERS:
-                text += tld(chat.id, "\nThis person has been whitelisted! " \
-                        "That means I'm not allowed to ban/kick them.")
+                text += tld(chat.id, "\n\nThis person has been whitelisted! " \
+                                     "That means I'm not allowed to ban/kick them.")
 
     fedowner = feds_sql.get_user_owner_fed_name(user.id)
     if fedowner:
@@ -443,11 +443,11 @@ def info(bot: Bot, update: Update, args: List[str]):
     #     text += ", ".join(fedadmin)
 
     for mod in USER_INFO:
-        mod_info = mod.__user_info__(user.id, chat_id).strip()
+        mod_info = mod.__user_info__(user.id, chat.id).strip()
         if mod_info:
             text += "\n\n" + mod_info
 
-    send_message(update.effective_message, text, parse_mode=ParseMode.HTML)
+    update.effective_message.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
 @run_async
