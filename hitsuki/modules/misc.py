@@ -26,6 +26,7 @@ from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.helper_funcs.filters import CustomFilters
 from hitsuki.modules.languages import tl as tld
+from hitsuki.modules.languages import tl
 from hitsuki.modules.helper_funcs.alternate import send_message
 
 
