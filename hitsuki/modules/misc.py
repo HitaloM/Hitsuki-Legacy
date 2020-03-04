@@ -443,7 +443,7 @@ def info(bot: Bot, update: Update, args: List[str]):
     #     text += ", ".join(fedadmin)
 
     for mod in USER_INFO:
-        mod_info = mod.__user_info__(user.id).strip()
+        mod_info = mod.__user_info__(user.id, chat_id).strip()
         if mod_info:
             text += "\n\n" + mod_info
 
