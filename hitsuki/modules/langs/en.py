@@ -19,55 +19,9 @@ en = {
 	"Bahasa telah di ubah ke {}!": "Language changed to {}!",
 	"Bahasa di *{}* saat ini adalah:\n{}.\n\nPilih bahasa:": "Current language in *{}* is:\n{}.\n\nSelect language:",
 	"obrolan saat ini": "current in this chat",
-	"language_help": """Not every group speaks indonesian; some groups would rather have Hitsuki respond in their own language.
-
-This is where translations come in; you can change most of Hitsuki's replies to be in the language of your choice!
-
-Available languages are:
-- 🇮🇩 Indonesia
-- 🇺🇸 English
-
-Available commands are:
- - /setlang: set your prefered language.""",
 
 # __main__
 	"Ada yang bisa saya bantu? 😊": "Is there anything I can help? 😊",
-	"start_text": """
-Hi {}! My name is *{}* - I'm here to help you manage your groups!
-Click Help button to find out more about how to use me to my full potential.
-
-Follow [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) if you want to keep up with the news, updates and bot downtime!
-
-This bot is managed by @HitaloSama
-
-Want to add me to your group? [Click here!](t.me/LordHitsuki_BOT?startgroup=true)
-""",
-	"help_text": """
-Hey there! My name is *Hitsuki*.
-I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of \
-the things I can help you with.
-
-*Main* commands available:
- - /start: start the bot
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /settings:
-   - in PM: will send you your settings for all supported modules.
-   - in a group: will redirect you to pm, with all that chat's settings.
-
-
-All commands can either be used with / or !.
-
-And the following:
-""",
-	"donate_text": """Hello, glad to hear you want to donate!
-Need a lot of work for [my creator](tg://user?id=388576209) to take me to my place now, and \
-every donation helps and motivates him to make me better.
-
-All donated money will be given to a better VPS to host me, and or some food. \
-He is just an ordinary person, so it will really help him!
-
-If you really are interested in donating, please visit ayrahikari.github.io/donations.html, Thank you 😁""",
 	"Kembali": "Back",
 	"Hubungi saya di PM untuk mendapatkan daftar perintah.": "Contact me in PM to get the list of possible commands.",
 	"Tolong": "Help",
