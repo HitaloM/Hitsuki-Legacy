@@ -380,71 +380,60 @@ def get_id(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def info(bot: Bot, update: Update, args: List[str]):
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
     msg = update.effective_message  # type: Optional[Message]
-    chat = update.effective_chat  # type: Optional[Chat]
     user_id = extract_user(update.effective_message, args)
-
-    if user_id:
+ 
+    if user_id and int(user_id) != 777000:
         user = bot.get_chat(user_id)
-
+    
+    elif user_id and int(user_id) == 777000:
+        msg.reply_text("This is Telegram. Unless you manually entered this reserved account's ID, it is likely a broadcast from a linked channel.")
+        return
+      
     elif not msg.reply_to_message and not args:
         user = msg.from_user
-
+ 
     elif not msg.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        send_message(update.effective_message, tl(update.effective_message, "Saya tidak dapat mengekstrak pengguna dari ini."))
+        msg.reply_text("I can't extract a user from this.")
         return
-
     else:
         return
-
-    text = tl(update.effective_message, "<b>Info Pengguna</b>:") \
-           + "\nID: <code>{}</code>".format(user.id) + \
-           tl(update.effective_message, "\nNama depan: {}").format(html.escape(user.first_name))
-
+ 
+    text = "<b>User info</b>:" \
+           "\nID: <code>{}</code>" \
+           "\nFirst Name: {}".format(user.id, html.escape(user.first_name))
+ 
     if user.last_name:
-        text += tl(update.effective_message, "\nNama belakang: {}").format(html.escape(user.last_name))
-
+        text += "\nLast Name: {}".format(html.escape(user.last_name))
+ 
     if user.username:
-        text += tl(update.effective_message, "\nNama pengguna: @{}").format(html.escape(user.username))
-
-    text += tl(update.effective_message, "\nTautan pengguna permanen: {}").format(mention_html(user.id, "link"))
-
+        text += "\nUsername: @{}".format(html.escape(user.username))
+ 
+    text += "\nPermanent user link: {}".format(mention_html(user.id, "link"))
+ 
     if user.id == OWNER_ID:
-        text += tl(update.effective_message, "\n\nOrang ini adalah pemilik saya - saya tidak akan pernah melakukan apa pun terhadap mereka!")
+        text += "\n\nThis person is my owner - I would never do anything against them!"
     else:
         if user.id in SUDO_USERS:
-            text += tl(update.effective_message, "\n\nOrang ini adalah salah satu pengguna sudo saya! " \
-                    "Hampir sama kuatnya dengan pemilik saya - jadi tontonlah.")
+            text += "\nThis person is one of my sudo users! " \
+                    "Nearly as powerful as my owner - so watch it."
         else:
             if user.id in SUPPORT_USERS:
-                text += tl(update.effective_message, "\n\nOrang ini adalah salah satu pengguna dukungan saya! " \
-                        "Tidak sekuat pengguna sudo, tetapi masih dapat menyingkirkan Anda dari peta.")
-
+                text += "\nThis person is one of my support users! " \
+                        "Not quite a sudo user, but can still gban you off the map."
+ 
             if user.id in WHITELIST_USERS:
-                text += tl(update.effective_message, "\n\nOrang ini telah dimasukkan dalam daftar putih! " \
-                        "Itu berarti saya tidak diizinkan untuk melarang/menendang mereka.")
-
-    fedowner = feds_sql.get_user_owner_fed_name(user.id)
-    if fedowner:
-        text += tl(update.effective_message, "\n\n<b>Pengguna ini adalah pemilik federasi ini:</b>\n<code>")
-        text += "</code>, <code>".join(fedowner)
-        text += "</code>"
-    # fedadmin = feds_sql.get_user_admin_fed_name(user.id)
-    # if fedadmin:
-    #     text += tl(update.effective_message, "\n\nThis user is a fed admin in the current federation:\n")
-    #     text += ", ".join(fedadmin)
-
+                text += "\nThis person has been whitelisted! " \
+                        "That means I'm not allowed to ban/kick them."
+ 
     for mod in USER_INFO:
-        mod_info = mod.__user_info__(user.id, chat.id).strip()
+        mod_info = mod.__user_info__(user.id).strip()
         if mod_info:
             text += "\n\n" + mod_info
-
-    send_message(update.effective_message, text, parse_mode=ParseMode.HTML)
+ 
+    update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
 
 @run_async
