@@ -377,9 +377,9 @@ def settings_button(bot: Bot, update: Update):
                                                                                      chat=chat_id)))
 
         # ensure no spinny white circle
-        query.message.delete()
         bot.answer_callback_query(query.id)
-    except Exception as excp:
+        query.message.delete()
+    except BadRequest as excp:
         if excp.message == "Message is not modified":
             pass
         elif excp.message == "Query_id_invalid":
