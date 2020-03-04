@@ -349,7 +349,7 @@ def get_id(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	user_id = extract_user(update.effective_message, args)
+    user_id = extract_user(update.effective_message, args) 
     chat = update.effective_chat  # type: Optional[Chat]
     if user_id:
         if update.effective_message.reply_to_message and update.effective_message.reply_to_message.forward_from:
@@ -452,7 +452,7 @@ def info(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def echo(bot: Bot, update: Update):
-	message = update.effective_message
+    message = update.effective_message
     chat_id = update.effective_chat.id
     try:
         message.delete()
@@ -517,7 +517,7 @@ def lyrics(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     text = message.text[len('/lyrics '):]
     song = " ".join(args).split("- ")
     reply_text = f'Looks up for lyrics'
@@ -553,7 +553,7 @@ def paste(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
 
     if message.reply_to_message:
         data = message.reply_to_message.text
@@ -588,7 +588,7 @@ def get_paste_content(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
 
     if len(args) >= 1:
         key = args[0]
@@ -625,7 +625,7 @@ def get_paste_stats(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
 
     if len(args) >= 1:
         key = args[0]
@@ -681,7 +681,7 @@ def decide(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	chat = update.effective_chat
+    chat = update.effective_chat
     r = randint(1, 100)
     if r <= 65:
         update.message.reply_text(tld(chat.id, "Yes."))
@@ -696,7 +696,7 @@ def weebify(bot: Bot, update: Update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	msg = update.effective_message
+    msg = update.effective_message
     if args:
         string = " ".join(args).lower()
     elif msg.reply_to_message:
@@ -721,7 +721,7 @@ def pat(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	chat_id = update.effective_chat.id
+    chat_id = update.effective_chat.id
     msg = str(update.message.text)
     try:
         msg = msg.split(" ", 1)[1]
