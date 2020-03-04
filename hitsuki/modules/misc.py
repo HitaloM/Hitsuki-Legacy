@@ -28,7 +28,8 @@ from hitsuki.modules.helper_funcs.filters import CustomFilters
 from hitsuki.modules.languages import tl as tld
 from hitsuki.modules.languages import tl
 from hitsuki.modules.helper_funcs.alternate import send_message
-
+from hitsuki.modules.sql import languages_sql as lang_sql
+import hitsuki.modules.sql.feds_sql as feds_sql
 
 RUN_STRINGS = (
     "Where do you think you're going?",
@@ -274,14 +275,18 @@ weebyfont = ['卂','乃','匚','刀','乇','下','厶','卄','工','丁','长','
 
 @run_async
 def shrug(bot: Bot, update: Update):
-    # reply to correct message 
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
     reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
     reply_text = reply_text(random.choice(SHRUGS))
  
  
 @run_async
 def hug(bot: Bot, update: Update):
-    # reply to correct message 
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
     reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
     reply_text = reply_text(random.choice(HUGS))
 
@@ -340,17 +345,11 @@ def slap(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def get_bot_ip(bot: Bot, update: Update):
-    """ Sends the bot's IP address, so as to be able to ssh in if necessary.
-        OWNER ONLY.
-    """
-    res = requests.get("http://ipinfo.io/ip")
-    update.message.reply_text(res.text)
-
-
-@run_async
 def get_id(bot: Bot, update: Update, args: List[str]):
-    user_id = extract_user(update.effective_message, args)
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	user_id = extract_user(update.effective_message, args)
     chat = update.effective_chat  # type: Optional[Chat]
     if user_id:
         if update.effective_message.reply_to_message and update.effective_message.reply_to_message.forward_from:
@@ -453,7 +452,7 @@ def info(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def echo(bot: Bot, update: Update):
-    message = update.effective_message
+	message = update.effective_message
     chat_id = update.effective_chat.id
     try:
         message.delete()
@@ -515,7 +514,10 @@ def stats(bot: Bot, update: Update):
 
 @run_async
 def lyrics(bot: Bot, update: Update, args: List[str]):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     text = message.text[len('/lyrics '):]
     song = " ".join(args).split("- ")
     reply_text = f'Looks up for lyrics'
@@ -548,7 +550,10 @@ BASE_URL = 'https://del.dog'
 
 @run_async
 def paste(bot: Bot, update: Update, args: List[str]):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
 
     if message.reply_to_message:
         data = message.reply_to_message.text
@@ -580,7 +585,10 @@ def paste(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def get_paste_content(bot: Bot, update: Update, args: List[str]):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
 
     if len(args) >= 1:
         key = args[0]
@@ -614,7 +622,10 @@ def get_paste_content(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def get_paste_stats(bot: Bot, update: Update, args: List[str]):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
 
     if len(args) >= 1:
         key = args[0]
@@ -667,7 +678,10 @@ def snipe(bot: Bot, update: Update, args: List[str]):
 
 
 def decide(bot: Bot, update: Update):
-    chat = update.effective_chat
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	chat = update.effective_chat
     r = randint(1, 100)
     if r <= 65:
         update.message.reply_text(tld(chat.id, "Yes."))
@@ -678,24 +692,11 @@ def decide(bot: Bot, update: Update):
 
 
 @run_async
-def gdpr(bot: Bot, update: Update):
-    update.effective_message.reply_text("Deleting identifiable data...")
-    for mod in GDPR:
-        mod.__gdpr__(update.effective_user.id)
-
-    update.effective_message.reply_text("Your personal data has been deleted.\n\nNote that this will not unban "
-                                        "you from any chats, as that is telegram data, not Marie data. "
-                                        "Flooding, warns, and gbans are also preserved, as of "
-                                        "[this](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), "
-                                        "which clearly states that the right to erasure does not apply "
-                                        "\"for the performance of a task carried out in the public interest\", as is "
-                                        "the case for the aforementioned pieces of data.",
-                                        parse_mode=ParseMode.MARKDOWN)
-
-
-@run_async
 def weebify(bot: Bot, update: Update, args):
-    msg = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	msg = update.effective_message
     if args:
         string = " ".join(args).lower()
     elif msg.reply_to_message:
@@ -717,7 +718,10 @@ def weebify(bot: Bot, update: Update, args):
 
 @run_async
 def pat(bot: Bot, update: Update):
-    chat_id = update.effective_chat.id
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	chat_id = update.effective_chat.id
     msg = str(update.message.text)
     try:
         msg = msg.split(" ", 1)[1]
