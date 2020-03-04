@@ -36,22 +36,19 @@ Want to add me to your group? [Click here!](t.me/LordHitsuki_BOT?startgroup=true
 """
 
 HELP_STRINGS = """
-Hey there! My name is *Hitsuki*.
-I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of \
-the things I can help you with.
+Hey! My name is *Hitsuki*. I am a group management bot, here to help you get around and keep the order in your groups!
+I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
 
-*Main* commands available:
- - /start: start the bot
+*Main commands available:*
+ - /start: cool command to check if the bot is alive or not.
  - /help: PM's you this message.
  - /help <module name>: PM's you info about that module.
+ - /setlang: change bot language.
  - /settings:
    - in PM: will send you your settings for all supported modules.
    - in a group: will redirect you to pm, with all that chat's settings.
 
-
 All commands can either be used with / or !.
-
-And the following:
 """
 
 IMPORTED = {}
@@ -162,7 +159,7 @@ def start(bot: Bot, update: Update, args: List[str]):
             first_name = update.effective_user.first_name
             buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="📃 HitaloSama's Docs", url="https://telegra.ph/HitaloKun-doc-07-15")],
-                [InlineKeyboardButton(text="⚙️ Connect Group", callback_data="main_connect")],
+                [InlineKeyboardButton(text="⚙️ Connections", callback_data="main_connect")],
                 [InlineKeyboardButton(text="🇺🇸 Language", callback_data="main_setlang"), InlineKeyboardButton(text="❔ Help", url="https://t.me/LordHitsuki_BOT?start=help")]])
             update.effective_message.reply_text(
                 tl(update.effective_message, PM_START_TEXT).format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
@@ -336,7 +333,7 @@ def settings_button(bot: Bot, update: Update):
             if isadmin == False or user.id != OWNER_ID:
                 query.message.edit_text("Status admin anda telah berubah")
                 return
-            text = tl(update.effective_message, "*{}* memiliki pengaturan berikut untuk modul *{}*:\n\n").format(escape_markdown(chat.title),
+            text = tl(update.effective_message, "*{}* has the following settings for the *{}* module:\n\n").format(escape_markdown(chat.title),
                                                                                      CHAT_SETTINGS[
                                                                                         module].__mod_name__) + \
                    CHAT_SETTINGS[module].__chat_settings__(chat_id, user.id)
@@ -344,7 +341,7 @@ def settings_button(bot: Bot, update: Update):
                 set_button = CHAT_SETTINGS[module].__chat_settings_btn__(chat_id, user.id)
             except AttributeError:
                 set_button = []
-            set_button.append([InlineKeyboardButton(text=tl(query.message, "Kembali"),
+            set_button.append([InlineKeyboardButton(text=tl(query.message, "⬅️ Back"),
                                                                callback_data="stngs_back({})".format(chat_id))])
             query.message.reply_text(text=text,
                                   parse_mode=ParseMode.MARKDOWN,
@@ -408,14 +405,14 @@ def get_settings(bot: Bot, update: Update):
     # ONLY send settings in PM
     if chat.type != chat.PRIVATE:
         if is_user_admin(chat, user.id):
-            text = tl(update.effective_message, "Klik di sini untuk mendapatkan pengaturan obrolan ini, serta milik Anda.")
+            text = tl(update.effective_message, "Click here to get this chat's settings, as well as yours.")
             msg.reply_text(text,
                            reply_markup=InlineKeyboardMarkup(
-                               [[InlineKeyboardButton(text="Pengaturan",
+                               [[InlineKeyboardButton(text="Settings",
                                                       url="t.me/{}?start=stngs_{}".format(
                                                           bot.username, chat.id))]]))
         else:
-            text = tl(update.effective_message, "Klik di sini untuk memeriksa pengaturan Anda.")
+            text = tl(update.effective_message, "Click here to check your settings.")
 
     else:
         send_settings(chat.id, user.id, True)
