@@ -70,7 +70,7 @@ def react(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     react = random.choice(reactions)
     if message.reply_to_message:
         message.reply_to_message.reply_text(react)
@@ -83,7 +83,7 @@ def rhappy(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     rhappy = random.choice(reactionhappy)
     if message.reply_to_message:
         message.reply_to_message.reply_text(rhappy)
@@ -96,7 +96,7 @@ def rangry(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     rangry = random.choice(reactionangry)
     if message.reply_to_message:
         message.reply_to_message.reply_text(rangry)
