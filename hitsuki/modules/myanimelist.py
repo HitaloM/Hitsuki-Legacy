@@ -8,7 +8,7 @@ import bs4
 from telegram import Bot, Update, InlineKeyboardMarkup, InlineKeyboardButton, ParseMode
 from telegram.ext import CallbackQueryHandler, run_async
 
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, DEV_USERS
+from hitsuki import dispatcher, OWNER_ID, SUDO_USERS
 from hitsuki.modules.disable import DisableAbleCommandHandler
 
 info_btn = "More Information"
@@ -16,7 +16,7 @@ prequel_btn = "⬅️ Prequel"
 sequel_btn = "Sequel ➡️"
 close_btn = "Close ❌"
 
- 
+
 def getKitsu(mal):
     # get kitsu id from mal id
     link = f'https://kitsu.io/api/edge/mappings?filter[external_site]=myanimelist/anime&filter[external_id]={mal}'
@@ -25,11 +25,13 @@ def getKitsu(mal):
     kitsu = requests.get(link).json()['data']['id']
     return(kitsu)
 
+
 def getPosterLink(mal):
     # grab poster from kitsu
     kitsu = getKitsu(mal)
     image = requests.get(f'https://kitsu.io/api/edge/anime/{kitsu}').json()
     return(image['data']['attributes']['posterImage']['original'])
+
 
 def getBannerLink(mal, kitsu_search=True):
     # try getting kitsu backdrop
@@ -37,7 +39,8 @@ def getBannerLink(mal, kitsu_search=True):
         kitsu = getKitsu(mal)
         image = f'http://media.kitsu.io/anime/cover_images/{kitsu}/original.jpg'
         response = requests.get(image)
-        if response.status_code == 200: return(image)
+        if response.status_code == 200:
+            return(image)
     # try getting anilist banner
     query = '''
     query ($idMal: Int){
@@ -46,22 +49,31 @@ def getBannerLink(mal, kitsu_search=True):
         }
     }
     '''
-    image = requests.post('https://graphql.anilist.co', json={'query': query, 'variables': {'idMal': int(mal)}}).json()['data']['Media']['bannerImage']
-    if image: return(image)
+    image = requests.post(
+        'https://graphql.anilist.co',
+        json={
+            'query': query,
+            'variables': {
+                'idMal': int(mal)}}).json()['data']['Media']['bannerImage']
+    if image:
+        return(image)
     # use the poster from kitsu
     return(getPosterLink(mal))
+
 
 def get_anime_manga(mal_id, search_type, user_id):
 
     jikan = jikanpy.jikan.Jikan()
-    
+
     if search_type == "anime_anime":
         result = jikan.anime(mal_id)
         image = getBannerLink(mal_id)
 
-        studio_string = ', '.join([studio_info['name'] for studio_info in result['studios']])
-        producer_string = ', '.join([producer_info['name'] for producer_info in result['producers']])
-    
+        studio_string = ', '.join([studio_info['name']
+                                   for studio_info in result['studios']])
+        producer_string = ', '.join(
+            [producer_info['name'] for producer_info in result['producers']])
+
     elif search_type == "anime_manga":
         result = jikan.manga(mal_id)
         image = result['image_url']
@@ -75,7 +87,7 @@ def get_anime_manga(mal_id, search_type, user_id):
 
     alternative_names = []
 
-    if result['title_english'] != None:
+    if result['title_english'] is not None:
         alternative_names.append(result['title_english'])
     alternative_names.extend(result['title_synonyms'])
 
@@ -83,9 +95,10 @@ def get_anime_manga(mal_id, search_type, user_id):
         alternative_names_string = ", ".join(alternative_names)
         caption += f"\n<b>Also known as</b>: <code>{alternative_names_string}</code>"
 
-    genre_string = ', '.join([genre_info['name'] for genre_info in result['genres']])
-    
-    if result['synopsis'] != None:
+    genre_string = ', '.join([genre_info['name']
+                              for genre_info in result['genres']])
+
+    if result['synopsis'] is not None:
         synopsis = result['synopsis'].split(" ", 60)
 
         try:
@@ -98,9 +111,9 @@ def get_anime_manga(mal_id, search_type, user_id):
         synopsis_string = "Unknown"
 
     for entity in result:
-        if result[entity] == None:
+        if result[entity] is None:
             result[entity] = "Unknown"
-    
+
     if search_type == "anime_anime":
         caption += textwrap.dedent(f"""
         <b>Type</b>: <code>{result['type']}</code>
@@ -140,7 +153,7 @@ def get_anime_manga(mal_id, search_type, user_id):
             prequel_id = related["Prequel"][0]["mal_id"]
         except IndexError:
             pass
-    
+
     if "Sequel" in related:
         try:
             sequel_id = related["Sequel"][0]["mal_id"]
@@ -153,28 +166,35 @@ def get_anime_manga(mal_id, search_type, user_id):
         )
 
     if prequel_id:
-        related_list.append(InlineKeyboardButton(prequel_btn, callback_data=f"{search_type}, {user_id}, {prequel_id}"))
+        related_list.append(
+            InlineKeyboardButton(
+                prequel_btn,
+                callback_data=f"{search_type}, {user_id}, {prequel_id}"))
 
     if sequel_id:
-        related_list.append(InlineKeyboardButton(sequel_btn, callback_data=f"{search_type}, {user_id}, {sequel_id}"))
+        related_list.append(
+            InlineKeyboardButton(
+                sequel_btn,
+                callback_data=f"{search_type}, {user_id}, {sequel_id}"))
 
     if related_list:
         buttons.append(related_list)
 
-    buttons.append([InlineKeyboardButton(close_btn, callback_data=f"anime_close, {user_id}")])
-    
+    buttons.append([InlineKeyboardButton(
+        close_btn, callback_data=f"anime_close, {user_id}")])
+
     return caption, buttons, image
 
 
 @run_async
 def anime(bot: Bot, update: Update):
-    
+
     message = update.effective_message
     args = message.text.strip().split(" ", 1)
 
     try:
         search_query = args[1]
-    except:
+    except BaseException:
         if message.reply_to_message:
             search_query = message.reply_to_message.text
         else:
@@ -187,12 +207,23 @@ def anime(bot: Bot, update: Update):
 
     search_result = jikan.search("anime", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
-    caption, buttons, image = get_anime_manga(first_mal_id, "anime_anime", message.from_user.id)
+    caption, buttons, image = get_anime_manga(
+        first_mal_id, "anime_anime", message.from_user.id)
     try:
-        update.effective_message.reply_photo(photo=image, caption=caption, parse_mode=ParseMode.HTML, reply_markup=InlineKeyboardMarkup(buttons), disable_web_page_preview=False)
-    except:
+        update.effective_message.reply_photo(
+            photo=image,
+            caption=caption,
+            parse_mode=ParseMode.HTML,
+            reply_markup=InlineKeyboardMarkup(buttons),
+            disable_web_page_preview=False)
+    except BaseException:
         image = getBannerLink(first_mal_id, False)
-        update.effective_message.reply_photo(photo=image, caption=caption, parse_mode=ParseMode.HTML, reply_markup=InlineKeyboardMarkup(buttons), disable_web_page_preview=False)
+        update.effective_message.reply_photo(
+            photo=image,
+            caption=caption,
+            parse_mode=ParseMode.HTML,
+            reply_markup=InlineKeyboardMarkup(buttons),
+            disable_web_page_preview=False)
     progress_message.delete()
 
 
@@ -204,7 +235,7 @@ def manga(bot: Bot, update: Update):
 
     try:
         search_query = args[1]
-    except:
+    except BaseException:
         if message.reply_to_message:
             search_query = message.reply_to_message.text
         else:
@@ -218,9 +249,15 @@ def manga(bot: Bot, update: Update):
     search_result = jikan.search("manga", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
 
-    caption, buttons, image = get_anime_manga(first_mal_id, "anime_manga", message.from_user.id)
-    
-    update.effective_message.reply_photo(photo=image, caption=caption, parse_mode=ParseMode.HTML, reply_markup=InlineKeyboardMarkup(buttons), disable_web_page_preview=False)
+    caption, buttons, image = get_anime_manga(
+        first_mal_id, "anime_manga", message.from_user.id)
+
+    update.effective_message.reply_photo(
+        photo=image,
+        caption=caption,
+        parse_mode=ParseMode.HTML,
+        reply_markup=InlineKeyboardMarkup(buttons),
+        disable_web_page_preview=False)
     progress_message.delete()
 
 
@@ -232,25 +269,26 @@ def character(bot: Bot, update: Update):
 
     try:
         search_query = args[1]
-    except:
+    except BaseException:
         if message.reply_to_message:
             search_query = message.reply_to_message.text
         else:
-            update.effective_message.reply_text("Format : /character <charactername>")
+            update.effective_message.reply_text(
+                "Format : /character <charactername>")
             return
 
     progress_message = update.effective_message.reply_text("Searching.... ")
     jikan = jikanpy.jikan.Jikan()
-    
+
     try:
         search_result = jikan.search("character", search_query)
     except jikanpy.APIException:
         progress_message.delete()
         update.effective_message.reply_text("Character not found.")
         return
-    
+
     first_mal_id = search_result["results"][0]["mal_id"]
-    
+
     character = jikan.character(first_mal_id)
 
     caption = f"[{character['name']}]({character['url']})"
@@ -274,17 +312,20 @@ def character(bot: Bot, update: Update):
     about_string = ' '.join(about)
 
     for entity in character:
-        if character[entity] == None:
+        if character[entity] is None:
             character[entity] = "Unknown"
 
     caption += f"\n*About*: {about_string}..."
 
-    buttons = [
-        [InlineKeyboardButton(info_btn, url=character['url'])],
-        [InlineKeyboardButton(close_btn, callback_data=f"anime_close, {message.from_user.id}")]
-    ]
+    buttons = [[InlineKeyboardButton(info_btn, url=character['url'])], [InlineKeyboardButton(
+        close_btn, callback_data=f"anime_close, {message.from_user.id}")]]
 
-    update.effective_message.reply_photo(photo=character['image_url'], caption=caption, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(buttons), disable_web_page_preview=False)
+    update.effective_message.reply_photo(
+        photo=character['image_url'],
+        caption=caption,
+        parse_mode=ParseMode.MARKDOWN,
+        reply_markup=InlineKeyboardMarkup(buttons),
+        disable_web_page_preview=False)
     progress_message.delete()
 
 
@@ -301,8 +342,9 @@ def upcoming(bot: Bot, update: Update):
         if entry_num == 10:
             break
         upcoming_message += f"{entry_num + 1}. {upcoming_list[entry_num]}\n"
-        
+
     update.effective_message.reply_text(upcoming_message)
+
 
 def button(bot, update):
 
@@ -312,8 +354,8 @@ def button(bot, update):
     query_type = data[0]
     original_user_id = int(data[1])
 
-    user_and_admin_list = [original_user_id, OWNER_ID] + SUDO_USERS + DEV_USERS
-    
+    user_and_admin_list = [original_user_id, OWNER_ID] + SUDO_USERS
+
     bot.answer_callback_query(query.id)
     if query_type == "anime_close":
         if query.from_user.id in user_and_admin_list:
@@ -324,9 +366,17 @@ def button(bot, update):
         mal_id = data[2]
         if query.from_user.id == original_user_id:
             message.delete()
-            progress_message = bot.sendMessage(message.chat.id, "Searching.... ")
-            caption, buttons, image = get_anime_manga(mal_id, query_type, original_user_id)
-            bot.sendPhoto(message.chat.id, photo=image, caption=caption, parse_mode=ParseMode.HTML, reply_markup=InlineKeyboardMarkup(buttons), disable_web_page_preview=False)
+            progress_message = bot.sendMessage(
+                message.chat.id, "Searching.... ")
+            caption, buttons, image = get_anime_manga(
+                mal_id, query_type, original_user_id)
+            bot.sendPhoto(
+                message.chat.id,
+                photo=image,
+                caption=caption,
+                parse_mode=ParseMode.HTML,
+                reply_markup=InlineKeyboardMarkup(buttons),
+                disable_web_page_preview=False)
             progress_message.delete()
         else:
             query.answer("You are not allowed to use this.")
@@ -342,7 +392,7 @@ Get information about anime, manga or characters from [MyAnimeList](https://myan
  - /manga <manga>: returns information about the manga.
  - /upcoming: returns a list of new anime in the upcoming seasons.
 """
- 
+
 __mod_name__ = "MyAnimeList"
 
 ANIME_HANDLER = DisableAbleCommandHandler("anime", anime)
