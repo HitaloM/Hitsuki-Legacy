@@ -26,11 +26,6 @@ from hitsuki.modules.sql import languages_sql as lang_sql
 import hitsuki.modules.sql.feds_sql as feds_sql
 from hitsuki.modules.helper_funcs.alternate import send_message
 
-# Change language locale to Indonesia
-# Install language:
-# - sudo apt-get install language-pack-id language-pack-id-base manpages
-# locale.setlocale(locale.LC_TIME, 'id_ID.UTF-8')
-
 RUN_STRINGS = (
     "Where do you think you're going?",
     "Huh? what? did they get away?",

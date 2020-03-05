@@ -318,7 +318,7 @@ def __stats__():
     return "{} gbanned users.".format(sql.num_gbanned_users())
 
 
-def __user_info__(user_id):
+def __user_info__(user_id, chat_id):
     is_gbanned = sql.is_user_gbanned(user_id)
     
     if int(user_id) in SUDO_USERS or int(user_id) in SUPPORT_USERS:
