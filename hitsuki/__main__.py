@@ -51,6 +51,10 @@ I have lots of handy features, such as flood control, a warning system, a note k
 All commands can either be used with / or !.
 """
 
+SOURCE_STRING = """
+I'm built in python3, using the python-telegram-bot library, and am fully opensource - you can find what makes me tick [here](https://github.com/HitaloSama/Hitsuki)
+"""
+
 IMPORTED = {}
 MIGRATEABLE = []
 HELPABLE = {}
@@ -418,6 +422,23 @@ def get_settings(bot: Bot, update: Update):
         send_settings(chat.id, user.id, True)
 
 
+@run_async
+def source(bot: Bot, update: Update):
+    user = update.effective_message.from_user
+    chat = update.effective_chat  # type: Optional[Chat]
+
+    if chat.type == "private":
+        update.effective_message.reply_text(SOURCE_STRING, parse_mode=ParseMode.MARKDOWN)
+
+    else:
+        try:
+            bot.send_message(user.id, SOURCE_STRING, parse_mode=ParseMode.MARKDOWN)
+
+            update.effective_message.reply_text("You'll find in PM more info about my sourcecode.")
+        except Unauthorized:
+            update.effective_message.reply_text("Contact me in PM first to get source information.")
+
+
 def migrate_chats(bot: Bot, update: Update):
     msg = update.effective_message  # type: Optional[Message]
     if msg.migrate_to_chat_id:
@@ -441,6 +462,7 @@ def main():
     test_handler = CommandHandler("test", test)
     start_handler = CommandHandler("start", start, pass_args=True)
 
+    source_handler = CommandHandler("source", source)
     help_handler = CommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
 
@@ -455,6 +477,7 @@ def main():
     # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(help_handler)
+    dispatcher.add_handler(source_handler)
     dispatcher.add_handler(settings_handler)
     dispatcher.add_handler(help_callback_handler)
     dispatcher.add_handler(settings_callback_handler)
