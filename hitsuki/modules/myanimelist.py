@@ -398,7 +398,6 @@ __mod_name__ = "MyAnimeList"
 ANIME_HANDLER = DisableAbleCommandHandler("anime", anime)
 CHARACTER_HANDLER = DisableAbleCommandHandler("character", character)
 MANGA_HANDLER = DisableAbleCommandHandler("manga", manga)
-USER_HANDLER = DisableAbleCommandHandler("user", user)
 UPCOMING_HANDLER = DisableAbleCommandHandler("upcoming", upcoming)
 BUTTON_HANDLER = CallbackQueryHandler(button, pattern='anime_.*')
 
