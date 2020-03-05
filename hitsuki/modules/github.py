@@ -54,7 +54,7 @@ def getRelease(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	msg = update.effective_message
+    msg = update.effective_message
     if(len(args) != 1):
         msg.reply_text("Please specify a valid combination of <user>/<repo>")
         return

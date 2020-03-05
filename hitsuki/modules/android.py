@@ -36,7 +36,7 @@ def device(bot, update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	if len(args) == 0:
+    if len(args) == 0:
         reply = f'No codename provided, write a codename for fetching informations.'
         update.effective_message.reply_text("{}".format(reply),
                     parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -70,7 +70,7 @@ def odin(bot, update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = "*Tool to flash the stock firmware of your Samsung Galaxy*\nDownload from below!\n\nYou can download a firmware by the `/getfw` command or on the @SamFirm channel"
+    message = "*Tool to flash the stock firmware of your Samsung Galaxy*\nDownload from below!\n\nYou can download a firmware by the `/getfw` command or on the @SamFirm channel"
     keyboard = [
         [InlineKeyboardButton("Odin", url="https://odin3download.com/tool/Odin3-v3.14.1.zip"),
          InlineKeyboardButton("USB Drivers", url="https://developer.samsung.com/mobile/android-usb-driver.html")]
@@ -86,7 +86,7 @@ def gsis(bot, update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = "*Channels recommended by my creator for you to download GSIs:*\n\n - @VegaGSIs\n - [@Expressluke](http://t.me/joinchat/AAAAAEjIRhZRX1mOZpLR5g)\n - @ErfanGSI\n - @canalvegadata"
+    message = "*Channels recommended by my creator for you to download GSIs:*\n\n - @VegaGSIs\n - [@Expressluke](http://t.me/joinchat/AAAAAEjIRhZRX1mOZpLR5g)\n - @ErfanGSI\n - @canalvegadata"
     keyboard = [
         [InlineKeyboardButton("What is GSI?", url="https://github.com/phhusson/treble_experimentations/wiki/Home"),
          InlineKeyboardButton("PHH's GSI", url="https://github.com/phhusson/treble_experimentations")]
@@ -101,7 +101,7 @@ def edxposed(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     usr = get(f'https://api.github.com/repos/elderdrivers/edxposed/releases/latest').json()
     reply_text = "*Latest EdXposed release(s):*\n"
     for i in range(len(usr)):
@@ -120,7 +120,7 @@ def mitools(bot, update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	url = f'{WIKI}/Tools_for_Xiaomi_devices.html'
+    url = f'{WIKI}/Tools_for_Xiaomi_devices.html'
     message = "Useful tools for Xiaomi devices"
     keyboard = [
         [InlineKeyboardButton("Mi Flash Tool", f'{url}#miflash-by-xiaomi'),
@@ -145,7 +145,7 @@ def getfw(bot, update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	if not len(args) == 2:
+    if not len(args) == 2:
         reply = f'Give me something to fetch, like: <code>/getfw SM-N975F DBT</code>'
         update.effective_message.reply_text("{}".format(reply),
                     parse_mode=ParseMode.HTML)
@@ -190,7 +190,7 @@ def checkfw(bot, update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	if not len(args) == 2:
+    if not len(args) == 2:
         reply = f'Give me something to fetch, like:\n`/checkfw SM-N975F DBT`'
         update.effective_message.reply_text("{}".format(reply),
                     parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -241,7 +241,7 @@ def magisk(bot, update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
+    url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     releases = ""
     for type, branch in {"Stable":["master/stable","master"], "Beta":["master/beta","master"], "Canary (release)":["canary/release","canary"], "Canary (debug)":["canary/debug","canary"]}.items():
         data = get(url + branch[0] + '.json').json()
@@ -260,7 +260,7 @@ def twrp(bot, update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	if len(args) == 0:
+    if len(args) == 0:
         reply='No codename provided, write a codename for fetching informations.'
         update.effective_message.reply_text("{}".format(reply),
                     parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -302,7 +302,7 @@ def aex(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	AEX_OTA_API = "https://api.aospextended.com/ota/"
+    AEX_OTA_API = "https://api.aospextended.com/ota/"
     message = update.effective_message
 
     if len(args) != 2:
@@ -348,7 +348,7 @@ def bootleggers(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     codename = message.text[len('/bootleggers '):]
 
     if codename == '':
@@ -406,7 +406,7 @@ def dotos(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     device = message.text[len('/dotos '):]
 
     if device == '':
@@ -445,7 +445,7 @@ def evo(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     device = message.text[len('/evo '):]
 
     if device == "x00t" or device == "x01bd":
@@ -506,7 +506,7 @@ def havoc(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     device = message.text[len('/havoc '):]
     fetch = get(f'https://raw.githubusercontent.com/Havoc-Devices/android_vendor_OTA/pie/{device}.json')
 
@@ -543,7 +543,7 @@ def los(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     device = message.text[len('/los '):]
 
     if device == '':
@@ -579,7 +579,7 @@ def miui(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	giturl = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/"
+    giturl = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/"
     message = update.effective_message
     device = message.text[len('/miui '):]
 
@@ -620,7 +620,7 @@ def pe(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     cmd = message.text.split()[0]
     device = message.text[len(cmd)+1:]
 
@@ -668,7 +668,7 @@ def pearl(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     device = message.text[len('/pearl '):]
 
     if device == '':
@@ -723,7 +723,7 @@ def pixys(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     device = message.text[len('/pixys '):]
 
     if device == '':
@@ -762,7 +762,7 @@ def posp(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     device = message.text[len('/posp '):]
 
     if device == '':
@@ -799,7 +799,7 @@ def viper(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     device = message.text[len('/viper '):]
 
     if device == '':
@@ -834,7 +834,7 @@ def specs(bot, update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	if len(args) == 0:
+    if len(args) == 0:
         update.effective_message.reply_html("Please type your device <b>brand</b> and <b>name</b>!\
         \nFor example, <code>/specs Xiaomi Redmi Note 7</code>")
         return
@@ -883,7 +883,7 @@ def enesrelease(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     usr = get(f'https://api.github.com/repos/EnesSastim/Downloads/releases/latest').json()
     reply_text = "*Enes Sastim's lastest releases(s):*\n"
     for i in range(len(usr)):
@@ -900,7 +900,7 @@ def phh(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     usr = get(f'https://api.github.com/repos/phhusson/treble_experimentations/releases/latest').json()
     reply_text = "*Phh's lastest release(s):*\n"
     for i in range(len(usr)):

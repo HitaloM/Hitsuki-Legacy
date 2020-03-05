@@ -565,42 +565,45 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not msg.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
         [MessageEntity.TEXT_MENTION]))):
-        send_message(update.effective_message, tl(update.effective_message, "Saya tidak dapat mengekstrak pengguna dari ini."))
+        send_message(update.effective_message, tl(update.effective_message, "I can't extract a user from this."))
         return
 
     else:
         return
 
-    text = tl(update.effective_message, "<b>Info Pengguna</b>:") \
+    text = tl(update.effective_message, "<b>User Info:</b>") \
            + "\nID: <code>{}</code>".format(user.id) + \
-           tl(update.effective_message, "\nNama depan: {}").format(html.escape(user.first_name))
+           tl(update.effective_message, "\nFirst Name: {}").format(html.escape(user.first_name))
 
     if user.last_name:
-        text += tl(update.effective_message, "\nNama belakang: {}").format(html.escape(user.last_name))
+        text += tl(update.effective_message, "\nLast Name: {}").format(html.escape(user.last_name))
 
     if user.username:
-        text += tl(update.effective_message, "\nNama pengguna: @{}").format(html.escape(user.username))
+        text += tl(update.effective_message, "\nUsername: @{}").format(html.escape(user.username))
 
-    text += tl(update.effective_message, "\nTautan pengguna permanen: {}").format(mention_html(user.id, "link"))
+    text += tl(update.effective_message, "\nUser link: {}").format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += tl(update.effective_message, "\n\nOrang ini adalah pemilik saya - saya tidak akan pernah melakukan apa pun terhadap mereka!")
+        text += tld(chat.id, "\n\nThis person is my owner - I would never do anything against them!")
     else:
+        if user.id == int(918317361):
+            text += tld(chat.id, "\n\nThis person.... He is my god.")
+
         if user.id in SUDO_USERS:
-            text += tl(update.effective_message, "\n\nOrang ini adalah salah satu pengguna sudo saya! " \
-                    "Hampir sama kuatnya dengan pemilik saya - jadi tontonlah.")
+            text += tld(chat.id, "\n\nThis person is one of my sudo users! " \
+                                 "Nearly as powerful as my owner - so watch it.")
         else:
             if user.id in SUPPORT_USERS:
-                text += tl(update.effective_message, "\n\nOrang ini adalah salah satu pengguna dukungan saya! " \
-                        "Tidak sekuat pengguna sudo, tetapi masih dapat menyingkirkan Anda dari peta.")
+                text += tld(chat.id, "\n\nThis person is one of my support users! " \
+                                     "Not quite a sudo user, but can still gban you off the map.")
 
             if user.id in WHITELIST_USERS:
-                text += tl(update.effective_message, "\n\nOrang ini telah dimasukkan dalam daftar putih! " \
-                        "Itu berarti saya tidak diizinkan untuk melarang/menendang mereka.")
+                text += tld(chat.id, "\n\nThis person has been whitelisted! " \
+                                     "That means I'm not allowed to ban/kick them.")
 
     fedowner = feds_sql.get_user_owner_fed_name(user.id)
     if fedowner:
-        text += tl(update.effective_message, "\n\n<b>Pengguna ini adalah pemilik federasi ini:</b>\n<code>")
+        text += tl(update.effective_message, "\n\n<b>This user is the owner of current federation:</b>\n<code>")
         text += "</code>, <code>".join(fedowner)
         text += "</code>"
     # fedadmin = feds_sql.get_user_admin_fed_name(user.id)
@@ -614,52 +617,6 @@ def info(bot: Bot, update: Update, args: List[str]):
             text += "\n\n" + mod_info
 
     send_message(update.effective_message, text, parse_mode=ParseMode.HTML)
-
-
-@run_async
-def get_time(bot: Bot, update: Update, args: List[str]):
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
-    location = " ".join(args)
-    if location.lower() == bot.first_name.lower():
-        send_message(update.effective_message, tl(update.effective_message, "Selalu ada waktu banned untukku!"))
-        bot.send_sticker(update.effective_chat.id, BAN_STICKER)
-        return
-
-    res = requests.get(GMAPS_LOC, params=dict(address=location, key=MAPS_API))
-    print(res.text)
-
-    if res.status_code == 200:
-        loc = json.loads(res.text)
-        if loc.get('status') == 'OK':
-            lat = loc['results'][0]['geometry']['location']['lat']
-            long = loc['results'][0]['geometry']['location']['lng']
-
-            country = None
-            city = None
-
-            address_parts = loc['results'][0]['address_components']
-            for part in address_parts:
-                if 'country' in part['types']:
-                    country = part.get('long_name')
-                if 'administrative_area_level_1' in part['types'] and not city:
-                    city = part.get('long_name')
-                if 'locality' in part['types']:
-                    city = part.get('long_name')
-
-            if city and country:
-                location = "{}, {}".format(city, country)
-            elif country:
-                location = country
-
-            timenow = int(datetime.utcnow().timestamp())
-            res = requests.get(GMAPS_TIME, params=dict(location="{},{}".format(lat, long), timestamp=timenow))
-            if res.status_code == 200:
-                offset = json.loads(res.text)['dstOffset']
-                timestamp = json.loads(res.text)['rawOffset']
-                time_there = datetime.fromtimestamp(timenow + timestamp + offset).strftime("%H:%M:%S hari %A %d %B")
-                send_message(update.effective_message, "Sekarang pukul {} di {}".format(time_there, location))
 
 
 @run_async
@@ -680,7 +637,7 @@ def echo(bot: Bot, update: Update):
             else:
                 bot.send_message(chat_id, text, quote=False, disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(tombol))
         except BadRequest:
-            bot.send_message(chat_id, tl(update.effective_message, "Teks markdown salah!\nJika anda tidak tahu apa itu markdown, silahkan ketik `/markdownhelp` pada PM."), parse_mode="markdown")
+            bot.send_message(chat_id, tl(update.effective_message, "Wrong markdown text!\nIf you don't know what markdown is, please type `/markdownhelp` in PM."), parse_mode="markdown")
             return
 
 
@@ -690,10 +647,10 @@ def markdown_help(bot: Bot, update: Update):
     if spam == True:
         return
     send_message(update.effective_message, tl(update.effective_message, "MARKDOWN_HELP").format(dispatcher.bot.first_name), parse_mode=ParseMode.HTML)
-    send_message(update.effective_message, tl(update.effective_message, "Coba teruskan pesan berikut kepada saya, dan Anda akan lihat!"))
-    send_message(update.effective_message, tl(update.effective_message, "/save test Ini adalah tes markdown. _miring_, *tebal*, `kode`, "
-                                        "[URL](contoh.com) [tombol](buttonurl:github.com) "
-                                        "[tombol2](buttonurl:google.com:same)"))
+    send_message(update.effective_message, tl(update.effective_message, "Try forwarding the following message to me, and you'll see!"))
+    send_message(update.effective_message, tl(update.effective_message, "/save test This is a markdown test. _italics_, *bold*, `code`, [URL](example.com) [button](buttonurl:github.com) [button2](buttonurl:google.com:same) "
+                                        "[URL](google.com) [button](buttonurl:github.com) "
+                                        "[button2](buttonurl:google.com:same)"))
 
 
 @run_async

@@ -95,7 +95,7 @@ def vapor(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     if not message.reply_to_message:
         if not args:
             message.reply_text(
@@ -185,7 +185,7 @@ def bmoji(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to meme.")
     else:
@@ -201,7 +201,7 @@ def forbesify(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     if message.reply_to_message:
         data = message.reply_to_message.text
     else:
@@ -232,7 +232,7 @@ def spongemocktext(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     if message.reply_to_message:
         data = message.reply_to_message.text
     else:
@@ -247,7 +247,7 @@ def clapmoji(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to meme.")
     else:
@@ -262,7 +262,7 @@ def zalgotext(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     if message.reply_to_message:
         data = message.reply_to_message.text
     else:
@@ -281,7 +281,7 @@ def chinesememes(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     maxnum = urllib.request.urlopen(MAXNUMURL)
     maxnum = maxnum.read().decode("utf8")
     if args:
@@ -308,7 +308,7 @@ def deepfryer(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     if message.reply_to_message:
         data = message.reply_to_message.photo
         data2 = message.reply_to_message.sticker
@@ -367,7 +367,7 @@ def shout(bot: Bot, update: Update, args):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	if len(args) == 0:
+    if len(args) == 0:
         update.effective_message.reply_text("Where is text?")
         return
 
