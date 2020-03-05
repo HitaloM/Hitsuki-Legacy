@@ -153,7 +153,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                     summary = summary[:4000]+"..."
                 message.reply_text("<b>{}</b>\n{}".format(judul, summary), parse_mode=ParseMode.HTML,
                     reply_markup=InlineKeyboardMarkup(
-                            [[InlineKeyboardButton(text=tl(update.effective_message, "Baca di Wikipedia"), url=pagewiki.url)]]))
+                            [[InlineKeyboardButton(text=tl(update.effective_message, "Read on Wikipedia"), url=pagewiki.url)]]))
 
         else:
             first_name = update.effective_user.first_name
@@ -167,7 +167,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=buttons)
     else:
-        update.effective_message.reply_text(tl(update.effective_message, "Ada yang bisa saya bantu? 😊"))
+        update.effective_message.reply_text(tl(update.effective_message, "Is there anything I can help? 😊"))
 
 
 def m_connect_button(bot, update):
@@ -217,13 +217,13 @@ def help_button(bot: Bot, update: Update):
     try:
         if mod_match:
             module = mod_match.group(1)
-            text = tl(update.effective_message, "Ini bantuan untuk modul *{}*:\n").format(HELPABLE[module].__mod_name__) \
+            text = tl(update.effective_message, "Here is the help for the *{}* module:").format(HELPABLE[module].__mod_name__) \
                    + tl(update.effective_message, HELPABLE[module].__help__)
 
             query.message.reply_text(text=text,
                                   parse_mode=ParseMode.MARKDOWN,
                                   reply_markup=InlineKeyboardMarkup(
-                                        [[InlineKeyboardButton(text=tl(query.message, "Kembali"), callback_data="help_back")]]))
+                                        [[InlineKeyboardButton(text=tl(query.message, "⬅️ Back"), callback_data="help_back")]]))
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
@@ -272,18 +272,18 @@ def get_help(bot: Bot, update: Update):
     if chat.type != chat.PRIVATE:
 
         # update.effective_message.reply_text("Contact me in PM to get the list of possible commands.",
-        update.effective_message.reply_text(tl(update.effective_message, "Hubungi saya di PM untuk mendapatkan daftar perintah."),
+        update.effective_message.reply_text(tl(update.effective_message, "Contact me in PM to get the list of possible commands."),
                                             reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text=tl(update.effective_message, "Tolong"),
+                                                [[InlineKeyboardButton(text=tl(update.effective_message, "Help"),
                                                                        url="t.me/{}?start=help".format(
                                                                            bot.username))]]))
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
-        text = tl(update.effective_message, "Ini adalah bantuan yang tersedia untuk modul *{}*:\n").format(HELPABLE[module].__mod_name__) \
+        text = tl(update.effective_message, "Here is the available help for the *{}* module:\n").format(HELPABLE[module].__mod_name__) \
                + tl(update.effective_message, HELPABLE[module].__help__)
-        send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "Kembali"), callback_data="help_back")]]))
+        send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "⬅️ Back"), callback_data="help_back")]]))
 
     else:
         send_help(chat.id, tl(update.effective_message, HELP_STRINGS))
@@ -294,24 +294,24 @@ def send_settings(chat_id, user_id, user=False):
         if USER_SETTINGS:
             settings = "\n\n".join(
                 "*{}*:\n{}".format(mod.__mod_name__, mod.__user_settings__(user_id)) for mod in USER_SETTINGS.values())
-            dispatcher.bot.send_message(user_id, tl(chat_id, "Ini adalah pengaturan Anda saat ini:") + "\n\n" + settings,
+            dispatcher.bot.send_message(user_id, tl(chat_id, "These are your current settings:") + "\n\n" + settings,
                                         parse_mode=ParseMode.MARKDOWN)
 
         else:
-            dispatcher.bot.send_message(user_id, tl(chat_id, "Sepertinya tidak ada pengaturan khusus pengguna yang tersedia 😢"),
+            dispatcher.bot.send_message(user_id, tl(chat_id, "Seems like there aren't any user specific settings available 😢"),
                                         parse_mode=ParseMode.MARKDOWN)
 
     else:
         if CHAT_SETTINGS:
             chat_name = dispatcher.bot.getChat(chat_id).title
             dispatcher.bot.send_message(user_id,
-                                        text=tl(chat_id, "Modul mana yang ingin Anda periksa untuk pengaturan {}?").format(
+                                        text=tl(chat_id, "Which module would you like to check {}'s settings for?").format(
                                             chat_name),
                                         reply_markup=InlineKeyboardMarkup(
                                             paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)))
         else:
-            dispatcher.bot.send_message(user_id, tl(chat_id, "Sepertinya tidak ada pengaturan obrolan yang tersedia 😢\nKirim ini "
-                                                 "ke obrolan Anda sebagai admin untuk menemukan pengaturannya saat ini!"),
+            dispatcher.bot.send_message(user_id, tl(chat_id, "Seems like there aren't any chat settings available 😢\n "
+                                                 "Send this in a group chat you're admin in to find its current settings!"),
                                         parse_mode=ParseMode.MARKDOWN)
 
 
@@ -351,8 +351,8 @@ def settings_button(bot: Bot, update: Update):
             chat_id = prev_match.group(1)
             curr_page = int(prev_match.group(2))
             chat = bot.get_chat(chat_id)
-            query.message.reply_text(text=tl(update.effective_message, "Hai! Ada beberapa pengaturan untuk {} - lanjutkan dan pilih "
-                                       "apa yang Anda minati.").format(chat.title),
+            query.message.reply_text(text=tl(update.effective_message, "Hey there! There are quite a few settings for {} - "
+                                       "go ahead and pick what you're interested in.").format(chat.title),
                                   reply_markup=InlineKeyboardMarkup(
                                         paginate_modules(curr_page - 1, CHAT_SETTINGS, "stngs",
                                                          chat=chat_id)))
@@ -361,8 +361,8 @@ def settings_button(bot: Bot, update: Update):
             chat_id = next_match.group(1)
             next_page = int(next_match.group(2))
             chat = bot.get_chat(chat_id)
-            query.message.reply_text(text=tl(update.effective_message, "Hai! Ada beberapa pengaturan untuk {} - lanjutkan dan pilih "
-                                       "apa yang Anda minati.").format(chat.title),
+            query.message.reply_text(text=tl(update.effective_message, "Hey there! There are quite a few settings for {} - "
+                                       "go ahead and pick what you're interested in.").format(chat.title),
                                   reply_markup=InlineKeyboardMarkup(
                                         paginate_modules(next_page + 1, CHAT_SETTINGS, "stngs",
                                                          chat=chat_id)))
@@ -370,8 +370,8 @@ def settings_button(bot: Bot, update: Update):
         elif back_match:
             chat_id = back_match.group(1)
             chat = bot.get_chat(chat_id)
-            query.message.reply_text(text=tl(update.effective_message, "Hai! Ada beberapa pengaturan untuk {} - lanjutkan dan pilih "
-                                       "apa yang Anda minati.").format(escape_markdown(chat.title)),
+            query.message.reply_text(text=tl(update.effective_message, "Hey there! There are quite a few settings for {} - "
+                                       "go ahead and pick what you're interested in.").format(escape_markdown(chat.title)),
                                   parse_mode=ParseMode.MARKDOWN,
                                   reply_markup=InlineKeyboardMarkup(paginate_modules(0, CHAT_SETTINGS, "stngs",
                                                                                      chat=chat_id)))
