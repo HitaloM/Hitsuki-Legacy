@@ -160,7 +160,7 @@ def start(bot: Bot, update: Update, args: List[str]):
             buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="📃 HitaloSama's Docs", url="https://telegra.ph/HitaloKun-doc-07-15")],
                 [InlineKeyboardButton(text="⚙️ Connections", callback_data="main_connect")],
-                [InlineKeyboardButton(text="🇺🇸 Language", callback_data="main_setlang"), InlineKeyboardButton(text="❔ Help", url="https://t.me/LordHitsuki_BOT?start=help")]])
+                [InlineKeyboardButton(text="🇺🇸 Language", callback_data="main_setlang"), InlineKeyboardButton(text="❓ Help", url="https://t.me/LordHitsuki_BOT?start=help")]])
             update.effective_message.reply_text(
                 tl(update.effective_message, PM_START_TEXT).format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 disable_web_page_preview=True,

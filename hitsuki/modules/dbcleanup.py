@@ -4,7 +4,7 @@ from telegram import Bot, Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import CommandHandler, CallbackQueryHandler, run_async
 
-from hitsuki import dispatcher, OWNER_ID, DEV_USERS
+from hitsuki import dispatcher, OWNER_ID, SUDO_USERS
 from hitsuki.modules.helper_funcs.chat_status import dev_plus
 
 import hitsuki.modules.sql.users_sql as user_sql
@@ -178,7 +178,7 @@ def callback_button(bot: Bot, update: Update):
     chat_id = update.effective_chat.id
     query_type = query.data
 
-    admin_list = [OWNER_ID] + DEV_USERS
+    admin_list = [OWNER_ID] + SUDO_USERS
     
     bot.answer_callback_query(query.id)
     
