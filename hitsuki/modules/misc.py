@@ -584,21 +584,21 @@ def info(bot: Bot, update: Update, args: List[str]):
     text += tl(update.effective_message, "\nUser link: {}").format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += tld(chat.id, "\n\nThis person is my owner - I would never do anything against them!")
+        text += tl(update.effective_message, "\n\nThis person is my owner - I would never do anything against them!")
     else:
         if user.id == int(918317361):
-            text += tld(chat.id, "\n\nThis person.... He is my god.")
+            text += tl(update.effective_message, "\n\nThis person.... He is my god.")
 
         if user.id in SUDO_USERS:
-            text += tld(chat.id, "\n\nThis person is one of my sudo users! " \
+            text += tl(update.effective_message, "\n\nThis person is one of my sudo users! " \
                                  "Nearly as powerful as my owner - so watch it.")
         else:
             if user.id in SUPPORT_USERS:
-                text += tld(chat.id, "\n\nThis person is one of my support users! " \
+                text += tl(update.effective_message, "\n\nThis person is one of my support users! " \
                                      "Not quite a sudo user, but can still gban you off the map.")
 
             if user.id in WHITELIST_USERS:
-                text += tld(chat.id, "\n\nThis person has been whitelisted! " \
+                text += tl(update.effective_message, "\n\nThis person has been whitelisted! " \
                                      "That means I'm not allowed to ban/kick them.")
 
     fedowner = feds_sql.get_user_owner_fed_name(user.id)
