@@ -109,7 +109,8 @@ def gban(bot: Bot, update: Update, args: List[str]):
                      "\n<b>Amended Reason:</b> {}".format(mention_html(banner.id, banner.first_name),
                                               mention_html(user_chat.id, user_chat.first_name or "Deleted Account"), 
                                                            user_chat.id, old_reason, new_reason), 
-                    html=True)
+                    parse_mode=ParseMode.HTML
+            )
                 
             message.reply_text("This user is already gbanned, for the following reason:\n"
                                "<code>{}</code>\n"
@@ -127,7 +128,8 @@ def gban(bot: Bot, update: Update, args: List[str]):
                      "\n<b>New Reason:</b> {}".format(mention_html(banner.id, banner.first_name),
                                               mention_html(user_chat.id, user_chat.first_name or "Deleted Account"), 
                                                            user_chat.id, new_reason), 
-                    html=True)
+                    parse_mode=ParseMode.HTML
+            )
             message.reply_text("This user is already gbanned, but had no reason set; I've gone and updated it!")
 
         return
@@ -147,7 +149,8 @@ def gban(bot: Bot, update: Update, args: List[str]):
                  "\n<b>Reason:</b> {}".format(mention_html(banner.id, banner.first_name),
                                               mention_html(user_chat.id, user_chat.first_name or "Deleted Account"), 
                                                            user_chat.id, reason or "No reason given"), 
-                html=True)
+                parse_mode=ParseMode.HTML
+            )
 
     sql.gban_user(user_id, user_chat.username or user_chat.first_name, reason)
 
@@ -209,7 +212,8 @@ def ungban(bot: Bot, update: Update, args: List[str]):
                  "\n<b>ID:</b> <code>{}</code>".format(mention_html(banner.id, banner.first_name),
                                                        mention_html(user_chat.id, user_chat.first_name or "Deleted Account"), 
                                                                     user_chat.id),
-                 html=True)
+                 parse_mode=ParseMode.HTML
+            )
 
     chats = get_all_chats()
     for chat in chats:
@@ -322,7 +326,7 @@ def __user_info__(user_id, chat_id):
     is_gbanned = sql.is_user_gbanned(user_id)
     
     if int(user_id) in SUDO_USERS or int(user_id) in SUPPORT_USERS:
-        text="Globally banned: <b>No</b> (Immortal)"
+        text="Globally banned: <b>No</b>"
     else:
         text = "Globally banned: <b>{}</b>"
         if is_gbanned:
