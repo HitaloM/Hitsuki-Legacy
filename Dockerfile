@@ -1,46 +1,53 @@
-# Using Arch Linux
-# Dockerfile for Hitsuki by @HitaloSama on Telegram
-FROM archlinux:latest
+# We're using Alpine Edge
+FROM alpine:edge
 
-#
-# Using English as arch default language
-#
-RUN LANG=en_US.UTF-8
+# We have to uncomment Community repo for some packages
+RUN sed -e 's;^#http\(.*\)/edge/community;http\1/edge/community;g' -i /etc/apk/repositories
 
-#
-# Installing packages and updating the system
-#
-RUN pacman -Syu --noconfirm base-devel
+# install ca-certificates so that HTTPS works consistently
+# other runtime dependencies for Python are installed later
+RUN apk add --no-cache ca-certificates
 
-RUN pacman -Sy --noconfirm \
+# Installing Packages
+RUN apk add --no-cache --update \
     bash \
-    bzip2 \
+    build-base \
+    bzip2-dev \
+    curl \
     coreutils \
+    figlet \
     gcc \
+    g++ \
     git \
-    sudo \
+    aria2 \
     util-linux \
     libevent \
-    jpeg-archive \
-    libffi \
-    libwebp \
-    libxml2 \
-    libxslt \
+    libjpeg-turbo-dev \
+    jpeg-dev \
+    jpeg \
+    libc-dev \
+    libffi-dev \
+    libpq \
+    libwebp-dev \
+    libxml2-dev \
+    libxslt-dev \
     linux-headers \
-    musl \
+    musl-dev \
     neofetch \
     postgresql \
     postgresql-client \
-    postgresql-libs \
+    postgresql-dev \
+    wget \
     python \
-    python-pip \
-    sqlite \
-    zlib \
-    readline
+    python3 \
+    python-dev \
+    python3-dev \
+    sqlite-dev \
+    sudo \
+    zlib-dev \
+    zip
 
-#
-# Updating python
-#
+
 RUN python3 -m ensurepip \
     && pip3 install --upgrade pip setuptools \
     && rm -r /usr/lib/python*/ensurepip && \
@@ -51,16 +58,14 @@ RUN python3 -m ensurepip \
 #
 # Clone repo and prepare working directory
 #
-RUN git clone 'https://github.com/HitaloSama/Hitsuki' /root/hitsuki
+RUN git clone 'https://github.com/HitaloSama/Hitsuki.git' /root/hitsuki
 RUN mkdir /root/hitsuki/bin/
-RUN chmod 777 /root/hitsuki/ && chmod 777 /root/hitsuki/bin
 WORKDIR /root/hitsuki/
 
 #
-# Installing requirements and updating
+# Install requirements
 #
 RUN pip3 install -r requirements.txt
 RUN pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
-
 RUN pip3 install python-telegram-bot==11.1.0
 CMD ["python3","-m","hitsuki"]

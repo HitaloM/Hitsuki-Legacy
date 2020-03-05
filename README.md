@@ -18,7 +18,8 @@ Based on [Emilia Hikari](https://github.com/AyraHikari/EmiliaHikari)
 * [@MrYacha](https://github.com/MrYacha) - for welcome security base and connection base and maybe others.
 * [@RealAkito](https://github.com/RealAkito) - for reworked federation, Android module and other things.
 * [@RaphielGang](https://github.com/RaphielGang) - for the base of the direct link module.
-* [Saitama Robot](https://github.com/AnimeKaizoku/SaitamaRobot) - for dbcleanup module
+* [@AvinashReddy3108](https://github.com/AvinashReddy3108) - for the base used in Dockerfile.
+* [@AnimeKaizoku](https://github.com/AnimeKaizoku) - for dbcleanup module
 
 ----------
 ```
