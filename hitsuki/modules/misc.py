@@ -1,12 +1,15 @@
 import html
 import json
 import random
-from datetime import datetime
-from typing import Optional, List
+import urllib.request
+import urllib.parse
 import time
 import locale
-
 import requests
+
+from datetime import datetime
+from typing import Optional, List 
+
 from telegram.error import BadRequest, Unauthorized
 from telegram import Message, Chat, Update, Bot, MessageEntity, InlineKeyboardMarkup
 from telegram import ParseMode
@@ -20,7 +23,6 @@ from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.helper_funcs.filters import CustomFilters
 from hitsuki.modules.helper_funcs.msg_types import get_message_type
 from hitsuki.modules.helper_funcs.misc import build_keyboard_alternate
-
 from hitsuki.modules.languages import tl
 from hitsuki.modules.sql import languages_sql as lang_sql
 import hitsuki.modules.sql.feds_sql as feds_sql
@@ -729,30 +731,6 @@ def markdown_help(bot: Bot, update: Update):
 def stats(bot: Bot, update: Update):
     send_message(update.effective_message, tl(update.effective_message, "Statistik saat ini:\n") + "\n".join([mod.__stats__() for mod in STATS]))
 
-
-# /ip is for private use
-__help__ = """
-*Group tools:*
- - /id: get the current group id. If used by replying to a message, gets that user's id.
- - /info: get information about a user.
- - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
-
-*Useful tools:*
- - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
- - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
- - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
- - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
-
-*Other things:*
- - /runs: reply a random string from an array of replies.
- - /insults: reply a random string from an array of replies.
- - /slap: slap a user, or get slapped if not a reply.
- - /status: Shows some bot information.
- - /weebify: as a reply to a message, "weebifies" the message.
- - /pat: give a headpat :3
- - /shg or /shrug: pretty self-explanatory.
- - /hug: give a hug and spread the love :)
-"""
 
 __mod_name__ = "Misc"
 
