@@ -642,6 +642,29 @@ def echo(bot: Bot, update: Update):
 
 
 @run_async
+def sudo_list(bot: Bot, update: Update):
+    reply = "<b>Sudo Users:</b>\n"
+    for sudo in SUDO_USERS:
+        user_id = int(sudo) # Ensure int
+        user = bot.get_chat(user_id)
+        first_name = user.first_name
+        reply += """• <a href="tg://user?id={}">{}</a>\n""".format(user_id, first_name)
+    update.effective_message.reply_text(reply, parse_mode=ParseMode.HTML)
+
+
+@run_async
+def support_list(bot: Bot, update: Update):
+    reply = "<b>Support Users:</b>\n"
+    for support in SUPPORT_USERS:
+        user_id = int(support) # Ensure int
+        user = bot.get_chat(user_id)
+        first_name = user.first_name.replace(">", ">")
+        first_name = first_name.replace("<", "<")
+        reply += """• <a href="tg://user?id={}">{}</a>\n""".format(user_id, first_name)
+    update.effective_message.reply_text(reply, parse_mode=ParseMode.HTML)
+
+
+@run_async
 def markdown_help(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
@@ -673,6 +696,8 @@ PASTE_STATS_HANDLER = CommandHandler("pastestats", get_paste_stats, pass_args=Tr
 
 ECHO_HANDLER = CommandHandler("echo", echo, filters=Filters.user(OWNER_ID))
 MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
+SUDO_LIST_HANDLER = CommandHandler("sudolist", sudo_list, filters=CustomFilters.sudo_filter)
+SUPPORT_LIST_HANDLER = CommandHandler("supportlist", support_list, filters=CustomFilters.sudo_filter)
 
 STATS_HANDLER = CommandHandler("stats", stats, filters=CustomFilters.sudo_filter)
 WEEBIFY_HANDLER = DisableAbleCommandHandler("weebify", weebify, pass_args=True)
@@ -695,3 +720,5 @@ dispatcher.add_handler(HUG_HANDLER)
 dispatcher.add_handler(PASTE_HANDLER)
 dispatcher.add_handler(GET_PASTE_HANDLER)
 dispatcher.add_handler(PASTE_STATS_HANDLER)
+dispatcher.add_handler(SUDO_LIST_HANDLER)
+dispatcher.add_handler(SUPPORT_LIST_HANDLER)
