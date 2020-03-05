@@ -128,8 +128,6 @@ def get_anime_manga(mal_id, search_type, user_id):
         <b>Producers</b>: <code>{producer_string}</code>
 
         📖 <b>Synopsis</b>: {synopsis_string} <a href='{result['url']}'>read more</a>
-
-        <i>Search an encode on..</i>
         """)
     elif search_type == "anime_manga":
         caption += textwrap.dedent(f"""
