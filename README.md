@@ -17,3 +17,4 @@ Thanks to this users:
 * [@RealAkito](https://github.com/RealAkito) - for reworked federation, Android module and other things.
 * [@RaphielGang](https://github.com/RaphielGang) - for the base of the direct link module.
 * [@AvinashReddy3108](https://github.com/AvinashReddy3108) - for the base used in Dockerfile.
+* [Saitama Robot](https://github.com/AnimeKaizoku/SaitamaRobot) - for dbcleanup module
