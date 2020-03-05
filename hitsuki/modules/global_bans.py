@@ -8,7 +8,7 @@ from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import mention_html
 
 import hitsuki.modules.sql.global_bans_sql as sql
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, STRICT_GBAN
+from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, STRICT_GBAN, MESSAGE_DUMP
 from hitsuki.modules.helper_funcs.chat_status import user_admin, is_user_admin
 from hitsuki.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from hitsuki.modules.helper_funcs.filters import CustomFilters
@@ -98,7 +98,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
         user_id, new_reason = extract_user_and_text(message, args)
         if old_reason:
             banner = update.effective_user  # type: Optional[User]
-            send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+            bot.send_message(MESSAGE_DUMP,
                      "<b>Emendation of Global Ban</b>" \
                      "\n#GBAN" \
                      "\n<b>Status:</b> <code>Amended</code>" \
@@ -117,7 +117,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
                                parse_mode=ParseMode.HTML)
         else:
             banner = update.effective_user  # type: Optional[User]
-            send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+            bot.send_message(MESSAGE_DUMP,
                      "<b>Emendation of Global Ban</b>" \
                      "\n#GBAN" \
                      "\n<b>Status:</b> <code>New reason</code>" \
@@ -137,7 +137,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
     # message.reply_text(starting, reply_markup=keyboard, parse_mode=ParseMode.HTML)
     
     banner = update.effective_user  # type: Optional[User]
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+    bot.send_message(MESSAGE_DUMP,
                  "<b>Global Ban</b>" \
                  "\n#GBAN" \
                  "\n<b>Status:</b> <code>Enforcing</code>" \
@@ -172,7 +172,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
         except TelegramError:
             pass
 
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS, 
+    bot.send_message(MESSAGE_DUMP,
                   "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name or "Deleted Account")),
                 html=True)
     message.reply_text("Person has been gbanned.")
@@ -200,7 +200,7 @@ def ungban(bot: Bot, update: Update, args: List[str]):
 
     # message.reply_text("{}, will be unbanned globally.".format(user_chat.first_name or "Deleted Account"))
 
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
+    bot.send_message(MESSAGE_DUMP,
                  "<b>Regression of Global Ban</b>" \
                  "\n#UNGBAN" \
                  "\n<b>Status:</b> <code>Ceased</code>" \
@@ -236,7 +236,7 @@ def ungban(bot: Bot, update: Update, args: List[str]):
 
     sql.ungban_user(user_id)
 
-    send_to_list(bot, SUDO_USERS + SUPPORT_USERS, 
+    bot.send_message(MESSAGE_DUMP,
                   "{} has been unbanned globally!".format(mention_html(user_chat.id, 
                                                                          user_chat.first_name or "Deleted Account")),
                   html=True)
