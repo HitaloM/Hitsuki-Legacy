@@ -177,7 +177,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
     bot.send_message(MESSAGE_DUMP,
                   "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name or "Deleted Account")),
-                html=True)
+                parse_mode=ParseMode.HTML)
     message.reply_text("Person has been gbanned.")
 
 
@@ -243,7 +243,7 @@ def ungban(bot: Bot, update: Update, args: List[str]):
     bot.send_message(MESSAGE_DUMP,
                   "{} has been unbanned globally!".format(mention_html(user_chat.id, 
                                                                          user_chat.first_name or "Deleted Account")),
-                  html=True)
+                  parse_mode=ParseMode.HTML)
 
     message.reply_text("Person has been un-gbanned.")
 
