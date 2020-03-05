@@ -5,12 +5,16 @@ from io import BytesIO
 from PIL import Image
 from telegram import Message, Update, Bot, User
 from telegram.ext import run_async, CommandHandler
-from hitsuki import dispatcher
+from hitsuki import dispatcher, spamfilters
 from hitsuki.modules.languages import tl as tld
 
 
 @run_async
 def thonkify(bot: Bot, update: Update):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+
     from hitsuki.modules.thonkify_dict import thonkifydict
 
     chat = update.effective_chat

@@ -23,7 +23,7 @@ from zalgo_text import zalgo
 
 from deeppyer import deepfry
 from hitsuki import DEEPFRY_TOKEN
-from hitsuki import dispatcher
+from hitsuki import dispatcher, spamfilters
 
 MAXNUMURL = 'https://raw.githubusercontent.com/atanet90/expression-pack/master/meta'
 WIDE_MAP = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
@@ -33,6 +33,9 @@ WIDE_MAP[0x20] = 0x3000
 
 @run_async
 def owo(bot: Bot, update: Update):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
     message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to meme.")
@@ -72,6 +75,9 @@ def owo(bot: Bot, update: Update):
 
 @run_async
 def stretch(bot: Bot, update: Update):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
     message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to meme.")
@@ -86,7 +92,10 @@ def stretch(bot: Bot, update: Update):
 
 @run_async
 def vapor(bot: Bot, update: Update, args: List[str]):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     if not message.reply_to_message:
         if not args:
             message.reply_text(
@@ -115,6 +124,9 @@ def vapor(bot: Bot, update: Update, args: List[str]):
 # https://github.com/wrxck/mattata/blob/master/plugins/copypasta.mattata
 @run_async
 def copypasta(bot: Bot, update: Update):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
     message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to meme.")
@@ -170,7 +182,10 @@ def copypasta(bot: Bot, update: Update):
 
 @run_async
 def bmoji(bot: Bot, update: Update):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to meme.")
     else:
@@ -183,7 +198,10 @@ def bmoji(bot: Bot, update: Update):
 
 @run_async
 def forbesify(bot: Bot, update: Update):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     if message.reply_to_message:
         data = message.reply_to_message.text
     else:
@@ -211,7 +229,10 @@ def forbesify(bot: Bot, update: Update):
 
 @run_async
 def spongemocktext(bot: Bot, update: Update):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     if message.reply_to_message:
         data = message.reply_to_message.text
     else:
@@ -223,7 +244,10 @@ def spongemocktext(bot: Bot, update: Update):
 
 @run_async
 def clapmoji(bot: Bot, update: Update):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     if not message.reply_to_message:
         message.reply_text("I need a message to meme.")
     else:
@@ -235,7 +259,10 @@ def clapmoji(bot: Bot, update: Update):
 
 @run_async
 def zalgotext(bot: Bot, update: Update):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     if message.reply_to_message:
         data = message.reply_to_message.text
     else:
@@ -251,7 +278,10 @@ def zalgotext(bot: Bot, update: Update):
 
 @run_async
 def chinesememes(bot: Bot, update: Update, args: List[str]):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     maxnum = urllib.request.urlopen(MAXNUMURL)
     maxnum = maxnum.read().decode("utf8")
     if args:
@@ -275,7 +305,10 @@ def chinesememes(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def deepfryer(bot: Bot, update: Update):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     if message.reply_to_message:
         data = message.reply_to_message.photo
         data2 = message.reply_to_message.sticker
@@ -331,7 +364,10 @@ async def process_deepfry(image: Image, reply: Message, bot: Bot):
 
 @run_async
 def shout(bot: Bot, update: Update, args):
-    if len(args) == 0:
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	if len(args) == 0:
         update.effective_message.reply_text("Where is text?")
         return
 

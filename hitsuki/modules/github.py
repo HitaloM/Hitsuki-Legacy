@@ -51,7 +51,10 @@ def getRepo(bot, update, reponame):
 
 @run_async
 def getRelease(bot: Bot, update: Update, args: List[str]):
-    msg = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	msg = update.effective_message
     if(len(args) != 1):
         msg.reply_text("Please specify a valid combination of <user>/<repo>")
         return
@@ -151,7 +154,10 @@ def getVer(bot: Bot, update: Update):
 
 @run_async
 def github(bot: Bot, update: Update):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     text = message.text[len('/git '):]
     usr = get(f'https://api.github.com/users/{text}').json()
     if usr.get('login'):
@@ -192,7 +198,10 @@ def github(bot: Bot, update: Update):
 
 @run_async
 def repo(bot: Bot, update: Update, args: List[str]):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     text = message.text[len('/repo '):]
     usr = get(f'https://api.github.com/users/{text}/repos?per_page=40').json()
     reply_text = "*Repo*\n"

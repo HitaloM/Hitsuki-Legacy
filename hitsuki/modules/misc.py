@@ -663,37 +663,6 @@ def get_time(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def get_time_alt(bot: Bot, update: Update, args: List[str]):
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
-    if args:
-        location = " ".join(args)
-        if location.lower() == bot.first_name.lower():
-            send_message(update.effective_message, "Selalu ada waktu banned untukku!")
-            bot.send_sticker(update.effective_chat.id, BAN_STICKER)
-            return
-
-        res = requests.get('https://dev.virtualearth.net/REST/v1/timezone/?query={}&key={}'.format(location, MAPS_API))
-
-        if res.status_code == 200:
-            loc = res.json()
-            if len(loc['resourceSets'][0]['resources'][0]['timeZoneAtLocation']) == 0:
-                send_message(update.effective_message, tl(update.effective_message, "Lokasi tidak di temukan!"))
-                return
-            placename = loc['resourceSets'][0]['resources'][0]['timeZoneAtLocation'][0]['placeName']
-            localtime = loc['resourceSets'][0]['resources'][0]['timeZoneAtLocation'][0]['timeZone'][0]['convertedTime']['localTime']
-            if lang_sql.get_lang(update.effective_chat.id) == "id":
-                locale.setlocale(locale.LC_TIME, 'id_ID.UTF-8')
-                time = datetime.strptime(localtime, '%Y-%m-%dT%H:%M:%S').strftime("%H:%M:%S hari %A, %d %B")
-            else:
-                time = datetime.strptime(localtime, '%Y-%m-%dT%H:%M:%S').strftime("%H:%M:%S %A, %d %B")
-            send_message(update.effective_message, tl(update.effective_message, "Sekarang pukul `{}` di `{}`").format(time, placename), parse_mode="markdown")
-    else:
-        send_message(update.effective_message, tl(update.effective_message, "Gunakan `/time nama daerah`\nMisal: `/time jakarta`"), parse_mode="markdown")
-
-
-@run_async
 def echo(bot: Bot, update: Update):
     message = update.effective_message
     chat_id = update.effective_chat.id
@@ -737,8 +706,6 @@ __mod_name__ = "Misc"
 ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True)
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID))
 
-TIME_HANDLER = DisableAbleCommandHandler("time", get_time_alt, pass_args=True)
-
 RUNS_HANDLER = DisableAbleCommandHandler(["runs", "lari"], runs)
 SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True)
 INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True)
@@ -758,7 +725,6 @@ HUG_HANDLER = DisableAbleCommandHandler("hug", hug)
 
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(IP_HANDLER)
-dispatcher.add_handler(TIME_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
 dispatcher.add_handler(INFO_HANDLER)

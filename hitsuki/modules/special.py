@@ -67,7 +67,10 @@ reactionangry = ["▄︻̷┻═━一", "(▀Ĺ̯▀ )", "(ง ͠° ͟ل͜ ͡°
 
 @run_async
 def react(bot: Bot, update: Update):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     react = random.choice(reactions)
     if message.reply_to_message:
         message.reply_to_message.reply_text(react)
@@ -77,7 +80,10 @@ def react(bot: Bot, update: Update):
 
 @run_async
 def rhappy(bot: Bot, update: Update):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     rhappy = random.choice(reactionhappy)
     if message.reply_to_message:
         message.reply_to_message.reply_text(rhappy)
@@ -87,7 +93,10 @@ def rhappy(bot: Bot, update: Update):
 
 @run_async
 def rangry(bot: Bot, update: Update):
-    message = update.effective_message
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
+	message = update.effective_message
     rangry = random.choice(reactionangry)
     if message.reply_to_message:
         message.reply_to_message.reply_text(rangry)
@@ -366,6 +375,7 @@ __help__ = """
  - /react: reacts with normal reactions.
  - /happy: reacts with happiness.
  - /angry: reacts angrily.
+ - /fortune: give a fortune
 """
 
 __mod_name__ = "🚀 Hitsuki Extras 🚀"
