@@ -157,7 +157,7 @@ def github(bot: Bot, update: Update):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     text = message.text[len('/git '):]
     usr = get(f'https://api.github.com/users/{text}').json()
     if usr.get('login'):
@@ -201,7 +201,7 @@ def repo(bot: Bot, update: Update, args: List[str]):
     spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
     if spam == True:
         return
-	message = update.effective_message
+    message = update.effective_message
     text = message.text[len('/repo '):]
     usr = get(f'https://api.github.com/users/{text}/repos?per_page=40').json()
     reply_text = "*Repo*\n"
