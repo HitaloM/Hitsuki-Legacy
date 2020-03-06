@@ -99,21 +99,21 @@ def new_fed(bot: Bot, update: Update):
 
 		x = sql.new_fed(user.id, fed_name, fed_id)
 		if not x:
-			send_message(update.effective_message, tl(update.effective_message, "Tidak dapat membuat federasi! Tolong hubungi pembuat saya jika masalah masih berlanjut."))
+			send_message(update.effective_message, tl(update.effective_message, "Unable to create a federation! Please contact my owner if the problem persists."))
 			return
 
-		send_message(update.effective_message, tl(update.effective_message, "*Anda telah berhasil membuat federasi baru!*"\
+		send_message(update.effective_message, tl(update.effective_message, "*You have successfully created a new federation!*"\
 											"\nName: `{}`"\
 											"\nID: `{}`"
-											"\n\nGunakan perintah di bawah ini untuk bergabung dengan federasi:"
+											"\n\nUse the command below to join the federation:"
 											"\n`/joinfed {}`").format(fed_name, fed_id, fed_id), parse_mode=ParseMode.MARKDOWN)
 		try:
 			bot.send_message(TEMPORARY_DATA,
-				"Federasi <b>{}</b> telah di buat dengan ID: <pre>{}</pre>".format(fed_name, fed_id), parse_mode=ParseMode.HTML)
+				"Federation <b>{}</b> has been created with the ID: <pre>{}</pre>".format(fed_name, fed_id), parse_mode=ParseMode.HTML)
 		except:
 			LOGGER.warning("Cannot send a message to TEMPORARY_DATA")
 	else:
-		send_message(update.effective_message, tl(update.effective_message, "Tolong tulis nama federasinya!"))
+		send_message(update.effective_message, tl(update.effective_message, "Please write the name of the federation!"))
 
 @run_async
 def del_fed(bot: Bot, update: Update, args: List[str]):
@@ -124,31 +124,31 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
 	chat = update.effective_chat  # type: Optional[Chat]
 	user = update.effective_user  # type: Optional[User]
 	if chat.type != "private":
-		send_message(update.effective_message, tl(update.effective_message, "Hapus federasi Anda di PM saya, bukan dalam grup."))
+		send_message(update.effective_message, tl(update.effective_message, "Remove the federation on my PM, not in the group."))
 		return
 	if args:
 		is_fed_id = args[0]
 		getinfo = sql.get_fed_info(is_fed_id)
 		if getinfo == False:
-			send_message(update.effective_message, tl(update.effective_message, "Federasi ini tidak di temukan!"))
+			send_message(update.effective_message, tl(update.effective_message, "The federation is not found!"))
 			return
 		if int(getinfo['owner']) == int(user.id) or int(user.id) == OWNER_ID:
 			fed_id = is_fed_id
 		else:
-			send_message(update.effective_message, tl(update.effective_message, "Hanya pemilik federasi yang dapat melakukan ini!"))
+			send_message(update.effective_message, tl(update.effective_message, "Only the owner of a federation can do this!"))
 			return
 	else:
-		send_message(update.effective_message, tl(update.effective_message, "Apa yang harus saya hapus?"))
+		send_message(update.effective_message, tl(update.effective_message, "What should I remove?"))
 		return
 
 	if is_user_fed_owner(fed_id, user.id) == False:
-		send_message(update.effective_message, tl(update.effective_message, "Hanya pemilik federasi yang dapat melakukan ini!"))
+		send_message(update.effective_message, tl(update.effective_message, "Only the owner of a federation can do this!"))
 		return
 
-	send_message(update.effective_message, tl(update.effective_message, "Anda yakin ingin menghapus federasi Anda? Tindakan ini tidak bisa dibatalkan, Anda akan kehilangan seluruh daftar larangan Anda, dan '{}' akan hilang secara permanen.").format(getinfo['fname']),
+	send_message(update.effective_message, tl(update.effective_message, "Are you sure you want to delete your federation? This action can not be undone, you will lose all your ban list, and '{}' will be lost permanently.").format(getinfo['fname']),
 			reply_markup=InlineKeyboardMarkup(
-						[[InlineKeyboardButton(text=tl(update.effective_message, "⚠️ Hapus Federasi ⚠️"), callback_data="rmfed_{}".format(fed_id))],
-						[InlineKeyboardButton(text=tl(update.effective_message, "Batalkan"), callback_data="rmfed_cancel")]]))
+						[[InlineKeyboardButton(text=tl(update.effective_message, "⚠️ Delete Federation ⚠️"), callback_data="rmfed_{}".format(fed_id))],
+						[InlineKeyboardButton(text=tl(update.effective_message, "Cancel"), callback_data="rmfed_cancel")]]))
 
 @run_async
 def fed_chat(bot: Bot, update: Update, args: List[str]):

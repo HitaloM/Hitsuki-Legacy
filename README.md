@@ -20,6 +20,7 @@ Based on [Emilia Hikari](https://github.com/AyraHikari/EmiliaHikari)
 * [@RaphielGang](https://github.com/RaphielGang) - for the base of the direct link module.
 * [@AvinashReddy3108](https://github.com/AvinashReddy3108) - for the base used in Dockerfile.
 * [@AnimeKaizoku](https://github.com/AnimeKaizoku) - for dbcleanup module
+* [@nunopenim](https://github.com/nunopenim) - for the codes of CAS and GitHub
 
 ----------
 ```
