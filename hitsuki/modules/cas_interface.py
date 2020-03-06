@@ -85,7 +85,6 @@ def get_version(bot: Bot, update: Update):
 
 @run_async
 def caschecker(bot: Bot, update: Update, args: List[str]):
-    # /info logic
     msg = update.effective_message  # type: Optional[Message]
     user_id = extract_user(update.effective_message, args)
     if user_id and int(user_id) != 777000:
@@ -120,8 +119,7 @@ def caschecker(bot: Bot, update: Update, args: List[str]):
         text += str(parsing)
     update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
-# this sends direct request to combot server. Will return true if user is banned, false if
-# id invalid or user not banned
+
 @run_async
 def casquery(bot: Bot, update: Update, args: List[str]):
     msg = update.effective_message  # type: Optional[Message]
@@ -138,10 +136,11 @@ def casquery(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def watcher(bot: Bot, update: Update):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    msg = update.effective_message  # type: Optional[Message]
-    casPrefs = sql.get_status(str(chat.id))  # check if enabled, obviously
+    chat = update.effective_chat
+    user = update.effective_user
+    msg = update.effective_message
+    casPrefs = sql.get_cas_status(str(chat.id))
+    autoban = sql.get_cas_autoban(str(chat.id))
     if casPrefs and not autoban and cas.banchecker(user.id):
         bot.restrict_chat_member(chat.id, user.id,
                                  can_send_messages=False,
@@ -166,7 +165,7 @@ def watcher(bot: Bot, update: Update):
             send_to_list(bot, SUDO_USERS + SUPPORT_USERS, report, html=True)
 
 
-__mod_name__ = "CAS Interface"
+__mod_name__ = "Combot Anti-Spam (CAS)"
 
 __help__ = """
 The CAS Interface module is designed to work with a ported CAS API. CAS means Combot Anti-Spam System, and is a huge known list that contains spammers, scammers and more people that come to break peace.

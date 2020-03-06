@@ -28,9 +28,6 @@ def getKitsu(mal):
 
 def getPosterLink(mal):
     # grab poster from kitsu
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
     kitsu = getKitsu(mal)
     image = requests.get(f'https://kitsu.io/api/edge/anime/{kitsu}').json()
     return(image['data']['attributes']['posterImage']['original'])
@@ -38,9 +35,6 @@ def getPosterLink(mal):
 
 def getBannerLink(mal, kitsu_search=True):
     # try getting kitsu backdrop
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
     if kitsu_search:
         kitsu = getKitsu(mal)
         image = f'http://media.kitsu.io/anime/cover_images/{kitsu}/original.jpg'
