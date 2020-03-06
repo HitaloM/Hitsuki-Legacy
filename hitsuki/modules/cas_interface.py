@@ -165,19 +165,22 @@ def watcher(bot: Bot, update: Update):
             send_to_list(bot, SUDO_USERS + SUPPORT_USERS, report, html=True)
 
 
-__mod_name__ = "Combot Anti-Spam (CAS)"
+__mod_name__ = "Combot Anti-Spam"
 
 __help__ = """
-The CAS Interface module is designed to work with a ported CAS API. CAS means Combot Anti-Spam System, and is a huge known list that contains spammers, scammers and more people that come to break peace.
-This module will warn you of potential spammers that join your group, but you can check for them if they are already in group.
+The CAS Interface module is designed to work with a ported CAS API.
+
+*What is CAS?*
+CAS stands for Combot Anti-Spam, an automated system designed to detect spammers in Telegram groups. 
+If a user with any spam record connects to a CAS-secured group, the CAS system will ban that user immediately.
 
 *Available commands:*
- - /casver: Returns the API version that the bot is currently running.
- - /cascheck: Checks you or another user for CAS BAN.
+ - /casver: Returns the pyCombotCAS API version that the bot is currently running.
+ - /cascheck <user>/<reply>: Check if users are banned in the CAS database.
 
 *Admin only:*
- - /setcas <on/off/true/false>: Enables/disables CAS Checking on welcome.
- - /setban <on/off/true/false>: Enables/disables auto bans for CAS Banneds.
+ - /setcas <on/off/true/false>: Enable/Disable CAS checking on welcome.
+ - /setban <on/off/true/false>: Enable/Disable auto bans for CAS Banneds.
  - /getcas: Gets the current CAS setting.
 """
 
