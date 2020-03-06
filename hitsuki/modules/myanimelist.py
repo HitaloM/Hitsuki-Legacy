@@ -8,7 +8,7 @@ import bs4
 from telegram import Bot, Update, InlineKeyboardMarkup, InlineKeyboardButton, ParseMode
 from telegram.ext import CallbackQueryHandler, run_async
 
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS
+from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, spamfilters
 from hitsuki.modules.disable import DisableAbleCommandHandler
 
 info_btn = "More Information"
@@ -28,6 +28,9 @@ def getKitsu(mal):
 
 def getPosterLink(mal):
     # grab poster from kitsu
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
     kitsu = getKitsu(mal)
     image = requests.get(f'https://kitsu.io/api/edge/anime/{kitsu}').json()
     return(image['data']['attributes']['posterImage']['original'])
@@ -35,6 +38,9 @@ def getPosterLink(mal):
 
 def getBannerLink(mal, kitsu_search=True):
     # try getting kitsu backdrop
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
     if kitsu_search:
         kitsu = getKitsu(mal)
         image = f'http://media.kitsu.io/anime/cover_images/{kitsu}/original.jpg'
@@ -186,6 +192,9 @@ def get_anime_manga(mal_id, search_type, user_id):
 
 @run_async
 def anime(bot: Bot, update: Update):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
 
     message = update.effective_message
     args = message.text.strip().split(" ", 1)
@@ -227,6 +236,9 @@ def anime(bot: Bot, update: Update):
 
 @run_async
 def manga(bot: Bot, update: Update):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
 
     message = update.effective_message
     args = message.text.strip().split(" ", 1)
@@ -261,6 +273,9 @@ def manga(bot: Bot, update: Update):
 
 @run_async
 def character(bot: Bot, update: Update):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
 
     message = update.effective_message
     args = message.text.strip().split(" ", 1)
@@ -329,6 +344,9 @@ def character(bot: Bot, update: Update):
 
 @run_async
 def upcoming(bot: Bot, update: Update):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
 
     jikan = jikanpy.jikan.Jikan()
     upcoming = jikan.top('anime', page=1, subtype="upcoming")
