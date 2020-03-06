@@ -29,7 +29,7 @@ if is_module_loaded(FILENAME):
             if result:
                 if chat.type == chat.SUPERGROUP and chat.username:
                     result += "\n<b>Link:</b> " \
-                              "<a href=\"http://telegram.me/{}/{}\">klik disini</a>".format(chat.username,
+                              "<a href=\"http://telegram.me/{}/{}\">Click here</a>".format(chat.username,
                                                                                            message.message_id)
                 log_chat = sql.get_chat_log_channel(chat.id)
                 if log_chat:
@@ -75,7 +75,7 @@ if is_module_loaded(FILENAME):
         if log_channel:
             log_channel_info = bot.get_chat(log_channel)
             send_message(update.effective_message, 
-                tl(update.effective_message, "Grup ini memiliki semua log yang dikirim ke: {} (`{}`)").format(escape_markdown(log_channel_info.title),
+                tl(update.effective_message, "These group have all logs sent to: {} (`{}`)").format(escape_markdown(log_channel_info.title),
                                                                          log_channel),
                 parse_mode=ParseMode.MARKDOWN)
 
@@ -110,19 +110,19 @@ if is_module_loaded(FILENAME):
                                  chat.title or chat.first_name))
             except Unauthorized as excp:
                 if excp.message == "Forbidden: bot is not a member of the channel chat":
-                    bot.send_message(chat.id, tl(update.effective_message, "Gagal menyetel saluran log!\nSaya mungkin bukan admin di channel tersebut."))
+                    bot.send_message(chat.id, tl(update.effective_message, "Failed to set log channel!\nI probably not the admin on the channel."))
                     sql.stop_chat_logging(chat.id)
                     return
                 else:
                     LOGGER.exception("ERROR in setting the log channel.")
                     
-            bot.send_message(chat.id, tl(update.effective_message, "Berhasil mengatur saluran log!"))
+            bot.send_message(chat.id, tl(update.effective_message, "Successfully set up the log channel!"))
 
         else:
-            send_message(update.effective_message, tl(update.effective_message, "Langkah-langkah untuk mengatur saluran log adalah:\n"
-                               " - tambahkan bot ke saluran yang diinginkan\n"
-                               " - Kirimkan /setlog ke saluran\n"
-                               " - Teruskan /setlog ke grup\n"))
+            send_message(update.effective_message, tl(update.effective_message, "Setting the log channel is done by:\n"
+                               " - adding the bot to the desired channel (as an admin!)\n"
+                               " - sending /setlog in the channel\n"
+                               " - forwarding the /setlog to the group\n"))
 
 
     @run_async
@@ -136,15 +136,15 @@ if is_module_loaded(FILENAME):
 
         log_channel = sql.stop_chat_logging(chat.id)
         if log_channel:
-            bot.send_message(log_channel, tl(update.effective_message, "Channel telah dibatalkan tautannya {}").format(chat.title))
-            send_message(update.effective_message, tl(update.effective_message, "Log saluran telah dinonaktifkan."))
+            bot.send_message(log_channel, tl(update.effective_message, "Channel has been unlinked from {}").format(chat.title))
+            send_message(update.effective_message, tl(update.effective_message, "Log channel has been un-set."))
 
         else:
-            send_message(update.effective_message, tl(update.effective_message, "Belum ada saluran log yang ditetapkan!"))
+            send_message(update.effective_message, tl(update.effective_message, "No log channel has been set yet!"))
 
 
     def __stats__():
-        return tl(OWNER_ID, "{} saluran log ditetapkan.").format(sql.num_logchannels())
+        return tl(OWNER_ID, "{} log channels set.").format(sql.num_logchannels())
 
 
     def __migrate__(old_chat_id, new_chat_id):
@@ -155,12 +155,22 @@ if is_module_loaded(FILENAME):
         log_channel = sql.get_chat_log_channel(chat_id)
         if log_channel:
             log_channel_info = dispatcher.bot.get_chat(log_channel)
-            return tl(user_id, "Grup ini memiliki semua log yang dikirim ke: {} (`{}`)").format(escape_markdown(log_channel_info.title),
+            return tl(user_id, "This group has all it's logs sent to: {} (`{}`)").format(escape_markdown(log_channel_info.title),
                                                                             log_channel)
-        return tl(user_id, "Tidak ada saluran masuk yang ditetapkan untuk grup ini!")
+        return tl(user_id, "No log channel is set for this group!")
 
 
-    __help__ = "logchannel_help"
+    __help__ = """
+    *Admin only:*
+    - /logchannel: get log channel info
+    - /setlog: set the log channel.
+    - /unsetlog: unset the log channel.
+
+    Setting the log channel is done by:
+    - adding the bot to the desired channel (as an admin!)
+    - sending /setlog in the channel
+    - forwarding the /setlog to the group
+    """
 
     __mod_name__ = "Channel Log"
 
