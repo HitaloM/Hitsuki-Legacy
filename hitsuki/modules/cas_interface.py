@@ -1,6 +1,6 @@
 import html
 import hitsuki.modules.helper_funcs.cas_api as cas
-import hitsuki.modules.sql.cas_api_sql as sql
+import hitsuki.modules.sql.welcome_sql as sql
 
 from typing import Optional, List
 
