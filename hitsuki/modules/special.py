@@ -10,16 +10,18 @@ import time
 import urbandict
 
 import pyowm
-from pyowm import timeutils, exceptions
-from googletrans import Translator
+import requests
 import wikipedia
 import base64
+
 from bs4 import BeautifulSoup
 from emoji import UNICODE_EMOJI
+from pyowm import timeutils, exceptions
+from googletrans import Translator
+from PIL import Image
 
-import requests
 from telegram.error import BadRequest, Unauthorized
-from telegram import Message, Chat, Update, Bot, MessageEntity
+from telegram import Message, Chat, Update, Bot, MessageEntity, TelegramError
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
