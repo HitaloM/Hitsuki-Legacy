@@ -90,6 +90,17 @@ class WelcomeSecurity(BASE):
         self.mute_time = mute_time
         self.custom_text = custom_text
 
+class CombotCASStatus(BASE):
+    __tablename__ = "cas_stats"
+    chat_id = Column(String(14), primary_key=True)
+    status = Column(Boolean, default=True)
+    autoban = Column(Boolean, default=False)
+    
+    def __init__(self, chat_id, status, autoban):
+        self.chat_id = str(chat_id) #chat_id is int, make sure it's string
+        self.status = status
+        self.autoban = autoban
+
 class UserRestrict(BASE):
     __tablename__ = "welcome_restrictlist"
     chat_id = Column(String(14), primary_key=True)
@@ -119,6 +130,7 @@ class AllowedChat(BASE):
 Welcome.__table__.create(checkfirst=True)
 WelcomeButtons.__table__.create(checkfirst=True)
 GoodbyeButtons.__table__.create(checkfirst=True)
+CombotCASStatus.__table__.create(checkfirst=True)
 CleanServiceSetting.__table__.create(checkfirst=True)
 WelcomeSecurity.__table__.create(checkfirst=True)
 UserRestrict.__table__.create(checkfirst=True)
@@ -126,6 +138,7 @@ AllowedChat.__table__.create(checkfirst=True)
 
 INSERTION_LOCK = threading.RLock()
 WELC_BTN_LOCK = threading.RLock()
+CAS_LOCK = threading.RLock()
 LEAVE_BTN_LOCK = threading.RLock()
 CS_LOCK = threading.RLock()
 WS_LOCK = threading.RLock()
@@ -412,6 +425,46 @@ def __load_chat_userrestrict():
 
     finally:
         SESSION.close()
+
+def get_cas_status(chat_id):
+    try:
+        resultObj = SESSION.query(CombotCASStatus).get(str(chat_id))
+        if resultObj:
+            return resultObj.status
+        return True
+    finally:
+        SESSION.close()
+
+def set_cas_status(chat_id, status):
+    with CAS_LOCK:
+        ban = False
+        prevObj = SESSION.query(CombotCASStatus).get(str(chat_id))
+        if prevObj:
+            ban = prevObj.autoban
+            SESSION.delete(prevObj)
+        newObj = CombotCASStatus(str(chat_id), status, ban)
+        SESSION.add(newObj)
+        SESSION.commit()
+
+def get_cas_autoban(chat_id):
+    try:
+        resultObj = SESSION.query(CombotCASStatus).get(str(chat_id))
+        if resultObj and resultObj.autoban:
+            return resultObj.autoban
+        return False
+    finally:
+        SESSION.close()
+        
+def set_cas_autoban(chat_id, autoban):
+    with CAS_LOCK:
+        status = True
+        prevObj = SESSION.query(CombotCASStatus).get(str(chat_id))
+        if prevObj:
+            status = prevObj.status
+            SESSION.delete(prevObj)
+        newObj = CombotCASStatus(str(chat_id), status, autoban)
+        SESSION.add(newObj)
+        SESSION.commit()
 
 def __load_whitelisted_chats_list(): #load shit to memory to be faster, and reduce disk access 
     global WHITELIST
