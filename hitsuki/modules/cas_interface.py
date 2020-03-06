@@ -141,7 +141,7 @@ def watcher(bot: Bot, update: Update):
     user = update.effective_user  # type: Optional[User]
     msg = update.effective_message  # type: Optional[Message]
     casPrefs = sql.get_status(str(chat.id))  # check if enabled, obviously
-    elif casPrefs and not autoban and cas.banchecker(user.id):
+    if casPrefs and not autoban and cas.banchecker(user.id):
         bot.restrict_chat_member(chat.id, user.id,
                                  can_send_messages=False,
                                  can_send_media_messages=False,
