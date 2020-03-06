@@ -463,12 +463,16 @@ def main():
     start_handler = CommandHandler("start", start, pass_args=True)
 
     source_handler = CommandHandler("source", source)
+
     help_handler = CommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
 
     settings_handler = CommandHandler("settings", get_settings)
     settings_callback_handler = CallbackQueryHandler(settings_button, pattern=r"stngs_")
-    
+
+    start_callback_handler = CallbackQueryHandler(send_start, pattern=r"bot_start")
+    dispatcher.add_handler(start_callback_handler)
+
     M_CONNECT_BTN_HANDLER = CallbackQueryHandler(m_connect_button, pattern=r"main_connect")
     M_SETLANG_BTN_HANDLER = CallbackQueryHandler(m_change_langs, pattern=r"main_setlang")
 
