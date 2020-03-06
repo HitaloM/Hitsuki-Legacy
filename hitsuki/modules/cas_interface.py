@@ -1,6 +1,7 @@
 import html
 import hitsuki.modules.helper_funcs.cas_api as cas
 import hitsuki.modules.sql.welcome_sql as sql
+import hitsuki.modules.sql.global_bans_sql as gbansql
 
 from typing import Optional, List
 
@@ -171,16 +172,18 @@ __help__ = """
 The CAS Interface module is designed to work with a ported CAS API. CAS means Combot Anti-Spam System, and is a huge known list that contains spammers, scammers and more people that come to break peace.
 This module will warn you of potential spammers that join your group, but you can check for them if they are already in group.
 
-Commands:
- - /casver: Returns the API version that the bot is currently running
- - /cascheck: Checks you or another user for CAS BAN
+*Available commands:*
+ - /casver: Returns the API version that the bot is currently running.
+ - /cascheck: Checks you or another user for CAS BAN.
 
- *Admin only:*
- - /setcas <on/off/true/false>: Enables/disables CAS Checking on welcome
- - /getcas: Gets the current CAS setting
- """
+*Admin only:*
+ - /setcas <on/off/true/false>: Enables/disables CAS Checking on welcome.
+ - /setban <on/off/true/false>: Enables/disables auto bans for CAS Banneds.
+ - /getcas: Gets the current CAS setting.
+"""
 
 SETCAS_HANDLER = CommandHandler("setcas", setcas, filters=Filters.group)
+SETBAN_HANDLER = CommandHandler("setban", setban, filters=Filters.group)
 GETCAS_HANDLER = CommandHandler(
     "getcas",
     get_current_setting,
@@ -196,6 +199,7 @@ WATCHER_HANDLER = MessageHandler(
     Filters.status_update.new_chat_members, watcher)
 
 dispatcher.add_handler(SETCAS_HANDLER)
+dispatcher.add_handler(SETBAN_HANDLER)
 dispatcher.add_handler(GETCAS_HANDLER)
 dispatcher.add_handler(GETVER_HANDLER)
 dispatcher.add_handler(CASCHECK_HANDLER)
