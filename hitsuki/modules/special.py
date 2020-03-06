@@ -630,6 +630,9 @@ def deEmojify(inputString):
 
 @run_async
 def getsticker(bot: Bot, update: Update):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
     msg = update.effective_message
     chat_id = update.effective_chat.id
     if msg.reply_to_message and msg.reply_to_message.sticker:
@@ -644,6 +647,9 @@ def getsticker(bot: Bot, update: Update):
 
 @run_async
 def kang(bot: Bot, update: Update, args: List[str]):
+    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
+    if spam == True:
+        return
     msg = update.effective_message
     user = update.effective_user
     packnum = 0

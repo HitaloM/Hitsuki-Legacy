@@ -386,29 +386,30 @@ def shout(bot: Bot, update: Update, args):
 
 # no help string
 __help__ = """
-*Some memes command, find it all out yourself!*
-- /owo: OWO de text
-- /stretch: STRETCH de text
-- /vapor: owo vapor dis
-- /mock: mocks a replied message lick the spongebob meme.
-- /zalgofy: Reply to a message to g̫̞l̼̦i̎͡tͫ͢c̘ͭh̛̗ it out!
-- /deepfry: For when you're hungry for memes
-- /shout <keyword>: Write anything you want to give loud shout
-- /dllm: Some chinese memes
-- /thonkify <reply>/<args>: turns text into thonk text (only supports letters and none symbols for now).
- /forbes <reply>: turns a message into a Forbes headline.
+Ohai, I see you'd like to know what memes I have for sale.
+Well, here you go.
 
-*Emojis:*
-- /clapmoji
-- /bmoji
-- /copypasta
+*Some memes command:*
+ - /owo: OwO whats this? OwOfies a message.
+ - /stretch: Stretches vowels in a message a random number of times.
+ - /vapor: Turns a message into vaporwave text.
+ - /mock: Mocks a replied message lick the spongebob meme.
+ - /zalgofy: corrupts a message.
+ - /deepfry: for when your images/stickers need to get a little fried.
+ - /shout <keyword>: Write anything you want to give loud shout
+ - /dllm: Some chinese memes
+ - /thonkify <reply>/<args>: turns text into thonk text (only supports letters and none symbols for now).
+ - /forbes <reply>: turns a message into a Forbes headline.
+ - /bify <reply>: Replying to a message with replace a random character with the B emoji.
+ - /clap <reply>: Adds clap emojis at the begining, end, and in every space in a message.
+ - /cp <reply>: A replica of mattatas copypasta command.
 """
 
 __mod_name__ = "Memes and etc."
 
-COPYPASTA_HANDLER = CommandHandler("copypasta", copypasta)
-CLAPMOJI_HANDLER = CommandHandler("clapmoji", clapmoji)
-BMOJI_HANDLER = CommandHandler("bmoji", bmoji)
+COPYPASTA_HANDLER = CommandHandler("cp", copypasta)
+CLAPMOJI_HANDLER = CommandHandler("clap", clapmoji)
+BMOJI_HANDLER = CommandHandler("bify", bmoji)
 MOCK_HANDLER = CommandHandler("mock", spongemocktext)
 OWO_HANDLER = CommandHandler("owo", owo)
 FORBES_HANDLER = CommandHandler("forbes", forbesify)
