@@ -804,7 +804,7 @@ def makepack_internal(msg, user, png_sticker, emoji, bot, packname, packnum):
         extra_version = ""
         if packnum > 0:
             extra_version = " " + str(packnum)
-        success = bot.create_new_sticker_set(user.id, packname, f"{name}s kang pack" + extra_version,
+        success = bot.create_new_sticker_set(user.id, packname, f"{name}s Hitsuki pack" + extra_version,
                                              png_sticker=png_sticker,
                                              emojis=emoji)
     except TelegramError as e:
