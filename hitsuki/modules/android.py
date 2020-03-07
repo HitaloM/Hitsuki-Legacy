@@ -16,7 +16,6 @@ from telegram.ext import run_async
 
 from hitsuki import dispatcher, LOGGER, spamfilters
 from hitsuki.modules.helper_funcs.misc import split_message
-from hitsuki.modules.languages import tl
 
 # DO NOT DELETE THIS, PLEASE.
 # Originally made by @RealAkito on GitHub and Telegram
@@ -950,7 +949,7 @@ __help__ = """
  - /getfw <model> <csc>: (SAMSUNG ONLY) gets firmware download links from samfrew, sammobile and sfirmwares for the given device.
  - /checkfw <model> <csc>: (SAMSUNG ONLY) shows the latest firmware info for the given device, taken from samsung server.
  - /miui <device>: Get the latest MIUI ROM for a device.
-""",
+"""
 
 __mod_name__ = "Android"
 
