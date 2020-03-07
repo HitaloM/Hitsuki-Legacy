@@ -1,7 +1,7 @@
 
 __lang__ = "🇧🇷 Português"
 
-en = {
+pt  = {
 # Global default
 	"Anda bisa lakukan command ini pada grup, bukan pada PM": "You can do this command in groups, not PM",
 	"Anda sepertinya tidak mengacu pada pengguna.": "You don't seem to be referring to a user.",
