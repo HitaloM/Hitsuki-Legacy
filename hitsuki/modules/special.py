@@ -516,8 +516,8 @@ def wiki(bot: Bot, update: Update):
     teks = args[1]
     message = update.effective_message
     getlang = langsql.get_lang(chat_id)
-    if str(getlang) == "id":
-        wikipedia.set_lang("id")
+    if str(getlang) == "pt":
+        wikipedia.set_lang("pt")
     else:
         wikipedia.set_lang("en")
     try:
@@ -525,7 +525,7 @@ def wiki(bot: Bot, update: Update):
     except wikipedia.exceptions.PageError:
         send_message(
             update.effective_message, tl(
-                update.effective_message, "Hasil tidak ditemukan"))
+                update.effective_message, "Results not found"))
         return
     except wikipedia.exceptions.DisambiguationError as refer:
         rujuk = str(refer).split("\n")
@@ -536,9 +536,9 @@ def wiki(bot: Bot, update: Update):
         teks = ""
         for x in range(batas):
             if x == 0:
-                if getlang == "id":
+                if getlang == "pt":
                     teks += rujuk[x].replace('may refer to',
-                                             'dapat merujuk ke') + "\n"
+                                             'pode referir-se a') + "\n"
                 else:
                     teks += rujuk[x] + "\n"
             else:
@@ -548,14 +548,14 @@ def wiki(bot: Bot, update: Update):
     except IndexError:
         send_message(
             update.effective_message, tl(
-                update.effective_message, "Tulis pesan untuk mencari dari sumber wikipedia"))
+                update.effective_message, "Write a message to search from the wikipedia source"))
         return
     judul = pagewiki.title
     summary = pagewiki.summary
     if update.effective_message.chat.type == "private":
         send_message(update.effective_message,
                      tl(update.effective_message,
-                        "Hasil dari {} adalah:\n\n<b>{}</b>\n{}").format(teks,
+                        "Results of {} is:\n\n<b>{}</b>\n{}").format(teks,
                                                                          judul,
                                                                          summary),
                      parse_mode=ParseMode.HTML)
@@ -564,12 +564,12 @@ def wiki(bot: Bot, update: Update):
             judul = pagewiki.title
             summary = summary[:200] + "..."
             button = InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(
-                update.effective_message, "Baca Lebih Lengkap"), url="t.me/{}?start=wiki-{}".format(bot.username, teks.replace(' ', '_')))]])
+                update.effective_message, "Read More"), url="t.me/{}?start=wiki-{}".format(bot.username, teks.replace(' ', '_')))]])
         else:
             button = None
         send_message(update.effective_message,
                      tl(update.effective_message,
-                        "Hasil dari {} adalah:\n\n<b>{}</b>\n{}").format(teks,
+                        "Results of {} is:\n\n<b>{}</b>\n{}").format(teks,
                                                                          judul,
                                                                          summary),
                      parse_mode=ParseMode.HTML,
@@ -908,40 +908,7 @@ def makepack_internal(msg, user, png_sticker, emoji, bot, packname, packnum):
             "Failed to create sticker pack. Possibly due to blek mejik.")
 
 
-__help__ = """
-*Group tools:*
- - /id: get the current group id. If used by replying to a message, gets that user's id.
- - /info: get information about a user.
- - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
-
-*Useful tools:*
- - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
- - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
- - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
- - /stickerid: reply message sticker at PM to get ID sticker
- - /getsticker: reply to a sticker to me to upload its raw PNG file.
- - /kang: reply to a sticker to add it to your pack.
- - /ping: check the speed of the bot
- - /tr <from>-<to> <text>: translate text written or reply for any language to the intended language,Â or
- - /tr <to> <text>: translate text written or reply for any language to the intended language
- - /wiki <text>: search for text written from the wikipedia source
- - /ud <text>: search from urban dictionary
-
-*Other things:*
- - /runs: reply a random string from an array of replies.
- - /insults: reply a random string from an array of replies.
- - /slap: slap a user, or get slapped if not a reply.
- - /status: Shows some bot information.
- - /weebify: as a reply to a message, "weebifies" the message.
- - /pat: give a headpat :3
- - /shg or /shrug: pretty self-explanatory.
- - /hug: give a hug and spread the love :)
- - /react: reacts with normal reactions.
- - /happy: reacts with happiness.
- - /angry: reacts angrily.
- - /fortune: give a fortune
- - /status: Get the hitsuki version, python, and APIs used by the bot.
-"""
+__help__ = "exclusive_help"
 
 __mod_name__ = "🚀 Hitsuki Extras 🚀"
 

@@ -1318,19 +1318,44 @@ This also works with /goodbye.
 	"Diterjemahkan dari `{}` ke `{}`:\n`{}`": "Translated from `{}` to `{}`:\n`{}`",
 	"Balas pesan atau tulis pesan dari bahasa lain untuk diterjemahkan kedalam bahasa yang di dituju\n\nContoh: `/tr en-id` untuk menerjemahkan dari Bahasa inggris ke Bahasa Indonesia\nAtau gunakan: `/tr id` untuk deteksi otomatis dan menerjemahkannya kedalam bahasa indonesia": "Reply to messages or write messages from other languages Ã¢â‚¬â€¹Ã¢â‚¬â€¹to translate into the intended language\n\nExample: `/tr en-id` to translate from English to Indonesian\nOr use: `/tr id` for automatic detection and translating it into Indonesian",
 	"Bahasa yang di tuju tidak ditemukan!": "The destination language is not found!",
-	"Hasil tidak ditemukan": "Results not found",
-	"Tulis pesan untuk mencari dari sumber wikipedia": "Write a message to search from the wikipedia source",
-	"Hasil dari {} adalah:\n\n<b>{}</b>\n{}": "Results of {} is:\n\n<b>{}</b>\n{}",
-	"Baca di Wikipedia": "Read on Wikipedia",
-	"Baca Lebih Lengkap": "Read More",
+	"Results not found": "Resultados não encontrados",
+	"Write a message to search from the wikipedia source": "Escreva uma mensagem para pesquisar na Wikipedia",
+	"Results of {} is:\n\n<b>{}</b>\n{}": "Resultados de {} são:\n\n<b>{}</b>\n{}",
+	"Read on Wikipedia": "Ler na Wikipedia",
+	"Read More": "Ler Mais",
 	"exclusive_help": """
+*Group tools:*
+ - /id: get the current group id. If used by replying to a message, gets that user's id.
+ - /info: get information about a user.
+ - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
+
+*Useful tools:*
+ - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
+ - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
+ - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
  - /stickerid: reply message sticker at PM to get ID sticker
+ - /getsticker: reply to a sticker to me to upload its raw PNG file.
+ - /kang: reply to a sticker to add it to your pack.
  - /ping: check the speed of the bot
- - /fortune: give a fortune
- - /tr <from>-<to> <text>: translate text written or reply for any language to the intended language,Ã‚Â or
+ - /tr <from>-<to> <text>: translate text written or reply for any language to the intended language,Â or
  - /tr <to> <text>: translate text written or reply for any language to the intended language
  - /wiki <text>: search for text written from the wikipedia source
  - /ud <text>: search from urban dictionary
+
+*Other things:*
+ - /runs: reply a random string from an array of replies.
+ - /insults: reply a random string from an array of replies.
+ - /slap: slap a user, or get slapped if not a reply.
+ - /status: Shows some bot information.
+ - /weebify: as a reply to a message, "weebifies" the message.
+ - /pat: give a headpat :3
+ - /shg or /shrug: pretty self-explanatory.
+ - /hug: give a hug and spread the love :)
+ - /react: reacts with normal reactions.
+ - /happy: reacts with happiness.
+ - /angry: reacts angrily.
+ - /fortune: give a fortune
+ - /status: Get the hitsuki version, python, and APIs used by the bot.
 """
 }
 
