@@ -16,7 +16,7 @@ from telegram import Bot, Update
 from telegram.ext import run_async, CommandHandler
 
 from hitsuki import dispatcher
-
+from hitsuki.modules.languages import tl
 
 @run_async
 def direct_link_generator(bot: Bot, update: Update):
@@ -137,14 +137,7 @@ def useragent():
     user_agent = choice(useragents)
     return user_agent.text
 
-__help__ = """
-*This module allows you to generate direct links from various websites.*
-
-/direct <url>: paste a URL to generate a direct download link.
-
-*List of supported URLs:*
-`Google Drive - MediaFire - SourceForge`
-"""
+__help__ = "directlinks_help"
 
 __mod_name__ = "Direct Links"
 

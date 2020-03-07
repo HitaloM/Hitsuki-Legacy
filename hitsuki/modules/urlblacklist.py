@@ -9,6 +9,7 @@ from hitsuki import LOGGER, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import user_admin, user_not_admin
 from hitsuki.modules.sql import urlblacklist_sql as sql
+from hitsuki.modules.languages import tl
 
 
 @run_async
@@ -160,20 +161,7 @@ URL_DELETE_HANDLER = MessageHandler(
 
 __mod_name__ = "Domain Blacklists"
 
-__help__ = """
-Domain blacklisting is used to stop certain domains from being mentioned in a group, Any time an url on that domain is mentioned, /
-the message will immediately be deleted.
-
-*NOTE:* domain blacklisting do not affect group admins.
-
-- /geturl: View the current blacklisted urls
-
-*Admin only:*
-
-- /addurl <urls>: Add a domain to the blacklist. The bot will automatically parse the url.
-- /delurl <urls>: Remove urls from the blacklist
-
-"""
+__help__ = "urlblacklist_help"
 
 dispatcher.add_handler(URL_BLACKLIST_HANDLER)
 dispatcher.add_handler(ADD_URL_BLACKLIST_HANDLER)

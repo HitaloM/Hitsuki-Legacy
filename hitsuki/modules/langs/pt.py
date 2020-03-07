@@ -115,6 +115,235 @@ Todos os comandos podem ser usados com / ou !.
  - /demote: demotes the user replied to
 """,
 
+# Android
+	"Android_help": """
+*Here you will have several useful commands for Android users!*
+
+*Useful tools:*
+ - /device <codename>: Get android device basic info from its codename.
+ - /magisk: Get the latest magisk release for Stable/Beta/Canary.
+ - /twrp <codename>: gets latest twrp for the android device using the codename.
+ - /specs <brand> <device name>: will give you the complete specifications of a device.
+ - /odin: Get the latest version of odin for Samsung devices.
+ - /edxposed: Get the latest EdXposed releases.
+ - /mitools: Get useful tools for Xiaomi devices.
+
+*Specific ROM for a device*
+ - /aex <device> <android version>: Get the latest AEX ROM for a device
+ - /bootleggers <device>: Get the latest Bootleggers ROM for a device
+ - /dotos <device>: Get the latest DotOS ROM for a device
+ - /evo <device>: Get the latest Evolution X ROM for a device
+ - /havoc <device>: Get the latest Havoc ROM for a device
+ - /los <device>: Get the latest LineageOS ROM for a device
+ - /pe <device>: Get the latest PixelExperience ROM for a device
+ - /pe10 <device>: Get the latest PixelExperience 10 ROM for a device
+ - /peplus <device>: Get the latest PixelExperience Plus ROM for a device
+ - /pearl <device>: Get the latest Pearl ROM for a device
+ - /pixys <device>: Get the latest Pixys ROM for a device
+ - /posp <device>: Get the latest POSP ROM for a device
+ - /viper <device>: Get the latest Viper ROM for a device
+
+*GSIs:*
+ - /gsis: Get a list of Telegram channels recommended by my creator for you to download GSIs
+ - /phh: Get the latest PHH GSI.
+ - /enes: Get the latest Enes GSI.
+
+*Firmwares:*
+ - /getfw <model> <csc>: (SAMSUNG ONLY) gets firmware download links from samfrew, sammobile and sfirmwares for the given device.
+ - /checkfw <model> <csc>: (SAMSUNG ONLY) shows the latest firmware info for the given device, taken from samsung server.
+ - /miui <device>: Get the latest MIUI ROM for a device.
+""",
+
+# MyAnimeList
+"myanimelist_help": """
+Get information about anime, manga or characters from [MyAnimeList](https://myanimelist.net).
+
+*Available commands:*
+
+ - /anime <anime>: returns information about the anime.
+ - /character <character>: returns information about the character.
+ - /manga <manga>: returns information about the manga.
+ - /upcoming: returns a list of new anime in the upcoming seasons.
+""",
+
+# Android
+	"Android_help": """
+*Here you will have several useful commands for Android users!*
+
+*Useful tools:*
+ - /device <codename>: Get android device basic info from its codename.
+ - /magisk: Get the latest magisk release for Stable/Beta/Canary.
+ - /twrp <codename>: gets latest twrp for the android device using the codename.
+ - /specs <brand> <device name>: will give you the complete specifications of a device.
+ - /odin: Get the latest version of odin for Samsung devices.
+ - /edxposed: Get the latest EdXposed releases.
+ - /mitools: Get useful tools for Xiaomi devices.
+
+*Specific ROM for a device*
+ - /aex <device> <android version>: Get the latest AEX ROM for a device
+ - /bootleggers <device>: Get the latest Bootleggers ROM for a device
+ - /dotos <device>: Get the latest DotOS ROM for a device
+ - /evo <device>: Get the latest Evolution X ROM for a device
+ - /havoc <device>: Get the latest Havoc ROM for a device
+ - /los <device>: Get the latest LineageOS ROM for a device
+ - /pe <device>: Get the latest PixelExperience ROM for a device
+ - /pe10 <device>: Get the latest PixelExperience 10 ROM for a device
+ - /peplus <device>: Get the latest PixelExperience Plus ROM for a device
+ - /pearl <device>: Get the latest Pearl ROM for a device
+ - /pixys <device>: Get the latest Pixys ROM for a device
+ - /posp <device>: Get the latest POSP ROM for a device
+ - /viper <device>: Get the latest Viper ROM for a device
+
+*GSIs:*
+ - /gsis: Get a list of Telegram channels recommended by my creator for you to download GSIs
+ - /phh: Get the latest PHH GSI.
+ - /enes: Get the latest Enes GSI.
+
+*Firmwares:*
+ - /getfw <model> <csc>: (SAMSUNG ONLY) gets firmware download links from samfrew, sammobile and sfirmwares for the given device.
+ - /checkfw <model> <csc>: (SAMSUNG ONLY) shows the latest firmware info for the given device, taken from samsung server.
+ - /miui <device>: Get the latest MIUI ROM for a device.
+""",
+
+# warns
+	"CURRENT_WARNING_FILTER_STRING": "<b>Current warning filters in this chat:</b>\n",
+	"warns_help": """
+ - /warns <userhandle>: get a user's number, and reason, of warnings.
+ - /warnlist: list of all current warning filters
+
+*Admin only:*
+ - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
+ - /resetwarn <userhandle>: reset the warnings for a user. Can also be used as a reply.
+ - /addwarn <keyword> <reply message>: set a warning filter on a certain keyword. If you want your keyword to \
+be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`. 
+ - /nowarn <keyword>: stop a warning filter
+ - /warnlimit <num>: set the warning limit
+ - /warnmode <kick/ban/mute>: Set warn mode, when user exceeding the warn limit will result in that mode.
+""",
+
+	"WELC_HELP_TXT": "Your group's welcome/goodbye messages can be personalised in multiple ways. If you want the messages to be individually generated, like the default welcome message is, you can use *these* variables:\n - `{{first}}`: this represents the user's *first* name\n - `{{last}}`: this represents the user's *last* name. Defaults to *first name* if user has no last name.\n - `{{fullname}}`: this represents the user's *full* name. Defaults to *first name* if user has no last name.\n - `{{username}}`: this represents the user's *username*. Defaults to a *mention* of the user's first name if has no username.\n - `{{mention}}`: this simply *mentions* a user - tagging them with their first name.\n - `{{id}}`: this represents the user's *id*\n - `{{count}}`: this represents the user's *member number*.\n - `{{chatname}}`: this represents the *current chat name*.\n\nEach variable MUST be surrounded by `{{}}` to be replaced.\nWelcome messages also support markdown, so you can make any elements bold/italic/code/links. Buttons are also supported, so you can make your welcomes look awesome with some nice intro buttons.\nTo create a button linking to your rules, use this: `[Rules](buttonurl://t.me/{}?start=group_id)`. Simply replace `group_id` with your group's id, which can be obtained via /id, and you're good to go. Note that group ids are usually preceded by a `-` sign; this is required, so please don't remove it.\nIf you're feeling fun, you can even set images/gifs/videos/voice messages as the welcome message by replying to the desired media, and calling /setwelcome.",
+	"welcome_help": """
+*Admin only:*
+ - /welcome <on/off>: enable/disable the welcome message.
+ - /goodbye <on/off>: enable/disable goodbye message.
+ - /welcome: show current welcome settings, without formatting - useful for recycling your welcome message!
+ - /goodbye: same use and args as /welcome.
+ - /setwelcome <sometext>: set a custom welcome message. If used to reply to media, use that media.
+ - /setgoodbye <sometext>: set a custom goodbye message. If used to reply to media, use that media.
+ - /resetwelcome: reset to the default welcome message.
+ - /resetgoodbye: reset to the default goodbye message.
+ - /cleanwelcome <on/off>: deletes old welcome messages; when a new person joins, the old message is deleted.
+ - /cleanservice <on/off/yes/no>: deletes all service message; those are the annoying "x joined the group" you see when people join.
+ - /welcomemute <on/ya/off/ga>: all users that join, get muted; a button gets added to the welcome message for them to unmute themselves. This proves they aren't a bot!
+ - /welcomemutetime <Xw/d/h/m>: if a user hasnt pressed the "unmute" button in the welcome message after a certain this time, they'll get unmuted automatically after this period of time.
+ Note: if you want to reset the mute time to be forever, use /welcomemutetime 0m. 0 == eternal!
+ - /setmutetext <new text>: Customise the "Click here to unmute" button obtained from enabling welcomemutes.
+ - /resetmutetext: Reset teks tombol unmute menjadi default.
+
+Read /welcomehelp and /markdownhelp to learn about formatting your text and mentioning new users when the join!
+
+If you want to save an image, gif, or sticker, or any other data, do the following:
+/setwelcome while replying to a sticker or whatever data you'd like. This data will now be sent to welcome new users.
+
+Tip: use /welcome noformat to retrieve the unformatted welcome message.
+This will retrieve the welcome message and send it without formatting it; getting you the raw markdown, allowing you to make easy edits.
+This also works with /goodbye.
+""",
+	"cleaner_help": """
+*Admin only:*
+ - /cleanbluetext <on/off>: Delete all blue text message.
+
+Note:
+- This feature may broke others bot
+""",
+	"exclusive_help": """
+*Group tools:*
+ - /id: get the current group id. If used by replying to a message, gets that user's id.
+ - /info: get information about a user.
+ - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
+
+*Useful tools:*
+ - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
+ - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
+ - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
+ - /stickerid: reply message sticker at PM to get ID sticker
+ - /getsticker: reply to a sticker to me to upload its raw PNG file.
+ - /kang: reply to a sticker to add it to your pack.
+ - /ping: check the speed of the bot
+ - /tr <from>-<to> <text>: translate text written or reply for any language to the intended language,Â or
+ - /tr <to> <text>: translate text written or reply for any language to the intended language
+ - /wiki <text>: search for text written from the wikipedia source
+ - /ud <text>: search from urban dictionary
+
+*Other things:*
+ - /runs: reply a random string from an array of replies.
+ - /insults: reply a random string from an array of replies.
+ - /slap: slap a user, or get slapped if not a reply.
+ - /status: Shows some bot information.
+ - /weebify: as a reply to a message, "weebifies" the message.
+ - /pat: give a headpat :3
+ - /shg or /shrug: pretty self-explanatory.
+ - /hug: give a hug and spread the love :)
+ - /react: reacts with normal reactions.
+ - /happy: reacts with happiness.
+ - /angry: reacts angrily.
+ - /fortune: give a fortune
+ - /status: Get the hitsuki version, python, and APIs used by the bot.
+""",
+
+# Direct Links
+"directlinks_help": """
+*This module allows you to generate direct links from various websites.*
+
+/direct <url>: paste a URL to generate a direct download link.
+
+*List of supported URLs:*
+`Google Drive - MediaFire - SourceForge`
+""",
+
+# URL Blacklist
+"urlblacklist_help": """
+Domain blacklisting is used to stop certain domains from being mentioned in a group, Any time an url on that domain is mentioned, /
+the message will immediately be deleted.
+
+*NOTE:* domain blacklisting do not affect group admins.
+
+- /geturl: View the current blacklisted urls
+
+*Admin only:*
+
+- /addurl <urls>: Add a domain to the blacklist. The bot will automatically parse the url.
+- /delurl <urls>: Remove urls from the blacklist
+""",
+
+# Reverse Image
+"revwrse_help": """
+*This module uses Google Images to do a reverse image search.*
+
+- /reverse: Does a reverse image search of the media which it was replied to.
+""",
+
+# Memes
+"memes_help": """
+Ohai, I see you'd like to know what memes I have for sale.
+Well, here you go.
+
+*Some memes command:*
+ - /owo: OwO whats this? OwOfies a message.
+ - /stretch: Stretches vowels in a message a random number of times.
+ - /vapor: Turns a message into vaporwave text.
+ - /mock: Mocks a replied message lick the spongebob meme.
+ - /zalgofy: corrupts a message.
+ - /deepfry: for when your images/stickers need to get a little fried.
+ - /shout <keyword>: Write anything you want to give loud shout
+ - /dllm: Some chinese memes
+ - /thonkify <reply>/<args>: turns text into thonk text (only supports letters and none symbols for now).
+ - /forbes <reply>: turns a message into a Forbes headline.
+ - /bify <reply>: Replying to a message with replace a random character with the B emoji.
+ - /clap <reply>: Adds clap emojis at the begining, end, and in every space in a message.
+ - /cp <reply>: A replica of mattatas copypasta command.
+""",
+
 # AFK
 	"{} sekarang AFK!": "{} is now AFK!",
 	"{} sudah tidak AFK!": "{} is no longer AFK!",

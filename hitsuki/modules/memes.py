@@ -26,6 +26,7 @@ from zalgo_text import zalgo
 from deeppyer import deepfry
 from hitsuki import DEEPFRY_TOKEN
 from hitsuki import dispatcher, spamfilters
+from hitsuki.modules.languages import tl
 
 MAXNUMURL = 'https://raw.githubusercontent.com/atanet90/expression-pack/master/meta'
 WIDE_MAP = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
@@ -387,25 +388,7 @@ def shout(bot: Bot, update: Update, args):
 
 
 # no help string
-__help__ = """
-Ohai, I see you'd like to know what memes I have for sale.
-Well, here you go.
-
-*Some memes command:*
- - /owo: OwO whats this? OwOfies a message.
- - /stretch: Stretches vowels in a message a random number of times.
- - /vapor: Turns a message into vaporwave text.
- - /mock: Mocks a replied message lick the spongebob meme.
- - /zalgofy: corrupts a message.
- - /deepfry: for when your images/stickers need to get a little fried.
- - /shout <keyword>: Write anything you want to give loud shout
- - /dllm: Some chinese memes
- - /thonkify <reply>/<args>: turns text into thonk text (only supports letters and none symbols for now).
- - /forbes <reply>: turns a message into a Forbes headline.
- - /bify <reply>: Replying to a message with replace a random character with the B emoji.
- - /clap <reply>: Adds clap emojis at the begining, end, and in every space in a message.
- - /cp <reply>: A replica of mattatas copypasta command.
-"""
+__help__ = "memes_help"
 
 __mod_name__ = "Memes and etc."
 

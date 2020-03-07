@@ -12,6 +12,7 @@ from telegram.ext import run_async
 
 from hitsuki import dispatcher
 from hitsuki.modules.disable import CommandHandler
+from hitsuki.modules.languages import tl
 
 opener = urllib.request.build_opener()
 useragent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.38 Safari/537.36'
@@ -185,11 +186,7 @@ def scam(imgspage, lim):
     return imglinks
 
 
-__help__ = """
-*This module uses Google Images to do a reverse image search.*
-
-- /reverse: Does a reverse image search of the media which it was replied to.
-"""
+__help__ = "reverse_help"
 
 __mod_name__ = "Image Lookup"
 

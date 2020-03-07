@@ -214,30 +214,7 @@ def __stats__():
 	return (tld(OWNER_ID, "{} repos, accross {} chats.").format(sql.num_github(), sql.num_chats())) 
 
 
-__help__ = """
-*Need some GitHub release but don't want to have to go to GitHub and go to the repository? Here are some commands that can make your life easier with GitHub.*
-
-*Available commands are:*
- - /gitr <user>/<repo>: will fetch the most recent release from that repo.
- - /git: Returns info about a GitHub user or organization.
- - /repo: Return the GitHub user or organization repository list (Limited at 40).
- - /fetch <word>: get the repo shortcut registered to that word.
- - &<word>: same as /get word
- - /changelog <word>: gets the changelog of a saved repo shortcut
- - /listrepo: List all repo shortcuts in the current chat
-
-*Admin only:*
- - /saverepo <word> <user>/<repo>: Save that repo releases to the shortcut called "word".
- - /delrepo <word>: delete the repo shortcut called "word"
-
-An example of how to save a repo shortcut would be via:
-`/saverepo ptb python-telegram-bot/python-telegram-bot`
-Now, anyone using "`/fetch ptb`", or "`&ptb`" will be answered with the releases of the given repository.
-
-*Note:* Note names are case-insensitive, and they are automatically converted to lowercase before getting saved.
- 
-This module was only possible thanks to the [pyGitHyb_API](https://github.com/nunopenim/pyGitHyb_API)
-"""
+__help__ = "github_help"
 
 __mod_name__ = "GitHub"
 

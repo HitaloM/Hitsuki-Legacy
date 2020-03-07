@@ -115,6 +115,59 @@ All commands can either be used with / or !.
  - /demote: demotes the user replied to
 """,
 
+# Direct Links
+"directlinks_help": """
+*This module allows you to generate direct links from various websites.*
+
+/direct <url>: paste a URL to generate a direct download link.
+
+*List of supported URLs:*
+`Google Drive - MediaFire - SourceForge`
+""",
+
+# URL Blacklist
+"urlblacklist_help": """
+Domain blacklisting is used to stop certain domains from being mentioned in a group, Any time an url on that domain is mentioned, /
+the message will immediately be deleted.
+
+*NOTE:* domain blacklisting do not affect group admins.
+
+- /geturl: View the current blacklisted urls
+
+*Admin only:*
+
+- /addurl <urls>: Add a domain to the blacklist. The bot will automatically parse the url.
+- /delurl <urls>: Remove urls from the blacklist
+""",
+
+# Reverse Image
+"revwrse_help": """
+*This module uses Google Images to do a reverse image search.*
+
+- /reverse: Does a reverse image search of the media which it was replied to.
+""",
+
+# Memes
+"memes_help": """
+Ohai, I see you'd like to know what memes I have for sale.
+Well, here you go.
+
+*Some memes command:*
+ - /owo: OwO whats this? OwOfies a message.
+ - /stretch: Stretches vowels in a message a random number of times.
+ - /vapor: Turns a message into vaporwave text.
+ - /mock: Mocks a replied message lick the spongebob meme.
+ - /zalgofy: corrupts a message.
+ - /deepfry: for when your images/stickers need to get a little fried.
+ - /shout <keyword>: Write anything you want to give loud shout
+ - /dllm: Some chinese memes
+ - /thonkify <reply>/<args>: turns text into thonk text (only supports letters and none symbols for now).
+ - /forbes <reply>: turns a message into a Forbes headline.
+ - /bify <reply>: Replying to a message with replace a random character with the B emoji.
+ - /clap <reply>: Adds clap emojis at the begining, end, and in every space in a message.
+ - /cp <reply>: A replica of mattatas copypasta command.
+""",
+
 # AFK
 	"{} sekarang AFK!": "{} is now AFK!",
 	"{} sudah tidak AFK!": "{} is no longer AFK!",
@@ -125,6 +178,80 @@ All commands can either be used with / or !.
  - brb <reason>: same as the afk command - but not a command.
 
 When marked as AFK, any mentions will be replied to with a message to say you're not available!
+""",
+
+# GitHub
+"github_help": """
+*Need some GitHub release but don't want to have to go to GitHub and go to the repository? Here are some commands that can make your life easier with GitHub.*
+
+*Available commands are:*
+ - /gitr <user>/<repo>: will fetch the most recent release from that repo.
+ - /git: Returns info about a GitHub user or organization.
+ - /repo: Return the GitHub user or organization repository list (Limited at 40).
+ - /fetch <word>: get the repo shortcut registered to that word.
+ - &<word>: same as /get word
+ - /changelog <word>: gets the changelog of a saved repo shortcut
+ - /listrepo: List all repo shortcuts in the current chat
+
+*Admin only:*
+ - /saverepo <word> <user>/<repo>: Save that repo releases to the shortcut called "word".
+ - /delrepo <word>: delete the repo shortcut called "word"
+
+An example of how to save a repo shortcut would be via:
+`/saverepo ptb python-telegram-bot/python-telegram-bot`
+Now, anyone using "`/fetch ptb`", or "`&ptb`" will be answered with the releases of the given repository.
+
+*Note:* Note names are case-insensitive, and they are automatically converted to lowercase before getting saved.
+ 
+This module was only possible thanks to the [pyGitHyb_API](https://github.com/nunopenim/pyGitHyb_API)
+""".
+
+# Sed
+"sed_help": """
+ - s/<text1>/<text2>(/<flag>): Reply to a message with this to perform a sed operation on that message, replacing all occurrences of 'text1' with 'text2'. Flags are optional, and currently include 'i' for ignore case, 'g' for global, or nothing. Delimiters include `/`, `_`, `|`, and `:`. Text grouping is supported. The resulting message cannot be larger than {}.
+ 
+*Reminder:* Sed uses some special characters to make matching easier, such as these: `+*.?\\`
+If you want to use these characters, make sure you escape them!
+eg: \\?.
+""",
+
+# Android
+	"Android_help": """
+*Here you will have several useful commands for Android users!*
+
+*Useful tools:*
+ - /device <codename>: Get android device basic info from its codename.
+ - /magisk: Get the latest magisk release for Stable/Beta/Canary.
+ - /twrp <codename>: gets latest twrp for the android device using the codename.
+ - /specs <brand> <device name>: will give you the complete specifications of a device.
+ - /odin: Get the latest version of odin for Samsung devices.
+ - /edxposed: Get the latest EdXposed releases.
+ - /mitools: Get useful tools for Xiaomi devices.
+
+*Specific ROM for a device*
+ - /aex <device> <android version>: Get the latest AEX ROM for a device
+ - /bootleggers <device>: Get the latest Bootleggers ROM for a device
+ - /dotos <device>: Get the latest DotOS ROM for a device
+ - /evo <device>: Get the latest Evolution X ROM for a device
+ - /havoc <device>: Get the latest Havoc ROM for a device
+ - /los <device>: Get the latest LineageOS ROM for a device
+ - /pe <device>: Get the latest PixelExperience ROM for a device
+ - /pe10 <device>: Get the latest PixelExperience 10 ROM for a device
+ - /peplus <device>: Get the latest PixelExperience Plus ROM for a device
+ - /pearl <device>: Get the latest Pearl ROM for a device
+ - /pixys <device>: Get the latest Pixys ROM for a device
+ - /posp <device>: Get the latest POSP ROM for a device
+ - /viper <device>: Get the latest Viper ROM for a device
+
+*GSIs:*
+ - /gsis: Get a list of Telegram channels recommended by my creator for you to download GSIs
+ - /phh: Get the latest PHH GSI.
+ - /enes: Get the latest Enes GSI.
+
+*Firmwares:*
+ - /getfw <model> <csc>: (SAMSUNG ONLY) gets firmware download links from samfrew, sammobile and sfirmwares for the given device.
+ - /checkfw <model> <csc>: (SAMSUNG ONLY) shows the latest firmware info for the given device, taken from samsung server.
+ - /miui <device>: Get the latest MIUI ROM for a device.
 """,
 
 # Antiflood
@@ -1028,6 +1155,18 @@ NOTE: neither of these will get triggered if used by admins
  - /reports <on/off>: change report setting, or view current status.
    - If done in pm, toggles your status.
    - If in chat, toggles that chat's status.
+""",
+
+# MyAnimeList
+"myanimelist_help": """
+Get information about anime, manga or characters from [MyAnimeList](https://myanimelist.net).
+
+*Available commands:*
+
+ - /anime <anime>: returns information about the anime.
+ - /character <character>: returns information about the character.
+ - /manga <manga>: returns information about the manga.
+ - /upcoming: returns a list of new anime in the upcoming seasons.
 """,
 
 # rss

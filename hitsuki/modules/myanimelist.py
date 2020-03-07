@@ -10,6 +10,7 @@ from telegram.ext import CallbackQueryHandler, run_async
 
 from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, spamfilters
 from hitsuki.modules.disable import DisableAbleCommandHandler
+from hitsuki.modules.languages import tl
 
 info_btn = "More Information"
 prequel_btn = "⬅️ Prequel"
@@ -392,16 +393,7 @@ def button(bot, update):
             query.answer("You are not allowed to use this.")
 
 
-__help__ = """
-Get information about anime, manga or characters from [MyAnimeList](https://myanimelist.net).
-
-*Available commands:*
-
- - /anime <anime>: returns information about the anime.
- - /character <character>: returns information about the character.
- - /manga <manga>: returns information about the manga.
- - /upcoming: returns a list of new anime in the upcoming seasons.
-"""
+__help__ = "MyAnimeList_help"
 
 __mod_name__ = "MyAnimeList"
 
