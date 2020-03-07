@@ -207,7 +207,7 @@ This module was only possible thanks to the [pyGitHyb_API](https://github.com/nu
 """.
 
 # Android
-	"android_help": """
+"android_help": """
 *Here you will have several useful commands for Android users!*
 
 *Useful tools:*

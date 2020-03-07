@@ -81,12 +81,7 @@ def reply_afk(bot: Bot, update: Update):
                     send_message(update.effective_message, res)
 
 
-__help__ = """
- - /afk <reason>: mark yourself as AFK.
- - brb <reason>: same as the afk command - but not a command.
-
-When marked as AFK, any mentions will be replied to with a message to say you're not available!
-"""
+__help__ = "afk_help"
 
 __mod_name__ = "AFK"
 
