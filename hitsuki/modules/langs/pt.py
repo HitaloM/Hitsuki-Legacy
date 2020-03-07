@@ -116,7 +116,7 @@ Todos os comandos podem ser usados com / ou !.
 """,
 
 # Android
-	"Android_help": """
+	"android_help": """
 *Here you will have several useful commands for Android users!*
 
 *Useful tools:*
