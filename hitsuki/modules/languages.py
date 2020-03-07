@@ -42,26 +42,26 @@ def tl(message, text):
 					sql.set_lang(message.chat.id, message.from_user.language_code)
 					getlang = message.from_user.language_code
 				else:
-					sql.set_lang(message.chat.id, 'en')
-					getlang = 'en'
+					sql.set_lang(message.chat.id, 'pt')
+					getlang = 'pt'
 			else:
 				if message.chat.type == "private":
-					sql.set_lang(message.chat.id, 'en')
-					getlang = 'en'
+					sql.set_lang(message.chat.id, 'pt')
+					getlang = 'pt'
 				else:
-					sql.set_lang(message.chat.id, 'id')
-					getlang = 'en'
+					sql.set_lang(message.chat.id, 'en')
+					getlang = 'pt'
 
 	getlangid = {}
 	for x in LOADED_LANGS_ID:
 		getlangid[x] = x
 
-	if str(getlang) == 'en':
-		get = getattr(FUNC_LANG['en'], 'en')
+	if str(getlang) == 'id':
+		get = getattr(FUNC_LANG['id'], 'id')
 		if text in tuple(get):
 			return get.get(text)
 		if text in ("RUN_STRINGS", "SLAP_TEMPLATES", "ITEMS", "THROW", "HIT", "RAMALAN_STRINGS", "RAMALAN_FIRST"):
-			runstr = getattr(FUNC_LANG['en'], text)
+			runstr = getattr(FUNC_LANG['id'], text)
 			return runstr
 		return text
 	elif str(getlang) in LOADED_LANGS_ID:
@@ -96,10 +96,10 @@ def set_language(bot, update):
 			getlang = msg.from_user.language_code
 		else:
 			if msg.chat.type == "private":
-				sql.set_lang(msg.chat.id, 'en')
-				getlang = 'en'
+				sql.set_lang(msg.chat.id, 'pt')
+				getlang = 'pt'
 			else:
-				sql.set_lang(msg.chat.id, 'id')
+				sql.set_lang(msg.chat.id, 'en')
 				getlang = 'en'
 	loaded_langs = []
 	counter = 0
@@ -121,7 +121,7 @@ def set_language(bot, update):
 		if chat.type == "private":
 			chatname = user.first_name
 		else:
-			chatname = tl(update.effective_message, "current chat")
+			chatname = tl(update.effective_message, "obrolan saat ini")
 
 	send_message(update.effective_message, tl(msg, "The language in *{}* is currently:\n{}.\n\nChoose a language:").format(chatname, LANGS_TEXT[getlang]), parse_mode="markdown", reply_markup=keyboard)
 
@@ -138,15 +138,7 @@ def button(bot, update):
 		update.effective_message.edit_text(tl(query.message, "The language has been changed to {}!").format(LANGS_TEXT.get(set_lang)))
 
 
-__help__ = """"
-This is where translations come in; you can change most of Hitsuki's replies to be in the language of your choice!
-
-Available languages are:
-- ðŸ‡ºðŸ‡¸ English
-
-Available commands are:
- - /setlang: set your prefered language.
-"""
+__help__ = "language_help"
 
 __mod_name__ = "Languages"
 
