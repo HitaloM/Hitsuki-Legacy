@@ -125,8 +125,8 @@ def start(bot: Bot, update: Update, args: List[str]):
                 wiki = args[0].split("-")[1].replace('_', ' ')
                 message = update.effective_message
                 getlang = langsql.get_lang(message)
-                if getlang == "id":
-                    wikipedia.set_lang("id")
+                if getlang == "pt":
+                    wikipedia.set_lang("pt")
                 pagewiki = wikipedia.page(wiki)
                 judul = pagewiki.title
                 summary = pagewiki.summary
@@ -198,7 +198,7 @@ def help_button(bot: Bot, update: Update):
     try:
         if mod_match:
             module = mod_match.group(1)
-            text = tl(update.effective_message, "Here is the help for the *{}* module:").format(HELPABLE[module].__mod_name__) \
+            text = tl(update.effective_message, "Here is the help for the *{}* module:\n").format(HELPABLE[module].__mod_name__) \
                    + tl(update.effective_message, HELPABLE[module].__help__)
 
             query.message.reply_text(text=text,

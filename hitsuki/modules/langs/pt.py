@@ -1,5 +1,5 @@
 
-__lang__ = "🇧🇷 PortuguÃªs"
+__lang__ = "🇧🇷 Português"
 
 pt  = {
 # Global default
@@ -16,7 +16,7 @@ pt  = {
 	"Anda bukan admin di grup ini!": "You are not an admin in this group!",
 
 # languages
-	"Bahasa telah di ubah ke {}!": "Language changed to {}!",
+	"The language has been changed to {}": "Idioma alterado para {}!",
 	"Bahasa di *{}* saat ini adalah:\n{}.\n\nPilih bahasa:": "Current language in *{}* is:\n{}.\n\nSelect language:",
 	"obrolan saat ini": "current in this chat",
 	"language_help": """Nem todos os grupos falam Inglês; alguns grupos preferem que o Hitsuki responda em seu próprio idioma.
@@ -57,9 +57,9 @@ Tenho muitos recursos úteis, tais como anti-flood, um sistema de avisos, um sis
 
 Todos os comandos podem ser usados com / ou !.
 """,
-	"Kembali": "Back",
+	"⬅️ Back": "⬅️ Voltar",
 	"Hubungi saya di PM untuk mendapatkan daftar perintah.": "Contact me in PM to get the list of possible commands.",
-	"Tolong": "Help",
+	"Help": "Ajuda",
 	"Ini adalah bantuan yang tersedia untuk modul *{}*:\n": "Here is the available help for the *{}* module:\n",
 	"Ini adalah pengaturan Anda saat ini:": "These are your current settings:",
 	"Sepertinya tidak ada pengaturan khusus pengguna yang tersedia Ã°Å¸ËœÂ¢": "Seems like there aren't any user specific settings available Ã°Å¸ËœÂ¢",
