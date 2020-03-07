@@ -204,45 +204,6 @@ Now, anyone using "`/fetch ptb`", or "`&ptb`" will be answered with the releases
 *Note:* Note names are case-insensitive, and they are automatically converted to lowercase before getting saved.
  
 This module was only possible thanks to the [pyGitHyb_API](https://github.com/nunopenim/pyGitHyb_API)
-""".
-
-# Android
-"android_help": """
-*Here you will have several useful commands for Android users!*
-
-*Useful tools:*
- - /device <codename>: Get android device basic info from its codename.
- - /magisk: Get the latest magisk release for Stable/Beta/Canary.
- - /twrp <codename>: gets latest twrp for the android device using the codename.
- - /specs <brand> <device name>: will give you the complete specifications of a device.
- - /odin: Get the latest version of odin for Samsung devices.
- - /edxposed: Get the latest EdXposed releases.
- - /mitools: Get useful tools for Xiaomi devices.
-
-*Specific ROM for a device*
- - /aex <device> <android version>: Get the latest AEX ROM for a device
- - /bootleggers <device>: Get the latest Bootleggers ROM for a device
- - /dotos <device>: Get the latest DotOS ROM for a device
- - /evo <device>: Get the latest Evolution X ROM for a device
- - /havoc <device>: Get the latest Havoc ROM for a device
- - /los <device>: Get the latest LineageOS ROM for a device
- - /pe <device>: Get the latest PixelExperience ROM for a device
- - /pe10 <device>: Get the latest PixelExperience 10 ROM for a device
- - /peplus <device>: Get the latest PixelExperience Plus ROM for a device
- - /pearl <device>: Get the latest Pearl ROM for a device
- - /pixys <device>: Get the latest Pixys ROM for a device
- - /posp <device>: Get the latest POSP ROM for a device
- - /viper <device>: Get the latest Viper ROM for a device
-
-*GSIs:*
- - /gsis: Get a list of Telegram channels recommended by my creator for you to download GSIs
- - /phh: Get the latest PHH GSI.
- - /enes: Get the latest Enes GSI.
-
-*Firmwares:*
- - /getfw <model> <csc>: (SAMSUNG ONLY) gets firmware download links from samfrew, sammobile and sfirmwares for the given device.
- - /checkfw <model> <csc>: (SAMSUNG ONLY) shows the latest firmware info for the given device, taken from samsung server.
- - /miui <device>: Get the latest MIUI ROM for a device.
 """,
 
 # Antiflood
