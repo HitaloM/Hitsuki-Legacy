@@ -393,7 +393,7 @@ def button(bot, update):
             query.answer("You are not allowed to use this.")
 
 
-__help__ = "MyAnimeList_help"
+__help__ = "myanimelist_help"
 
 __mod_name__ = "MyAnimeList"
 
