@@ -1320,7 +1320,6 @@ This also works with /goodbye.
 	"Bahasa yang di tuju tidak ditemukan!": "The destination language is not found!",
 	"Hasil tidak ditemukan": "Results not found",
 	"Tulis pesan untuk mencari dari sumber wikipedia": "Write a message to search from the wikipedia source",
-	"Results of {} is:\n\n<b>{}</b>\n{}": "Resultados de {} são:\n\n<b>{}</b>\n{}",
 	"Baca di Wikipedia": "Read on Wikipedia",
 	"Baca Lebih Lengkap": "Read More",
 	"exclusive_help": """

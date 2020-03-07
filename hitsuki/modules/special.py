@@ -298,7 +298,7 @@ def stickerid(bot: Bot, update: Update):
             update.effective_message,
             tl(
                 update.effective_message,
-                "Hai {}, Id stiker yang anda balas adalah :\n```{}```").format(
+                "Hi {}, sticker id that you reply is :\n```{}```").format(
                 mention_markdown(
                     msg.from_user.id,
                     msg.from_user.first_name),
@@ -307,7 +307,7 @@ def stickerid(bot: Bot, update: Update):
     else:
         send_message(update.effective_message,
                      tl(update.effective_message,
-                        "Tolong balas pesan stiker untuk mendapatkan id stiker"),
+                        "Please reply to the sticker to get the ID sticker"),
                      parse_mode=ParseMode.MARKDOWN)
 
 
@@ -318,7 +318,7 @@ def getlink(bot: Bot, update: Update, args: List[int]):
     else:
         send_message(
             update.effective_message, tl(
-                update.effective_message, "Anda sepertinya tidak mengacu pada obrolan"))
+                update.effective_message, "You don't seem to be referring to a chat"))
     chat = bot.getChat(chat_id)
     bot_member = chat.get_member(bot.id)
     if bot_member.can_invite_users:
@@ -326,12 +326,12 @@ def getlink(bot: Bot, update: Update, args: List[int]):
         invitelink = bot.get_chat(chat_id).invite_link
         send_message(
             update.effective_message, tl(
-                update.effective_message, "Sukses mengambil link invite di grup {}. \nInvite link : {}").format(
+                update.effective_message, "Successfully retrieve the invite link in the group {}.\nInvite link: {}").format(
                 titlechat, invitelink))
     else:
         send_message(
             update.effective_message, tl(
-                update.effective_message, "Saya tidak memiliki akses ke tautan undangan!"))
+                update.effective_message, "I don't have access to the invitation link!"))
 
 
 @run_async
@@ -341,22 +341,22 @@ def leavechat(bot: Bot, update: Update, args: List[int]):
     else:
         send_message(
             update.effective_message, tl(
-                update.effective_message, "Anda sepertinya tidak mengacu pada obrolan"))
+                update.effective_message, "You don't seem to be referring to a chat"))
     try:
         chat = bot.getChat(chat_id)
         titlechat = bot.get_chat(chat_id).title
         bot.sendMessage(
             chat_id, tl(
-                update.effective_message, "Selamat tinggal semua 😁"))
+                update.effective_message, "Goodbye everyone 😁"))
         bot.leaveChat(chat_id)
         send_message(
             update.effective_message, tl(
-                update.effective_message, "Saya telah keluar dari grup {}").format(titlechat))
+                update.effective_message, "I have left the group {}").format(titlechat))
 
     except BadRequest as excp:
         if excp.message == "Chat not found":
             send_message(update.effective_message, tl(update.effective_message,
-                                                      "Sepertinya saya sudah keluar atau di tendang di grup tersebut"))
+                                                      "Looks like I have been out or kicked in the group"))
         else:
             return
 
@@ -379,7 +379,7 @@ def ping(bot: Bot, update: Update):
         message_id=test.message_id,
         text=tl(
             update.effective_message,
-            "Pong!\nKecepatannya: {0:.2f} detik").format(
+            "Pong!\nSpeed was: {0:.2f}s").format(
             round(
                 ping_time,
                 2) %
@@ -443,13 +443,13 @@ def terjemah(bot: Bot, update: Update):
                 tekstr = trl.translate(teks, dest=target)
                 send_message(
                     update.effective_message, tl(
-                        update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(
+                        update.effective_message, "Translated from `{}` to `{}`:\n`{}`").format(
                         deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
             else:
                 tekstr = trl.translate(teks, dest=target2, src=target)
                 send_message(
                     update.effective_message, tl(
-                        update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(
+                        update.effective_message, "Translated from `{}` to `{}`:\n`{}`").format(
                         target, target2, tekstr.text), parse_mode=ParseMode.MARKDOWN)
 
         else:
@@ -476,27 +476,27 @@ def terjemah(bot: Bot, update: Update):
                 tekstr = trl.translate(teks, dest=target)
                 return send_message(
                     update.effective_message, tl(
-                        update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(
+                        update.effective_message, "Translated from `{}` to `{}`:\n`{}`").format(
                         deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
             else:
                 tekstr = trl.translate(teks, dest=target2, src=target)
                 send_message(
                     update.effective_message, tl(
-                        update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(
+                        update.effective_message, "Translated from `{}` to `{}`:\n`{}`").format(
                         target, target2, tekstr.text), parse_mode=ParseMode.MARKDOWN)
     except IndexError:
         send_message(
             update.effective_message,
             tl(
                 update.effective_message,
-                "Balas pesan atau tulis pesan dari bahasa lain untuk "
-                "diterjemahkan kedalam bahasa yang di dituju\n\n"
-                "Contoh: `/tr en-id` untuk menerjemahkan dari Bahasa inggris ke Bahasa Indonesia\n"
-                "Atau gunakan: `/tr id` untuk deteksi otomatis dan menerjemahkannya kedalam bahasa indonesia"),
+                "Reply to messages or write messages from other "
+                "languages to translate into the intended language\n\n"
+                "Example: `/tr en-pt` to translate from English to Portuguese\n"
+                "Or use: `/tr pt` for automatic detection and translating it into Portuguese"),
             parse_mode="markdown")
     except ValueError:
         send_message(update.effective_message, tl(
-            update.effective_message, "Bahasa yang di tuju tidak ditemukan!"))
+            update.effective_message, "The destination language is not found!"))
     else:
         return
 
