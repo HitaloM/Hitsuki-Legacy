@@ -104,7 +104,7 @@ def sed(bot: Bot, update: Update):
             update.effective_message.reply_to_message.reply_text(text)
  
  
-__help__ = "sed_help".format(telegram.MAX_MESSAGE_LENGTH)
+__help__ = "sed_help"
  
 __mod_name__ = "Sed/Regex"
  
