@@ -56,12 +56,12 @@ def tl(message, text):
 	for x in LOADED_LANGS_ID:
 		getlangid[x] = x
 
-	if str(getlang) == 'pt':
-		get = getattr(FUNC_LANG['pt'], 'pt')
+	if str(getlang) == 'en':
+		get = getattr(FUNC_LANG['en'], 'en')
 		if text in tuple(get):
 			return get.get(text)
 		if text in ("RUN_STRINGS", "SLAP_TEMPLATES", "ITEMS", "THROW", "HIT", "RAMALAN_STRINGS", "RAMALAN_FIRST"):
-			runstr = getattr(FUNC_LANG['pt'], text)
+			runstr = getattr(FUNC_LANG['en'], text)
 			return runstr
 		return text
 	elif str(getlang) in LOADED_LANGS_ID:
