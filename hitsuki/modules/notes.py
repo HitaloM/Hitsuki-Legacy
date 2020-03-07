@@ -505,18 +505,16 @@ def __import_data__(chat_id, data):
 
 
 def __stats__():
-	return (tl(OWNER_ID, "{} notes, accross {} chats.").format(sql.num_notes(), sql.num_chats()))
+	return tl(OWNER_ID, "{} notes, accross {} chats.").format(sql.num_notes(), sql.num_chats())
 
 
 def __migrate__(old_chat_id, new_chat_id):
 	sql.migrate_chat(old_chat_id, new_chat_id)
 
 
-def __chat_settings__(bot, update, chat, chatP, user):
-	chat_id = chat.id
-	user_id = user.id
+def __chat_settings__(chat_id, user_id):
 	notes = sql.get_all_chat_notes(chat_id)
-	return (tl(user_id, "There are `{}` notes in this chat.").format(len(notes)))
+	return tl(user_id, "There are {} notes in this chat.").format(len(notes))
 
 
 __help__ = "notes_help"
