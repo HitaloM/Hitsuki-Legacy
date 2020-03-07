@@ -9,7 +9,7 @@ from telegram.error import BadRequest
 from telegram.ext import MessageHandler, Filters, CommandHandler, run_async, CallbackQueryHandler
 from telegram.utils.helpers import mention_markdown, mention_html, escape_markdown
 
-import hitsuki.modules.sql.antispam_sql as gbansql
+import hitsuki.modules.sql.global_bans_sql as gbansql
 import hitsuki.modules.sql.welcome_sql as sql
 import hitsuki.modules.sql.users_sql as userssql
 from hitsuki import dispatcher, OWNER_ID, LOGGER, MESSAGE_DUMP, SUDO_USERS, SUPPORT_USERS
