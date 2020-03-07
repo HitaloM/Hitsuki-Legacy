@@ -1,5 +1,5 @@
 
-__lang__ = "🇧🇷, Português"
+__lang__ = "🇧🇷 Português"
 
 en = {
 # Global default
@@ -25,7 +25,7 @@ This is where translations come in; you can change most of Hitsuki's replies to 
 
 Available languages are:
 - 🇧🇷 Português
-- 🇺🇲 English
+- 🇺🇸 English
 
 Available commands are:
  - /setlang: set your prefered language.""",
