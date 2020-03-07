@@ -1,5 +1,5 @@
 
-__lang__ = "ðŸ‡§ðŸ‡· PortuguÃªs"
+__lang__ = "🇧🇷 PortuguÃªs"
 
 pt  = {
 # Global default
@@ -24,8 +24,8 @@ pt  = {
 Este é o lugar onde você altera as traduções; você pode alterar a maioria das respostas do Hitsuki para serem no idioma de sua escolha!
 
 Available languages are:
-- ðŸ‡§ðŸ‡· PortuguÃªs
-- ðŸ‡ºðŸ‡¸ English
+- 🇧🇷 Português
+- 🇺🇲 English
 
 Available commands are:
  - /setlang: define seu idioma preferido.""",
