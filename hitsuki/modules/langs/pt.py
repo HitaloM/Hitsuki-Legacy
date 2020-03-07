@@ -33,43 +33,30 @@ Available commands are:
 # __main__
 	"Ada yang bisa saya bantu? √∞≈∏Àú≈†": "Is there anything I can help? √∞≈∏Àú≈†",
 	"start_text": """
-Hi {}, my name is {}! I am a group manager managed by [my master](tg://user?id={}).
-To get this bot status info and update, you can join our channel [Ayra's Bot News](https://t.me/AyraBotNews)
+Ol· {}! Meu nome È *{}* - Estou aqui para ajudar vocÍ a administrar seus grupos!
+Clique no bot„o ajuda para encontrar mais sobre como me usar em todo meu potencial.
 
-Any issue or need more help?
-Join our group [Emilia Official Support](https://t.me/EmiliaOfficial)!
+Siga [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) se vocÍ quiser receber notÌcias e avisos de manutenÁ„o do bot!
 
-You can find the list of available commands with /help.
+Este bot È gerenciado por @HitaloSama
 
-If you're enjoying using me, and/or would like to help me survive in the wild, hit /donate to help fund/upgrade my VPS!
+Quer me adicionar em seus grupos? [Clique aqui!](t.me/LordHitsuki_BOT?startgroup=true)
 """,
 	"help_text": """
-Hey there! My name is *Emilia*.
-I'm a modular group management bot with a few fun extras! Have a look at the following for an idea of some of \
-the things I can help you with.
+Ei! Meu nome È *Hitsuki*. Eu sou um bot de administraÁ„o de grupos, estou aqui para ajud·-lo a manter a ordem em seus grupos!
+Tenho muitos recursos ˙teis, tais como anti-flood, um sistema de avisos, um sistema de notas, e as respostas ainda predeterminadas sobre determinadas palavras-chave.
 
-*Main* commands available:
- - /start: start the bot
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /donate: information about how to donate!
+*Principais comandos:*
+ - /start: Um comando interessante para verificar se o bot est· vivo ou n„o.
+ - /help: Envia essa mensagem.
+ - /help <nome do mÛdulo>: Lhe envia informaÁıes sobre o mÛdulo.
+ - /setlang: Muda o idioma do bot.
  - /settings:
-   - in PM: will send you your settings for all supported modules.
-   - in a group: will redirect you to pm, with all that chat's settings.
+   - No PM: ir· enviar-lhe as suas configuraÁıes para todos os mÛdulos suportados.
+   - Em um grupo: ir· lhe redirecionar para o PV, com todas as configuraÁıes do determinado grupo.
 
-
-All commands can either be used with / or !.
-
-And the following:
+Todos os comandos podem ser usados com / ou !.
 """,
-	"donate_text": """Hello, glad to hear you want to donate!
-Need a lot of work for [my creator](tg://user?id=388576209) to take me to my place now, and \
-every donation helps and motivates him to make me better.
-
-All donated money will be given to a better VPS to host me, and or some food. \
-He is just an ordinary person, so it will really help him!
-
-If you really are interested in donating, please visit ayrahikari.github.io/donations.html, Thank you √∞≈∏Àú¬Å""",
 	"Kembali": "Back",
 	"Hubungi saya di PM untuk mendapatkan daftar perintah.": "Contact me in PM to get the list of possible commands.",
 	"Tolong": "Help",

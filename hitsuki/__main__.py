@@ -24,32 +24,9 @@ from hitsuki.modules.sql import languages_sql as langsql
 from hitsuki.modules.connection import connect_button
 from hitsuki.modules.languages import set_language
 
-PM_START_TEXT = """
-Hi {}! My name is *{}* - I'm here to help you manage your groups!
-Click Help button to find out more about how to use me to my full potential.
+PM_START_TEXT = "start_text"
 
-Follow [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) if you want to keep up with the news, updates and bot downtime!
-
-This bot is managed by @HitaloSama
-
-Want to add me to your group? [Click here!](t.me/LordHitsuki_BOT?startgroup=true)
-"""
-
-HELP_STRINGS = """
-Hey! My name is *Hitsuki*. I am a group management bot, here to help you get around and keep the order in your groups!
-I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
-
-*Main commands available:*
- - /start: cool command to check if the bot is alive or not.
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /setlang: change bot language.
- - /settings:
-   - in PM: will send you your settings for all supported modules.
-   - in a group: will redirect you to pm, with all that chat's settings.
-
-All commands can either be used with / or !.
-"""
+HELP_STRINGS = "help_text"
 
 SOURCE_STRING = """
 I'm built in python3, using the python-telegram-bot library, and am fully opensource - you can find what makes me tick [here](https://github.com/HitaloSama/Hitsuki)
