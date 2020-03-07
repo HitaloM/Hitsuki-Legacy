@@ -1,5 +1,5 @@
 
-__lang__ = "🇧🇷 Português"
+__lang__ = "ðŸ‡§ðŸ‡· PortuguÃªs"
 
 pt  = {
 # Global default
@@ -24,47 +24,47 @@ pt  = {
 This is where translations come in; you can change most of Hitsuki's replies to be in the language of your choice!
 
 Available languages are:
-- 🇧🇷 Português
-- 🇺🇸 English
+- ðŸ‡§ðŸ‡· PortuguÃªs
+- ðŸ‡ºðŸ‡¸ English
 
 Available commands are:
  - /setlang: set your prefered language.""",
 
 # __main__
-	"Ada yang bisa saya bantu? ðŸ˜Š": "Is there anything I can help? ðŸ˜Š",
+	"Ada yang bisa saya bantu? Ã°Å¸ËœÅ ": "Is there anything I can help? Ã°Å¸ËœÅ ",
 	"start_text": """
-Ol� {}! Meu nome � *{}* - Estou aqui para ajudar voc� a administrar seus grupos!
-Clique no bot�o ajuda para encontrar mais sobre como me usar em todo meu potencial.
+Olá {}! Meu nome é *{}* - Estou aqui para ajudar você a administrar seus grupos!
+Clique no botão ajuda para encontrar mais sobre como me usar em todo meu potencial.
 
-Siga [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) se voc� quiser receber not�cias e avisos de manuten��o do bot!
+Siga [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) se você quiser receber notícias e avisos de manutenção do bot!
 
-Este bot � gerenciado por @HitaloSama
+Este bot é gerenciado por @HitaloSama
 
 Quer me adicionar em seus grupos? [Clique aqui!](t.me/LordHitsuki_BOT?startgroup=true)
 """,
 	"help_text": """
-Ei! Meu nome � *Hitsuki*. Eu sou um bot de administra��o de grupos, estou aqui para ajud�-lo a manter a ordem em seus grupos!
-Tenho muitos recursos �teis, tais como anti-flood, um sistema de avisos, um sistema de notas, e as respostas ainda predeterminadas sobre determinadas palavras-chave.
+Ei! Meu nome é *Hitsuki*. Eu sou um bot de administração de grupos, estou aqui para ajudá-lo a manter a ordem em seus grupos!
+Tenho muitos recursos úteis, tais como anti-flood, um sistema de avisos, um sistema de notas, e as respostas ainda predeterminadas sobre determinadas palavras-chave.
 
 *Principais comandos:*
- - /start: Um comando interessante para verificar se o bot est� vivo ou n�o.
+ - /start: Um comando interessante para verificar se o bot está vivo ou não.
  - /help: Envia essa mensagem.
- - /help <nome do m�dulo>: Lhe envia informa��es sobre o m�dulo.
+ - /help <nome do módulo>: Lhe envia informações sobre o módulo.
  - /setlang: Muda o idioma do bot.
  - /settings:
-   - No PM: ir� enviar-lhe as suas configura��es para todos os m�dulos suportados.
-   - Em um grupo: ir� lhe redirecionar para o PV, com todas as configura��es do determinado grupo.
+   - No PM: irá enviar-lhe as suas configurações para todos os módulos suportados.
+   - Em um grupo: irá lhe redirecionar para o PV, com todas as configurações do determinado grupo.
 
-Todos os comandos podem ser usados com / ou !.
+Todos os comandos podem ser usados com / ou !.
 """,
 	"Kembali": "Back",
 	"Hubungi saya di PM untuk mendapatkan daftar perintah.": "Contact me in PM to get the list of possible commands.",
 	"Tolong": "Help",
 	"Ini adalah bantuan yang tersedia untuk modul *{}*:\n": "Here is the available help for the *{}* module:\n",
 	"Ini adalah pengaturan Anda saat ini:": "These are your current settings:",
-	"Sepertinya tidak ada pengaturan khusus pengguna yang tersedia ðŸ˜¢": "Seems like there aren't any user specific settings available ðŸ˜¢",
+	"Sepertinya tidak ada pengaturan khusus pengguna yang tersedia Ã°Å¸ËœÂ¢": "Seems like there aren't any user specific settings available Ã°Å¸ËœÂ¢",
 	"Modul mana yang ingin Anda periksa untuk pengaturan {}?": "Which module would you like to check {}'s settings for?",
-	"Sepertinya tidak ada pengaturan obrolan yang tersedia ðŸ˜¢\nKirim ini ke obrolan Anda sebagai admin untuk menemukan pengaturannya saat ini!": "Seems like there aren't any chat settings available :'(\nSend this in a group chat you're admin in to find its current settings!",
+	"Sepertinya tidak ada pengaturan obrolan yang tersedia Ã°Å¸ËœÂ¢\nKirim ini ke obrolan Anda sebagai admin untuk menemukan pengaturannya saat ini!": "Seems like there aren't any chat settings available :'(\nSend this in a group chat you're admin in to find its current settings!",
 	"*{}* memiliki pengaturan berikut untuk modul *{}*:\n\n": "*{}* has the following settings for the *{}* module:\n\n",
 	"Hai! Ada beberapa pengaturan untuk {} - lanjutkan dan pilih apa yang Anda minati.": "Hi there! There are quite a few settings for {} - go ahead and pick what you're interested in.",
 	"Klik di sini untuk mendapatkan pengaturan obrolan ini, serta milik Anda.": "Click here to get this chat's settings, as well as yours.",
@@ -79,11 +79,11 @@ Todos os comandos podem ser usados com / ou !.
 	"Bagaimana saya ingin menaikan jabatan seseorang yang sudah menjadi admin?": "How am I meant to promote someone that's already an admin?",
 	"Saya tidak bisa menaikan jabatan diri saya sendiri! Hanya admin yang dapat melakukanya untuk saya.": "I can't promote myself! Get an admin to do it for me.",
 	"Tidak dapat mempromosikan pengguna, mungkin saya bukan admin atau tidak punya izin untuk mempromosikan pengguna.": "Cannot promote users, maybe I am not admin or do not have permission to promote users.",
-	"ðŸ’– Berhasil dinaikan jabatannya!": "ðŸ’– Successfully promoted!",
+	"Ã°Å¸â€™â€“ Berhasil dinaikan jabatannya!": "Ã°Å¸â€™â€“ Successfully promoted!",
 	"Orang ini MENCIPTAKAN obrolan ini, bagaimana saya menurunkannya?": "This person CREATED the chat, how would I demote them?",
 	"Tidak dapat menurunkan jabatan apa yang tidak dipromosikan!": "Can't demote what wasn't promoted!",
 	"Saya tidak bisa menurunkan jabatan diri saya sendiri! Hanya admin yang dapat melakukanya untuk saya.": "I can't demote myself! Get an admin to do it for me.",
-	"ðŸ’” Berhasil diturunkan jabatannya!": "ðŸ’” Successfully demoted!",
+	"Ã°Å¸â€™â€ Berhasil diturunkan jabatannya!": "Ã°Å¸â€™â€ Successfully demoted!",
 	"Tidak dapat menurunkan jabatannya. Saya mungkin bukan admin, atau status admin ditunjuk oleh orang lain, jadi saya tidak bisa bertindak atas hak mereka!": "Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!",
 	"Gunakan /pin <notify/loud/silent/violent> <link pesan>": "Use /pin <notify/loud/silent/violent> <message link>",
 	"Balas pesan untuk pin pesan tersebut pada grup ini": "Reply to a message for pin that message in this group",
@@ -93,7 +93,7 @@ Todos os comandos podem ser usados com / ou !.
 	"Saya hanya dapat memberi Anda tautan undangan untuk supergroup dan saluran, maaf!": "I can only give you invite links for supergroups and channels, sorry!",
 	"Admin di *{}*:": "Admin in *{}*:",
 	"chat ini": "current chat",
-	"â˜  Akun Terhapus": "â˜  Deleted Account",
+	"Ã¢ËœÂ  Akun Terhapus": "Ã¢ËœÂ  Deleted Account",
 	"Teks markdown salah!\nJika anda tidak tahu apa itu markdown, silahkan ketik `/markdownhelp` pada PM.": "Wrong markdown text!\nIf you don't know what markdown is, please type `/markdownhelp` in PM.",
 	"Saya tidak punya akses untuk pin pesan!": "I don't have access to pin message!",
 	"\n\nKamu adalah *{}*": "\n\nYou are *{}*",
@@ -186,25 +186,25 @@ Examples of time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 week.
 	"Ada lebih dari satu grup di file ini, dan tidak ada yang memiliki id obrolan yang sama dengan grup ini - bagaimana cara memilih apa yang akan diimpor?": "Theres more than one group here in this file, and none have the same chat id as this group - how do I choose what to import?",
 	"Backup berasal chat lain, Saya tidak bisa mengembalikan chat lain kedalam chat *{}*": "Backup comes from another chat, I can't return another chat to chat *{}*",
 	"Backup berasal chat lain, Saya tidak bisa mengembalikan chat lain kedalam chat ini": "Backup comes from another chat, I can't return another chat to this chat",
-	"Telah terjadi error dalam pengecekan data, silahkan laporkan kepada pembuat saya untuk masalah ini untuk membuat saya lebih baik! Terima kasih! ðŸ™‚": "An exception occured while restoring your data, please report to my creator for solve this problem to make me better! Thanks! ðŸ™‚",
+	"Telah terjadi error dalam pengecekan data, silahkan laporkan kepada pembuat saya untuk masalah ini untuk membuat saya lebih baik! Terima kasih! Ã°Å¸â„¢â€š": "An exception occured while restoring your data, please report to my creator for solve this problem to make me better! Thanks! Ã°Å¸â„¢â€š",
 	"Backup berasal dari bot lain, dokumen, foto, video, audio, suara tidak akan "
 							   "bekerja, jika file anda tidak ingin hilang, import dari bot yang dicadangkan."
 							   "jika masih tidak bekerja, laporkan pada pembuat bot tersebut untuk "
-							   "membuat saya lebih baik! Terima kasih! ðŸ™‚":
+							   "membuat saya lebih baik! Terima kasih! Ã°Å¸â„¢â€š":
 	"Backup comes from other bots, documents, photos, videos, audio, sounds will not "
 							   "works, if your data wont to be lost, import from the exported bot."
 							   "if it still does not work, report it to the bot maker for "
-							   "make me better! Thanks! ðŸ™‚",
+							   "make me better! Thanks! Ã°Å¸â„¢â€š",
 	"Kesalahan terjadi saat memulihkan data Anda. Prosesnya mungkin tidak lengkap. Jika "
 						   "Anda mengalami masalah dengan ini, pesan @AyraHikari dengan file cadangan Anda, jadi "
 						   "masalah bisa di-debug. Pemilik saya akan dengan senang hati membantu, dan setiap bug "
-						   "dilaporkan membuat saya lebih baik! Terima kasih! ðŸ™‚": 
+						   "dilaporkan membuat saya lebih baik! Terima kasih! Ã°Å¸â„¢â€š": 
 	"An exception occured while restoring your data. The process may not be complete. If "
 						   "you have a problem with this, contact @AyraHikari with your backup file, so "
 						   "issue can be debugged. My owner will be happy to help, and every bug "
-						   "reported makes me better! Thanks! ðŸ™‚",
-	"Cadangan sepenuhnya dikembalikan pada *{}*. Selamat datang kembali! ðŸ˜€": "Backup fully imported in *{}*. Welcome back! ðŸ˜€",
-	"Cadangan sepenuhnya dikembalikan. Selamat datang kembali! ðŸ˜€": "Backup fully imported. Welcome back! ðŸ˜€",
+						   "reported makes me better! Thanks! Ã°Å¸â„¢â€š",
+	"Cadangan sepenuhnya dikembalikan pada *{}*. Selamat datang kembali! Ã°Å¸Ëœâ‚¬": "Backup fully imported in *{}*. Welcome back! Ã°Å¸Ëœâ‚¬",
+	"Cadangan sepenuhnya dikembalikan. Selamat datang kembali! Ã°Å¸Ëœâ‚¬": "Backup fully imported. Welcome back! Ã°Å¸Ëœâ‚¬",
 	"\n\nYang saya kembalikan:\n": "\n\nRestored:\n",
 	"- Pengaturan Antiflood\n": "- Antiflood Settings\n",
 	"- Pengaturan Blacklist\n": "- Blacklist Settings\n",
@@ -232,27 +232,27 @@ Note that files/photos from other bots can't be imported due to telegram restric
 # Bans
 	"Saya tidak bisa membatasi orang di {}! Pastikan saya admin dan dapat menunjuk admin baru.": "I can't restrict people in {}! Make sure I'm admin and can appoint new admins.",
 	"Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan dapat menunjuk admin baru.": "I can't restrict people here! Make sure I'm admin and can appoint new admins.",
-	"Saya tidak dapat menemukan pengguna ini pada *{}* ðŸ˜£": "I can't find this user on *{}* ðŸ˜£",
-	"Saya tidak dapat menemukan pengguna ini ðŸ˜£": "I can't find this user ðŸ˜£",
-	"Saya tidak akan BAN diri saya sendiri, apakah kamu gila? ðŸ˜ ": "I'm not gonna BAN myself, are you crazy? ðŸ˜ ",
-	"Saya tidak bisa banned orang ini karena dia adalah admin ðŸ˜’": "I really wish I could ban admins... ðŸ˜’",
+	"Saya tidak dapat menemukan pengguna ini pada *{}* Ã°Å¸ËœÂ£": "I can't find this user on *{}* Ã°Å¸ËœÂ£",
+	"Saya tidak dapat menemukan pengguna ini Ã°Å¸ËœÂ£": "I can't find this user Ã°Å¸ËœÂ£",
+	"Saya tidak akan BAN diri saya sendiri, apakah kamu gila? Ã°Å¸ËœÂ ": "I'm not gonna BAN myself, are you crazy? Ã°Å¸ËœÂ ",
+	"Saya tidak bisa banned orang ini karena dia adalah admin Ã°Å¸Ëœâ€™": "I really wish I could ban admins... Ã°Å¸Ëœâ€™",
 	"Anda tidak punya hak untuk membatasi seseorang pada *{}*.": "You have no right to restrict someone in *{}*.",
 	"Anda tidak punya hak untuk membatasi seseorang.": "You have no right to restrict someone.",
-	"Terbanned pada *{}*! ðŸ˜": "Banned at *{}*! ðŸ˜",
-	"Terbanned! ðŸ˜": "Banned! ðŸ˜",
-	"Yah sial, aku tidak bisa banned pengguna itu ðŸ˜’": "Well damn, I can't ban that user ðŸ˜’",
+	"Terbanned pada *{}*! Ã°Å¸ËœÂ": "Banned at *{}*! Ã°Å¸ËœÂ",
+	"Terbanned! Ã°Å¸ËœÂ": "Banned! Ã°Å¸ËœÂ",
+	"Yah sial, aku tidak bisa banned pengguna itu Ã°Å¸Ëœâ€™": "Well damn, I can't ban that user Ã°Å¸Ëœâ€™",
 	"Anda belum menetapkan waktu untuk banned pengguna ini!": "You haven't specified a time to ban this user for!",
 	"Banned! Pengguna diblokir untuk *{}* pada *{}*.": "Banned! User banned for *{}* at *{}*.",
 	"Banned! Pengguna diblokir untuk {}.": "Banned! User banned for {}.",
-	"Yah sial, aku tidak bisa menendang pengguna itu ðŸ˜’": "Well damn, I can't kick that user ðŸ˜’",
-	"Yahhh aku tidak akan melakukan itu ðŸ˜": "Yeahhh I'm not gonna do that ðŸ˜",
-	"Saya berharap saya bisa... tetapi Anda seorang admin ðŸ˜’": "I wish I could... but you're an admin.",
-	"Tidak masalah ðŸ˜Š": "No problem ðŸ˜Š",
-	"Hah? Aku tidak bisa ðŸ™„": "Huh? I can't ðŸ™„",
-	"Bagaimana saya akan unban diri saya sendiri jika saya tidak ada di sini...? ðŸ¤”": "How would I unban myself if I wasn't here...? ðŸ¤”",
-	"Mengapa Anda mencoba unban seseorang yang sudah ada di obrolan? ðŸ˜‘": "Why are you trying to unban someone that's already in the chat? ðŸ˜‘",
-	"Ya, pengguna ini dapat bergabung pada {}! ðŸ˜": "Yep, this user can join in {}! ðŸ˜",
-	"Ya, pengguna ini dapat bergabung! ðŸ˜": "Yep, this user can join! ðŸ˜",
+	"Yah sial, aku tidak bisa menendang pengguna itu Ã°Å¸Ëœâ€™": "Well damn, I can't kick that user Ã°Å¸Ëœâ€™",
+	"Yahhh aku tidak akan melakukan itu Ã°Å¸ËœÂ": "Yeahhh I'm not gonna do that Ã°Å¸ËœÂ",
+	"Saya berharap saya bisa... tetapi Anda seorang admin Ã°Å¸Ëœâ€™": "I wish I could... but you're an admin.",
+	"Tidak masalah Ã°Å¸ËœÅ ": "No problem Ã°Å¸ËœÅ ",
+	"Hah? Aku tidak bisa Ã°Å¸â„¢â€ž": "Huh? I can't Ã°Å¸â„¢â€ž",
+	"Bagaimana saya akan unban diri saya sendiri jika saya tidak ada di sini...? Ã°Å¸Â¤â€": "How would I unban myself if I wasn't here...? Ã°Å¸Â¤â€",
+	"Mengapa Anda mencoba unban seseorang yang sudah ada di obrolan? Ã°Å¸Ëœâ€˜": "Why are you trying to unban someone that's already in the chat? Ã°Å¸Ëœâ€˜",
+	"Ya, pengguna ini dapat bergabung pada {}! Ã°Å¸ËœÂ": "Yep, this user can join in {}! Ã°Å¸ËœÂ",
+	"Ya, pengguna ini dapat bergabung! Ã°Å¸ËœÂ": "Yep, this user can join! Ã°Å¸ËœÂ",
 	"bans_help": """
  - /kickme: kicks the user who issued the command
 
@@ -387,7 +387,7 @@ Note:
 	"supportcmd": """
 *Currently support command*
 
-*ã€Œ For Members ã€*
+*Ã£â‚¬Å’ For Members Ã£â‚¬Â*
 *Admin*
 -> `/adminlist` | `/admins`
 
@@ -414,7 +414,7 @@ Note:
 -> `/warns`
 -> `/warnlist` | `/warnfilters`
 
-*ã€Œ Admin Only ã€*
+*Ã£â‚¬Å’ Admin Only Ã£â‚¬Â*
 *Admin*
 -> `/adminlist`
 
@@ -513,8 +513,8 @@ Organize your group via PM easily.
  - /allowconnect on/yes/off/no: Allow connecting non-admin users to groups
  - /helpconnect: Get command help for connections
 """,
-	"ðŸ§¹ Hapus riwayat": "ðŸ§¹ Clear history",
-	"ðŸ”Œ Putuskan sambungan": "ðŸ”Œ Disconnect",
+	"Ã°Å¸Â§Â¹ Hapus riwayat": "Ã°Å¸Â§Â¹ Clear history",
+	"Ã°Å¸â€Å’ Putuskan sambungan": "Ã°Å¸â€Å’ Disconnect",
 	"Riwayat yang terhubung telah dihapus!": "History connected has been cleared!",
 	"\n\n*Riwayat koneksi:*\n": "\n\n*Connection history:*\n",
 
@@ -582,7 +582,7 @@ NOTE: all filter keywords are in lowercase. If you want your keyword to be a sen
 	"Hanya pemilik federasi yang dapat melakukan ini!": "Only fed owner can do this!",
 	"Apa yang harus saya hapus?": "What should I delete?",
 	"Anda yakin ingin menghapus federasi Anda? Tindakan ini tidak bisa dibatalkan, Anda akan kehilangan seluruh daftar larangan Anda, dan '{}' akan hilang secara permanen.": "Are you sure you want to delete your federation? This action cannot be undone - you will lose your entire ban list, and '{}' will be permanently gone.",
-	"âš ï¸ Hapus Federasi âš ï¸": "âš ï¸ Delete Federation âš ï¸",
+	"Ã¢Å¡Â Ã¯Â¸Â Hapus Federasi Ã¢Å¡Â Ã¯Â¸Â": "Ã¢Å¡Â Ã¯Â¸Â Delete Federation Ã¢Å¡Â Ã¯Â¸Â",
 	"Batalkan": "Cancel",
 	"Anda harus menjadi admin untuk menjalankan perintah ini": "You must be an admin to execute this command",
 	"Grup ini tidak dalam federasi apa pun!": "This chat is not in any federation!",
@@ -604,18 +604,18 @@ NOTE: all filter keywords are in lowercase. If you want your keyword to be a sen
 	"Gagal dipromosikan!": "Failed to promote!",
 	"Apa yang sedang Anda coba lakukan? Menurunkan saya dari federasi Anda?": "What are you trying to do? Demote me from your federation?",
 	"Saya tidak dapat mendemosikan pengguna yang bukan merupakan admin federasi! Jika Anda ingin membuatnya menangis, promosikan dia terlebih dahulu!": "I cannot demote users who are not federated admins! If you want to make him/her cry, Promote him/her first!",
-	"ðŸ’” Dia telah di keluarkan dari federasi anda!": "ðŸ’” Demoted from your federation!",
+	"Ã°Å¸â€™â€ Dia telah di keluarkan dari federasi anda!": "Ã°Å¸â€™â€ Demoted from your federation!",
 	"Saya tidak bisa mengusirnya, Saya tidak berdaya!": "I can't demote, I'm helpless!",
 	"Grup ini tidak dalam federasi apa pun!": "This group is not in any federation!",
 	"Hanya admin federasi yang dapat melakukan ini!": "Only federated admin can do this!",
-	"<b>â„¹ï¸ Info federasi:</b>": "<b>â„¹ï¸ Federation Info:</b>",
+	"<b>Ã¢â€žÂ¹Ã¯Â¸Â Info federasi:</b>": "<b>Ã¢â€žÂ¹Ã¯Â¸Â Federation Info:</b>",
 	"\nNama: {}": "\nName: {}",
 	"\nPembuat: {}": "\nCreator: {}",
 	"\nSeluruh admin: <code>{}</code>": "\nAll admins: <code>{}</code>",
 	"\nTotal yang di banned: <code>{}</code>": "\nTotal banned: <code>{}</code>",
 	"\nTotal grup yang terkoneksi: <code>{}</code>": "\nConnected group: <code>{}</code>",
 	"<b>Admin Federasi {}:</b>\n\n": "<b>Federation Admin {}:</b>\n\n",
-	"\nðŸ”± Tidak ada admin di federasi ini": "\nðŸ”± There is no admin in this federation",
+	"\nÃ°Å¸â€Â± Tidak ada admin di federasi ini": "\nÃ°Å¸â€Â± There is no admin in this federation",
 	"Anda sepertinya tidak merujuk ke pengguna.": "You do not seem to be referring to the user.",
 	"Apa yang lebih lucu dari menendang creator grup? Fban diri saya sendiri.": "What's funnier than kicking the group creator? Fban myself.",
 	"Mengapa Anda mencoba fban pemilik federasi?": "Why did you try fban owner federation?",
@@ -736,14 +736,14 @@ You can even appoint federation admins, so that your trustworthiest admins can b
 """,
 
 # global bans
-	"Saya memata-matai, dengan mata kecil saya... perang pengguna sudo! Mengapa kalian saling berpaling? ðŸ˜±": "I spy, with my little eye... a sudo user war! Why are you guys turning on each other? ðŸ˜±",
-	"OOOH seseorang mencoba untuk memblokir secara global pengguna dukungan! ðŸ˜Ž *mengambil popcorn*": "OOOH someone's trying to gban a support user! ðŸ˜Ž *grabs popcorn*",
-	"ðŸ˜‘ Sangat lucu, mari kita blokir secara global diri saya sendiri? Usaha yang bagus ðŸ˜’": "ðŸ˜‘ So funny, lets gban myself why don't I? Nice try. ðŸ˜’",
+	"Saya memata-matai, dengan mata kecil saya... perang pengguna sudo! Mengapa kalian saling berpaling? Ã°Å¸ËœÂ±": "I spy, with my little eye... a sudo user war! Why are you guys turning on each other? Ã°Å¸ËœÂ±",
+	"OOOH seseorang mencoba untuk memblokir secara global pengguna dukungan! Ã°Å¸ËœÅ½ *mengambil popcorn*": "OOOH someone's trying to gban a support user! Ã°Å¸ËœÅ½ *grabs popcorn*",
+	"Ã°Å¸Ëœâ€˜ Sangat lucu, mari kita blokir secara global diri saya sendiri? Usaha yang bagus Ã°Å¸Ëœâ€™": "Ã°Å¸Ëœâ€˜ So funny, lets gban myself why don't I? Nice try. Ã°Å¸Ëœâ€™",
 	"Itu bukan pengguna!": "That's not a user!",
 	"Pengguna ini sudah dilarang secara global; Saya akan mengubah alasannya, tetapi Anda belum memberi saya satu...": "This user is already gbanned; I'd change the reason, but you haven't given me one...",
 	"Pengguna ini sudah gbanned, karena alasan berikut:\n<code>{}</code>\nSaya telah melakukan dan memperbaruinya dengan alasan baru Anda!": "This user is already gbanned, for the following reason:\n<code>{}</code>\nI've gone and updated it with your new reason!",
 	"Pengguna ini sudah gbanned, tetapi tidak ada alasan yang ditetapkan; Saya telah melakukan dan memperbaruinya!": "This user is already gbanned, but had no reason set; I've gone and updated it!",
-	"*It's global banned time* ðŸ˜‰": "*It's global banned time* ðŸ˜‰",
+	"*It's global banned time* Ã°Å¸Ëœâ€°": "*It's global banned time* Ã°Å¸Ëœâ€°",
 	"{} melarang secara global pengguna {} karena:\n{}": "{} is gbanning user {} because:\n{}",
 	"Tidak ada alasan yang diberikan": "No reason given",
 	"Tidak dapat melarang secara global karena: {}": "Could not gban due to: {}",
@@ -906,8 +906,8 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 
 # muting
 	"Anda harus memberi saya nama pengguna untuk membungkam, atau membalas seseorang untuk dibisukan.": "You'll need to either give me a username to mute, or reply to someone to be muted.",
-	"Terbisukan pada *{}*! ðŸ˜†": "Muted on *{}*! ðŸ˜†",
-	"Terbisukan! ðŸ˜†": "Muted! ðŸ˜†",
+	"Terbisukan pada *{}*! Ã°Å¸Ëœâ€ ": "Muted on *{}*! Ã°Å¸Ëœâ€ ",
+	"Terbisukan! Ã°Å¸Ëœâ€ ": "Muted! Ã°Å¸Ëœâ€ ",
 	"Saya tidak akan membungkam diri saya sendiri!": "I'm not muting myself!",
 	"Saya tidak bisa menghentikan seorang admin berbicara!": "Afraid I can't stop an admin from talking!",
 	"Pengguna ini sudah dibungkam!": "This user is already muted!",
@@ -947,18 +947,18 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 	"Ok, catatan `{note_name}` disimpan.": "Ok, saved note `{note_name}`.",
 	"Ok, catatan <code>{note_name}</code> disimpan di <b>{chat_name}</b>.": "Ok, saved note <code>{note_name}</code> in <b>{chat_name}</b>.",
 	"Ok, catatan <code>{note_name}</code> disimpan.": "Ok, saved note <code>{note_name}</code>.",
-	"Catatan di *{chat_name}* untuk `{note_name}` dihapus ðŸ˜": "Note in *{chat_name}* for `{note_name}` deleted ðŸ˜",
-	"Catatan `{note_name}` dihapus ðŸ˜": "Note `{note_name}` deleted ðŸ˜",
-	"Catatan di <b>{chat_name}</b> untuk <code>{note_name}</code> dihapus ðŸ˜": "Note in <b>{chat_name}</b> for <code>{note_name}</code> deleted ðŸ˜",
-	"Catatan <code>{note_name}</code> dihapus ðŸ˜": "Note <code>{note_name}</code> deleted ðŸ˜",
+	"Catatan di *{chat_name}* untuk `{note_name}` dihapus Ã°Å¸ËœÂ": "Note in *{chat_name}* for `{note_name}` deleted Ã°Å¸ËœÂ",
+	"Catatan `{note_name}` dihapus Ã°Å¸ËœÂ": "Note `{note_name}` deleted Ã°Å¸ËœÂ",
+	"Catatan di <b>{chat_name}</b> untuk <code>{note_name}</code> dihapus Ã°Å¸ËœÂ": "Note in <b>{chat_name}</b> for <code>{note_name}</code> deleted Ã°Å¸ËœÂ",
+	"Catatan <code>{note_name}</code> dihapus Ã°Å¸ËœÂ": "Note <code>{note_name}</code> deleted Ã°Å¸ËœÂ",
 	"Catatan di *{chat_name}* untuk `{fnote_name}` gagal dihapus!": "Failed to delete note in *{chat_name}* for `{fnote_name}`!",
 	"Catatan `{fnote_name}` gagal dihapus!": "Failed to delete note `{fnote_name}`!",
 	"Catatan di <b>{chat_name}</b> untuk <code>{fnote_name}</code> gagal dihapus!": "Failed to delete note in <b>{chat_name}</b> for <code>{fnote_name}</code>!",
 	"Catatan <code>{fnote_name}</code> gagal dihapus!": "Failed to delete note <code>{fnote_name}</code>!",
-	"Catatan di *{chat_name}* untuk `{note_name}` dihapus ðŸ˜\nCatatan `{fnote_name}` gagal dihapus!": "Note `{note_name}` deleted in *{chat_name}* ðŸ˜\nFailed to delete note `{fnote_name}`!",
-	"Catatan `{note_name}` dihapus ðŸ˜\nCatatan `{fnote_name}` gagal dihapus!": "Note `{note_name}` deleted ðŸ˜\nFailed to delete note `{fnote_name}`!",
-	"Catatan di <b>{chat_name}</b> untuk <code>{note_name}</code> dihapus ðŸ˜\nCatatan <code>{fnote_name}</code> gagal dihapus!": "Note <code>{note_name}</code> deleted in <b>{chat_name}</b> ðŸ˜\nFailed to delete note <code>{fnote_name}</code>!",
-	"Catatan <code>{note_name}</code> dihapus ðŸ˜\nCatatan <code>{fnote_name}</code> gagal dihapus!": "Note <code>{note_name}</code> deleted ðŸ˜\nFailed to delete note <code>{fnote_name}</code>!",
+	"Catatan di *{chat_name}* untuk `{note_name}` dihapus Ã°Å¸ËœÂ\nCatatan `{fnote_name}` gagal dihapus!": "Note `{note_name}` deleted in *{chat_name}* Ã°Å¸ËœÂ\nFailed to delete note `{fnote_name}`!",
+	"Catatan `{note_name}` dihapus Ã°Å¸ËœÂ\nCatatan `{fnote_name}` gagal dihapus!": "Note `{note_name}` deleted Ã°Å¸ËœÂ\nFailed to delete note `{fnote_name}`!",
+	"Catatan di <b>{chat_name}</b> untuk <code>{note_name}</code> dihapus Ã°Å¸ËœÂ\nCatatan <code>{fnote_name}</code> gagal dihapus!": "Note <code>{note_name}</code> deleted in <b>{chat_name}</b> Ã°Å¸ËœÂ\nFailed to delete note <code>{fnote_name}</code>!",
+	"Catatan <code>{note_name}</code> dihapus Ã°Å¸ËœÂ\nCatatan <code>{fnote_name}</code> gagal dihapus!": "Note <code>{note_name}</code> deleted Ã°Å¸ËœÂ\nFailed to delete note <code>{fnote_name}</code>!",
 	"Apa yang ingin dihapus?": "What you want to delete?",
 	"*Catatan di {}:*\n": "*Notes in {}:*\n",
 	"<b>Catatan di {}:</b>\n": "<b>Notes in {}:</b>\n",
@@ -998,13 +998,13 @@ A button can be added to a note by using standard markdown link syntax - the lin
 	"Pengaturan obrolan saat ini adalah: `{}`": "This chat's current setting is: `{}`",
 	"<b>{}:</b>\n<b>Pengguna yang dilaporkan:</b> {} (<code>{}</code>)\n<b>Dilaporkan oleh:</b> {} (<code>{}</code>)": "<b>{}:</b>\n<b>Reported user:</b> {} (<code>{}</code>)\n<b>Reported by:</b> {} (<code>{}</code>)",
 	"{} memanggil admin di \"{}\"!": "{} is calling for admins in \"{}\"!",
-	"âš ï¸ Pesan yang dilaporkan": "âš ï¸ Message reported",
-	"âš ï¸ Tendang": "âš ï¸ Kick",
-	"â›”ï¸ Banned": "â›”ï¸ Banned",
+	"Ã¢Å¡Â Ã¯Â¸Â Pesan yang dilaporkan": "Ã¢Å¡Â Ã¯Â¸Â Message reported",
+	"Ã¢Å¡Â Ã¯Â¸Â Tendang": "Ã¢Å¡Â Ã¯Â¸Â Kick",
+	"Ã¢â€ºâ€Ã¯Â¸Â Banned": "Ã¢â€ºâ€Ã¯Â¸Â Banned",
 	"Hapus pesan": "Delete message",
 	"Tutup Tombol": "Close button",
-	"<i>âš ï¸ Pesan telah di laporkan ke semua admin!</i>": "<i>âš ï¸ Message has been reported to all admins!</i>",
-	"âš ï¸ {} <b>telah di laporkan ke admin!</b>{}": "âš ï¸ {} <b>has been reported to the admin!</b>{}",
+	"<i>Ã¢Å¡Â Ã¯Â¸Â Pesan telah di laporkan ke semua admin!</i>": "<i>Ã¢Å¡Â Ã¯Â¸Â Message has been reported to all admins!</i>",
+	"Ã¢Å¡Â Ã¯Â¸Â {} <b>telah di laporkan ke admin!</b>{}": "Ã¢Å¡Â Ã¯Â¸Â {} <b>has been reported to the admin!</b>{}",
 	"Sesi telah berakhir!": "Session is time out!",
 	"Ya": "Yes",
 	"Tidak": "No",
@@ -1108,7 +1108,7 @@ NOTE: In groups, only admins can add/remove RSS links to the group's subscriptio
 
 # warns
 	"CURRENT_WARNING_FILTER_STRING": "<b>Current warning filters in this chat:</b>\n",
-	"Sayangnya admin tidak bisa di warn ðŸ˜”": "Damn admins, can't even be warned!",
+	"Sayangnya admin tidak bisa di warn Ã°Å¸Ëœâ€": "Damn admins, can't even be warned!",
 	"Filter peringatan otomatis.": "Automated warn filter.",
 	"{} peringatan, {} telah ditendang!": "{} warnings, {} has been kicked!",
 	"{} peringatan, {} telah diblokir!": "{} warnings, {} has been banned!",
@@ -1184,12 +1184,12 @@ be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is
 # weather
 	"weather_lang": "en",
 	"Saya akan terus mengawasi di saat senang maupun sedih!": "I will keep watching when I am happy or sad!",
-	"{} hari ini sedang {}, sekitar {}Â°C.\n": "{} today is {}, around {}Â°C.\n",
-	"Untuk besok pada pukul 06:00, akan {}, sekitar {}Â°C": "Untuk besok pada pukul 06:00, akan {}, sekitar {}Â°C",
+	"{} hari ini sedang {}, sekitar {}Ã‚Â°C.\n": "{} today is {}, around {}Ã‚Â°C.\n",
+	"Untuk besok pada pukul 06:00, akan {}, sekitar {}Ã‚Â°C": "Untuk besok pada pukul 06:00, akan {}, sekitar {}Ã‚Â°C",
 	"Tulis lokasi untuk mengecek cuacanya": "Write the location to check the weather",
-	"Maaf, lokasi tidak ditemukan ðŸ˜ž": "Sorry, location not found ðŸ˜ž",
+	"Maaf, lokasi tidak ditemukan Ã°Å¸ËœÅ¾": "Sorry, location not found Ã°Å¸ËœÅ¾",
 	"Masukan nama lokasinya untuk mengecek cuacanya!": "Enter the name of the location to check the weather!",
-	"*Suhu:* `{}Â°C`/`{}Â°F`\n": "*Temperature:* `{}Â°C`/`{}Â°F`\n",
+	"*Suhu:* `{}Ã‚Â°C`/`{}Ã‚Â°F`\n": "*Temperature:* `{}Ã‚Â°C`/`{}Ã‚Â°F`\n",
 	"*Kelembapan:* `{}`\n": "*Humidity:* `{}`\n",
 	"*Angin:* `{} {} km/h` | `{} mi/h`\n": "*Wind:* `{} {} km/h` | `{} mi/h`\n",
 	"*Tingkat UV:* `{}`\n": "*UV level:* `{}`\n",
@@ -1207,7 +1207,7 @@ be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is
 	"\nCatatan: pesan saat ini memiliki tombol yang menggunakan protokol url yang tidak didukung oleh telegram. Harap perbarui.": "\nNote: the current message has buttons which use url protocols that are unsupported by telegram. Please update.",
 	"\nCatatan: pesan saat ini memiliki beberapa url yang buruk. Harap perbarui.": "\nNote: the current message has some bad urls. Please update.",
 	"\nCatatan: Terjadi kesalahan saat mengirim pesan kustom. Harap perbarui.": "\nNote: An error occured when sending the custom message. Please update.",
-	"Master telah pulang! Mari kita mulai pesta ini! ðŸ˜†": "Master is in the houseeee, let's get this party started! ðŸ˜†",
+	"Master telah pulang! Mari kita mulai pesta ini! Ã°Å¸Ëœâ€ ": "Master is in the houseeee, let's get this party started! Ã°Å¸Ëœâ€ ",
 	"Catatan: Terjadi kesalahan saat mengirim pesan kustom. Harap perbarui.": "Note: An error occurred while sending custom messages. Please update.",
 	"Kamu telah disuarakan!": "You've been unmuted!",
 	"Kamu bukan pengguna baru!": "You are not a new member!",
@@ -1229,7 +1229,7 @@ Note:
 	# This is optional since it disabled by default
 	"Kamu bukan pengguna yang di tuju!": "You are not the intended user!",
 
-	"Selamat jalan master ðŸ˜¢": "RIP Master ðŸ˜¢",
+	"Selamat jalan master Ã°Å¸ËœÂ¢": "RIP Master Ã°Å¸ËœÂ¢",
 	"Saya tidak bisa membatasi orang di sini! Pastikan saya admin agar bisa membisukan seseorang!": "I can't restrict member here! Make sure I'm an admin an can mute someone!",
 	"Keamanan untuk member baru di aktifkan!": "Security for new members is activated!",
 	"Di nonaktifkan, saya tidak akan membisukan member masuk lagi": "Disabled, I will not mute new member again",
@@ -1259,8 +1259,8 @@ Note:
 	"Saat ini saya membisukan pengguna ketika mereka bergabung: `{}`\n": "Currently I mute users when they join: `{}`\n",
 	"Tombol welcomemute akan mengatakan: `{}`\n": "The button welcomemute will say: `{}`\n",
 	"\n*Pesan selamat datang (tidak mengisi {{}}) adalah:*": "\n*Welcome message (not filling the {{}}) is:*",
-	"Saya akan sopan ðŸ˜": "I'll be polite! ðŸ˜",
-	"Aku ngambek, tidak menyapa lagi. ðŸ˜£": "I'm sulking, not saying hello anymore. ðŸ˜£",
+	"Saya akan sopan Ã°Å¸ËœÂ": "I'll be polite! Ã°Å¸ËœÂ",
+	"Aku ngambek, tidak menyapa lagi. Ã°Å¸ËœÂ£": "I'm sulking, not saying hello anymore. Ã°Å¸ËœÂ£",
 	"Saya hanya mengerti 'on/yes' atau 'off/no' saja!": "I only understand 'on/yes' or 'off/no' only!",
 	"Obrolan ini memiliki setelan selamat tinggal yang disetel ke: `{}`.\n*Pesan selamat tinggal (tidak mengisi {{}}) adalah:*": "This chat has it's goodbye setting set to: `{}`.\n*The goodbye  message (not filling the {{}}) is:*",
 	"Aku akan menyesal jika orang-orang pergi!": "I'll be sorry when people leave!",
@@ -1311,12 +1311,12 @@ This also works with /goodbye.
 	"Anda sepertinya tidak mengacu pada obrolan": "You don't seem to be referring to chat",
 	"Sukses mengambil link invite di grup {}. \nInvite link : {}": "Successfully retrieve the invite link in the group {}. \nInvite link : {}",
 	"Saya tidak memiliki akses ke tautan undangan!": "I don't have access to the invitation link!",
-	"Selamat tinggal semua ðŸ˜": "Goodbye everyone ðŸ˜",
+	"Selamat tinggal semua Ã°Å¸ËœÂ": "Goodbye everyone Ã°Å¸ËœÂ",
 	"Saya telah keluar dari grup {}": "I have left the group {}",
 	"Sepertinya saya sudah keluar atau di tendang di grup tersebut": "Looks like I have been out or kicked in the group",
 	"Pong!\nKecepatannya: {0:.2f} detik": "Pong!\nSpeed was: {0:.2f}s",
 	"Diterjemahkan dari `{}` ke `{}`:\n`{}`": "Translated from `{}` to `{}`:\n`{}`",
-	"Balas pesan atau tulis pesan dari bahasa lain untuk diterjemahkan kedalam bahasa yang di dituju\n\nContoh: `/tr en-id` untuk menerjemahkan dari Bahasa inggris ke Bahasa Indonesia\nAtau gunakan: `/tr id` untuk deteksi otomatis dan menerjemahkannya kedalam bahasa indonesia": "Reply to messages or write messages from other languages â€‹â€‹to translate into the intended language\n\nExample: `/tr en-id` to translate from English to Indonesian\nOr use: `/tr id` for automatic detection and translating it into Indonesian",
+	"Balas pesan atau tulis pesan dari bahasa lain untuk diterjemahkan kedalam bahasa yang di dituju\n\nContoh: `/tr en-id` untuk menerjemahkan dari Bahasa inggris ke Bahasa Indonesia\nAtau gunakan: `/tr id` untuk deteksi otomatis dan menerjemahkannya kedalam bahasa indonesia": "Reply to messages or write messages from other languages Ã¢â‚¬â€¹Ã¢â‚¬â€¹to translate into the intended language\n\nExample: `/tr en-id` to translate from English to Indonesian\nOr use: `/tr id` for automatic detection and translating it into Indonesian",
 	"Bahasa yang di tuju tidak ditemukan!": "The destination language is not found!",
 	"Hasil tidak ditemukan": "Results not found",
 	"Tulis pesan untuk mencari dari sumber wikipedia": "Write a message to search from the wikipedia source",
@@ -1327,7 +1327,7 @@ This also works with /goodbye.
  - /stickerid: reply message sticker at PM to get ID sticker
  - /ping: check the speed of the bot
  - /fortune: give a fortune
- - /tr <from>-<to> <text>: translate text written or reply for any language to the intended language,Â or
+ - /tr <from>-<to> <text>: translate text written or reply for any language to the intended language,Ã‚Â or
  - /tr <to> <text>: translate text written or reply for any language to the intended language
  - /wiki <text>: search for text written from the wikipedia source
  - /ud <text>: search from urban dictionary
@@ -1450,59 +1450,59 @@ HIT = (
 
 
 RAMALAN_STRINGS = (
-	"Thereâ€™s a friend who would be happy to hear from you today\nTell them I said â€œHiâ€",
+	"ThereÃ¢â‚¬â„¢s a friend who would be happy to hear from you today\nTell them I said Ã¢â‚¬Å“HiÃ¢â‚¬Â",
 	"5 - 8 - 27 - 38 - 42 - 48\nWhoops! That was the back!",
 	"You're due for a good documentary",
 	"It's a good time to re-read your favorite book",
-	"Consider adding a little extra color to your wardrobe tomorrow ðŸ‘ ",
-	"Make sure you drink enough water today\nThatâ€™s not so much a fortune as a general guideline to keep feeling alright",
-	"A stranger will come into your life with a BANG ðŸ’¥",
+	"Consider adding a little extra color to your wardrobe tomorrow Ã°Å¸â€˜Â ",
+	"Make sure you drink enough water today\nThatÃ¢â‚¬â„¢s not so much a fortune as a general guideline to keep feeling alright",
+	"A stranger will come into your life with a BANG Ã°Å¸â€™Â¥",
 	"It's great to be grateful\nThank somebody today",
 	"Temptation is often disguised as opportunity",
 	"Now is the right time to do something you've put off",
-	"You can't get what you don't ask for ðŸ‘",
+	"You can't get what you don't ask for Ã°Å¸â€˜Â",
 	"Never let a cookie tell you what to do",
 	"Trust decisions where your emotions and logic agree",
-	"Animal companionship can bring a smile to even the most frowny face ï¸ðŸ˜” ðŸ¶ ðŸ˜Š",
-	"If you make someoneâ€™s day, your day will be made, too\nIt pretty much always works that way ðŸ˜Š",
-	"Knowing that an illusion isnâ€™t real doesnâ€™t it make it less magical",
-	"The next meal you cook will be your best yet ðŸ´",
-	"You'll notice something new in your neighborhood soon ðŸ¡",
+	"Animal companionship can bring a smile to even the most frowny face Ã¯Â¸ÂÃ°Å¸Ëœâ€ Ã°Å¸ÂÂ¶ Ã°Å¸ËœÅ ",
+	"If you make someoneÃ¢â‚¬â„¢s day, your day will be made, too\nIt pretty much always works that way Ã°Å¸ËœÅ ",
+	"Knowing that an illusion isnÃ¢â‚¬â„¢t real doesnÃ¢â‚¬â„¢t it make it less magical",
+	"The next meal you cook will be your best yet Ã°Å¸ÂÂ´",
+	"You'll notice something new in your neighborhood soon Ã°Å¸ÂÂ¡",
 	"Today will be yesterday tomorrow",
 	"Indulge in some nostalgia; sweet memories can be good medicine",
-	"Today is a good day to listen to your intuition rather than advice ðŸš¶",
+	"Today is a good day to listen to your intuition rather than advice Ã°Å¸Å¡Â¶",
 	"It's a good day to appreciate the little things",
-	"Embrace your goals\nSmooch your dreams ðŸ˜˜ ðŸŒ™",
+	"Embrace your goals\nSmooch your dreams Ã°Å¸ËœËœ Ã°Å¸Å’â„¢",
 	"That food you've never tasted might actually taste good",
-	"Hear no evil ðŸ™‰, see no evil ðŸ™ˆ, tweet no evil ðŸ¥",
+	"Hear no evil Ã°Å¸â„¢â€°, see no evil Ã°Å¸â„¢Ë†, tweet no evil Ã°Å¸ÂÂ¥",
 	"You will learn a new dance\nAnd you'll be really good at it",
 	"Try going somewhere new, even if it's just a few miles away from home",
-	"Do something you love today ðŸ’ž\nI can all but promise happiness awaits ðŸ˜€",
+	"Do something you love today Ã°Å¸â€™Å¾\nI can all but promise happiness awaits Ã°Å¸Ëœâ‚¬",
 	"It's time to try out a new hobby",
-	"An opportunity will present itself if you pay attention ðŸ‘€",
-	"Companionship is right within your reach\nIn fact, you're holding it right now ðŸ˜Š",
-	"Keep doing what youâ€™re doing and it will be done\nOk, even I will admit that was a weak fortune",
+	"An opportunity will present itself if you pay attention Ã°Å¸â€˜â‚¬",
+	"Companionship is right within your reach\nIn fact, you're holding it right now Ã°Å¸ËœÅ ",
+	"Keep doing what youÃ¢â‚¬â„¢re doing and it will be done\nOk, even I will admit that was a weak fortune",
 	"In life, there is but one truth\nHe who smelt it, delt it",
-	"If you listen closely, the wind will provide all of lifes answers ðŸ’¨",
-	"Positive things will enter your life today\nBut bear in mind that most of them will be atomically bonded to negative things ðŸ”¬ðŸ˜€",
-	"A great gift awaits\nBut fair warning, itâ€™s a very patient gift",
+	"If you listen closely, the wind will provide all of lifes answers Ã°Å¸â€™Â¨",
+	"Positive things will enter your life today\nBut bear in mind that most of them will be atomically bonded to negative things Ã°Å¸â€Â¬Ã°Å¸Ëœâ‚¬",
+	"A great gift awaits\nBut fair warning, itÃ¢â‚¬â„¢s a very patient gift",
 	"It's a good time for a new creative pursuit",
-	"Stop and smell the roses\nReally, any flowers you come across willl do ðŸ’",
+	"Stop and smell the roses\nReally, any flowers you come across willl do Ã°Å¸â€™Â",
 	"You will pick up a good book tonight\nBut ultimately decide to free the spider outside",
-	"You're about to receive a new message from your Google Assistant:\nHI ðŸ˜€",
-	"Make a playlist for a friend this week ðŸŽ§",
+	"You're about to receive a new message from your Google Assistant:\nHI Ã°Å¸Ëœâ‚¬",
+	"Make a playlist for a friend this week Ã°Å¸Å½Â§",
 	"Your favorite YouTube video is yet to be found",
 	"Take some time to listen to your loved ones",
-	"Make sure to laugh at something silly today ðŸ˜†",
-	"The one you love is closer than you think ðŸ’ž",
+	"Make sure to laugh at something silly today Ã°Å¸Ëœâ€ ",
+	"The one you love is closer than you think Ã°Å¸â€™Å¾",
 	"You're going to hear a song that will make you smile for days",
-	"Keep your head up, because good things are coming your way ðŸ˜Ž",
-	"When in doubt, Google it ðŸ˜‰",
+	"Keep your head up, because good things are coming your way Ã°Å¸ËœÅ½",
+	"When in doubt, Google it Ã°Å¸Ëœâ€°",
 	"May you go from strength to strength",
-	"Error 404: Fortune not found\nTry again soon ðŸ˜‰",
-	"The next time you go out to eat, you will order dessert\nNot exactly a fortune, more like a good idea ðŸª",
+	"Error 404: Fortune not found\nTry again soon Ã°Å¸Ëœâ€°",
+	"The next time you go out to eat, you will order dessert\nNot exactly a fortune, more like a good idea Ã°Å¸ÂÂª",
 	"Chase the dawn and your shadow will be behind you",
-	"You are admired for your talents more than you realize ðŸ‘",
+	"You are admired for your talents more than you realize Ã°Å¸â€˜Â",
 	"It's a good time to learn a new skill",
 	"Fortune favors the bold\nLuck favors the italic",
 	"It's the right time to act like the person you want to be",
@@ -1513,10 +1513,10 @@ RAMALAN_STRINGS = (
 	"You will get a taste of something unexpected",
 	"Go somewhere you've never been, and see what you find there",
 	"Seek not fortunes in the inedible",
-	"It's a great time to plan a trip with someone you love âœˆï¸",
+	"It's a great time to plan a trip with someone you love Ã¢Å“Ë†Ã¯Â¸Â",
 	"Send an old friend a message today",
-	"Trust your instincts\nWin that bear ðŸŽ¯ðŸ»",
-	"Someone will invite you to a karaoke party ðŸŽ¶",
+	"Trust your instincts\nWin that bear Ã°Å¸Å½Â¯Ã°Å¸ÂÂ»",
+	"Someone will invite you to a karaoke party Ã°Å¸Å½Â¶",
 	"An exciting email is coming your way soon"
 )
 
