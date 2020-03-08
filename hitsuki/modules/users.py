@@ -70,6 +70,22 @@ def broadcast(bot: Bot, update: Update):
 
 
 @run_async
+def snipe(bot: Bot, update: Update, args: List[str]):
+    try:
+        chat_id = str(args[0])
+        del args[0]
+    except TypeError as excp:
+        update.effective_message.reply_text("Please give me a chat to echo to!")
+    to_send = " ".join(args)
+    if len(to_send) >= 2:
+        try:
+            bot.sendMessage(int(chat_id), str(to_send))
+        except TelegramError:
+            LOGGER.warning("Couldn't send to group %s", str(chat_id))
+            update.effective_message.reply_text("Couldn't send the message. Perhaps I'm not part of that group?") 
+
+
+@run_async
 def log_user(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
@@ -136,7 +152,9 @@ __mod_name__ = "Users"
 BROADCAST_HANDLER = CommandHandler("broadcast", broadcast, filters=Filters.user(OWNER_ID))
 USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user)
 CHATLIST_HANDLER = CommandHandler("chatlist", chats, filters=CustomFilters.sudo_filter)
+SNIPE_HANDLER = CommandHandler("snipe", snipe, pass_args=True, filters=Filters.user(OWNER_ID))
 
+dispatcher.add_handler(SNIPE_HANDLER)
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
 dispatcher.add_handler(BROADCAST_HANDLER)
 dispatcher.add_handler(CHATLIST_HANDLER)
