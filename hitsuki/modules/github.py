@@ -8,7 +8,7 @@ from requests import get
 import hitsuki.modules.helper_funcs.git_api as api
 import hitsuki.modules.sql.github_sql as sql
 
-from hitsuki import dispatcher, OWNER_ID, LOGGER, SUDO_USERS, SUPPORT_USERS
+from hitsuki import dispatcher, OWNER_ID, LOGGER, SUDO_USERS, SUPPORT_USERS, spamfilters
 from hitsuki.modules.helper_funcs.filters import CustomFilters
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.languages import tl as tld

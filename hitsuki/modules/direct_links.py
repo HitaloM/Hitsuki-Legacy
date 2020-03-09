@@ -4,19 +4,22 @@
 # you may not use this file except in compliance with the License.
 #
 
-from os import popen
 import re
 import urllib.parse
 import json
-from random import choice
 import requests
+
+from os import popen
+from random import choice
 from bs4 import BeautifulSoup
 from hurry.filesize import size as naturalsize
+
 from telegram import Bot, Update
 from telegram.ext import run_async, CommandHandler
 
-from hitsuki import dispatcher
+from hitsuki import dispatcher, spamfilters
 from hitsuki.modules.languages import tl
+
 
 @run_async
 def direct_link_generator(bot: Bot, update: Update):
@@ -42,7 +45,11 @@ def direct_link_generator(bot: Bot, update: Update):
         elif 'androidfilehost.com' in link:
             reply.append(androidfilehost(link))
         else:
-            reply.append(re.findall(r"\bhttps?://(.*?[^/]+)", link)[0] + ' is not supported')
+            reply.append(
+                re.findall(
+                    r"\bhttps?://(.*?[^/]+)",
+                    link)[0] +
+                ' is not supported')
 
     message.reply_html("\n".join(reply))
 
@@ -136,6 +143,7 @@ def useragent():
         'lxml').findAll('td', {'class': 'useragent'})
     user_agent = choice(useragents)
     return user_agent.text
+
 
 __help__ = "directlinks_help"
 
