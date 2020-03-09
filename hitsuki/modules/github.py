@@ -20,7 +20,7 @@ from telegram import Message, Chat, Update, Bot, User, ParseMode, InlineKeyboard
 def getData(url):
     if not api.getData(url):
         return "Invalid <user>/<repo> combo"
-    recentRelease = api.getLastestReleaseData(api.getData(url))
+    recentRelease = api.getReleaseData(api.getData(url))
     author = api.getAuthor(recentRelease)
     authorUrl = api.getAuthorUrl(recentRelease)
     name = api.getReleaseName(recentRelease)
@@ -97,7 +97,7 @@ def changelog(bot: Bot, update: Update, args: List[str]):
         msg.reply_text("Invalid <user>/<repo> combo")
         return
     data = api.getData(url)
-    release = api.getLastestReleaseData(data)
+    release = api.getReleaseData(data)
     body = api.getBody(release)
     msg.reply_text(body)
     return
