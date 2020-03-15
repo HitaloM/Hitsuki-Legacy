@@ -6,8 +6,8 @@ from sqlalchemy import Column, String, Boolean, UnicodeText, Integer, BigInteger
 from hitsuki.modules.helper_funcs.msg_types import Types
 from hitsuki.modules.sql import SESSION, BASE
 
-DEFAULT_WELCOME = "Hey there {first}, How are you?"
-DEFAULT_GOODBYE = "Nice knowing you!"
+DEFAULT_WELCOME = "Hi {first}, how are you? 🙂"
+DEFAULT_GOODBYE = "Goodbye 😉"
 
 
 class Welcome(BASE):
@@ -77,30 +77,6 @@ class CleanServiceSetting(BASE):
         return "<Chat used clean service ({})>".format(self.chat_id)
 
 
-class CombotCASStatus(BASE):
-    __tablename__ = "cas_stats"
-    chat_id = Column(String(14), primary_key=True)
-    status = Column(Boolean, default=True)
-    autoban = Column(Boolean, default=False)
-
-    def __init__(self, chat_id, status, autoban):
-        self.chat_id = str(chat_id)  # chat_id is int, make sure it's string
-        self.status = status
-        self.autoban = autoban
-
-
-Welcome.__table__.create(checkfirst=True)
-WelcomeButtons.__table__.create(checkfirst=True)
-GoodbyeButtons.__table__.create(checkfirst=True)
-CombotCASStatus.__table__.create(checkfirst=True)
-
-INSERTION_LOCK = threading.RLock()
-WELC_BTN_LOCK = threading.RLock()
-LEAVE_BTN_LOCK = threading.RLock()
-WM_LOCK = threading.RLock()
-CAS_LOCK = threading.RLock()
-
-
 class WelcomeSecurity(BASE):
     __tablename__ = "welcome_security"
     chat_id = Column(String(14), primary_key=True)
@@ -109,36 +85,29 @@ class WelcomeSecurity(BASE):
     custom_text = Column(UnicodeText, default="Klik disini untuk mensuarakan")
 
     def __init__(self, chat_id, security=False, mute_time="0", custom_text="Klik disini untuk mensuarakan"):
-        self.chat_id = str(chat_id)  # ensure string
+        self.chat_id = str(chat_id) # ensure string
         self.security = security
         self.mute_time = mute_time
         self.custom_text = custom_text
 
-
-class UserRestirect(BASE):
-    __tablename__ = "welcome_restirectlist"
+class UserRestrict(BASE):
+    __tablename__ = "welcome_restrictlist"
     chat_id = Column(String(14), primary_key=True)
     user_id = Column(Integer, primary_key=True, nullable=False)
+    is_clicked = Column(Boolean)
 
-    def __init__(self, chat_id, user_id):
+    def __init__(self, chat_id, user_id, is_clicked):
         self.chat_id = str(chat_id)  # ensure string
         self.user_id = user_id
+        self.is_clicked = is_clicked
 
     def __repr__(self):
-        return "<User restirect '%s' in %s>" % (self.user_id, self.chat_id)
+        return "<User restrict '%s' in %s>" % (self.user_id, self.chat_id)
 
     def __eq__(self, other):
-        return bool(isinstance(other, UserRestirect)
+        return bool(isinstance(other, UserRestrict)
                     and self.chat_id == other.chat_id
                     and self.user_id == other.user_id)
-
-
-class AllowedChat(BASE):
-    __tablename__ = "chat_whitelist"
-    chat_id = Column(String(14), primary_key=True)
-
-    def __init__(self, chat_id):
-        self.chat_id = str(chat_id)  # chat_id is int, make sure it is string
 
 
 Welcome.__table__.create(checkfirst=True)
@@ -146,8 +115,7 @@ WelcomeButtons.__table__.create(checkfirst=True)
 GoodbyeButtons.__table__.create(checkfirst=True)
 CleanServiceSetting.__table__.create(checkfirst=True)
 WelcomeSecurity.__table__.create(checkfirst=True)
-UserRestirect.__table__.create(checkfirst=True)
-AllowedChat.__table__.create(checkfirst=True)
+UserRestrict.__table__.create(checkfirst=True)
 
 INSERTION_LOCK = threading.RLock()
 WELC_BTN_LOCK = threading.RLock()
@@ -155,32 +123,29 @@ LEAVE_BTN_LOCK = threading.RLock()
 CS_LOCK = threading.RLock()
 WS_LOCK = threading.RLock()
 UR_LOCK = threading.RLock()
-ALLOWCHATLOCK = threading.RLock()
 
-CHAT_USERRESTIRECT = {}
-
-WHITELIST = set()
+CHAT_USERRESTRICT = {}
 
 
-def add_to_userlist(chat_id, user_id):
+def add_to_userlist(chat_id, user_id, is_clicked):
     with UR_LOCK:
-        user_filt = UserRestirect(str(chat_id), user_id)
+        user_filt = UserRestrict(str(chat_id), user_id, is_clicked)
 
         SESSION.merge(user_filt)  # merge to avoid duplicate key issues
         SESSION.commit()
-        global CHAT_USERRESTIRECT
-        if CHAT_USERRESTIRECT.get(str(chat_id), set()) == set():
-            CHAT_USERRESTIRECT[str(chat_id)] = {user_id}
+        global CHAT_USERRESTRICT
+        if CHAT_USERRESTRICT.get(str(chat_id)):
+            CHAT_USERRESTRICT[str(chat_id)] = {user_id: is_clicked}
         else:
-            CHAT_USERRESTIRECT.get(str(chat_id), set()).add(user_id)
+            CHAT_USERRESTRICT.get(str(chat_id))[user_id] = is_clicked
 
 
 def rm_from_userlist(chat_id, user_id):
     with UR_LOCK:
-        user_filt = SESSION.query(UserRestirect).get((str(chat_id), user_id))
+        user_filt = SESSION.query(UserRestrict).get((str(chat_id), user_id))
         if user_filt:
-            if user_id in CHAT_USERRESTIRECT.get(str(chat_id), set()):  # sanity check
-                CHAT_USERRESTIRECT.get(str(chat_id), set()).remove(user_id)
+            if user_id in CHAT_USERRESTRICT.get(str(chat_id)):  # sanity check
+                CHAT_USERRESTRICT.get(str(chat_id)).pop(user_id)
 
             SESSION.delete(user_filt)
             SESSION.commit()
@@ -189,9 +154,11 @@ def rm_from_userlist(chat_id, user_id):
         SESSION.close()
         return False
 
-
 def get_chat_userlist(chat_id):
-    return CHAT_USERRESTIRECT.get(str(chat_id), set())
+    global CHAT_USERRESTRICT
+    if not CHAT_USERRESTRICT.get(str(chat_id)):
+        CHAT_USERRESTRICT[str(chat_id)] = {}
+    return CHAT_USERRESTRICT.get(str(chat_id))
 
 
 def welcome_security(chat_id):
@@ -200,7 +167,7 @@ def welcome_security(chat_id):
         if security:
             return security.security, security.mute_time, security.custom_text
         else:
-            return False, "0", "Click here to prove you're human"
+            return False, "0", "Klik disini untuk mensuarakan"
     finally:
         SESSION.close()
 
@@ -227,7 +194,7 @@ def clean_service(chat_id: Union[str, int]) -> bool:
         return False
     finally:
         SESSION.close()
-
+        
 
 def set_clean_service(chat_id: Union[int, str], setting: bool):
     with CS_LOCK:
@@ -406,50 +373,6 @@ def get_gdbye_buttons(chat_id):
         SESSION.close()
 
 
-def get_cas_status(chat_id):
-    try:
-        resultObj = SESSION.query(CombotCASStatus).get(str(chat_id))
-        if resultObj:
-            return resultObj.status
-        return True
-    finally:
-        SESSION.close()
-
-
-def set_cas_status(chat_id, status):
-    with CAS_LOCK:
-        ban = False
-        prevObj = SESSION.query(CombotCASStatus).get(str(chat_id))
-        if prevObj:
-            ban = prevObj.autoban
-            SESSION.delete(prevObj)
-        newObj = CombotCASStatus(str(chat_id), status, ban)
-        SESSION.add(newObj)
-        SESSION.commit()
-
-
-def get_cas_autoban(chat_id):
-    try:
-        resultObj = SESSION.query(CombotCASStatus).get(str(chat_id))
-        if resultObj and resultObj.autoban:
-            return resultObj.autoban
-        return False
-    finally:
-        SESSION.close()
-
-
-def set_cas_autoban(chat_id, autoban):
-    with CAS_LOCK:
-        status = True
-        prevObj = SESSION.query(CombotCASStatus).get(str(chat_id))
-        if prevObj:
-            status = prevObj.status
-            SESSION.delete(prevObj)
-        newObj = CombotCASStatus(str(chat_id), status, autoban)
-        SESSION.add(newObj)
-        SESSION.commit()
-
-
 def migrate_chat(old_chat_id, new_chat_id):
     with INSERTION_LOCK:
         chat = SESSION.query(Welcome).get(str(old_chat_id))
@@ -468,55 +391,22 @@ def migrate_chat(old_chat_id, new_chat_id):
 
         SESSION.commit()
 
-
-def __load_chat_userrestirect():
-    global CHAT_USERRESTIRECT
+def __load_chat_userrestrict():
+    global CHAT_USERRESTRICT
     try:
-        chats = SESSION.query(UserRestirect.chat_id).distinct().all()
+        chats = SESSION.query(UserRestrict.chat_id).distinct().all()
         for (chat_id,) in chats:  # remove tuple by ( ,)
-            CHAT_USERRESTIRECT[chat_id] = []
+            CHAT_USERRESTRICT[chat_id] = []
 
-        all_filters = SESSION.query(UserRestirect).all()
+        all_filters = SESSION.query(UserRestrict).all()
         for x in all_filters:
-            CHAT_USERRESTIRECT[x.chat_id] += [x.user_id]
+            if not CHAT_USERRESTRICT.get(x.chat_id):
+                CHAT_USERRESTRICT[x.chat_id] = {}
+            CHAT_USERRESTRICT[x.chat_id][x.user_id] = x.is_clicked
 
-        CHAT_USERRESTIRECT = {x: set(y) for x, y in CHAT_USERRESTIRECT.items()}
+        # CHAT_USERRESTRICT = {x: set(y) for x, y in CHAT_USERRESTRICT.items()}
 
     finally:
         SESSION.close()
 
-
-def __load_whitelisted_chats_list():  # load shit to memory to be faster, and reduce disk access
-    global WHITELIST
-    try:
-        WHITELIST = {x.chat_id for x in SESSION.query(AllowedChat).all()}
-    finally:
-        SESSION.close()
-
-
-def whitelistChat(chat_id):
-    with ALLOWCHATLOCK:
-        chat = SESSION.query(AllowedChat).get(chat_id)
-        if not chat:
-            chat = AllowedChat(chat_id)
-            SESSION.merge(chat)
-        SESSION.commit()
-        __load_whitelisted_chats_list()
-
-
-def unwhitelistChat(chat_id):
-    with ALLOWCHATLOCK:
-        chat = SESSION.query(AllowedChat).get(chat_id)
-        if chat:
-            SESSION.delete(chat)
-        SESSION.commit()
-        __load_whitelisted_chats_list()
-
-
-def isWhitelisted(chat_id):
-    return chat_id in WHITELIST
-
-
-__load_whitelisted_chats_list()
-
-__load_chat_userrestirect()
+__load_chat_userrestrict()
