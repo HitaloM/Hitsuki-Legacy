@@ -168,7 +168,7 @@ SNIPE_HANDLER = CommandHandler("snipe", snipe, pass_args=True, filters=Filters.u
 CHAT_CHECKER_HANDLER = MessageHandler(Filters.all & Filters.group, chat_checker)
 
 dispatcher.add_handler(SNIPE_HANDLER)
-dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
+dispatcher.add_handler(USER_HANDLER, CHAT_GROUP)
 dispatcher.add_handler(BROADCAST_HANDLER)
 dispatcher.add_handler(CHATLIST_HANDLER)
 dispatcher.add_handler(CHAT_CHECKER_HANDLER, CHAT_GROUP)
