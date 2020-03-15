@@ -17,7 +17,7 @@ import hitsuki.modules.sql.feds_sql as fedsql
 from hitsuki.modules import languages
 from hitsuki.modules.helper_funcs.alternate import send_message
 
-USERS_GROUP = 5
+CHAT_GROUP = 5
 
 
 def get_user_id(username):
