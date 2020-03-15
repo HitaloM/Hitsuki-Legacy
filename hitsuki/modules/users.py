@@ -17,7 +17,7 @@ import hitsuki.modules.sql.feds_sql as fedsql
 from hitsuki.modules import languages
 from hitsuki.modules.helper_funcs.alternate import send_message
 
-USERS_GROUP = 4
+USERS_GROUP = 5
 
 
 def get_user_id(username):
@@ -90,6 +90,10 @@ def snipe(bot: Bot, update: Update, args: List[str]):
 def log_user(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
+    """text = msg.text if msg.text else ""
+                uid = msg.from_user.id
+                uname = msg.from_user.name
+                print("{} | {} | {} | {}".format(text, uname, uid, chat.title))"""
     fed_id = fedsql.get_fed_id(chat.id)
     if fed_id:
         user = update.effective_user
@@ -131,6 +135,13 @@ def chats(bot: Bot, update: Update):
                                                 caption="Here is a list of chats in my database.")
 
 
+@run_async
+def chat_checker(bot: Bot, update: Update):
+	if update.effective_message.chat.get_member(bot.id).can_send_messages == False:
+		bot.leaveChat(update.effective_message.chat.id)
+		bot.sendMessage(-1001332080671, "I am leave from {}".format(update.effective_message.chat.title))
+
+
 def __user_info__(user_id, chat_id):
     if user_id == dispatcher.bot.id:
         return languages.tl(chat_id, """I've seen them in... Wow. Are they stalking me? They're in all the same places I am... oh. It's me.""")
@@ -154,8 +165,10 @@ BROADCAST_HANDLER = CommandHandler("broadcast", broadcast, filters=Filters.user(
 USER_HANDLER = MessageHandler(Filters.all & Filters.group, log_user)
 CHATLIST_HANDLER = CommandHandler("chatlist", chats, filters=CustomFilters.sudo_filter)
 SNIPE_HANDLER = CommandHandler("snipe", snipe, pass_args=True, filters=Filters.user(OWNER_ID))
+CHAT_CHECKER_HANDLER = MessageHandler(Filters.all & Filters.group, chat_checker)
 
 dispatcher.add_handler(SNIPE_HANDLER)
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
 dispatcher.add_handler(BROADCAST_HANDLER)
 dispatcher.add_handler(CHATLIST_HANDLER)
+dispatcher.add_handler(CHAT_CHECKER_HANDLER, CHAT_GROUP)
