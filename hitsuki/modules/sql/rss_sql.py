@@ -2,7 +2,7 @@ import threading
 
 from sqlalchemy import Column, UnicodeText, Integer, Boolean
 
-from emilia.modules.sql import BASE, SESSION
+from hitsuki.modules.sql import BASE, SESSION
 
 
 class RSS(BASE):

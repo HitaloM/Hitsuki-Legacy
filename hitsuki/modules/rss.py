@@ -5,12 +5,12 @@ from feedparser import parse
 from telegram import ParseMode, constants, error
 from telegram.ext import CommandHandler, Filters
 
-from emilia import dispatcher, updater, spamfilters
-from emilia.modules.helper_funcs.chat_status import user_admin
-from emilia.modules.sql import rss_sql as sql
+from hitsuki import dispatcher, updater, spamfilters
+from hitsuki.modules.helper_funcs.chat_status import user_admin
+from hitsuki.modules.sql import rss_sql as sql
 
-from emilia.modules.languages import tl
-from emilia.modules.helper_funcs.alternate import send_message
+from hitsuki.modules.languages import tl
+from hitsuki.modules.helper_funcs.alternate import send_message
 
 def show_url(bot, update, args):
     tg_chat_id = str(update.effective_chat.id)
