@@ -142,9 +142,8 @@ def extract_unt_fedban(message: Message, args: List[str]) -> (Optional[int], Opt
         message.bot.get_chat(user_id)
     except BadRequest as excp:
         if excp.message in ("User_id_invalid", "Chat not found") and not str(user_id).isdigit():
-            message.reply_text("Saya sepertinya tidak pernah berinteraksi dengan pengguna ini sebelumnya - silakan meneruskan pesan dari "
-                               "mereka untuk memberi saya kontrol! (Seperti boneka voodoo, saya butuh sepotong untuk bisa"
-                               "untuk menjalankan perintah tertentu...)")
+            message.reply_text("I don't seem to have interacted with this user before - "
+                               "please forward a message from them to give me control! ")
             return None, None
         elif excp.message != "Chat not found":
             LOGGER.exception("Exception %s on user %s", excp.message, user_id)
