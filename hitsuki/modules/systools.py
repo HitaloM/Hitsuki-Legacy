@@ -3,7 +3,6 @@ import os
 import requests
 import speedtest
 
-import hitsuki.modules.helper_funcs.cas_api as cas
 import hitsuki.modules.helper_funcs.git_api as git
 
 from platform import python_version
@@ -21,7 +20,6 @@ def status(bot: Bot, update: Update):
     reply = "<b>System Status:</b> <code>operational</code>\n\n"
     reply += "<b>Hitsuki version:</b> <code>1.0 - X Edition</code>\n"
     reply += "<b>Python version:</b> <code>"+python_version()+"</code>\n"
-    reply += "<b>CAS API version:</b> <code>"+str(cas.vercheck())+"</code>\n"
     reply += "<b>GitHub API version:</b> <code>"+str(git.vercheck())+"</code>\n\n"
     update.effective_message.reply_text(reply, parse_mode=ParseMode.HTML)
 
