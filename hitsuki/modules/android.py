@@ -28,7 +28,7 @@ LOGGER.info("Original Android Modules by @RealAkito on Telegram, modified by @Hi
 
 WIKI = 'https://xiaomiwiki.github.io/wiki'
 GITHUB = 'https://github.com'
-DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/devices.json'
+DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json'
 
 
 @run_async
