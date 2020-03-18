@@ -286,10 +286,12 @@ def twrp(bot, update, args):
         reply = f'*Latest Official TWRP for {device}*\n'            
         db = get(DEVICES_DATA).json()
         newdevice = device.strip('lte') if device.startswith('beyond') else device
-        if db[newdevice][0]['brand']:
-             brand = db[newdevice][0]['brand']
-             name = db[newdevice][0]['name']
-             reply += f'*{brand} - {name}*\n'
+        try:
+            brand = db[newdevice][0]['brand']
+            name = db[newdevice][0]['name']
+            reply += f'*{brand} - {name}*\n'
+        except KeyError as err:
+            pass
         page = BeautifulSoup(url.content, 'lxml')
         date = page.find("em").text.strip()
         reply += f'*Updated:* {date}\n'
