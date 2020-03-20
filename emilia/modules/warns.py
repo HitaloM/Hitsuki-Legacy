@@ -858,7 +858,7 @@ __help__ = "warns_help"
 
 __mod_name__ = "Warnings"
 
-WARN_HANDLER = CommandHandler("warn", warn_user, pass_args=True)#, filters=Filters.group)
+WARN_HANDLER = DisableAbleCommandHandler("warn", warn_user, pass_args=True)#, filters=Filters.group)
 RESET_WARN_HANDLER = CommandHandler(["resetwarn", "resetwarns", "rmwarn"], reset_warns, pass_args=True)#, filters=Filters.group)
 CALLBACK_QUERY_HANDLER = CallbackQueryHandler(button, pattern=r"rm_warn")
 MYWARNS_HANDLER = DisableAbleCommandHandler("warns", warns, pass_args=True)#, filters=Filters.group)
