@@ -17,8 +17,8 @@ from hurry.filesize import size as naturalsize
 from telegram import Bot, Update
 from telegram.ext import run_async, CommandHandler
 
-from hitsuki import dispatcher, spamcheck
-from hitsuki.modules.languages import tl
+from emilia import dispatcher, spamcheck
+from emilia.modules.languages import tl
 
 
 @run_async
