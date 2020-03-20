@@ -25,7 +25,7 @@ def get_rules(update, context):
 
 
 # Do not async - not from a handler
-def send_rules(update, chat_id, from_pm=False):
+def send_rules(context, update, chat_id, from_pm=False):
     bot = dispatcher.bot
     user = update.effective_user  # type: Optional[User]
     try:
