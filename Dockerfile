@@ -65,6 +65,5 @@ WORKDIR /root/emilia/
 #
 # Install requirements
 #
-RUN pip3 install -r requirements.txt
-RUN pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U
+RUN pip3 install -r requirements.txt --upgrade
 CMD ["python3","-m","emilia"]
