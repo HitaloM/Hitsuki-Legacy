@@ -547,8 +547,8 @@ PERMAPIN_HANDLER = CommandHandler("permapin", permapin, filters=Filters.group)
 
 INVITE_HANDLER = CommandHandler("invitelink", invite, filters=Filters.group)
 
-PROMOTE_HANDLER = CommandHandler("promote", promote, pass_args=True, filters=Filters.group)
-DEMOTE_HANDLER = CommandHandler("demote", demote, pass_args=True, filters=Filters.group)
+PROMOTE_HANDLER = DisableAbleCommandHandler("promote", promote, pass_args=True, filters=Filters.group)
+DEMOTE_HANDLER = DisableAbleCommandHandler("demote", demote, pass_args=True, filters=Filters.group)
 
 PERMANENT_PIN_SET_HANDLER = CommandHandler("permanentpin", permanent_pin_set, pass_args=True, filters=Filters.group)
 PERMANENT_PIN_HANDLER = MessageHandler(Filters.status_update.pinned_message | Filters.user(777000), permanent_pin)
