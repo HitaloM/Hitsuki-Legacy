@@ -199,6 +199,16 @@ Examples of time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 week.
 	`1w` = 1 week
 """,
 
+# Direct Links
+"directlinks_help": """
+*This module allows you to generate direct links from various websites.*
+
+/direct <url>: paste a URL to generate a direct download link.
+
+*List of supported URLs:*
+`Google Drive - MediaFire - SourceForge`
+""",
+
 # GitHub
 "github_help": """
 *Need some GitHub release but don't want to have to go to GitHub and go to the repository? Here are some commands that can make your life easier with GitHub.*
