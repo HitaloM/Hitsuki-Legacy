@@ -42,7 +42,7 @@ def send_rules(update, chat_id, from_pm=False):
     if conn:
         chat = dispatcher.context.bot.getChat(conn)
         chat_id = conn
-        chat_name = dispatcher.context.bot.getChat(conn).title
+        chat_name = dispatcher.bot.getChat(conn).title
 
     rules, buttons = button_markdown_parser(sql.get_rules(chat_id))
     try:
@@ -96,7 +96,7 @@ def set_rules(update, context):
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
-        chat = dispatcher.context.bot.getChat(conn)
+        chat = dispatcher.bot.getChat(conn)
         chat_id = conn
         chat_name = dispatcher.context.bot.getChat(conn).title
     else:
@@ -140,9 +140,9 @@ def clear_rules(update, context):
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
-        chat = dispatcher.context.bot.getChat(conn)
+        chat = dispatcher.bot.getChat(conn)
         chat_id = conn
-        chat_name = dispatcher.context.bot.getChat(conn).title
+        chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
             send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
@@ -166,7 +166,7 @@ def private_rules(update, context):
     conn = connected(bot, update, chat, user.id)
     if conn:
         chat_id = conn
-        chat_name = dispatcher.context.bot.getChat(conn).title
+        chat_name = dispatcher.bot.getChat(conn).title
     else:
         chat_id = update.effective_chat.id
         if chat.type == "private":
