@@ -14,6 +14,7 @@ from emilia.modules.helper_funcs.extraction import extract_user, extract_user_an
 from emilia.modules.helper_funcs.string_handling import extract_time
 from emilia.modules.log_channel import loggable
 from emilia.modules.connection import connected
+from emilia.modules.disable import DisableAbleCommandHandler
 
 from emilia.modules.languages import tl
 from emilia.modules.helper_funcs.alternate import send_message
@@ -268,9 +269,9 @@ __help__ = "mute_help"
 
 __mod_name__ = "Muting"
 
-MUTE_HANDLER = CommandHandler("mute", mute, pass_args=True)
-UNMUTE_HANDLER = CommandHandler("unmute", unmute, pass_args=True)
-TEMPMUTE_HANDLER = CommandHandler(["tmute", "tempmute"], temp_mute, pass_args=True)
+MUTE_HANDLER = DisableAbleCommandHandler("mute", mute, pass_args=True)
+UNMUTE_HANDLER = DisableAbleCommandHandler("unmute", unmute, pass_args=True)
+TEMPMUTE_HANDLER = DisableAbleCommandHandler(["tmute", "tempmute"], temp_mute, pass_args=True)
 
 dispatcher.add_handler(MUTE_HANDLER)
 dispatcher.add_handler(UNMUTE_HANDLER)
