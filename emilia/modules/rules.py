@@ -29,20 +29,20 @@ def send_rules(update, chat_id, from_pm=False):
     bot = dispatcher.bot
     user = update.effective_user  # type: Optional[User]
     try:
-        chat = bot.get_chat(chat_id)
+        chat = context.bot.get_chat(chat_id)
     except BadRequest as excp:
         if excp.message == "Chat not found" and from_pm:
-            bot.send_message(user.id, tl(update.effective_message, "Pintasan aturan untuk obrolan ini belum diatur dengan benar! Mintalah admin untuk "
+            context.bot.send_message(user.id, tl(update.effective_message, "Pintasan aturan untuk obrolan ini belum diatur dengan benar! Mintalah admin untuk "
                                       "perbaiki ini."))
             return
         else:
             raise
 
-    conn = connected(bot, update, chat, user.id, need_admin=False)
+    conn = connected(context.bot, update, chat, user.id, need_admin=False)
     if conn:
-        chat = dispatcher.bot.getChat(conn)
+        chat = dispatcher.context.bot.getChat(conn)
         chat_id = conn
-        chat_name = dispatcher.bot.getChat(conn).title
+        chat_name = dispatcher.context.bot.getChat(conn).title
 
     rules, buttons = button_markdown_parser(sql.get_rules(chat_id))
     try:
@@ -57,17 +57,17 @@ def send_rules(update, chat_id, from_pm=False):
         bot.send_message(user.id, text, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(build_keyboard_alternate(buttons)))
     elif from_pm:
         if conn:
-            bot.send_message(user.id, tl(update.effective_message, "Admin grup belum menetapkan aturan apa pun untuk *{}*. "
+            context.bot.send_message(user.id, tl(update.effective_message, "Admin grup belum menetapkan aturan apa pun untuk *{}*. "
                                       "Bukan berarti obrolan ini tanpa hukum...!").format(chat_name), parse_mode="markdown")
         else:
-            bot.send_message(user.id, tl(update.effective_message, "Admin grup belum menetapkan aturan apa pun untuk obrolan ini. "
+            context.bot.send_message(user.id, tl(update.effective_message, "Admin grup belum menetapkan aturan apa pun untuk obrolan ini. "
                                       "Bukan berarti obrolan ini tanpa hukum...!"))
     elif rules:
         if (update.effective_message.chat.type == "private" or not is_private) and rules:
             if not is_private:
                 send_message(update.effective_message, text, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(build_keyboard_alternate(buttons)))
             else:
-                bot.send_message(user.id, text, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(build_keyboard_alternate(buttons)))
+                context.bot.send_message(user.id, text, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(build_keyboard_alternate(buttons)))
         else:
             send_message(update.effective_message, tl(update.effective_message, "Hubungi saya di PM untuk mendapatkan aturan grup ini"),
                                                 reply_markup=InlineKeyboardMarkup(
@@ -94,11 +94,11 @@ def set_rules(update, context):
     raw_text = msg.text
     args = raw_text.split(None, 1)  # use python's maxsplit to separate cmd and args
 
-    conn = connected(bot, update, chat, user.id, need_admin=True)
+    conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
-        chat = dispatcher.bot.getChat(conn)
+        chat = dispatcher.context.bot.getChat(conn)
         chat_id = conn
-        chat_name = dispatcher.bot.getChat(conn).title
+        chat_name = dispatcher.context.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
             send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
@@ -138,11 +138,11 @@ def clear_rules(update, context):
     chat_id = update.effective_chat.id
     user = update.effective_user
 
-    conn = connected(bot, update, chat, user.id, need_admin=True)
+    conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
-        chat = dispatcher.bot.getChat(conn)
+        chat = dispatcher.context.bot.getChat(conn)
         chat_id = conn
-        chat_name = dispatcher.bot.getChat(conn).title
+        chat_name = dispatcher.context.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
             send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
@@ -166,7 +166,7 @@ def private_rules(update, context):
     conn = connected(bot, update, chat, user.id)
     if conn:
         chat_id = conn
-        chat_name = dispatcher.bot.getChat(conn).title
+        chat_name = dispatcher.context.bot.getChat(conn).title
     else:
         chat_id = update.effective_chat.id
         if chat.type == "private":
