@@ -46,7 +46,8 @@ def getData(url, index):
 
 #likewise, aux function, not async
 def getRepo(update, context, reponame):
-    chat_id = update.effective_chat.id
+    chat_id = update.effective_chat
+    chat = update.effective_chat
     repo = sql.get_repo(str(chat_id), reponame)
     if repo:
         return repo.value, repo.backoffset
