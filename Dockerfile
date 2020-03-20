@@ -11,29 +11,41 @@ RUN apk add --no-cache ca-certificates
 # Installing Packages
 RUN apk add --no-cache --update \
     bash \
+    build-base \
+    bzip2-dev \
     curl \
+    coreutils \
+    figlet \
     gcc \
+    g++ \
     git \
-    libffi-dev \
-    libjpeg \
+    aria2 \
+    util-linux \
+    libevent \
     libjpeg-turbo-dev \
+    jpeg-dev \
+    jpeg \
+    libc-dev \
+    libffi-dev \
+    libpq \
     libwebp-dev \
+    libxml2-dev \
+    libxslt-dev \
     linux-headers \
-    musl \
     musl-dev \
     neofetch \
-    rsync \
-    zlib \
-    zlib-dev \
     postgresql \
     postgresql-client \
     postgresql-dev \
+    wget \
     python \
     python3 \
     python-dev \
     python3-dev \
     sqlite-dev \
-    sudo
+    sudo \
+    zlib-dev \
+    zip
 
 
 RUN python3 -m ensurepip \
@@ -46,9 +58,9 @@ RUN python3 -m ensurepip \
 #
 # Clone repo and prepare working directory
 #
-RUN git clone 'https://github.com/HitaloSama/Hitsuki.git' /root/hitsuki
-RUN mkdir /root/hitsuki/bin/
-WORKDIR /root/hitsuki/
+RUN git clone 'https://github.com/HitaloSama/Hitsuki.git' /root/emilia
+RUN mkdir /root/emilia/bin/
+WORKDIR /root/emilia/
 
 #
 # Install requirements
