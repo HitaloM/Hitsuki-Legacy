@@ -24,7 +24,7 @@ RUN apk add --no-cache --update \
     neofetch \
     rsync \
     zlib \
-    zlib-dev
+    zlib-dev \
     postgresql \
     postgresql-client \
     postgresql-dev \
