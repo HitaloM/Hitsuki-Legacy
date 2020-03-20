@@ -14,7 +14,7 @@ from random import choice
 from bs4 import BeautifulSoup
 from hurry.filesize import size as naturalsize
 
-from telegram import Bot Update
+from telegram import Bot, Update
 from telegram.ext import run_async, CommandHandler
 
 from hitsuki import dispatcher, spamcheck

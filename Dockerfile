@@ -11,41 +11,29 @@ RUN apk add --no-cache ca-certificates
 # Installing Packages
 RUN apk add --no-cache --update \
     bash \
-    build-base \
-    bzip2-dev \
     curl \
-    coreutils \
-    figlet \
     gcc \
-    g++ \
     git \
-    aria2 \
-    util-linux \
-    libevent \
-    libjpeg-turbo-dev \
-    jpeg-dev \
-    jpeg \
-    libc-dev \
     libffi-dev \
-    libpq \
+    libjpeg \
+    libjpeg-turbo-dev \
     libwebp-dev \
-    libxml2-dev \
-    libxslt-dev \
     linux-headers \
+    musl \
     musl-dev \
     neofetch \
+    rsync \
+    zlib \
+    zlib-dev \
     postgresql \
     postgresql-client \
     postgresql-dev \
-    wget \
     python \
     python3 \
     python-dev \
     python3-dev \
     sqlite-dev \
-    sudo \
-    zlib-dev \
-    zip
+    sudo
 
 
 RUN python3 -m ensurepip \
