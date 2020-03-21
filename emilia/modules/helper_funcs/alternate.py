@@ -25,7 +25,7 @@ def send_message(message, text, target_id=None, *args,**kwargs):
 			elif str(err) == "Have no rights to send a message":
 				try:
 					dispatcher.bot.leaveChat(message.chat.id)
-					dispatcher.bot.sendMessage(-1001287670948, "I am leave chat `{}`\nBecause of: `Muted`".format(message.chat.title))
+					dispatcher.bot.sendMessage(-1001180408164, "I am leave chat `{}`\nBecause of: `Muted`".format(message.chat.title))
 				except error.BadRequest as err:
 					if str(err) == "Chat not found":
 						pass
@@ -51,7 +51,7 @@ def send_message_raw(chat_id, text, *args, **kwargs):
 		elif str(err) == "Have no rights to send a message":
 			try:
 				dispatcher.bot.leaveChat(message.chat.id)
-				dispatcher.bot.sendMessage(-1001287670948, "I am leave chat `{}`\nBecause of: `Muted`".format(message.chat.title))
+				dispatcher.bot.sendMessage(-1001180408164, "I am leave chat `{}`\nBecause of: `Muted`".format(message.chat.title))
 			except error.BadRequest as err:
 				if str(err) == "Chat not found":
 					pass

@@ -248,7 +248,7 @@ def extract_time(message, time_val):
         unit = time_val[-1]
         time_num = time_val[:-1]  # type: str
         if not time_num.isdigit():
-            message.reply_text("Jumlah waktu tidak ditentukan.")
+            message.reply_text("The amount of time is not specified.")
             return ""
 
         if unit == 'm':
@@ -262,7 +262,7 @@ def extract_time(message, time_val):
             return ""
         return bantime
     else:
-        message.reply_text("Jenis waktu tidak valid ditentukan. Diharapkan m, h, atau d, didapatkan: {}".format(time_val[-1]))
+        message.reply_text("Invalid type specified. Expected m, h, or d, is obtained: {}".format(time_val[-1]))
         return ""
 
 def make_time(time_val):
@@ -281,7 +281,7 @@ def extract_time_int(message, time_val):
         unit = time_val[-1]
         time_num = time_val[:-1]  # type: str
         if not time_num.isdigit():
-            message.reply_text("Jumlah waktu tidak ditentukan.")
+            message.reply_text("The amount of time is not specified.")
             return ""
 
         if unit == 'm':
@@ -295,5 +295,5 @@ def extract_time_int(message, time_val):
             return ""
         return bantime
     else:
-        message.reply_text("Jenis waktu tidak valid ditentukan. Diharapkan m, h, atau d, didapatkan: {}".format(time_val[-1]))
+        message.reply_text("Invalid type specified. Expected m, h, or d, is obtained: {}".format(time_val[-1]))
         return ""
