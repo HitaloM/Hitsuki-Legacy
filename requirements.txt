@@ -21,3 +21,4 @@ markdown2
 spongemock
 zalgo-text
 aiohttp
+tldextract

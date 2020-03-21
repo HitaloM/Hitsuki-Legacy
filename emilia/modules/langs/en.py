@@ -199,6 +199,21 @@ Examples of time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 week.
 	`1w` = 1 week
 """,
 
+# URL Blacklist
+"urlblacklist_help": """
+Domain blacklisting is used to stop certain domains from being mentioned in a group, Any time an url on that domain is mentioned, /
+the message will immediately be deleted.
+
+*NOTE:* domain blacklisting do not affect group admins.
+
+- /geturl: View the current blacklisted urls
+
+*Admin only:*
+
+- /addurl <urls>: Add a domain to the blacklist. The bot will automatically parse the url.
+- /delurl <urls>: Remove urls from the blacklist
+""",
+
 # Direct Links
 "directlinks_help": """
 *This module allows you to generate direct links from various websites.*
