@@ -44,10 +44,10 @@ def getData(url, index):
         message += "\nDownload Count: " + str(downloadCount) + "\n\n"
     return message
 
-#likewise, aux function, not async
-def getRepo(update, context, reponame):
-    args = context.args
-    chat = update.effective_chat
+
+def getRepo(bot, update, reponame, show_none=True, no_format=False):
+    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user  # type: Optional[User]
     chat_id = update.effective_chat.id
     repo = sql.get_repo(str(chat_id), reponame)
     if repo:
