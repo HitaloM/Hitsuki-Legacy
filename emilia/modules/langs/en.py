@@ -996,6 +996,9 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
  - /react: reacts with normal reactions.
  - /happy: reacts with happiness.
  - /angry: reacts angrily.
+ - /paste: Create a paste or a shortened url using dogbin
+ - /getpaste: Get the content of a paste or shortened url from dogbin
+ - /pastestats: Get stats of a paste or
  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
 """,
 
