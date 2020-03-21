@@ -10,6 +10,8 @@ from emilia import dispatcher, OWNER_ID
 
 
 def get_invalid_chats(update, context, remove: bool = False):
+    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user  # type: Optional[User]
     chat_id = update.effective_chat.id
     chats = user_sql.get_all_chats()
     kicked_chats, progress = 0, 0
@@ -80,6 +82,8 @@ def get_invalid_gban(update, context, remove: bool = False):
 
 @run_async
 def dbcleanup(update, context):
+    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user  # type: Optional[User]
     msg = update.effective_message
 
     msg.reply_text("Getting invalid chat count ...")
@@ -99,6 +103,8 @@ def dbcleanup(update, context):
 
 
 def get_muted_chats(update, context, leave: bool = False):
+    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user  # type: Optional[User]
     chat_id = update.effective_chat.id
     chats = user_sql.get_all_chats()
     muted_chats, progress = 0, 0
@@ -149,7 +155,6 @@ def get_muted_chats(update, context, leave: bool = False):
 
 @run_async
 def leave_muted_chats(update, context):
-    message = update.effective_message
     progress_message = message.reply_text("Getting chat count ...")
     muted_chats = get_muted_chats(context.bot, update)
 
@@ -164,6 +169,8 @@ def leave_muted_chats(update, context):
 
 @run_async
 def callback_button(update, context):
+    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user  # type: Optional[User]
     query = update.callback_query
     message = query.message
     chat_id = update.effective_chat.id
