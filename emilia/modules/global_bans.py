@@ -1,4 +1,5 @@
 import html
+import time
 from io import BytesIO
 from typing import Optional, List
 
@@ -245,6 +246,23 @@ def enforce_gban(update, context):
 
 
 @run_async
+def clear_gbans(update, context):
+    banned = sql.get_gban_list()
+    deleted = 0
+    update.message.reply_text("*Beginning to cleanup deleted users from global ban database...*\nThis process might take a while...", parse_mode=ParseMode.MARKDOWN)
+    for user in banned:
+        id = user["user_id"]
+        time.sleep(0.1) # Reduce floodwait
+        try:
+            context.bot.get_chat(id)
+        except BadRequest:
+            deleted += 1
+            sql.ungban_user(id)
+    update.message.reply_text("Done! {} deleted accounts were removed " \
+    "from the gbanlist.".format(deleted), parse_mode=ParseMode.MARKDOWN)
+
+
+@run_async
 @spamcheck
 @user_admin
 def gbanstat(update, context):
@@ -291,41 +309,6 @@ def __migrate__(old_chat_id, new_chat_id):
 def __chat_settings__(chat_id, user_id):
     return tl(user_id, "Obrolan ini memberlakukan *larangan global*: `{}`.").format(sql.does_chat_gban(chat_id))
 
-"""
-def __chat_settings_btn__(chat_id, user_id):
-    getstatus = sql.does_chat_gban(chat_id)
-    if getstatus:
-        status = "✅ Aktif"
-    else:
-        status = "❎ Tidak Aktif"
-    button = []
-    button.append([InlineKeyboardButton(text=status, callback_data="set_gstats={}".format(chat_id))])
-    return button
-
-def GBAN_EDITBTN(bot: Bot, update: Update):
-    query = update.callback_query
-    user = update.effective_user
-    print("User {} clicked button GBAN EDIT".format(user.id))
-    chat_id = query.data.split("=")[1]
-    isgban = sql.does_chat_gban(chat_id)
-    if chat_id:
-        button = []
-        if isgban:
-            sql.disable_gbans(chat_id)
-            status = "❎ Tidak Aktif"
-        else:
-            sql.enable_gbans(chat_id)
-            status = "✅ Aktif"
-        chat = context.bot.get_chat(chat_id)
-        text = "*{}* memiliki pengaturan berikut untuk modul *Welcomes/Goodbyes*:\n\n".format(escape_markdown(chat.title))
-        text += "Obrolan ini memberlakukan *larangan global*: `{}`.".format(status)
-        button.append([InlineKeyboardButton(text=status, callback_data="set_gstats={}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="Kembali", callback_data="stngs_back({})".format(chat_id))])
-        query.message.edit_text(text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(button))
-        context.bot.answer_callback_query(query.id)
-"""
 
 __help__ = "globalbans_help"
 
@@ -342,12 +325,14 @@ GBAN_STATUS = CommandHandler("gbanstat", gbanstat, pass_args=True, filters=Filte
 
 GBAN_ENFORCER = MessageHandler(Filters.all & Filters.group, enforce_gban)
 # GBAN_BTNSET_HANDLER = CallbackQueryHandler(GBAN_EDITBTN, pattern=r"set_gstats")
+CLEAN_DELACC_HANDLER = CommandHandler("cleandelacc", clear_gbans, filters=Filters.user(OWNER_ID))
 
 dispatcher.add_handler(GBAN_HANDLER)
 dispatcher.add_handler(UNGBAN_HANDLER)
 dispatcher.add_handler(GBAN_LIST)
 dispatcher.add_handler(GBAN_STATUS)
 # dispatcher.add_handler(GBAN_BTNSET_HANDLER)
+dispatcher.add_handler(CLEAN_DELACC_HANDLER)
 
 if STRICT_GBAN:  # enforce GBANS if this is set
     dispatcher.add_handler(GBAN_ENFORCER, GBAN_ENFORCE_GROUP)
