@@ -230,10 +230,6 @@ def repo(update, context):
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 
-def __stats__():
-	return (tl(OWNER_ID, "{} repos, accross {} chats.").format(sql.num_github(), sql.num_chats())) 
-
-
 __help__ = "github_help"
 
 __mod_name__ = "GitHub"
