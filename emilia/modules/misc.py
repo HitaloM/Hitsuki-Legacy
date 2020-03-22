@@ -579,36 +579,36 @@ def info(update, context):
     else:
         return
 
-    text = tl(update.effective_message, "<b>Info Pengguna</b>:") \
+    text = tl(update.effective_message, "<b>User info:</b>:") \
            + "\nID: <code>{}</code>".format(user.id) + \
-           tl(update.effective_message, "\nNama depan: {}").format(html.escape(user.first_name))
+           tl(update.effective_message, "\nFirst Name: {}").format(html.escape(user.first_name))
 
     if user.last_name:
-        text += tl(update.effective_message, "\nNama belakang: {}").format(html.escape(user.last_name))
+        text += tl(update.effective_message, "\nLast Name: {}").format(html.escape(user.last_name))
 
     if user.username:
-        text += tl(update.effective_message, "\nNama pengguna: @{}").format(html.escape(user.username))
+        text += tl(update.effective_message, "\nUsername: @{}").format(html.escape(user.username))
 
-    text += tl(update.effective_message, "\nTautan pengguna permanen: {}").format(mention_html(user.id, "link"))
+    text += tl(update.effective_message, "\nUser link: {}").format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += tl(update.effective_message, "\n\nOrang ini adalah pemilik saya - saya tidak akan pernah melakukan apa pun terhadap mereka!")
+        text += tl(update.effective_message, "\n\nThis person is my owner - I would never do anything against them!")
     else:
         if user.id in SUDO_USERS:
-            text += tl(update.effective_message, "\n\nOrang ini adalah salah satu pengguna sudo saya! " \
-                    "Hampir sama kuatnya dengan pemilik saya - jadi tontonlah.")
+            text += tl(update.effective_message, "\n\nThis person is one of my sudo users! " \
+                    "Nearly as powerful as my owner - so watch it.")
         else:
             if user.id in SUPPORT_USERS:
-                text += tl(update.effective_message, "\n\nOrang ini adalah salah satu pengguna dukungan saya! " \
-                        "Tidak sekuat pengguna sudo, tetapi masih dapat menyingkirkan Anda dari peta.")
+                text += tl(update.effective_message, "\n\nThis person is one of my support users! " \
+                        "Not quite a sudo user, but can still gban you off the map.")
 
             if user.id in WHITELIST_USERS:
-                text += tl(update.effective_message, "\n\nOrang ini telah dimasukkan dalam daftar putih! " \
-                        "Itu berarti saya tidak diizinkan untuk melarang/menendang mereka.")
+                text += tl(update.effective_message, "\n\nThis person has been whitelisted!" \
+                        "That means I'm not allowed to ban/kick them.")
 
     fedowner = feds_sql.get_user_owner_fed_name(user.id)
     if fedowner:
-        text += tl(update.effective_message, "\n\n<b>Pengguna ini adalah pemilik federasi ini:</b>\n<code>")
+        text += tl(update.effective_message, "\n\nThis user owns the following federations:\n<code>")
         text += "</code>, <code>".join(fedowner)
         text += "</code>"
     # fedadmin = feds_sql.get_user_admin_fed_name(user.id)
