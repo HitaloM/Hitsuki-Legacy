@@ -236,15 +236,17 @@ __mod_name__ = "GitHub"
 
 GITHUB_HANDLER = CommandHandler("git", github)
 REPO_HANDLER = CommandHandler("repo", repo, pass_args=True)
+
 RELEASEHANDLER = CommandHandler("gitr", getRelease, pass_args=True)
 FETCH_HANDLER = CommandHandler("fetch", cmdFetch, pass_args=True)
+CHANGELOG_HANDLER = CommandHandler("changelog", changelog, pass_args=True)
+HASHFETCH_HANDLER = MessageHandler(Filters.regex(r"^&[^\s]+", hashFetch)
+
 SAVEREPO_HANDLER = CommandHandler("saverepo", saveRepo)
 DELREPO_HANDLER = CommandHandler("delrepo", delRepo)
 LISTREPO_HANDLER = CommandHandler("listrepo", listRepo)
-VERCHECKER_HANDLER = CommandHandler("gitver", getVer)
-CHANGELOG_HANDLER = CommandHandler("changelog", changelog, pass_args=True)
 
-HASHFETCH_HANDLER = MessageHandler(Filters.regex(r"^&[^\s]+", hashFetch)
+VERCHECKER_HANDLER = CommandHandler("gitver", getVer)
 
 dispatcher.add_handler(RELEASEHANDLER)
 dispatcher.add_handler(REPO_HANDLER)
