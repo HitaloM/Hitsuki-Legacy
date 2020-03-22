@@ -240,7 +240,7 @@ REPO_HANDLER = CommandHandler("repo", repo, pass_args=True)
 RELEASEHANDLER = CommandHandler("gitr", getRelease, pass_args=True)
 FETCH_HANDLER = CommandHandler("fetch", cmdFetch, pass_args=True)
 CHANGELOG_HANDLER = CommandHandler("changelog", changelog, pass_args=True)
-HASHFETCH_HANDLER = MessageHandler(Filters.regex(r"^&[^\s]+", hashFetch)
+HASHFETCH_HANDLER = MessageHandler(Filters.regex(r"^&[^\s]+"), hashFetch)
 
 SAVEREPO_HANDLER = CommandHandler("saverepo", saveRepo)
 DELREPO_HANDLER = CommandHandler("delrepo", delRepo)
