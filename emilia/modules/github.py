@@ -244,7 +244,7 @@ LISTREPO_HANDLER = CommandHandler("listrepo", listRepo)
 VERCHECKER_HANDLER = CommandHandler("gitver", getVer)
 CHANGELOG_HANDLER = CommandHandler("changelog", changelog, pass_args=True)
 
-HASHFETCH_HANDLER = RegexHandler(r"^&[^\s]+", hashFetch)
+HASHFETCH_HANDLER = MessageHandler(Filters.regex(r"^&[^\s]+", hashFetch)
 
 dispatcher.add_handler(RELEASEHANDLER)
 dispatcher.add_handler(REPO_HANDLER)
