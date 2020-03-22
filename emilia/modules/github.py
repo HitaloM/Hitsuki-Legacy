@@ -13,7 +13,7 @@ from emilia.modules.helper_funcs.filters import CustomFilters
 from emilia.modules.helper_funcs.chat_status import user_admin
 from emilia.modules.languages import tl
 
-from telegram.ext import CommandHandler, run_async, Filters, RegexHandler
+from telegram.ext import CommandHandler, run_async, Filters, MessageHandler
 from telegram import Message, Chat, Update, Bot, User, ParseMode, InlineKeyboardMarkup, MAX_MESSAGE_LENGTH
 
 
