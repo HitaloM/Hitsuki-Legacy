@@ -96,21 +96,21 @@ def new_fed(update, context):
 
 		x = sql.new_fed(user.id, fed_name, fed_id)
 		if not x:
-			send_message(update.effective_message, tl(update.effective_message, "Tidak dapat membuat federasi! Tolong hubungi pembuat saya jika masalah masih berlanjut."))
+			send_message(update.effective_message, tl(update.effective_message, "Unable to create a federation! Please contact my creator if the problem still persists."))
 			return
 
-		send_message(update.effective_message, tl(update.effective_message, "*Anda telah berhasil membuat federasi baru!*"\
-											"\nNama: `{}`"\
-											"\nID: `{}`"
-											"\n\nGunakan perintah di bawah ini untuk bergabung dengan federasi:"
+		send_message(update.effective_message, tl(update.effective_message, "*You have successfully created a new federation!*"\
+											"\nFed Name: `{}`"\
+											"\nFed ID: `{}`"
+											"\n\nUse the command below to join the federation:"
 											"\n`/joinfed {}`").format(fed_name, fed_id, fed_id), parse_mode=ParseMode.MARKDOWN)
 		try:
 			context.bot.send_message(TEMPORARY_DATA,
-				"Federasi <b>{}</b> telah di buat dengan ID: <pre>{}</pre>".format(fed_name, fed_id), parse_mode=ParseMode.HTML)
+				"Federation <b>{}</b> has been created with the ID: <pre>{}</pre>".format(fed_name, fed_id), parse_mode=ParseMode.HTML)
 		except:
 			LOGGER.warning("Cannot send a message to TEMPORARY_DATA")
 	else:
-		send_message(update.effective_message, tl(update.effective_message, "Tolong tulis nama federasinya!"))
+		send_message(update.effective_message, tl(update.effective_message, "Please write the name of the federation!"))
 
 @run_async
 @spamcheck
@@ -177,7 +177,7 @@ def join_fed(update, context):
 	user = update.effective_user  # type: Optional[User]
 
 	if chat.type == 'private':
-		send_message(update.effective_message, tl(update.effective_message, "Perintah ini di khususkan untuk grup, bukan pada PM!"))
+		send_message(update.effective_message, tl(update.effective_message, "This command is to be used in group, not on PM!"))
 		return
 
 	message = update.effective_message

@@ -54,7 +54,7 @@ def import_data(update, context):
 		chat_name = dispatcher.bot.getChat(conn).title
 	else:
 		if update.effective_message.chat.type == "private":
-			send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+			send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
@@ -63,12 +63,12 @@ def import_data(update, context):
 	if msg.reply_to_message and msg.reply_to_message.document:
 		filetype = msg.reply_to_message.document.file_name
 		if filetype.split('.')[-1] not in ("backup", "json", "txt"):
-			send_message(update.effective_message, tl(update.effective_message, "File cadangan tidak valid!"))
+			send_message(update.effective_message, tl(update.effective_message, "Invalid backup file!"))
 			return
 		try:
 			file_info = context.bot.get_file(msg.reply_to_message.document.file_id)
 		except BadRequest:
-			send_message(update.effective_message, tl(update.effective_message, "Coba unduh dan unggah ulang file seperti Anda sendiri sebelum mengimpor - yang ini sepertinya rusak!"))
+			send_message(update.effective_message, tl(update.effective_message, "Try downloading and reuploading the file as yourself before importing - this one seems to be iffy!"))
 			return
 
 		with BytesIO() as file:
@@ -428,44 +428,44 @@ def import_data(update, context):
 							imp_warn_chat += 1
 
 				if conn:
-					text = tl(update.effective_message, "Cadangan sepenuhnya dikembalikan pada *{}*. Selamat datang kembali! 😀").format(chat_name)
+					text = tl(update.effective_message, "Backup fully imported in *{}*. Welcome back! 😀").format(chat_name)
 				else:
-					text = tl(update.effective_message, "Cadangan sepenuhnya dikembalikan. Selamat datang kembali! 😀").format(chat_name)
-				text += tl(update.effective_message, "\n\nYang saya kembalikan:\n")
+					text = tl(update.effective_message, "Backup fully imported. Welcome back! 😀").format(chat_name)
+				text += tl(update.effective_message, "\n\nRestored:\n")
 				if imp_antiflood:
-					text += tl(update.effective_message, "- Pengaturan Antiflood\n")
+					text += tl(update.effective_message, "- Antiflood Settings\n")
 				if imp_blacklist:
-					text += tl(update.effective_message, "- Pengaturan Blacklist\n")
+					text += tl(update.effective_message, "- Blacklist Settings\n")
 				if imp_blacklist_count:
 					text += tl(update.effective_message, "- {} blacklists\n").format(imp_blacklist_count)
 				if imp_blsticker:
-					text += tl(update.effective_message, "- {} blacklist stickers\n").format(imp_blsticker_count)
+					text += tl(update.effective_message, "- {} blacklisted stickers\n").format(imp_blsticker_count)
 				if imp_disabled_count:
 					text += tl(update.effective_message, "- {} cmd disabled\n").format(imp_disabled_count)
 				if imp_filters_count:
 					text += tl(update.effective_message, "- {} filters\n").format(imp_filters_count)
 				if imp_greet_pref:
-					text += tl(update.effective_message, "- Pengaturan salam\n")
+					text += tl(update.effective_message, "- Greeting settings\n")
 				if imp_greet:
-					text += tl(update.effective_message, "- Pesan salam\n")
+					text += tl(update.effective_message, "- Greetings message\n")
 				if imp_gdbye:
-					text += tl(update.effective_message, "- Pesan selamat tinggal\n")
+					text += tl(update.effective_message, "- Goodbye message\n")
 				if imp_locks:
-					text += tl(update.effective_message, "- Penguncian\n")
+					text += tl(update.effective_message, "- Locked\n")
 				if imp_notes:
-					text += tl(update.effective_message, "- {} catatan\n").format(imp_notes)
+					text += tl(update.effective_message, "- {} Notes\n").format(imp_notes)
 				if imp_report:
-					text += tl(update.effective_message, "- Pengaturan pelaporan\n")
+					text += tl(update.effective_message, "- Reporting settings\n")
 				if imp_rules:
-					text += tl(update.effective_message, "- Pesan peraturan grup\n")
+					text += tl(update.effective_message, "- Group rules\n")
 				if imp_lang:
-					text += tl(update.effective_message, "- Pengaturan bahasa\n")
+					text += tl(update.effective_message, "- Language settings\n")
 				if imp_warn:
-					text += tl(update.effective_message, "- Pengaturan peringatan\n")
+					text += tl(update.effective_message, "- Warn settings\n")
 				if imp_warn_chat:
-					text += tl(update.effective_message, "- {} pengguna peringatan\n").format(imp_warn_chat)
+					text += tl(update.effective_message, "- {} user warnings\n").format(imp_warn_chat)
 				if imp_warn_filter:
-					text += tl(update.effective_message, "- {} filter peringatan\n").format(imp_warn_filter)
+					text += tl(update.effective_message, "- {} warning filters\n").format(imp_warn_filter)
 				try:
 					send_message(update.effective_message, text, parse_mode="markdown")
 				except BadRequest:
@@ -478,7 +478,7 @@ def import_data(update, context):
 					os.remove("{}-notimported.txt".format(chat_id))
 				return
 		except Exception as err:
-			send_message(update.effective_message, tl(update.effective_message, "Telah terjadi kesalahan dalam import backup Emilia!\nGabung ke [Grup support](https://t.me/EmiliaOfficial) kami untuk melaporkan dan mengatasi masalah ini!\n\nTerima kasih"), parse_mode="markdown")
+			send_message(update.effective_message, tl(update.effective_message, "An exception occured while restoring your data from Emilia backup!\n\nSorry."), parse_mode="markdown")
 			LOGGER.exception("An error when importing from Emilia base!")
 			return
 
