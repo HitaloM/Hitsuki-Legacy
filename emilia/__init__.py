@@ -193,7 +193,7 @@ def spamfilters(text, user_id, chat_id, message):
 
 def spamcheck(func):
 	@wraps(func)
-	def check_user(update, context, *args, **kwargs):
+	def check_user(update, context, chat_data, *args, **kwargs):
 		chat = update.effective_chat
 		user = update.effective_user
 		message = update.effective_message

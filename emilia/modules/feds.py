@@ -1718,13 +1718,13 @@ def __user_info__(user_id, chat_id):
 		infoname = info['fname']
 
 		if int(info['owner']) == user_id:
-			text = tl(chat_id, "This user is the owner at the current federation: <b>{}</b>.").format(infoname)
+			text = tl(chat_id, "This user owns the following federations: <b>{}</b>.").format(infoname)
 		elif is_user_fed_admin(fed_id, user_id):
 			text = tl(chat_id, "This user is an admin on the current federation: <b>{}</b>.").format(infoname)
 
 		elif fban:
 			text = tl(chat_id, "Banned in the current federation: <b>Yes</b>")
-			text += tl(chat_id, "\n<b>Reason:</b> {}").format(fbanreason)
+			text += tl(chat_id, "\nReason: <code>{}</code>").format(fbanreason)
 		else:
 			text = tl(chat_id, "Banned in the current federation: <b>No</b> ")
 	else:
