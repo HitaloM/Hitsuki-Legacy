@@ -105,7 +105,7 @@ def gban(update, context):
                  tl(update.effective_message, "{} is gbanning user {} "
                  "because:\n{}").format(mention_html(banner.id, banner.first_name),
                                        mention_html(user_chat.id, user_chat.first_name), reason or tl(update.effective_message, "No reason given")),
-                 html=True)
+                 parse_mode=ParseMode.HTML)
 
     sql.gban_user(user_id, user_chat.username or user_chat.first_name, reason)
 
@@ -163,7 +163,7 @@ def ungban(update, context):
     context.bot.send_message(MESSAGE_DUMP,
                  tl(update.effective_message, "{} has ungbanned user {}").format(mention_html(banner.id, banner.first_name),
                                                    mention_html(user_chat.id, user_chat.first_name)),
-                 html=True)
+                 parse_mode=ParseMode.HTML)
 
     sql.ungban_user(user_id)
 
