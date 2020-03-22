@@ -1657,11 +1657,11 @@ def get_myfeds_list(update, context):
 
 	fedowner = sql.get_user_owner_fed_full(user.id)
 	if fedowner:
-		text = tl(update.effective_message, "*Ini adalah federasi milik anda:\n*")
+		text = tl(update.effective_message, "*You are owner of these feds:\n*")
 		for f in fedowner:
 			text += "- `{}`: *{}*\n".format(f['fed_id'], f['fed']['fname'])
 	else:
-		text = tl(update.effective_message, "*Anda tidak mempunyai federasi!*")
+		text = tl(update.effective_message, "*You do not have a federation!*")
 	send_message(update.effective_message, text, parse_mode="markdown")
 
 
@@ -1707,7 +1707,7 @@ def welcome_fed(update, context):
 def __stats__():
 	all_fbanned = sql.get_all_fban_users_global()
 	all_feds = sql.get_all_feds_users_global()
-	return tl(OWNER_ID, "{} pengguna di fbanned, pada {} federasi").format(len(all_fbanned), len(all_feds))
+	return tl(OWNER_ID, "{} Users fbanned, on {} federation").format(len(all_fbanned), len(all_feds))
 
 
 def __user_info__(user_id, chat_id):
@@ -1718,15 +1718,15 @@ def __user_info__(user_id, chat_id):
 		infoname = info['fname']
 
 		if int(info['owner']) == user_id:
-			text = tl(chat_id, "Pengguna ini adalah owner di federasi saat ini: <b>{}</b>.").format(infoname)
+			text = tl(chat_id, "This user is the owner at the current federation: <b>{}</b>.").format(infoname)
 		elif is_user_fed_admin(fed_id, user_id):
-			text = tl(chat_id, "Pengguna ini adalah admin di federasi saat ini: <b>{}</b>.").format(infoname)
+			text = tl(chat_id, "This user is an admin on the current federation: <b>{}</b>.").format(infoname)
 
 		elif fban:
-			text = tl(chat_id, "Dilarang di federasi saat ini: <b>Ya</b>")
-			text += tl(chat_id, "\n<b>Alasan:</b> {}").format(fbanreason)
+			text = tl(chat_id, "Banned in the current federation: <b>Yes</b>")
+			text += tl(chat_id, "\n<b>Reason:</b> {}").format(fbanreason)
 		else:
-			text = tl(chat_id, "Dilarang di federasi saat ini: <b>Tidak</b>")
+			text = tl(chat_id, "Banned in the current federation: <b>No</b> ")
 	else:
 		text = ""
 	return text
