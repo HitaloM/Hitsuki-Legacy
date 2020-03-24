@@ -59,7 +59,7 @@ def getRepo(bot, update, reponame, show_none=True, no_format=False):
 def getRelease(update, context):
     args = context.args
     msg = update.effective_message
-    if(len(args) != 1 and not (len(args) == 2 and args[1].isdigit())):
+    if(len(args) != 1 and not (len(args) == 2 and args[1].isdigit()) and not ("/" in args[0])):
         msg.reply_text("Please specify a valid combination of <user>/<repo>")
         return
     index = 0
@@ -123,7 +123,7 @@ def saveRepo(update, context):
     args = context.args
     chat_id = update.effective_chat.id
     msg = update.effective_message
-    if(len(args) != 2 and (len(args) != 3 and not args[2].isdigit())):
+    if(len(args) != 2 and (len(args) != 3 and not args[2].isdigit()) or not ("/" in args[1])):
         msg.reply_text("Invalid data, use <reponame> <user>/<repo> <value (optional)>")
         return
     index = 0
