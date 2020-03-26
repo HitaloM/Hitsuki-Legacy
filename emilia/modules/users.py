@@ -65,8 +65,8 @@ def broadcast(update, context):
                 failed += 1
                 LOGGER.warning("Couldn't send broadcast to %s, group name %s", str(chat.chat_id), str(chat.chat_name))
 
-        send_message(update.effective_message, "Siaran selesai. {} grup gagal menerima pesan, mungkin "
-                                            "karena ditendang.".format(failed))
+        send_message(update.effective_message, "The broadcast is complete. `{}` groups failed to receive the message, maybe "
+                                            "I'm kicked or muted.".format(failed))
 
 
 @run_async
@@ -115,18 +115,18 @@ def chats(update, context):
     with BytesIO(str.encode(chatfile)) as output:
         output.name = "chatlist.txt"
         update.effective_message.reply_document(document=output, filename="chatlist.txt",
-                                                caption="Berikut ini daftar obrolan dalam database saya.")
+                                                caption="Here is a list of chats in my database.")
 
 
 def __user_info__(user_id, chat_id):
     if user_id == dispatcher.bot.id:
-        return languages.tl(chat_id, """Saya telah melihatnya... Wow. Apakah mereka menguntit saya? Mereka ada di semua tempat yang sama dengan saya... oh. Ini aku.""")
+        return languages.tl(chat_id, """I have seen it... Wow. Are they following me? They're in all the same places with me... oh. This is me.""")
     num_chats = sql.get_user_num_chats(user_id)
-    return languages.tl(chat_id, """Saya telah melihatnya <code>{}</code> obrolan total.""").format(num_chats)
+    return languages.tl(chat_id, """I've seen them in <code>{}</code> chats in total.""").format(num_chats)
 
 
 def __stats__():
-    return languages.tl(OWNER_ID, "{} pengguna, pada {} obrolan").format(sql.num_users(), sql.num_chats())
+    return languages.tl(OWNER_ID, "{} users, on {} chats").format(sql.num_users(), sql.num_chats())
 
 
 def __migrate__(old_chat_id, new_chat_id):
