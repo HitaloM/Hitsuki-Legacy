@@ -88,8 +88,8 @@ def dbcleanup(update, context):
     msg.reply_text("Getting invalid gbanned count... 🙂")
     invalid_gban_count = get_invalid_gban(context.bot, update)
 
-    reply = f"Total invalid chats - `{invalid_chat_count}`\n"
-    reply += f"Total invalid gbanned users - `{invalid_gban_count}`"
+    reply = f"Total invalid chats - {invalid_chat_count}\n"
+    reply += f"Total invalid gbanned users - {invalid_gban_count}"
 
     buttons = [
         [InlineKeyboardButton("Cleanup DB", callback_data=f"db_cleanup")]
