@@ -48,7 +48,7 @@ def owo(update, context):
         data = message.text.split(None, 1)[1]
     else:
         noreply = True
-        data = tl(chat.id, "memes_no_message")
+        data = tl(chat.id, "I need a message to meme.")
 
     faces = [
         '(・`ω´・)', ';;w;;', 'owo', 'UwU', '>w<', '^w^', '\(^o\) (/o^)/',
@@ -105,7 +105,7 @@ def vapor(update, context):
         data = message.text.split(None, 1)[1]
     else:
         noreply = True
-        data = tl(chat.id, "memes_no_message")
+        data = tl(chat.id, "I need a message to meme.")
 
     reply_text = str(data).translate(WIDE_MAP)
 
@@ -261,7 +261,7 @@ def zalgotext(update, context):
         data = message.text.split(None, 1)[1]
     else:
         noreply = True
-        data = tl(chat.id, "memes_no_message")
+        data = tl(chat.id, "I need a message to meme.")
 
     reply_text = zalgo.zalgo().zalgofy(data)
     if noreply:
@@ -316,7 +316,7 @@ def shout(update, context):
         data = " ".join(args)
     else:
         noreply = True
-        data = tl(chat.id, "memes_no_message")
+        data = tl(chat.id, "I need a message to meme.")
  
     msg = "```"
     result = []
