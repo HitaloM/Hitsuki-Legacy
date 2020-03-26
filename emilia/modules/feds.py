@@ -96,21 +96,21 @@ def new_fed(update, context):
 
 		x = sql.new_fed(user.id, fed_name, fed_id)
 		if not x:
-			send_message(update.effective_message, tl(update.effective_message, "Unable to create a federation! Please contact my creator if the problem still persists."))
+			send_message(update.effective_message, tl(update.effective_message, "Tidak dapat membuat federasi! Tolong hubungi pembuat saya jika masalah masih berlanjut."))
 			return
 
-		send_message(update.effective_message, tl(update.effective_message, "*You have successfully created a new federation!*"\
-											"\nFed Name: `{}`"\
-											"\nFed ID: `{}`"
-											"\n\nUse the command below to join the federation:"
+		send_message(update.effective_message, tl(update.effective_message, "*Anda telah berhasil membuat federasi baru!*"\
+											"\nNama: `{}`"\
+											"\nID: `{}`"
+											"\n\nGunakan perintah di bawah ini untuk bergabung dengan federasi:"
 											"\n`/joinfed {}`").format(fed_name, fed_id, fed_id), parse_mode=ParseMode.MARKDOWN)
 		try:
 			context.bot.send_message(TEMPORARY_DATA,
-				"Federation <b>{}</b> has been created with the ID: <pre>{}</pre>".format(fed_name, fed_id), parse_mode=ParseMode.HTML)
+				"Federasi <b>{}</b> telah di buat dengan ID: <pre>{}</pre>".format(fed_name, fed_id), parse_mode=ParseMode.HTML)
 		except:
 			LOGGER.warning("Cannot send a message to TEMPORARY_DATA")
 	else:
-		send_message(update.effective_message, tl(update.effective_message, "Please write the name of the federation!"))
+		send_message(update.effective_message, tl(update.effective_message, "Tolong tulis nama federasinya!"))
 
 @run_async
 @spamcheck
@@ -177,7 +177,7 @@ def join_fed(update, context):
 	user = update.effective_user  # type: Optional[User]
 
 	if chat.type == 'private':
-		send_message(update.effective_message, tl(update.effective_message, "This command is to be used in group, not on PM!"))
+		send_message(update.effective_message, tl(update.effective_message, "Perintah ini di khususkan untuk grup, bukan pada PM!"))
 		return
 
 	message = update.effective_message
@@ -358,10 +358,6 @@ def fed_info(update, context):
 			send_message(update.effective_message, tl(update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
 			return
 		info = sql.get_fed_info(fed_id)
-
-	if is_user_fed_admin(fed_id, user.id) == False:
-		send_message(update.effective_message, tl(update.effective_message, "Hanya admin federasi yang dapat melakukan ini!"))
-		return
 
 	owner = context.bot.get_chat(info['owner'])
 	try:
@@ -1011,10 +1007,11 @@ def fed_broadcast(update, context):
 
 @run_async
 @spamcheck
-def fed_ban_list(update, context, chat_data):
+def fed_ban_list(update, context):
 	chat = update.effective_chat  # type: Optional[Chat]
 	user = update.effective_user  # type: Optional[User]
 	args = context.args
+	chat_data = context.chat_data
 
 	if chat.type == 'private':
 		send_message(update.effective_message, tl(update.effective_message, "Perintah ini di khususkan untuk grup, bukan pada PM!"))
@@ -1657,11 +1654,11 @@ def get_myfeds_list(update, context):
 
 	fedowner = sql.get_user_owner_fed_full(user.id)
 	if fedowner:
-		text = tl(update.effective_message, "*You are owner of these feds:\n*")
+		text = tl(update.effective_message, "*Ini adalah federasi milik anda:\n*")
 		for f in fedowner:
 			text += "- `{}`: *{}*\n".format(f['fed_id'], f['fed']['fname'])
 	else:
-		text = tl(update.effective_message, "*You do not have a federation!*")
+		text = tl(update.effective_message, "*Anda tidak mempunyai federasi!*")
 	send_message(update.effective_message, text, parse_mode="markdown")
 
 
@@ -1707,7 +1704,7 @@ def welcome_fed(update, context):
 def __stats__():
 	all_fbanned = sql.get_all_fban_users_global()
 	all_feds = sql.get_all_feds_users_global()
-	return tl(OWNER_ID, "{} Users fbanned, on {} federation").format(len(all_fbanned), len(all_feds))
+	return tl(OWNER_ID, "{} pengguna di fbanned, pada {} federasi").format(len(all_fbanned), len(all_feds))
 
 
 def __user_info__(user_id, chat_id):
@@ -1718,15 +1715,15 @@ def __user_info__(user_id, chat_id):
 		infoname = info['fname']
 
 		if int(info['owner']) == user_id:
-			text = tl(chat_id, "This user is the owner of the current federation, <code>{}</code>.").format(infoname)
+			text = tl(chat_id, "Pengguna ini adalah owner di federasi saat ini: <b>{}</b>.").format(infoname)
 		elif is_user_fed_admin(fed_id, user_id):
-			text = tl(chat_id, "This user is the owner of the current federation, <code>{}</code>.").format(infoname)
+			text = tl(chat_id, "Pengguna ini adalah admin di federasi saat ini: <b>{}</b>.").format(infoname)
 
 		elif fban:
-			text = tl(chat_id, "Banned in the current federation: <b>Yes</b>")
-			text += tl(chat_id, "\nReason: <code>{}</code>").format(fbanreason)
+			text = tl(chat_id, "Dilarang di federasi saat ini: <b>Ya</b>")
+			text += tl(chat_id, "\n<b>Alasan:</b> {}").format(fbanreason)
 		else:
-			text = tl(chat_id, "Banned in the current federation: <b>No</b> ")
+			text = tl(chat_id, "Dilarang di federasi saat ini: <b>Tidak</b>")
 	else:
 		text = ""
 	return text
@@ -1771,7 +1768,7 @@ FED_ADMIN_HANDLER = CommandHandler("fedadmins", fed_admin, pass_args=True)
 FED_USERBAN_HANDLER = CommandHandler("fbanlist", fed_ban_list, pass_args=True, pass_chat_data=True)
 FED_NOTIF_HANDLER = CommandHandler("fednotif", fed_notif, pass_args=True)
 FED_CHATLIST_HANDLER = CommandHandler("fedchats", fed_chats, pass_args=True)
-#FED_IMPORTBAN_HANDLER = CommandHandler("importfbans", fed_import_bans, pass_chat_data=True, filters=Filters.user(OWNER_ID))
+FED_IMPORTBAN_HANDLER = CommandHandler("importfbans", fed_import_bans, pass_chat_data=True, filters=Filters.user(OWNER_ID))
 FEDSTAT_USER = DisableAbleCommandHandler(["fedstat", "fbanstat"], fed_stat_user, pass_args=True)
 SET_FED_LOG = CommandHandler("setfedlog", set_fed_log, pass_args=True)
 UNSET_FED_LOG = CommandHandler("unsetfedlog", unset_fed_log, pass_args=True)
@@ -1799,7 +1796,7 @@ dispatcher.add_handler(FED_ADMIN_HANDLER)
 dispatcher.add_handler(FED_USERBAN_HANDLER)
 dispatcher.add_handler(FED_NOTIF_HANDLER)
 dispatcher.add_handler(FED_CHATLIST_HANDLER)
-#dispatcher.add_handler(FED_IMPORTBAN_HANDLER)
+dispatcher.add_handler(FED_IMPORTBAN_HANDLER)
 dispatcher.add_handler(FEDSTAT_USER)
 dispatcher.add_handler(SET_FED_LOG)
 dispatcher.add_handler(UNSET_FED_LOG)

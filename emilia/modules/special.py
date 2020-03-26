@@ -263,30 +263,6 @@ def rangry(update, context):
 
 
 @run_async
-@spamcheck
-def getsticker(update, context):
-	msg = update.effective_message
-	chat_id = update.effective_chat.id
-	if msg.reply_to_message and msg.reply_to_message.sticker:
-		send_message(update.effective_message, "Hai " + "[{}](tg://user?id={})".format(msg.from_user.first_name,
-											msg.from_user.id) + ", Silahkan cek file yang anda minta dibawah ini."
-											"\nTolong gunakan fitur ini dengan bijak!",
-											parse_mode=ParseMode.MARKDOWN)
-		context.bot.sendChatAction(chat_id, "upload_document")
-		file_id = msg.reply_to_message.sticker.file_id
-		newFile = context.bot.get_file(file_id)
-		newFile.download('sticker.png')
-		context.bot.sendDocument(chat_id, document=open('sticker.png', 'rb'))
-		context.bot.sendChatAction(chat_id, "upload_photo")
-		context.bot.send_photo(chat_id, photo=open('sticker.png', 'rb'))
-		
-	else:
-		send_message(update.effective_message, "Hai " + "[{}](tg://user?id={})".format(msg.from_user.first_name,
-											msg.from_user.id) + ", Tolong balas pesan stiker untuk mendapatkan gambar stiker",
-											parse_mode=ParseMode.MARKDOWN)
-
-
-@run_async
 def getlink(update, context):
 	args = context.args
 	if args:
@@ -526,7 +502,7 @@ RANGRY_HANDLER = DisableAbleCommandHandler("angry", rangry)
 dispatcher.add_handler(REACT_HANDLER)
 dispatcher.add_handler(RHAPPY_HANDLER)
 dispatcher.add_handler(RANGRY_HANDLER)
-dispatcher.add_handler(PING_HANDLER)
+#dispatcher.add_handler(PING_HANDLER)
 dispatcher.add_handler(GETLINK_HANDLER)
 dispatcher.add_handler(LEAVECHAT_HANDLER)
 dispatcher.add_handler(RAMALAN_HANDLER)

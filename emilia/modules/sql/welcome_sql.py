@@ -123,6 +123,21 @@ class AllowedChat(BASE):
     def __init__(self, chat_id):
         self.chat_id = str(chat_id)
 
+
+	def __init__(self, chat_id, user_id, is_clicked):
+		self.chat_id = str(chat_id)  # ensure string
+		self.user_id = user_id
+		self.is_clicked = is_clicked
+
+	def __repr__(self):
+		return "<User restrict '%s' in %s>" % (self.user_id, self.chat_id)
+
+	def __eq__(self, other):
+		return bool(isinstance(other, UserRestrict)
+					and self.chat_id == other.chat_id
+					and self.user_id == other.user_id)
+
+
 class WelcomeTimeout(BASE):
 	__tablename__ = "welcome_timeout"
 	chat_id = Column(String(14), primary_key=True)
@@ -162,11 +177,9 @@ CHAT_TIMEOUT = {}
 
 WHITELIST = set()
 
-
 def add_to_userlist(chat_id, user_id, is_clicked):
 	with UR_LOCK:
 		user_filt = UserRestrict(str(chat_id), user_id, is_clicked)
-
 		SESSION.merge(user_filt)  # merge to avoid duplicate key issues
 		SESSION.commit()
 		global CHAT_USERRESTRICT

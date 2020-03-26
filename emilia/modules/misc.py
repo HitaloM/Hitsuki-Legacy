@@ -497,6 +497,33 @@ def pat(update, context):
         context.bot.send_photo(chat_id, f'https://headp.at/pats/{urllib.parse.quote(random.choice(pats))}', caption=msg)
     else:
         context.bot.send_photo(chat_id, f'https://headp.at/pats/{urllib.parse.quote(random.choice(pats))}', reply_to_message_id=msg_id)
+    #if msg.from_user.username:
+    #    curr_user = "@" + escape_markdown(msg.from_user.username)
+    #else:
+    curr_user = "{}".format(mention_markdown(msg.from_user.id, msg.from_user.first_name))
+
+    user_id = extract_user(update.effective_message, args)
+    if user_id and user_id != "error":
+        slapped_user = context.bot.get_chat(user_id)
+        user1 = curr_user
+        #if slapped_user.username:
+        #    user2 = "@" + escape_markdown(slapped_user.username)
+        #else:
+        user2 = "{}".format(mention_markdown(slapped_user.id, slapped_user.first_name))
+
+    # if no target found, bot targets the sender
+    else:
+        user1 = "{}".format(mention_markdown(context.bot.id, context.bot.first_name))
+        user2 = curr_user
+
+    temp = random.choice(tl(update.effective_message, "SLAP_TEMPLATES"))
+    item = random.choice(tl(update.effective_message, "ITEMS"))
+    hit = random.choice(tl(update.effective_message, "HIT"))
+    throw = random.choice(tl(update.effective_message, "THROW"))
+
+    repl = temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw)
+
+    send_message(update.effective_message, repl, parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
@@ -692,10 +719,6 @@ __mod_name__ = "Misc"
 ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True)
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID))
 
-RUNS_HANDLER = DisableAbleCommandHandler("runs", runs)
-SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True)
-INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True)
-
 PASTE_HANDLER = CommandHandler("paste", paste, pass_args=True)
 GET_PASTE_HANDLER = CommandHandler("getpaste", get_paste_content, pass_args=True)
 PASTE_STATS_HANDLER = CommandHandler("pastestats", get_paste_stats, pass_args=True)
@@ -711,12 +734,12 @@ PAT_HANDLER = DisableAbleCommandHandler("pat", pat)
 SHRUG_HANDLER = DisableAbleCommandHandler(["shrug", "shg"], shrug)
 HUG_HANDLER = DisableAbleCommandHandler("hug", hug)
 
+RUNS_HANDLER = DisableAbleCommandHandler(["runs", "lari"], runs)
+SLAP_HANDLER = DisableAbleCommandHandler("slap", slap, pass_args=True)
+INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True)
+
 dispatcher.add_handler(ID_HANDLER)
 dispatcher.add_handler(IP_HANDLER)
-dispatcher.add_handler(WEEBIFY_HANDLER)
-dispatcher.add_handler(PAT_HANDLER)
-dispatcher.add_handler(SHRUG_HANDLER)
-dispatcher.add_handler(HUG_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
 dispatcher.add_handler(INFO_HANDLER)
@@ -728,3 +751,7 @@ dispatcher.add_handler(SUPPORT_LIST_HANDLER)
 dispatcher.add_handler(PASTE_HANDLER)
 dispatcher.add_handler(GET_PASTE_HANDLER)
 dispatcher.add_handler(PASTE_STATS_HANDLER)
+dispatcher.add_handler(WEEBIFY_HANDLER)
+dispatcher.add_handler(PAT_HANDLER)
+dispatcher.add_handler(SHRUG_HANDLER)
+dispatcher.add_handler(HUG_HANDLER)

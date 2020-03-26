@@ -144,6 +144,10 @@ def start(update, context):
                 chat_id = args[0].split("_")[1]
                 verify_welcome(update, context, chat_id)
 
+            elif args[0][:6].lower() == "verify":
+                chat_id = args[0].split("_")[1]
+                verify_welcome(update, context, chat_id)
+
         else:
             first_name = update.effective_user.first_name
             buttons = InlineKeyboardMarkup(
@@ -241,32 +245,31 @@ def help_button(update, context):
             text = tl(update.effective_message, "Here is the help for the *{}* module:\n").format(HELPABLE[module].__mod_name__) \
                    + tl(update.effective_message, HELPABLE[module].__help__)
 
-            query.message.reply_text(text=text,
+            query.message.edit_text(text=text,
                                   parse_mode=ParseMode.MARKDOWN,
                                   reply_markup=InlineKeyboardMarkup(
                                         [[InlineKeyboardButton(text=tl(query.message, "⬅️ Back"), callback_data="help_back")]]))
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
-            query.message.reply_text(text=tl(query.message, HELP_STRINGS),
+            query.message.edit_text(text=tl(query.message, HELP_STRINGS),
                                   parse_mode=ParseMode.MARKDOWN,
                                   reply_markup=InlineKeyboardMarkup(
                                         paginate_modules(curr_page - 1, HELPABLE, "help")))
 
         elif next_match:
             next_page = int(next_match.group(1))
-            query.message.reply_text(text=tl(query.message, HELP_STRINGS),
+            query.message.edit_text(text=tl(query.message, HELP_STRINGS),
                                   parse_mode=ParseMode.MARKDOWN,
                                   reply_markup=InlineKeyboardMarkup(
                                         paginate_modules(next_page + 1, HELPABLE, "help")))
 
         elif back_match:
-            query.message.reply_text(text=tl(query.message, HELP_STRINGS),
+            query.message.edit_text(text=tl(query.message, HELP_STRINGS),
                                   parse_mode=ParseMode.MARKDOWN,
                                   reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help")))
 
-        # ensure no spinny white circle
-        query.message.delete()
+
         context.bot.answer_callback_query(query.id)
     except Exception as excp:
         if excp.message == "Message is not modified":
@@ -361,7 +364,7 @@ def settings_button(update, context):
                 set_button = []
             set_button.append([InlineKeyboardButton(text=tl(query.message, "⬅️ Back"),
                                                                callback_data="stngs_back({})".format(chat_id))])
-            query.message.reply_text(text=text,
+            query.message.edit_text(text=text,
                                   parse_mode=ParseMode.MARKDOWN,
                                   reply_markup=InlineKeyboardMarkup(set_button))
 
@@ -395,7 +398,7 @@ def settings_button(update, context):
                                                                                      chat=chat_id)))
 
         # ensure no spinny white circle
-        query.message.delete()
+
         context.bot.answer_callback_query(query.id)
     except Exception as excp:
         if excp.message == "Message is not modified":
@@ -434,6 +437,7 @@ def get_settings(update, context):
 
 
 @run_async
+@spamcheck
 def source(update, context):
     user = update.effective_message.from_user
     chat = update.effective_chat  # type: Optional[Chat]

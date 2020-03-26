@@ -169,27 +169,6 @@ try:
 except ModuleNotFoundError:
 	antispam_module = False
 
-def spamfilters(text, user_id, chat_id, message):
-	# If msg from self, return True
-	if user_id == 1030612159:
-		return False
-	print("{} | {} | {} | {}".format(text, user_id, message.chat.title, chat_id))
-	if antispam_module:
-		parsing_date = time.mktime(message.date.timetuple())
-		detecting = detect_user(user_id, chat_id, message, parsing_date)
-		if detecting:
-			return True
-		antispam_restrict_user(user_id, parsing_date)
-	if int(user_id) in SPAMMERS:
-		print("This user is spammer!")
-		return True
-	elif int(chat_id) in GROUP_BLACKLIST:
-		dispatcher.bot.sendMessage(chat_id, "This group is in blacklist, i'm leave...")
-		dispatcher.bot.leaveChat(chat_id)
-		return True
-	else:
-		return False
-
 
 def spamcheck(func):
 	@wraps(func)
@@ -197,8 +176,11 @@ def spamcheck(func):
 		chat = update.effective_chat
 		user = update.effective_user
 		message = update.effective_message
+		# If not user, return function
+		if not user:
+			return func(update, context, *args, **kwargs)
 		# If msg from self, return True
-		if user.id == context.bot.id:
+		if user and user.id == context.bot.id:
 			return False
 		if IS_DEBUG:
 			print("{} | {} | {} | {}".format(message.text or message.caption, user.id, message.chat.title, chat.id))

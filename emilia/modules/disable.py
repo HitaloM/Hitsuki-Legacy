@@ -57,8 +57,8 @@ if is_module_loaded(FILENAME):
 
                     filter_result = self.filters(update)
                     if filter_result:
-                        user = update.effective_user
                         chat = update.effective_chat
+                        user = update.effective_user
                         # disabled, admincmd, user admin
                         if sql.is_command_disabled(chat.id, command[0].lower()):
                             # check if command was disabled
@@ -210,7 +210,7 @@ if is_module_loaded(FILENAME):
     def build_curr_disabled(chat_id: Union[str, int]) -> str:
         disabled = sql.get_all_disabled(chat_id)
         if not disabled:
-            return languages.tl(update.effective_message, "Tidak ada perintah yang dinonaktifkan!")
+            return languages.tl(chat_id, "Tidak ada perintah yang dinonaktifkan!")
 
         result = ""
         for cmd in disabled:
