@@ -23,6 +23,7 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 from zalgo_text import zalgo
 
+from emilia.modules.disable import DisableAbleCommandHandler
 from emilia import dispatcher, spamcheck
 from emilia.modules.languages import tl
 
@@ -35,40 +36,42 @@ WIDE_MAP[0x20] = 0x3000
 @spamcheck
 @run_async
 def owo(update, context):
+    chat = update.effective_chat
     message = update.effective_message
-    if not message.reply_to_message:
-        message.reply_text("I need a message to meme.")
+    args = context.args
+
+    noreply = False
+    if message.reply_to_message:
+        data = message.reply_to_message.text
+    elif args:
+        noreply = True
+        data = message.text.split(None, 1)[1]
     else:
-        faces = [
-            '(・`ω´・)',
-            ';;w;;',
-            'owo',
-            'UwU',
-            '>w<',
-            '^w^',
-            r'\(^o\) (/o^)/',
-            '( ^ _ ^)∠☆',
-            '(ô_ô)',
-            '~:o',
-            ';____;',
-            '(*^*)',
-            '(>_',
-            '(♥_♥)',
-            '*(^O^)*',
-            '((+_+))']
-        reply_text = re.sub(r'[rl]', "w", message.reply_to_message.text)
-        reply_text = re.sub(r'[ｒｌ]', "ｗ", message.reply_to_message.text)
-        reply_text = re.sub(r'[RL]', 'W', reply_text)
-        reply_text = re.sub(r'[ＲＬ]', 'Ｗ', reply_text)
-        reply_text = re.sub(r'n([aeiouａｅｉｏｕ])', r'ny\1', reply_text)
-        reply_text = re.sub(r'ｎ([ａｅｉｏｕ])', r'ｎｙ\1', reply_text)
-        reply_text = re.sub(r'N([aeiouAEIOU])', r'Ny\1', reply_text)
-        reply_text = re.sub(r'Ｎ([ａｅｉｏｕＡＥＩＯＵ])', r'Ｎｙ\1', reply_text)
-        reply_text = re.sub(r'\!+', ' ' + random.choice(faces), reply_text)
-        reply_text = re.sub(r'！+', ' ' + random.choice(faces), reply_text)
-        reply_text = reply_text.replace("ove", "uv")
-        reply_text = reply_text.replace("ｏｖｅ", "ｕｖ")
-        reply_text += ' ' + random.choice(faces)
+        noreply = True
+        data = tld(chat.id, "memes_no_message")
+
+    faces = [
+        '(・`ω´・)', ';;w;;', 'owo', 'UwU', '>w<', '^w^', '\(^o\) (/o^)/',
+        '( ^ _ ^)∠☆', '(ô_ô)', '~:o', ';____;', '(*^*)', '(>_', '(♥_♥)',
+        '*(^O^)*', '((+_+))'
+    ]
+    reply_text = re.sub(r'[rl]', "w", data)
+    reply_text = re.sub(r'[ｒｌ]', "ｗ", data)
+    reply_text = re.sub(r'[RL]', 'W', reply_text)
+    reply_text = re.sub(r'[ＲＬ]', 'Ｗ', reply_text)
+    reply_text = re.sub(r'n([aeiouａｅｉｏｕ])', r'ny\1', reply_text)
+    reply_text = re.sub(r'ｎ([ａｅｉｏｕ])', r'ｎｙ\1', reply_text)
+    reply_text = re.sub(r'N([aeiouAEIOU])', r'Ny\1', reply_text)
+    reply_text = re.sub(r'Ｎ([ａｅｉｏｕＡＥＩＯＵ])', r'Ｎｙ\1', reply_text)
+    reply_text = re.sub(r'\!+', ' ' + random.choice(faces), reply_text)
+    reply_text = re.sub(r'！+', ' ' + random.choice(faces), reply_text)
+    reply_text = reply_text.replace("ove", "uv")
+    reply_text = reply_text.replace("ｏｖｅ", "ｕｖ")
+    reply_text += ' ' + random.choice(faces)
+
+    if noreply:
+        message.reply_text(reply_text)
+    else:
         message.reply_to_message.reply_text(reply_text)
 
 
@@ -92,20 +95,20 @@ def stretch(update, context):
 def vapor(update, context):
     args = context.args
     message = update.effective_message
-    if not message.reply_to_message:
-        if not args:
-            message.reply_text(
-                "I need a message to convert to vaporwave text.")
-        else:
-            noreply = True
-            data = message.text.split(None, 1)[1]
-    elif message.reply_to_message:
-        noreply = False
+    chat = update.effective_chat  # type: Optional[Chat]
+
+    noreply = False
+    if message.reply_to_message:
         data = message.reply_to_message.text
+    elif args:
+        noreply = True
+        data = message.text.split(None, 1)[1]
     else:
-        data = ''
+        noreply = True
+        data = tld(chat.id, "memes_no_message")
 
     reply_text = str(data).translate(WIDE_MAP)
+
     if noreply:
         message.reply_text(reply_text)
     else:
@@ -247,13 +250,24 @@ def clapmoji(update, context):
 @run_async
 def zalgotext(update, context):
     message = update.effective_message
+    chat = update.effective_chat
+    args = context.args
+
+    noreply = False
     if message.reply_to_message:
         data = message.reply_to_message.text
+    elif args:
+        noreply = True
+        data = message.text.split(None, 1)[1]
     else:
-        data = str('Insolant human, you must reply to something to zalgofy it!')
+        noreply = True
+        data = tld(chat.id, "memes_no_message")
 
     reply_text = zalgo.zalgo().zalgofy(data)
-    message.reply_text(reply_text)
+    if noreply:
+        message.reply_text(reply_text)
+    else:
+        message.reply_to_message.reply_text(reply_text)
 
 
 # Less D A N K modules by @skittles9823 # holi fugg I did some maymays ^^^
@@ -290,41 +304,47 @@ def chinesememes(update, context):
 @spamcheck
 @run_async
 def shout(update, context):
+    message = update.effective_message
+    chat = update.effective_chat  # type: Optional[Chat]
     args = context.args
-
-    if len(args) == 0:
-        update.effective_message.reply_text("Where is text?")
-        return
-
+ 
+    noreply = False
+    if message.reply_to_message:
+        data = message.reply_to_message.text
+    elif args:
+        noreply = True
+        data = " ".join(args)
+    else:
+        noreply = True
+        data = tld(chat.id, "memes_no_message")
+ 
     msg = "```"
-    text = " ".join(args)
     result = []
-    result.append(' '.join([s for s in text]))
-    for pos, symbol in enumerate(text[1:]):
+    result.append(' '.join([s for s in data]))
+    for pos, symbol in enumerate(data[1:]):
         result.append(symbol + ' ' + '  ' * pos + symbol)
     result = list("\n".join(result))
-    result[0] = text[0]
+    result[0] = data[0]
     result = "".join(result)
     msg = "```\n" + result + "```"
     return update.effective_message.reply_text(msg, parse_mode="MARKDOWN")
 
 
-# no help string
 __help__ = "memes_help"
 
 __mod_name__ = "Memes and etc."
 
-COPYPASTA_HANDLER = CommandHandler("cp", copypasta)
-CLAPMOJI_HANDLER = CommandHandler("clap", clapmoji)
-BMOJI_HANDLER = CommandHandler("bify", bmoji)
-MOCK_HANDLER = CommandHandler("mock", spongemocktext)
-OWO_HANDLER = CommandHandler("owo", owo)
-FORBES_HANDLER = CommandHandler("forbes", forbesify)
-STRETCH_HANDLER = CommandHandler("stretch", stretch)
-VAPOR_HANDLER = CommandHandler("vapor", vapor, pass_args=True)
-ZALGO_HANDLER = CommandHandler("zalgofy", zalgotext)
-SHOUT_HANDLER = CommandHandler("shout", shout, pass_args=True)
-CHINESEMEMES_HANDLER = CommandHandler("dllm", chinesememes, pass_args=True)
+COPYPASTA_HANDLER = DisableAbleCommandHandler("cp", copypasta, pass_args=True)
+CLAPMOJI_HANDLER = DisableAbleCommandHandler("clap", clapmoji, pass_args=True)
+BMOJI_HANDLER = DisableAbleCommandHandler("bify", bmoji, pass_args=True)
+MOCK_HANDLER = DisableAbleCommandHandler("mock", spongemocktext, pass_args=True)
+OWO_HANDLER = DisableAbleCommandHandler("owo", owo, pass_args=True)
+FORBES_HANDLER = DisableAbleCommandHandler("forbes", forbesify, pass_args=True)
+STRETCH_HANDLER = DisableAbleCommandHandler("stretch", stretch, pass_args=True)
+VAPOR_HANDLER = DisableAbleCommandHandler("vapor", vapor, pass_args=True)
+ZALGO_HANDLER = DisableAbleCommandHandler("zalgofy", zalgotext, pass_args=True)
+SHOUT_HANDLER = DisableAbleCommandHandler("shout", shout, pass_args=True)
+CHINESEMEMES_HANDLER = DisableAbleCommandHandler("dllm", chinesememes, pass_args=True)
 
 dispatcher.add_handler(SHOUT_HANDLER)
 dispatcher.add_handler(OWO_HANDLER)
