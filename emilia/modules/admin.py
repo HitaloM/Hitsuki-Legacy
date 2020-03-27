@@ -541,16 +541,16 @@ __help__ = "admin_help"
 
 __mod_name__ = "Admin"
 
-PIN_HANDLER = CommandHandler("pin", pin, pass_args=True, filters=Filters.group)
-UNPIN_HANDLER = CommandHandler("unpin", unpin, filters=Filters.group)
-PERMAPIN_HANDLER = CommandHandler("permapin", permapin, filters=Filters.group)
+PIN_HANDLER = DisableAbleCommandHandler("pin", pin, pass_args=True, filters=Filters.group)
+UNPIN_HANDLER = DisableAbleCommandHandler("unpin", unpin, filters=Filters.group)
+PERMAPIN_HANDLER = DisableAbleCommandHandler("permapin", permapin, filters=Filters.group)
 
 INVITE_HANDLER = CommandHandler("invitelink", invite, filters=Filters.group)
 
 PROMOTE_HANDLER = DisableAbleCommandHandler("promote", promote, pass_args=True, filters=Filters.group)
 DEMOTE_HANDLER = DisableAbleCommandHandler("demote", demote, pass_args=True, filters=Filters.group)
 
-PERMANENT_PIN_SET_HANDLER = CommandHandler("permanentpin", permanent_pin_set, pass_args=True, filters=Filters.group)
+PERMANENT_PIN_SET_HANDLER = DisableAbleCommandHandler("permanentpin", permanent_pin_set, pass_args=True, filters=Filters.group)
 PERMANENT_PIN_HANDLER = MessageHandler(Filters.status_update.pinned_message | Filters.user(777000), permanent_pin)
 
 ADMINLIST_HANDLER = DisableAbleCommandHandler(["adminlist", "admins"], adminlist)
