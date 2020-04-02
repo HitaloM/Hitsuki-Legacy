@@ -160,7 +160,7 @@ def start(update, context):
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=buttons)
     else:
-        update.effective_message.reply_text(tl(update.effective_message, "Ada yang bisa saya bantu? 😊"))
+        update.effective_message.reply_text(tl(update.effective_message, "Is there anything I can help? 😊"))
 
 
 def m_connect_button(update, context):

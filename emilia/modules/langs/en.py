@@ -21,14 +21,13 @@ en = {
 This is where translations come in; you can change most of Emilia's replies to be in the language of your choice!
 
 Available languages are:
-- 🇮🇩 Indonesia
+- 🇧🇷 Português
 - 🇺🇸 English
 
 Available commands are:
  - /setlang: set your prefered language.""",
 
 # __main__
-	"Ada yang bisa saya bantu? 😊": "Is there anything I can help? 😊",
 	"start_text": """
 Hi {}! My name is *{}* - I'm here to help you manage your groups!
 Click Help button to find out more about how to use me to my full potential.

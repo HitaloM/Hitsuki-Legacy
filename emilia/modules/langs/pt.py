@@ -3,35 +3,35 @@ __lang__ = "🇧🇷 Português"
 
 pt = {
 # Global default
-	"Anda bisa lakukan command ini pada grup, bukan pada PM": "You can do this command in groups, not PM",
-	"Anda sepertinya tidak mengacu pada pengguna.": "You don't seem to be referring to a user.",
+	"You can do this command in groups, not PM": "Você pode usar este comando em grupo não no PV",
+	"You don't seem to be referring to a user.": "Você não parece estar se referindo a um usuário.",
 
 # chat_status
-	"Saya tidak dapat menghapus pesan di sini! Pastikan saya admin dan dapat menghapus pesan pengguna lain.": "I can't delete messages here! Make sure I'm admin and can delete other user's messages.",
-	"Saya tidak bisa menyematkan pesan di sini! Pastikan saya admin dan dapat pin pesan.": "I can't pin messages here! Make sure I'm admin and can pin messages.",
-	"Saya tidak dapat mempromosikan/mendemosikan orang di sini! Pastikan saya admin dan dapat menunjuk admin baru.": "I can't promote/demote people here! Make sure I'm admin and can appoint new admins.",
-	"Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan dapat menunjuk admin baru.": "I can't restrict people here! Make sure I'm admin and can appoint new admins.",
-	"Saya bukan admin!": "I'm not admin!",
-	"Siapa ini yang bukan admin memberikan perintah kepada saya?": "Who dis non-admin telling me what to do?",
-	"Anda bukan admin di grup ini!": "You are not an admin in this group!",
+	"I can't delete messages here! Make sure I'm admin and can delete other user's messages.": "Eu não posso apagar mensagens aqui! Tenha certeza que sou administrador e posso adicionar novos administradores.",
+	"I can't pin messages here! Make sure I'm admin and can pin messages.": "Eu não posso fixar mensagens aqui! Tenha certeza que sou administrador e posso adicionar novos administradores.",
+	"I can't promote/demote people here! Make sure I'm admin and can appoint new admins.": "Eu não posso promover/rebaixar pessoas aqui! Tenha certeza que sou administrador e posso adicionar novos administradores.",
+	"I can't restrict people here! Make sure I'm admin and can appoint new admins.": "Eu não posso restringir pessoas aqui! Tenha certeza que sou administrador e posso adicionar novos administradores.",
+	"I'm not admin!": "Eu não sou administrador!",
+	"Who dis non-admin telling me what to do?": "Quem é esse não-administrador me dizendo o que fazer?",
+	"You are not an admin in this group!": "Você não é um administrador neste grupo!",
 
 # languages
 	"Language changed to {}!": "Idioma alterado para {}!",
 	"Current language in *{}* is:\n{}.\n\nSelect language:": "Idioma atual em: *{}* é:\n{}.\n\nSelecione um idioma:",
 	"current in this chat": "atualmente neste grupo",
-	"language_help": """Not every group speaks indonesian; some groups would rather have Emilia respond in their own language.
+	"language_help": """Nem todo grupo fala Inglês; alguns grupos preferem que o Hitsuki responda em seu próprio idioma.
 
-This is where translations come in; you can change most of Emilia's replies to be in the language of your choice!
+É aqui que as traduções entram; você pode alterar a maioria das respostas do Hitsuki para o idioma de sua escolha!
 
-Available languages are:
+Os idiomas disponíveis são:
 - 🇧🇷 Português
-- 🇺🇸 English
+- 🇺🇸 Inglês
 
-Available commands are:
- - /setlang: set your prefered language.""",
+Os comandos disponíveis são:
+ - /setlang: define seu idioma preferido.‌‌""",
 
 # __main__
-	"Ada yang bisa saya bantu? 😊": "Is there anything I can help? 😊",
+	"Is there anything I can help? 😊": "Existe algo que eu possa ajudar? 😊‌‌",
 	"start_text": """
 Oi {}! Meu nome é *{}* - estou aqui para ajudá-lo a gerenciar seus grupos!
 Clique no botão Ajuda para descobrir mais sobre como me usar em todo o meu potencial.
@@ -57,14 +57,6 @@ Eu tenho muitos recursos úteis, como controle de flood, um sistema de avisos, u
 
 Todos os comandos podem ser usados ​​com `/` ou `!`‌‌
 """,
-	"donate_text": """Hello, glad to hear you want to donate!
-Need a lot of work for [my creator](tg://user?id=388576209) to take me to my place now, and \
-every donation helps and motivates him to make me better.
-
-All donated money will be given to a better VPS to host me, and or some food. \
-He is just an ordinary person, so it will really help him!
-
-If you really are interested in donating, please visit ayrahikari.github.io/donations.html, Thank you 😁""",
 	"⬅️ Back": "⬅️ Voltar",
 	"Contact me in PM to get the list of possible commands..": "Entre em contato comigo no PV para obter a lista de possíveis comandos.‌‌",
 	"Help": "Ajuda",
@@ -77,10 +69,7 @@ If you really are interested in donating, please visit ayrahikari.github.io/dona
 	"Hai! Ada beberapa pengaturan untuk {} - lanjutkan dan pilih apa yang Anda minati.": "Hi there! There are quite a few settings for {} - go ahead and pick what you're interested in.",
 	"Klik di sini untuk mendapatkan pengaturan obrolan ini, serta milik Anda.": "Click here to get this chat's settings, as well as yours.",
 	"Klik di sini untuk memeriksa pengaturan Anda.": "Click here to check your settings.",
-	"Anda juga dapat menyumbang kepada orang yang saat ini menjalankan saya [disini]({})": "You can also donate to the person currently running me [here]({})",
-	"Saya sudah PM Anda tentang donasi untuk pencipta saya!": "I've PM'ed you about donating to my creator!",
-	"Hubungi saya di PM dulu untuk mendapatkan informasi donasi.": "Contact me in PM first to get donation information.",
-	"Ini bantuan untuk modul *{}*:\n": "Here is the help for the *{}* module:\n",
+	"Here is the help for the *{}* module:\n": "Aqui está a ajuda para o módulo *{}*:\n",
 	"Anda sekarang dapat mengambil catatan di grup.": "Now you can get notes in group.",
 
 # admin
@@ -137,10 +126,10 @@ Get information about anime, manga or characters from [MyAnimeList](https://myan
 """,
 
 # AFK
-	"{} sekarang AFK!": "{} is now AFK!",
-	"{} sudah tidak AFK!": "{} is no longer AFK!",
-	"{} sedang AFK!": "{} is AFK!",
-	"{} sedang AFK!\nKarena : {}": "{} is AFK! says its because of: {}",
+	"{} is now AFK!": "{} está agora AFK!",
+	"{} is no longer AFK!": "{} não está mais AFK!",
+	"{} is AFK!": "{} está AFK!",
+	"{} is AFK! says its because of: {}": "{} está AFK! Motivo: {}",
 	"afk_help": """
  - /afk <reason>: mark yourself as AFK.
  - brb <reason>: same as the afk command - but not a command.
