@@ -20,11 +20,12 @@ from emilia.modules.helper_funcs.misc import split_message
 # DO NOT DELETE THIS, PLEASE.
 # Originally made by @RealAkito on GitHub and Telegram
 # This module was inspired by Android Helper Bot by Vachounet.
-# None of the code is taken from the bot itself, to avoid any more confusion.
+
+# This module has been modified by @HitaloSama on GitHub
 # Command /getfw /magisk /twrp and /device were obtained thanks to corsicanu bot (originally kanged from UserBot PaperplaneExtended)
 # Command /specs was only possible thanks to the help of AvinashReddy3108
 
-LOGGER.info("Original Android Modules by @RealAkito on Telegram, modified by @HitaloSama on Telegram")
+LOGGER.info("Original Android Modules by @RealAkito on Telegram, modified by @HitaloSama on GitHub")
 
 WIKI = 'https://xiaomiwiki.github.io/wiki'
 GITHUB = 'https://github.com'
@@ -38,30 +39,27 @@ def device(update, context):
     if len(args) == 0:
         reply = f'No codename provided, write a codename for fetching informations.'
         update.effective_message.reply_text("{}".format(reply),
-                    parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+                               parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         return
     device = " ".join(args)
-    found = [
-        i for i in get(DEVICES_DATA).json()
-        if i["device"] == device or i["model"] == device or i["name"] == device
-    ]
-    if found:
+    db = get(DEVICES_DATA).json()
+    newdevice = device.strip('lte') if device.startswith('beyond') else device
+    try:
         reply = f'Search results for {device}:\n\n'
-        for item in found:
-            brand = item['brand']
-            name = item['name']
-            codename = item['device']
-            model = item['model']
-            reply += f'<b>{brand} {name}</b>\n' \
-                     f'Model: <code>{model}</code>\n' \
-                     f'Codename: <code>{codename}</code>\n\n'
-    else:
+        brand = db[newdevice][0]['brand']
+        name = db[newdevice][0]['name']
+        model = db[newdevice][0]['model']
+        codename = newdevice
+        reply += f'<b>{brand} {name}</b>\n' \
+            f'Model: <code>{model}</code>\n' \
+            f'Codename: <code>{codename}</code>\n\n'  
+    except KeyError as err:
         reply = f"Couldn't find info about {device}!\n"
         update.effective_message.reply_text("{}".format(reply),
-                    parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-        return
+                               parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+    	return
     update.message.reply_text("{}".format(reply),
-                              parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+                               parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
 @spamcheck
