@@ -16,9 +16,9 @@ en = {
 	"Anda bukan admin di grup ini!": "You are not an admin in this group!",
 
 # languages
-	"Bahasa telah di ubah ke {}!": "Language changed to {}!",
-	"Bahasa di *{}* saat ini adalah:\n{}.\n\nPilih bahasa:": "Current language in *{}* is:\n{}.\n\nSelect language:",
-	"obrolan saat ini": "current in this chat",
+	"Language changed to {}!": "Idioma alterado para {}!",
+	"Current language in *{}* is:\n{}.\n\nSelect language:": "Idioma atual em: *{}* é:\n{}.\n\nSelecione um idioma:",
+	"current in this chat": "atualmente neste grupo",
 	"language_help": """Not every group speaks indonesian; some groups would rather have Emilia respond in their own language.
 
 This is where translations come in; you can change most of Emilia's replies to be in the language of your choice!
