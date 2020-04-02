@@ -273,7 +273,7 @@ def getlink(update, context):
 	bot_member = chat.get_member(context.bot.id)
 	if bot_member.can_invite_users:
 		titlechat = context.bot.get_chat(chat_id).title
-		invitelink = context.bot.get_chat(chat_id).invite link
+		invitelink = context.bot.get_chat(chat_id).invite_link
 		send_message(update.effective_message, tl(update.effective_message, "Successfully retrieve the invite link in the group {}. \nInvite link : {}").format(titlechat, invitelink))
 	else:
 		send_message(update.effective_message, tl(update.effective_message, "I don't have access to the invitation link!"))
@@ -405,8 +405,8 @@ def wiki(update, context):
 	teks = args[1]
 	message = update.effective_message
 	getlang = langsql.get_lang(chat_id)
-	if str(getlang) == "id":
-		wikipedia.set_lang("id")
+	if str(getlang) == "pt":
+		wikipedia.set_lang("pt")
 	else:
 		wikipedia.set_lang("en")
 	try:
@@ -423,8 +423,8 @@ def wiki(update, context):
 		teks = ""
 		for x in range(batas):
 			if x == 0:
-				if getlang == "id":
-					teks += rujuk[x].replace('may refer to', 'dapat merujuk ke')+"\n"
+				if getlang == "pt":
+					teks += rujuk[x].replace('may refer to', 'pode se referir a')+"\n"
 				else:
 					teks += rujuk[x]+"\n"
 			else:
