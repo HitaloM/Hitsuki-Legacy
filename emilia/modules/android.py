@@ -125,7 +125,7 @@ def mitools(update, context):
          InlineKeyboardButton("XiaomiADB", f'{url}#xiaomiadb-by-francesco-tescari'),
          InlineKeyboardButton("Unofficial MiUnlock",
                               f'{url}#miunlocktool-by-francesco-tescari')],
-        InlineKeyboardButton("Xiaomi ADB/Fastboot Tools",
+         InlineKeyboardButton("Xiaomi ADB/Fastboot Tools",
                               f'{url}#xiaomi-adbfastboot-tools-by-szaki'),
          InlineKeyboardButton("More Tools...", f'{url}')
     ]
