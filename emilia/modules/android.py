@@ -57,7 +57,7 @@ def device(update, context):
         reply = f"Couldn't find info about {device}!\n"
         update.effective_message.reply_text("{}".format(reply),
                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-    	return
+        return
     update.message.reply_text("{}".format(reply),
                                parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
