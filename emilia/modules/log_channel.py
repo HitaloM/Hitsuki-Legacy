@@ -29,7 +29,7 @@ if is_module_loaded(FILENAME):
             if result:
                 if chat.type == chat.SUPERGROUP and chat.username:
                     result += "\n<b>Link:</b> " \
-                              "<a href=\"http://telegram.me/{}/{}\">klik disini</a>".format(chat.username,
+                              "<a href=\"http://telegram.me/{}/{}\">Click here</a>".format(chat.username,
                                                                                            message.message_id)
                 log_chat = sql.get_chat_log_channel(chat.id)
                 if log_chat:
@@ -52,14 +52,14 @@ if is_module_loaded(FILENAME):
             bot.send_message(log_chat_id, result, parse_mode=ParseMode.HTML)
         except BadRequest as excp:
             if excp.message == "Chat not found":
-                bot.send_message(orig_chat_id, tl(update.effective_message, "Saluran log ini telah dihapus - tidak bisa dibuka."))
+                bot.send_message(orig_chat_id, tl(update.effective_message, "This log channel has been deleted - unsetting."))
                 sql.stop_chat_logging(orig_chat_id)
             else:
                 LOGGER.warning(excp.message)
                 LOGGER.warning(result)
                 LOGGER.exception("Could not parse")
 
-                bot.send_message(log_chat_id, result + tl(update.effective_message, "\n\nMemformat telah dinonaktifkan karena kesalahan tak terduga."))
+                bot.send_message(log_chat_id, result + tl(update.effective_message, "\n\nFormatting has been disabled due to an unexpected error."))
 
 
     @run_async
@@ -73,7 +73,7 @@ if is_module_loaded(FILENAME):
         if log_channel:
             log_channel_info = context.bot.get_chat(log_channel)
             send_message(update.effective_message, 
-                tl(update.effective_message, "Grup ini memiliki semua log yang dikirim ke: {} (`{}`)").format(escape_markdown(log_channel_info.title),
+                tl(update.effective_message, "These group have all logs sent to: {} (`{}`)").format(escape_markdown(log_channel_info.title),
                                                                          log_channel),
                 parse_mode=ParseMode.MARKDOWN)
 

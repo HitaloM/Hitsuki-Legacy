@@ -268,16 +268,17 @@ def getlink(update, context):
 	if args:
 		chat_id = int(args[0])
 	else:
-		send_message(update.effective_message, tl(update.effective_message, "Anda sepertinya tidak mengacu pada obrolan"))
+		send_message(update.effective_message, tl(update.effective_message, "You don't seem to be referring to chat"))
 	chat = context.bot.getChat(chat_id)
 	bot_member = chat.get_member(context.bot.id)
 	if bot_member.can_invite_users:
 		titlechat = context.bot.get_chat(chat_id).title
-		invitelink = context.bot.get_chat(chat_id).invite_link
-		send_message(update.effective_message, tl(update.effective_message, "Sukses mengambil link invite di grup {}. \nInvite link : {}").format(titlechat, invitelink))
+		invitelink = context.bot.get_chat(chat_id).invite link
+		send_message(update.effective_message, tl(update.effective_message, "Successfully retrieve the invite link in the group {}. \nInvite link : {}").format(titlechat, invitelink))
 	else:
-		send_message(update.effective_message, tl(update.effective_message, "Saya tidak memiliki akses ke tautan undangan!"))
-	
+		send_message(update.effective_message, tl(update.effective_message, "I don't have access to the invitation link!"))
+
+
 @run_async
 def leavechat(update, context):
 	args = context.args
@@ -298,6 +299,7 @@ def leavechat(update, context):
 		else:
 			return
 
+
 @run_async
 @spamcheck
 def ping(update, context):
@@ -306,20 +308,22 @@ def ping(update, context):
 	end_time = time.time()
 	ping_time = float(end_time - start_time)
 	context.bot.editMessageText(chat_id=update.effective_chat.id, message_id=test.message_id,
-						text=tl(update.effective_message, "Pong!\nKecepatannya: {0:.2f} detik").format(round(ping_time, 2) % 60))
+						text=tl(update.effective_message, "Pong!\nSpeed was: {0:.2f}s").format(round(ping_time, 2) % 60))
+
 
 @run_async
 @spamcheck
-def ramalan(update, context):
+def fortune(update, context):
 	text = ""
 	if random.randint(1,10) >= 7:
 		text += random.choice(tl(update.effective_message, "RAMALAN_FIRST"))
 	text += random.choice(tl(update.effective_message, "RAMALAN_STRINGS"))
 	send_message(update.effective_message, text)    
 
+
 @run_async
 @spamcheck
-def terjemah(update, context):
+def translate(update, context):
 	msg = update.effective_message
 	chat_id = update.effective_chat.id
 	getlang = langsql.get_lang(update.effective_message.from_user.id)
@@ -472,12 +476,14 @@ def urbandictionary(update, context):
 	else:
 		send_message(update.effective_message, "Use `/ud <text` for search meaning from urban dictionary.", parse_mode=ParseMode.MARKDOWN)
 
+
 @run_async
 def log(update, context):
 	message = update.effective_message
 	eventdict = message.to_dict()
 	jsondump = json.dumps(eventdict, indent=4)
 	send_message(update.effective_message, jsondump)
+
 
 def deEmojify(inputString):
     return inputString.encode('ascii', 'ignore').decode('ascii')
@@ -490,8 +496,8 @@ __mod_name__ = "🚀 Hitsuki Exclusive 🚀"
 PING_HANDLER = DisableAbleCommandHandler("ping", ping)
 GETLINK_HANDLER = CommandHandler("getlink", getlink, pass_args=True, filters=Filters.user(OWNER_ID))
 LEAVECHAT_HANDLER = CommandHandler(["leavechat", "leavegroup", "leave"], leavechat, pass_args=True, filters=Filters.user(OWNER_ID))
-RAMALAN_HANDLER = DisableAbleCommandHandler("fortune", ramalan)
-TERJEMAH_HANDLER = DisableAbleCommandHandler(["tr", "tl"], terjemah)
+FORTUNE_HANDLER = DisableAbleCommandHandler("fortune", fortune)
+TRANSLATE_HANDLER = DisableAbleCommandHandler("tr", translate)
 WIKIPEDIA_HANDLER = DisableAbleCommandHandler("wiki", wiki)
 UD_HANDLER = DisableAbleCommandHandler("ud", urbandictionary, pass_args=True)
 LOG_HANDLER = DisableAbleCommandHandler("log", log, filters=Filters.user(OWNER_ID))
@@ -505,8 +511,8 @@ dispatcher.add_handler(RANGRY_HANDLER)
 #dispatcher.add_handler(PING_HANDLER)
 dispatcher.add_handler(GETLINK_HANDLER)
 dispatcher.add_handler(LEAVECHAT_HANDLER)
-dispatcher.add_handler(RAMALAN_HANDLER)
-dispatcher.add_handler(TERJEMAH_HANDLER)
+dispatcher.add_handler(FORTUNE_HANDLER)
+dispatcher.add_handler(TRANSLATE_HANDLER)
 dispatcher.add_handler(WIKIPEDIA_HANDLER)
 dispatcher.add_handler(UD_HANDLER)
 dispatcher.add_handler(LOG_HANDLER)

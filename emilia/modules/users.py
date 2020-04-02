@@ -108,14 +108,29 @@ def log_user(update, context):
 @run_async
 def chats(update, context):
     all_chats = sql.get_all_chats() or []
-    chatfile = 'Daftar obrolan.\n'
+    chatfile = 'List of chats.\n0. Chat name | Chat ID | Members count | Invitelink\n'
+    P = 1
     for chat in all_chats:
-        chatfile += "{} - ({})\n".format(chat.chat_name, chat.chat_id)
+        try:
+            curr_chat = context.bot.getChat(chat.chat_id)
+            bot_member = curr_chat.get_member(context.bot.id)
+            chat_members = curr_chat.get_members_count(context.bot.id)
+            if bot_member.can_invite_users:
+                invitelink = context.bot.exportChatInviteLink(chat.chat_id)
+            else:
+                invitelink = "0"
+            chatfile += "{}. {} | {} | {} | {}\n".format(
+                P, chat.chat_name, chat.chat_id, chat_members, invitelink)
+            P = P + 1
+        except:
+            pass
 
     with BytesIO(str.encode(chatfile)) as output:
         output.name = "chatlist.txt"
-        update.effective_message.reply_document(document=output, filename="chatlist.txt",
-                                                caption="Here is a list of chats in my database.")
+        update.effective_message.reply_document(
+            document=output,
+            filename="chatlist.txt",
+            caption="Here is the list of chats in my database.")
 
 
 def __user_info__(user_id, chat_id):

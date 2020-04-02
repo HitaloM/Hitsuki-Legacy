@@ -1,5 +1,5 @@
 
-__lang__ = "🇺🇸 English"
+__lang__ = "🇧🇷 English"
 
 en = {
 # Global default
@@ -16,15 +16,15 @@ en = {
 	"Anda bukan admin di grup ini!": "You are not an admin in this group!",
 
 # languages
-	"Language changed to {}!": "Idioma alterado para {}!",
-	"Current language in *{}* is:\n{}.\n\nSelect language:": "Idioma atual em: *{}* é:\n{}.\n\nSelecione um idioma:",
-	"current in this chat": "atualmente neste grupo",
-	"language_help": """Not every group speaks English; some groups would rather have Emilia respond in their own language.
+	"Bahasa telah di ubah ke {}!": "Language changed to {}!",
+	"Bahasa di *{}* saat ini adalah:\n{}.\n\nPilih bahasa:": "Current language in *{}* is:\n{}.\n\nSelect language:",
+	"obrolan saat ini": "current in this chat",
+	"language_help": """Not every group speaks indonesian; some groups would rather have Emilia respond in their own language.
 
 This is where translations come in; you can change most of Emilia's replies to be in the language of your choice!
 
 Available languages are:
-- 🇮🇩 Indonesia
+- 🇧🇷 Português
 - 🇺🇸 English
 
 Available commands are:
@@ -33,29 +33,29 @@ Available commands are:
 # __main__
 	"Ada yang bisa saya bantu? 😊": "Is there anything I can help? 😊",
 	"start_text": """
-Hi {}! My name is *{}* - I'm here to help you manage your groups!
-Click Help button to find out more about how to use me to my full potential.
+Oi {}! Meu nome é *{}* - estou aqui para ajudá-lo a gerenciar seus grupos!
+Clique no botão Ajuda para descobrir mais sobre como me usar em todo o meu potencial.
 
-Follow [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) if you want to keep up with the news, updates and bot downtime!
+Siga o [Hitsuki](https://t.me/HitsukiNews) (@HitsukiNews) se você quiser acompanhar as notícias, atualizações e tempo de inatividade do bot!
 
-This bot is managed by @HitaloSama
+Este bot é gerenciado por @HitaloSama
 
-Want to add me to your group? [Click here!](t.me/LordHitsuki_BOT?startgroup=true)
+Deseja me adicionar ao seu grupo? [Clique aqui!](t.me/LordHitsuki_BOT?startgroup=true)‌‌
 """,
 	"help_text": """
-Hey! My name is *Hitsuki*. I am a group management bot, here to help you get around and keep the order in your groups!
-I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
+Olá! Meu nome é *Hitsuki*. Eu sou um bot de gerenciamento de grupos, aqui para ajudá-lo a se locomover e manter a ordem em seus grupos!
+Eu tenho muitos recursos úteis, como controle de flood, um sistema de avisos, um sistema de anotações e até respostas predeterminadas em determinadas palavras-chave.
 
-*Main commands available:*
- - /start: cool command to check if the bot is alive or not.
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /setlang: change bot language.
- - /settings:
-   - in PM: will send you your settings for all supported modules.
-   - in a group: will redirect you to pm, with all that chat's settings.
+*Principais comandos disponíveis:*
+ - /start: comando legal para verificar se o bot está vivo ou não.
+ - /help: PM é você esta mensagem.
+ - /help <nome do módulo>: informações de PM sobre esse módulo.
+ - /setlang: altera o idioma do bot.
+ - /settings:
+   - no privado: enviará suas configurações para todos os módulos suportados.
+   - em um grupo: o redirecionará para o PV, com todas as configurações do grupo.
 
-All commands can either be used with / or !.
+Todos os comandos podem ser usados ​​com `/` ou `!`‌‌
 """,
 	"donate_text": """Hello, glad to hear you want to donate!
 Need a lot of work for [my creator](tg://user?id=388576209) to take me to my place now, and \
@@ -65,9 +65,9 @@ All donated money will be given to a better VPS to host me, and or some food. \
 He is just an ordinary person, so it will really help him!
 
 If you really are interested in donating, please visit ayrahikari.github.io/donations.html, Thank you 😁""",
-	"Kembali": "Back",
-	"Hubungi saya di PM untuk mendapatkan daftar perintah.": "Contact me in PM to get the list of possible commands.",
-	"Tolong": "Help",
+	"⬅️ Back": "⬅️ Voltar",
+	"Contact me in PM to get the list of possible commands..": "Entre em contato comigo no PV para obter a lista de possíveis comandos.‌‌",
+	"Help": "Ajuda",
 	"Ini adalah bantuan yang tersedia untuk modul *{}*:\n": "Here is the available help for the *{}* module:\n",
 	"Ini adalah pengaturan Anda saat ini:": "These are your current settings:",
 	"Sepertinya tidak ada pengaturan khusus pengguna yang tersedia 😢": "Seems like there aren't any user specific settings available 😢",

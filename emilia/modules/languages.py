@@ -52,12 +52,12 @@ def tl(message, text):
 	for x in LOADED_LANGS_ID:
 		getlangid[x] = x
 
-	if str(getlang) == 'id':
-		get = getattr(FUNC_LANG['id'], 'id')
+	if str(getlang) == 'pt':
+		get = getattr(FUNC_LANG['pt'], 'pt')
 		if text in tuple(get):
 			return get.get(text)
 		if text in ("RUN_STRINGS", "SLAP_TEMPLATES", "ITEMS", "THROW", "HIT", "RAMALAN_STRINGS", "RAMALAN_FIRST"):
-			runstr = getattr(FUNC_LANG['id'], text)
+			runstr = getattr(FUNC_LANG['pt'], text)
 			return runstr
 		return text
 	elif str(getlang) in LOADED_LANGS_ID:
@@ -120,10 +120,10 @@ def set_language(update, context):
 		if chat.type == "private":
 			chatname = user.first_name
 		else:
-			chatname = tl(update.effective_message, "obrolan saat ini")
+			chatname = tl(update.effective_message, "current in this chat")
 
 	currlang = LANGS_TEXT[getlang] if LANGS_TEXT.get(getlang) else "(Deleted langs)"
-	send_message(update.effective_message, tl(msg, "Bahasa di *{}* saat ini adalah:\n{}.\n\nPilih bahasa:").format(chatname, currlang), parse_mode="markdown", reply_markup=keyboard)
+	send_message(update.effective_message, tl(msg, "Current language in *{}* is:\n{}.\n\nSelect language:").format(chatname, currlang), parse_mode="markdown", reply_markup=keyboard)
 
 @run_async
 @user_admin_no_reply
@@ -135,7 +135,7 @@ def button(update, context):
 		set_lang = match.group(1)
 		chat = update.effective_chat  # type: Optional[Chat]
 		sql.set_lang(chat.id, set_lang)
-		update.effective_message.edit_text(tl(query.message, "Bahasa telah di ubah ke {}!").format(LANGS_TEXT.get(set_lang)))
+		update.effective_message.edit_text(tl(query.message, "Language changed to {}!").format(LANGS_TEXT.get(set_lang)))
 
 
 __help__ = "language_help"
