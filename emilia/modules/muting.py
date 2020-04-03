@@ -42,7 +42,7 @@ def mute(update, context):
         chat = dispatcher.bot.getChat(conn)
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
-        text = tl(update.effective_message, "Terbisukan pada *{}*! 😆").format(chat_name)
+        text = tl(update.effective_message, "Muted on *{}*! 😆").format(chat_name)
     else:
         if update.effective_message.chat.type == "private":
             update.effective_send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
@@ -50,7 +50,7 @@ def mute(update, context):
         chat = update.effective_chat
         chat_id = update.effective_chat.id
         chat_name = update.effective_message.chat.title
-        text = tl(update.effective_message, "Terbisukan! 😆")
+        text = tl(update.effective_message, "Muted! 😆")
 
     if user_id == context.bot.id:
         send_message(update.effective_message, tl(update.effective_message, "Saya tidak akan membungkam diri saya sendiri!"))
@@ -116,7 +116,7 @@ def unmute(update, context):
         chat_id = update.effective_chat.id
         chat_name = update.effective_message.chat.title
         text = tl(update.effective_message, "Pengguna ini sudah bisa untuk berbicara.")
-        text2 = "Dia telah disuarakan."
+        text2 = tl(update.effective_message, "He has been unmuted.")
 
     check = context.bot.getChatMember(chat.id, user.id)
     if check['can_restrict_members'] == False:

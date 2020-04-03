@@ -1024,8 +1024,9 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 
 # muting
 	"Anda harus memberi saya nama pengguna untuk membungkam, atau membalas seseorang untuk dibisukan.": "You'll need to either give me a username to mute, or reply to someone to be muted.",
-	"Terbisukan pada *{}*! 😆": "Muted on *{}*! 😆",
-	"Terbisukan! 😆": "Muted! 😆",
+	"Muted on *{}*! 😆": "Silenciado em *{}* 😆",
+	"Muted! 😆": "Silenciado 😆",
+	"He has been unmuted.": "Certo, ele pode falar novamente.",
 	"Saya tidak akan membungkam diri saya sendiri!": "I'm not muting myself!",
 	"Saya tidak bisa menghentikan seorang admin berbicara!": "Afraid I can't stop an admin from talking!",
 	"Pengguna ini sudah dibungkam!": "This user is already muted!",
