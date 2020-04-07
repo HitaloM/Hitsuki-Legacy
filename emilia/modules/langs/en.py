@@ -1035,7 +1035,6 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 	"Terbisukan! 😆": "Muted! 😆",
 	"Saya tidak akan membungkam diri saya sendiri!": "I'm not muting myself!",
 	"Saya tidak bisa menghentikan seorang admin berbicara!": "Afraid I can't stop an admin from talking!",
-	"Pengguna ini sudah dibungkam!": "This user is already muted!",
 	"Pengguna ini tidak ada dalam obrolan!": "This user isn't in the chat!",
 	"Anda harus memberi saya nama pengguna untuk menyuarakan, atau membalas seseorang untuk disuarakan.": "You'll need to either give me a username to unmute, or reply to someone to be unmuted.",
 	"Pengguna ini sudah bisa untuk berbicara pada *{}*.": "This user already has the right to speak in *{}*.",
