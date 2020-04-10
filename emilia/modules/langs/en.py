@@ -16,16 +16,16 @@ en = {
 	"Anda bukan admin di grup ini!": "You are not an admin in this group!",
 
 # languages
-	"language_help": """Not every group speaks English; some groups would rather have Emilia respond in their own language.
+	"language_help": """Not every group speaks fluent english; some groups would rather have Hitsuki respond in their own language.
 
-This is where translations come in; you can change most of Emilia's replies to be in the language of your choice!
+This is where translations come in; you can change the language of most replies to be in the language of your choice!
 
-Available languages are:
-- 🇧🇷 Português
-- 🇺🇸 English
+*Available languages are:*
+ - 🇧🇷 Português (pt)
+ - 🇺🇸 English (en)
 
-Available commands are:
- - /setlang: set your prefered language.""",
+*Available commands:*
+ - /setlang <language>: Set your preferred language.""",
 
 # __main__
 	"start_text": """
@@ -42,10 +42,10 @@ Want to add me to your group? [Click here!](t.me/LordHitsuki_BOT?startgroup=true
 Hey! My name is *Hitsuki*. I am a group management bot, here to help you get around and keep the order in your groups!
 I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
 
-*Main commands available:*
- - /start: cool command to check if the bot is alive or not.
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
+Helpful commands:
+ - /start: Starts me! You've probably already used this.
+ - /help: Sends this message; I'll tell you more about myself!
+ - /help <module name>: Will send help of the desired module.
  - /setlang: change bot language.
  - /settings:
    - in PM: will send you your settings for all supported modules.
@@ -109,15 +109,19 @@ If you really are interested in donating, please visit ayrahikari.github.io/dona
 	"Permanent pin berhasil di atur!": "Successfully set permanent pin!",
 	"*Permanent pin error:*\nI can't pin messages here!\nMake sure I'm admin and can pin messages.\n\nPermanent pin disabled now, [here is your old pinned message]({})": "*Permanen pin error:*\nSaya tidak bisa menyematkan pesan di sini!\nPastikan saya admin dan dapat pin pesan.\n\nPermanen pin di nonaktifkan, [pesan permanen pin lama ada disini]({})",
 	"admin_help": """
- - /adminlist | /admins: list of admins in the chat
+*Make it easy to promote and demote users or pin and unpin messages with the the admin module!*
+
+*Available commands:*
+ - /adminlist | /admins: List the admins in the current chat.
+
 *Admin only:*
+- /promote <reply/username/mention/username>: Promote a user.
+- /demote <reply/username/mention/username>: Demote a user.
  - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
  - /unpin: unpins the currently pinned message
- - /permapin <teks>: Pin a custom messages via bots. This message can contain markdown, and can be used in replies to the media include additional buttons and text.
+ - /permapin <text>: Pin a custom messages via bots. This message can contain markdown, and can be used in replies to the media include additional buttons and text.
  - /permanentpin: Set a permanent pin for supergroup chat, when an admin or telegram channel change pinned message, bot will change pinned message immediatelly
- - /invitelink: gets invitelink
- - /promote: promotes the user replied to
- - /demote: demotes the user replied to
+ - /invitelink: Gets groups invite link.
 """,
 
 # MyAnimeList
@@ -181,13 +185,18 @@ Examples of time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 week.
 	"Saat ini *Tidak* menegakkan pengendalian pesan beruntun.": "*Not* currently enforcing flood control.",
 	"Anti Pesan Beruntun diatur ke `{}` pesan.": "Antiflood is set to `{}` messages.",
 	"antiflood_help": """
- - /flood: Get the current flood control setting
+You know how sometimes, people join, send 100 messages, and ruin your chat? With antiflood, that happens no more!
+
+Antiflood allows you to take action on users that send more than x messages in a row. Actions are: ban/kick/mute/tban/tmute
+
+*Available commands:*
+ - /flood: Get the current antiflood settings
 
 *Admin only:*
- - /setflood <int/'no'/'off'>: enables or disables flood control
- - /setfloodmode <ban/kick/mute/tban/tmute> <value>: select the action perform when warnings have been exceeded. ban/kick/mute/tmute/tban
+ - /setflood <number>: Set the number of messages after which to take action on a user.
+ - /setfloodmode <action type> <value>: Choose which action to take on a user who has been flooding. Options: ban/kick/mute/tban/tmute
 
- Note:
+*Note:*
  - Value must be filled for tban and tmute, Can be:
 	`4m` = 4 minutes
 	`3h` = 4 hours
@@ -325,10 +334,33 @@ When marked as AFK, any mentions will be replied to with a message to say you're
 	"Anda dapat mencadangan data sekali dalam 3 jam!\nAnda dapat mencadangan data lagi pada `{}`": "You can backup data once in 3 hours!\nYou can backup data again at `{}`",
 	"*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`\n\nNote: cadangan ini khusus untuk bot ini, jika di import ke bot lain maka catatan dokumen, video, audio, voice, dan lain-lain akan hilang": "*Successfully backed up for:*\nChat: `{}`\nChat ID: `{}`\nAt: `{}`\n\nNote: This backup is specific to this bot, if it is imported to another bot then document, video, audio, voice, and other notes will be lost",
 	"backups_help": """
-*Admin only:*
- - /import: reply to a group butler/marie/rose/emilia backup file to import as much as possible, making the transfer super simple!
-Note that files/photos from other bots can't be imported due to telegram restrictions. Except for Emilia backup it self.
- - /export: export group data, you can do this 12 hours once.
+Some people just want to see the world burn. Others, just want to have a way of grouping their chat data in one place so they can export their configuration to other chats!
+
+Hitsuki import/export settings feature allows you to quickly set up a chat using a preexisting template. Instead of setting the same settings over and over again in different chats, you can use this feature to copy the general configuration across groups.
+The generated file is in standard JSON format, so if there are any settings you dont want to import to your other chats, just open the file and edit it before importing.
+Exporting settings can be done by any administrator, but for security reasons, importing can only be done by the group creator.
+
+*The following modules will have their data exported:*
+- `admin`
+- `antiflood`
+- `blacklists`
+- `disabled`
+- `federations`
+- `filters`
+- `greetings`
+- `locks`
+- `notes`
+- `reports`
+- `rules`
+- `translations`
+- `warns`
+
+*Admin commands:*
+- /export: Generate a file containing all your chat data. (you can do this 12 hours once)
+- /import: Reply to a group butler/marie/rose/emilia/hitsuki backup file to import as much as possible, making the transfer super simple!
+Note that files/photos from other bots can't be imported due to telegram restrictions. Except for Hitsuki backup it self
+
+*Note:* To avoid abuse, this command is heavily rate limited; this is to make sure that people importing/exporting data don't slow down the bot.
 """,
 	"*Data yang tidak dapat di import*": "*Data which can't be imported*",
 
@@ -360,12 +392,19 @@ Note that files/photos from other bots can't be imported due to telegram restric
  - /kickme: kicks the user who issued the command
 
 *Admin only:*
- - /ban <userhandle>: bans a user. (via handle, or reply)
- - /sban <userhandle>: silent ban a user, bot will not reply and delete your sban message.
- - /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
- - /unban <userhandle>: unbans a user. (via handle, or reply)
- - /kick <userhandle>: kicks a user, (via handle, or reply)
- - /skick <userhandle>: silent kick a user, bot will not reply and delete your skick message.
+Some people need to be publicly banned; spammers, annoyances, or just trolls.
+
+This module allows you to do that easily, by exposing some common actions, so everyone will see!
+
+*User commands:*
+ - /kickme: Users that use this, kick themselves.
+
+*Admin commands:*
+ - /ban: Ban a user.
+ - /sban: Silently ban a user, and delete your message.
+ - /tban: Temporarily ban a user.
+ - /unban: Unban a user.
+ - /kick: Kick a user.
 """,
 
 # Blacklist
@@ -1023,10 +1062,12 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 	"Balas pesan untuk memilih tempat mulai membersihkan.": "Reply to a message to select where to start purging from.",
 	"Apa yang ingin di hapus?": "Whadya want to delete?",
 	"msgdel_help": """
-*Admin only:*
- - /del: deletes the message you replied to
- - /purge: deletes all messages between this and the replied to message.
- - /purge <integer X>: deletes the replied message, and X messages following it.
+Need to delete lots of messages? That's what purges are for!
+
+*Admin commands:*
+ - /purge: Delete all messages from the replied to message, to the current message.
+ - /purge <X>: Delete the following X messages after the replied to message.
+ - /del: Deletes the replied to message.
 """,
 
 # muting
