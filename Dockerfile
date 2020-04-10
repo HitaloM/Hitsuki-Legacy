@@ -38,12 +38,9 @@ RUN apk add --no-cache --update \
     postgresql-client \
     postgresql-dev \
     wget \
-    python \
     python3 \
-    python-dev \
     python3-dev \
     sqlite-dev \
-    sudo \
     zlib-dev \
     zip
 
@@ -55,15 +52,11 @@ RUN python3 -m ensurepip \
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
     rm -r /root/.cache
 
-#
 # Clone repo and prepare working directory
-#
 RUN git clone 'https://github.com/HitaloSama/Hitsuki.git' /root/emilia
 RUN mkdir /root/emilia/bin/
 WORKDIR /root/emilia/
 
-#
 # Install requirements
-#
 RUN pip3 install -r requirements.txt --upgrade
 CMD ["python3","-m","emilia"]
