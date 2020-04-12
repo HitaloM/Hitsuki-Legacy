@@ -52,7 +52,7 @@ def getRepo(bot, update, reponame, show_none=True, no_format=False):
     repo = sql.get_repo(str(chat_id), reponame)
     if repo:
         return repo.value, repo.backoffset
-    return None
+    return None, None
 
 @run_async
 @spamcheck
@@ -79,6 +79,9 @@ def hashFetch(update, context):
     fst_word = message.split()[0]
     no_hash = fst_word[1:]
     url, index = getRepo(context.bot, update, no_hash)
+    if url is None and index is None:
+        msg.reply_text("There was a problem parsing your request", parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
     text = getData(url, index)
     msg.reply_text(text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
     return
@@ -92,6 +95,9 @@ def cmdFetch(update, context):
         msg.reply_text("Invalid repo name")
         return
     url, index = getRepo(context.bot, update, args[0])
+    if url is None and index is None:
+        msg.reply_text("There was a problem parsing your request", parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
     text = getData(url, index)
     msg.reply_text(text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
     return
@@ -106,6 +112,9 @@ def changelog(update, context):
         msg.reply_text("Invalid repo name")
         return
     url, index = getRepo(context.bot, update, args[0])
+    if url is None and index is None:
+        msg.reply_text("There was a problem parsing your request", parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+        return
     if not api.getData(url):
         msg.reply_text("Invalid <user>/<repo> combo")
         return
