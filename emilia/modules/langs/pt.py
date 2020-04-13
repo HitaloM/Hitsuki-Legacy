@@ -73,16 +73,16 @@ Todos os comandos podem ser usados ​​com `/` ou `!`‌‌
 	"Anda sekarang dapat mengambil catatan di grup.": "Now you can get notes in group.",
 
 # admin
-	"Bagaimana saya ingin menaikan jabatan seseorang yang sudah menjadi admin?": "How am I meant to promote someone that's already an admin?",
-	"Saya tidak bisa menaikan jabatan diri saya sendiri! Hanya admin yang dapat melakukanya untuk saya.": "I can't promote myself! Get an admin to do it for me.",
-	"Tidak dapat mempromosikan pengguna, mungkin saya bukan admin atau tidak punya izin untuk mempromosikan pengguna.": "Cannot promote users, maybe I am not admin or do not have permission to promote users.",
-	"Gagal menaikan jabatan: Bot terkunci": "Failed to promote: Bot was locked",
-	"💖 Berhasil dinaikan jabatannya!": "💖 Successfully promoted!",
+	"How am I meant to promote someone that's already an admin?": "Como vou promover alguém que já é um administrador?",
+	"I can't promote myself! Get an admin to do it for me.": "Eu não posso me promover! Fale com um administrador para fazer isso por mim.",
+	"Cannot promote users, maybe I am not admin or do not have permission to promote users.": "Não posso promover usuários, talvez eu não seja um administrador ou não tenho permissão para adicionar novos administradores.",
+	"Failed to promote: Bot was locked": "Falha ao promover: Bot está travado",
+	"Successfully promoted! 😉": "Promovido com sucesso! 😉",
 	"Orang ini MENCIPTAKAN obrolan ini, bagaimana saya menurunkannya?": "This person CREATED the chat, how would I demote them?",
 	"Tidak dapat menurunkan jabatan apa yang tidak dipromosikan!": "Can't demote what wasn't promoted!",
 	"Saya tidak bisa menurunkan jabatan diri saya sendiri! Hanya admin yang dapat melakukanya untuk saya.": "I can't demote myself! Get an admin to do it for me.",
-	"💔 Berhasil diturunkan jabatannya!": "💔 Successfully demoted!",
-	"Tidak dapat menurunkan jabatannya. Saya mungkin bukan admin, atau status admin ditunjuk oleh orang lain, jadi saya tidak bisa bertindak atas hak mereka!": "Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!",
+	"Successfully demoted! 😎": "Rebaixado com sucesso! 😎",
+	"Could not demote. I might not be admin, or the admin status was appointed by another user, so I can't act upon them!": "Não foi possível rebaixar. Eu posso não ser admin, ou o usuário foi promovido por outro administrador, então não posso agir sobre ele!",
 	"Gunakan /pin <notify/loud/silent/violent> <link pesan>": "Use /pin <notify/loud/silent/violent> <message link>",
 	"Balas pesan untuk pin pesan tersebut pada grup ini": "Reply to a message for pin that message in this group",
 	"Saya sudah pin pesan dalam grup {}": "I have pinned messages in the group {}",
@@ -102,15 +102,19 @@ Todos os comandos podem ser usados ​​com `/` ou `!`‌‌
 	"Permanent pin berhasil di atur!": "Successfully set permanent pin!",
 	"*Permanent pin error:*\nI can't pin messages here!\nMake sure I'm admin and can pin messages.\n\nPermanent pin disabled now, [here is your old pinned message]({})": "*Permanen pin error:*\nSaya tidak bisa menyematkan pesan di sini!\nPastikan saya admin dan dapat pin pesan.\n\nPermanen pin di nonaktifkan, [pesan permanen pin lama ada disini]({})",
 	"admin_help": """
- - /adminlist | /admins: list of admins in the chat
+*Make it easy to promote and demote users or pin and unpin messages with the the admin module!*
+
+*Available commands:*
+ - /adminlist | /admins: List the admins in the current chat.
+
 *Admin only:*
+- /promote <reply/username/mention/username>: Promote a user.
+- /demote <reply/username/mention/username>: Demote a user.
  - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
  - /unpin: unpins the currently pinned message
- - /permapin <teks>: Pin a custom messages via bots. This message can contain markdown, and can be used in replies to the media include additional buttons and text.
+ - /permapin <text>: Pin a custom messages via bots. This message can contain markdown, and can be used in replies to the media include additional buttons and text.
  - /permanentpin: Set a permanent pin for supergroup chat, when an admin or telegram channel change pinned message, bot will change pinned message immediatelly
- - /invitelink: gets invitelink
- - /promote: promotes the user replied to
- - /demote: demotes the user replied to
+ - /invitelink: Gets groups invite link.
 """,
 
 # MyAnimeList
@@ -174,13 +178,18 @@ Examples of time values: 4m = 4 minutes, 3h = 3 hours, 6d = 6 days, 5w = 5 week.
 	"Saat ini *Tidak* menegakkan pengendalian pesan beruntun.": "*Not* currently enforcing flood control.",
 	"Anti Pesan Beruntun diatur ke `{}` pesan.": "Antiflood is set to `{}` messages.",
 	"antiflood_help": """
- - /flood: Get the current flood control setting
+You know how sometimes, people join, send 100 messages, and ruin your chat? With antiflood, that happens no more!
+
+Antiflood allows you to take action on users that send more than x messages in a row. Actions are: ban/kick/mute/tban/tmute
+
+*Available commands:*
+ - /flood: Get the current antiflood settings
 
 *Admin only:*
- - /setflood <int/'no'/'off'>: enables or disables flood control
- - /setfloodmode <ban/kick/mute/tban/tmute> <value>: select the action perform when warnings have been exceeded. ban/kick/mute/tmute/tban
+ - /setflood <number>: Set the number of messages after which to take action on a user.
+ - /setfloodmode <action type> <value>: Choose which action to take on a user who has been flooding. Options: ban/kick/mute/tban/tmute
 
- Note:
+*Note:*
  - Value must be filled for tban and tmute, Can be:
 	`4m` = 4 minutes
 	`3h` = 4 hours
@@ -318,10 +327,33 @@ When marked as AFK, any mentions will be replied to with a message to say you're
 	"Anda dapat mencadangan data sekali dalam 3 jam!\nAnda dapat mencadangan data lagi pada `{}`": "You can backup data once in 3 hours!\nYou can backup data again at `{}`",
 	"*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`\n\nNote: cadangan ini khusus untuk bot ini, jika di import ke bot lain maka catatan dokumen, video, audio, voice, dan lain-lain akan hilang": "*Successfully backed up for:*\nChat: `{}`\nChat ID: `{}`\nAt: `{}`\n\nNote: This backup is specific to this bot, if it is imported to another bot then document, video, audio, voice, and other notes will be lost",
 	"backups_help": """
-*Admin only:*
- - /import: reply to a group butler/marie/rose/emilia backup file to import as much as possible, making the transfer super simple!
-Note that files/photos from other bots can't be imported due to telegram restrictions. Except for Emilia backup it self.
- - /export: export group data, you can do this 12 hours once.
+Some people just want to see the world burn. Others, just want to have a way of grouping their chat data in one place so they can export their configuration to other chats!
+
+Hitsuki import/export settings feature allows you to quickly set up a chat using a preexisting template. Instead of setting the same settings over and over again in different chats, you can use this feature to copy the general configuration across groups.
+The generated file is in standard JSON format, so if there are any settings you dont want to import to your other chats, just open the file and edit it before importing.
+Exporting settings can be done by any administrator, but for security reasons, importing can only be done by the group creator.
+
+*The following modules will have their data exported:*
+- `admin`
+- `antiflood`
+- `blacklists`
+- `disabled`
+- `federations`
+- `filters`
+- `greetings`
+- `locks`
+- `notes`
+- `reports`
+- `rules`
+- `translations`
+- `warns`
+
+*Admin commands:*
+- /export: Generate a file containing all your chat data. (you can do this 12 hours once)
+- /import: Reply to a group butler/marie/rose/emilia/hitsuki backup file to import as much as possible, making the transfer super simple!
+Note that files/photos from other bots can't be imported due to telegram restrictions. Except for Hitsuki backup it self
+
+*Note:* To avoid abuse, this command is heavily rate limited; this is to make sure that people importing/exporting data don't slow down the bot.
 """,
 	"*Data yang tidak dapat di import*": "*Data which can't be imported*",
 

@@ -53,7 +53,7 @@ def promote(update, context):
 		chat_name = dispatcher.bot.getChat(conn).title
 	else:
 		if update.effective_message.chat.type == "private":
-			send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+			send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
@@ -61,7 +61,7 @@ def promote(update, context):
 
 	user_id = extract_user(message, args)
 	if not user_id:
-		send_message(update.effective_message, tl(update.effective_message, "Anda sepertinya tidak mengacu pada pengguna."))
+		send_message(update.effective_message, tl(update.effective_message, "You don't seem to be referring to a user."))
 		return ""
 	if user_id == "error":
 		send_message(update.effective_message, tl(update.effective_message, "Error: Unknown user!"))
@@ -69,11 +69,11 @@ def promote(update, context):
 
 	user_member = chat.get_member(user_id)
 	if user_member.status == 'administrator' or user_member.status == 'creator':
-		send_message(update.effective_message, tl(update.effective_message, "Bagaimana saya ingin menaikan jabatan seseorang yang sudah menjadi admin?"))
+		send_message(update.effective_message, tl(update.effective_message, "How am I meant to promote someone that's already an admin?"))
 		return ""
 
 	if user_id == context.bot.id:
-		send_message(update.effective_message, tl(update.effective_message, "Saya tidak bisa menaikan jabatan diri saya sendiri! Hanya admin yang dapat melakukanya untuk saya."))
+		send_message(update.effective_message, tl(update.effective_message, "I can't promote myself! Get an admin to do it for me."))
 		return ""
 
 	# set same perms as bot - bot can't assign higher perms than itself!
@@ -92,12 +92,12 @@ def promote(update, context):
 							)
 	except BadRequest as error:
 		if error.message == "Bot_groups_blocked":
-			send_message(update.effective_message, tl(update.effective_message, "Gagal menaikan jabatan: Bot terkunci"))
+			send_message(update.effective_message, tl(update.effective_message, "Failed to promote: Bot was locked"))
 		else:
-			send_message(update.effective_message, tl(update.effective_message, "Tidak dapat mempromosikan pengguna, mungkin saya bukan admin atau tidak punya izin untuk mempromosikan pengguna."))
+			send_message(update.effective_message, tl(update.effective_message, "Cannot promote users, maybe I am not admin or do not have permission to promote users."))
 		return
 
-	send_message(update.effective_message, tl(update.effective_message, "💖 Berhasil dinaikan jabatannya!"))
+	send_message(update.effective_message, tl(update.effective_message, "Successfully promoted! 😉"))
 	
 	return "<b>{}:</b>" \
 		   "\n#PROMOTED" \
@@ -126,7 +126,7 @@ def demote(update, context):
 		chat_name = dispatcher.bot.getChat(conn).title
 	else:
 		if update.effective_message.chat.type == "private":
-			send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+			send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
@@ -134,7 +134,7 @@ def demote(update, context):
 
 	user_id = extract_user(message, args)
 	if not user_id:
-		send_message(update.effective_message, tl(update.effective_message, "Anda sepertinya tidak mengacu pada pengguna."))
+		send_message(update.effective_message, tl(update.effective_message, "You don't seem to be referring to a user."))
 		return ""
 	if user_id == "error":
 		send_message(update.effective_message, tl(update.effective_message, "Error: Unknown user!"))
@@ -164,7 +164,7 @@ def demote(update, context):
 							  can_pin_messages=False,
 							  can_promote_members=False
 							)
-		send_message(update.effective_message, tl(update.effective_message, "💔 Berhasil diturunkan jabatannya!"))
+		send_message(update.effective_message, tl(update.effective_message, "Successfully demoted! 😎"))
 		return "<b>{}:</b>" \
 			   "\n#DEMOTED" \
 			   "\n<b>Admin:</b> {}" \
@@ -173,8 +173,8 @@ def demote(update, context):
 										  mention_html(user_member.user.id, user_member.user.first_name))
 
 	except BadRequest:
-		send_message(update.effective_message, tl(update.effective_message, "Tidak dapat menurunkan jabatannya. Saya mungkin bukan admin, atau status admin ditunjuk oleh "
-						   "orang lain, jadi saya tidak bisa bertindak atas hak mereka!"))
+		send_message(update.effective_message, tl(update.effective_message, "Could not demote. I might not be admin, or the admin status "
+						   "was appointed by another user, so I can't act upon them!"))
 		return ""
 
 
@@ -202,7 +202,7 @@ def pin(update, context):
 			prev_message = prev_message.split("/")[-1]
 	else:
 		if update.effective_message.chat.type == "private":
-			send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+			send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
@@ -254,7 +254,7 @@ def unpin(update, context):
 		chat_name = dispatcher.bot.getChat(conn).title
 	else:
 		if update.effective_message.chat.type == "private":
-			send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+			send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
@@ -292,7 +292,7 @@ def invite(update, context):
 		chat_name = dispatcher.bot.getChat(conn).title
 	else:
 		if update.effective_message.chat.type == "private":
-			send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+			send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
@@ -325,7 +325,7 @@ def adminlist(update, context):
 		chat_name = dispatcher.bot.getChat(conn).title
 	else:
 		if update.effective_message.chat.type == "private":
-			send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+			send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
@@ -380,7 +380,7 @@ def permapin(update, context):
 		chat_name = dispatcher.bot.getChat(conn).title
 	else:
 		if update.effective_message.chat.type == "private":
-			send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+			send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
@@ -442,7 +442,7 @@ def permanent_pin_set(update, context):
 			prev_message = prev_message.split("/")[-1]
 	else:
 		if update.effective_message.chat.type == "private":
-			send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+			send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
