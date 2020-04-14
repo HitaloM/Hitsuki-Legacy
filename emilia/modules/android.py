@@ -114,7 +114,6 @@ def edxposed(update, context):
 @spamcheck
 @run_async
 def mitools(update, context):
-    args = context.args
     url = f'{WIKI}/Tools_for_Xiaomi_devices.html'
     message = "Useful tools for Xiaomi devices"
     keyboard = [
@@ -125,9 +124,9 @@ def mitools(update, context):
          InlineKeyboardButton("XiaomiADB", f'{url}#xiaomiadb-by-francesco-tescari'),
          InlineKeyboardButton("Unofficial MiUnlock",
                               f'{url}#miunlocktool-by-francesco-tescari')],
-         InlineKeyboardButton("Xiaomi ADB/Fastboot Tools",
-                              f'{url}#xiaomi-adbfastboot-tools-by-szaki'),
-         InlineKeyboardButton("More Tools...", f'{url}')
+        [InlineKeyboardButton("Xiaomi ADB/Fastboot Tools",
+                              f'{url}#xiaomi-adbfastboot-tools-by-saki_eu'),
+         InlineKeyboardButton("More Tools...", f'{url}')]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.effective_message.bot.send_message(chat_id=update.message.chat_id, text=message,
