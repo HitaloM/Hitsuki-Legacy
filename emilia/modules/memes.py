@@ -23,6 +23,7 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 from zalgo_text import zalgo
 
+from deeppyer import deepfry
 from emilia.modules.disable import DisableAbleCommandHandler
 from emilia import dispatcher, spamcheck
 from emilia.modules.languages import tl
@@ -73,6 +74,56 @@ def owo(update, context):
         message.reply_text(reply_text)
     else:
         message.reply_to_message.reply_text(reply_text)
+
+
+@spamcheck
+@run_async
+def deepfryer(update, context):
+    message = update.effective_message
+    chat = update.effective_chat  # type: Optional[Chat]
+    if message.reply_to_message:
+        data = message.reply_to_message.photo
+        data2 = message.reply_to_message.sticker
+    else:
+        data = []
+        data2 = []
+
+    # check if message does contain media and cancel when not
+    if not data and not data2:
+        message.reply_text(tl(chat.id, "What am I supposed to do with this?!"))
+        return
+
+    # download last photo (highres) as byte array
+    if data:
+        photodata = data[len(data) - 1].get_file().download_as_bytearray()
+        image = Image.open(io.BytesIO(photodata))
+    elif data2:
+        sticker = bot.get_file(data2.file_id)
+        sticker.download('sticker.png')
+        image = Image.open("sticker.png")
+
+    # the following needs to be executed async (because dumb lib)
+    loop = asyncio.new_event_loop()
+    loop.run_until_complete(
+        process_deepfry(image, message.reply_to_message, bot))
+    loop.close()
+
+
+async def process_deepfry(image: Image, reply: Message, bot: Bot):
+    # DEEPFRY IT
+    image = await deepfry(img=image,
+                          token=DEEPFRY_TOKEN,
+                          url_base='westeurope')
+
+    bio = BytesIO()
+    bio.name = 'image.jpeg'
+    image.save(bio, 'JPEG')
+
+    # send it back
+    bio.seek(0)
+    reply.reply_photo(bio)
+    if Path("sticker.png").is_file():
+        os.remove("sticker.png")
 
 
 @spamcheck
@@ -345,6 +396,7 @@ VAPOR_HANDLER = DisableAbleCommandHandler("vapor", vapor, pass_args=True)
 ZALGO_HANDLER = DisableAbleCommandHandler("zalgofy", zalgotext, pass_args=True)
 SHOUT_HANDLER = DisableAbleCommandHandler("shout", shout, pass_args=True)
 CHINESEMEMES_HANDLER = DisableAbleCommandHandler("dllm", chinesememes, pass_args=True)
+DEEPFRY_HANDLER = DisableAbleCommandHandler("deepfry", deepfryer, admin_ok=True)
 
 dispatcher.add_handler(SHOUT_HANDLER)
 dispatcher.add_handler(OWO_HANDLER)
@@ -357,3 +409,4 @@ dispatcher.add_handler(BMOJI_HANDLER)
 dispatcher.add_handler(FORBES_HANDLER)
 dispatcher.add_handler(CHINESEMEMES_HANDLER)
 dispatcher.add_handler(MOCK_HANDLER)
+dispatcher.add_handler(DEEPFRY_HANDLER)

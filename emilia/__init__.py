@@ -80,6 +80,7 @@ if ENV:
 	CUSTOM_CMD = os.environ.get('CUSTOM_CMD', False)
 	TEMPORARY_DATA = os.environ.get('TEMPORARY_DATA', None)
 	SPAMWATCH_TOKEN = os.environ.get('SPAMWATCH_TOKEN', None)
+	DEEPFRY_TOKEN = os.environ.get('DEEPFRY_TOKEN', "")
 
 else:
 	from emilia.config import Development as Config
@@ -137,6 +138,7 @@ else:
 	# ALLOW_EXCL = Config.ALLOW_EXCL
 	CUSTOM_CMD = Config.CUSTOM_CMD
 	TEMPORARY_DATA = Config.TEMPORARY_DATA
+	DEEPFRY_TOKEN = Config.DEEPFRY_TOKEN
 	try:
 		SPAMWATCH_TOKEN = Config.SPAMWATCH_TOKEN
 	except:
