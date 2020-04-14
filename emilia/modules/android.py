@@ -125,7 +125,7 @@ def mitools(update, context):
          InlineKeyboardButton("Unofficial MiUnlock",
                               f'{url}#miunlocktool-by-francesco-tescari')],
         [InlineKeyboardButton("Xiaomi ADB/Fastboot Tools",
-                              f'{url}#xiaomi-adbfastboot-tools-by-saki_eu'),
+                              f'{url}#xiaomi-adbfastboot-tools-by-szaki'),
          InlineKeyboardButton("More Tools...", f'{url}')]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
