@@ -406,44 +406,6 @@ def bootleggers(update, context):
 
 @spamcheck
 @run_async
-def dotos(update, context):
-    args = context.args
-    message = update.effective_message
-    device = message.text[len('/dotos '):]
-
-    if device == '':
-        reply_text = "Please type your device **codename**!\nFor example, `/dotos tissot`"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-        return
-
-    fetch = get(f'https://raw.githubusercontent.com/DotOS/ota_config/dot-p/{device}.json')
-    if fetch.status_code == 200:
-        usr = fetch.json()
-        response = usr['response'][0]
-        filename = response['filename']
-        url = response['url']
-        buildsize_a = response['size']
-        buildsize_b = sizee(int(buildsize_a))
-        version = response['version']
-        changelog = response['changelog_device']
-
-        reply_text = (f"*Download:* [{filename}]({url})\n"
-                      f"*Build size:* `{buildsize_b}`\n"
-                      f"*Version:* `{version}`\n"
-                      f"*Device Changelog:* `{changelog}`")
-
-        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN,
-                           disable_web_page_preview=True)
-        return
-
-    elif fetch.status_code == 404:
-        reply_text = "Device not found"
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-
-
-@spamcheck
-@run_async
 def evo(update, context):
     args = context.args
     message = update.effective_message
@@ -666,168 +628,6 @@ def pe(update, context):
 
 @spamcheck
 @run_async
-def pearl(update, context):
-    args = context.args
-    message = update.effective_message
-    device = message.text[len('/pearl '):]
-
-    if device == '':
-        reply_text = "Please type your device **codename**!\nFor example, `/pearl mido`"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-        return
-
-    fetch = get(f'https://raw.githubusercontent.com/PearlOS/OTA/master/{device}.json')
-    if fetch.status_code == 200:
-        usr = fetch.json()
-        response = usr['response'][0]
-        maintainer = response['maintainer']
-        romtype = response['romtype']
-        filename = response['filename']
-        url = response['url']
-        buildsize_a = response['size']
-        buildsize_b = sizee(int(buildsize_a))
-        version = response['version']
-        xda = response['xda']
-
-        if xda == '':
-            reply_text = (f"*Download:* [{filename}]({url})\n"
-                          f"*Build size:* `{buildsize_b}`\n"
-                          f"*Version:* `{version}`\n"
-                          f"*Maintainer:* `{maintainer}`\n"
-                          f"*ROM Type:* `{romtype}`")
-
-            keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-            message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN,
-                               disable_web_page_preview=True)
-            return
-
-        reply_text = (f"*Download:* [{filename}]({url})\n"
-                      f"*Build size:* `{buildsize_b}`\n"
-                      f"*Version:* `{version}`\n"
-                      f"*Maintainer:* `{maintainer}`\n"
-                      f"*ROM Type:* `{romtype}`\n"
-                      f"*XDA Thread:* [Link]({xda})")
-
-        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN,
-                           disable_web_page_preview=True)
-        return
-
-    elif fetch.status_code == 404:
-        reply_text = "Device not found."
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-
-
-@spamcheck
-@run_async
-def pixys(update, context):
-    args = context.args
-    message = update.effective_message
-    device = message.text[len('/pixys '):]
-
-    if device == '':
-        reply_text = "Please type your device **codename**!\nFor example, `/pixys tissot`"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-        return
-
-    fetch = get(f'https://raw.githubusercontent.com/PixysOS-Devices/official_devices/master/{device}/build.json')
-    if fetch.status_code == 200:
-        usr = fetch.json()
-        response = usr['response'][0]
-        filename = response['filename']
-        url = response['url']
-        buildsize_a = response['size']
-        buildsize_b = sizee(int(buildsize_a))
-        romtype = response['romtype']
-        version = response['version']
-
-        reply_text = (f"*Download:* [{filename}]({url})\n"
-                      f"*Build size:* `{buildsize_b}`\n"
-                      f"*Version:* `{version}`\n"
-                      f"*Rom Type:* `{romtype}`")
-
-        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN,
-                           disable_web_page_preview=True)
-        return
-
-    elif fetch.status_code == 404:
-        reply_text = "Device not found."
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-
-
-@spamcheck
-@run_async
-def posp(update, context):
-    args = context.args
-    message = update.effective_message
-    device = message.text[len('/posp '):]
-
-    if device == '':
-        reply_text = "Please type your device **codename**!\nFor example, `/posp tissot`"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-        return
-
-    fetch = get(f'https://api.potatoproject.co/checkUpdate?device={device}&type=weekly')
-    if fetch.status_code == 200 and len(fetch.json()['response']) != 0:
-        usr = fetch.json()
-        response = usr['response'][0]
-        filename = response['filename']
-        url = response['url']
-        buildsize_a = response['size']
-        buildsize_b = sizee(int(buildsize_a))
-        version = response['version']
-
-        reply_text = (f"*Download:* [{filename}]({url})\n"
-                      f"*Build size:* `{buildsize_b}`\n"
-                      f"*Version:* `{version}`")
-
-        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN,
-                           disable_web_page_preview=True)
-        return
-
-    else:
-        reply_text = "Device not found"
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-
-
-@spamcheck
-@run_async
-def viper(update, context):
-    args = context.args
-    message = update.effective_message
-    device = message.text[len('/viper '):]
-
-    if device == '':
-        reply_text = "Please type your device **codename**!\nFor example, `/viper tissot`"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-        return
-
-    fetch = get(f'https://raw.githubusercontent.com/Viper-Devices/official_devices/master/{device}/build.json')
-    if fetch.status_code == 200:
-        usr = fetch.json()
-        response = usr['response'][0]
-        filename = response['filename']
-        url = response['url']
-        buildsize_a = response['size']
-        buildsize_b = sizee(int(buildsize_a))
-        version = response['version']
-
-        reply_text = (f"*Download:* [{filename}]({url})\n"
-                      f"*Build size:* `{buildsize_b}`\n"
-                      f"*Version:* `{version}`")
-
-        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN,
-                           disable_web_page_preview=True)
-
-    elif fetch.status_code == 404:
-        message.reply_text("Device not found")
-
-
-@spamcheck
-@run_async
 def specs(update, context):
     args = context.args
     if len(args) == 0:
@@ -877,23 +677,6 @@ def specs(update, context):
 
 @spamcheck
 @run_async
-def enesrelease(update, context):
-    args = context.args
-    message = update.effective_message
-    usr = get(f'https://api.github.com/repos/EnesSastim/Downloads/releases/latest').json()
-    reply_text = "*Enes Sastim's lastest releases(s):*\n"
-    for i in range(len(usr)):
-        try:
-            name = usr['assets'][i]['name']
-            url = usr['assets'][i]['browser_download_url']
-            reply_text += f"[{name}]({url})\n"
-        except IndexError:
-            continue
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
-
-
-@spamcheck
-@run_async
 def phh(update, context):
     args = context.args
     message = update.effective_message
@@ -924,22 +707,16 @@ __help__ = """
 *Specific ROM for a device*
  - /aex <device> <android version>: Get the latest AEX ROM for a device
  - /bootleggers <device>: Get the latest Bootleggers ROM for a device
- - /dotos <device>: Get the latest DotOS ROM for a device
  - /evo <device>: Get the latest Evolution X ROM for a device
  - /havoc <device>: Get the latest Havoc ROM for a device
  - /los <device>: Get the latest LineageOS ROM for a device
  - /pe <device>: Get the latest PixelExperience ROM for a device
  - /pe10 <device>: Get the latest PixelExperience 10 ROM for a device
  - /peplus <device>: Get the latest PixelExperience Plus ROM for a device
- - /pearl <device>: Get the latest Pearl ROM for a device
- - /pixys <device>: Get the latest Pixys ROM for a device
- - /posp <device>: Get the latest POSP ROM for a device
- - /viper <device>: Get the latest Viper ROM for a device
 
 *GSIs:*
  - /gsis: Get a list of Telegram channels recommended by my creator for you to download GSIs
  - /phh: Get the latest PHH GSI.
- - /enes: Get the latest Enes GSI.
 
 *Firmwares:*
  - /getfw <model> <csc>: (SAMSUNG ONLY) gets firmware download links from samfrew, sammobile and sfirmwares for the given device.
@@ -954,7 +731,6 @@ MAGISK_HANDLER = CommandHandler("magisk", magisk)
 TWRP_HANDLER = CommandHandler("twrp", twrp, pass_args=True)
 AEX_HANDLER = CommandHandler("aex", aex, pass_args=True)
 BOOTLEGGERS_HANDLER = CommandHandler("bootleggers", bootleggers)
-DOTOS_HANDLER = CommandHandler("dotos", dotos)
 EVO_HANDLER = CommandHandler("evo", evo)
 HAVOC_HANDLER = CommandHandler("havoc", havoc)
 LOS_HANDLER = CommandHandler("los", los)
@@ -962,16 +738,11 @@ MIUI_HANDLER = CommandHandler("miui", miui)
 PE_HANDLER = CommandHandler("pe", pe)
 PE10_HANDLER = CommandHandler("pe10", pe)
 PEPLUS_HANDLER = CommandHandler("peplus", pe)
-PEARL_HANDLER = CommandHandler("pearl", pearl)
-PIXYS_HANDLER = CommandHandler("pixys", pixys)
-POSP_HANDLER = CommandHandler("posp", posp)
-VIPER_HANDLER = CommandHandler("viper", viper)
 SPECS_HANDLER = CommandHandler("specs", specs, pass_args=True)
 GETFW_HANDLER = CommandHandler("getfw", getfw, pass_args=True)
 CHECKFW_HANDLER = CommandHandler("checkfw", checkfw, pass_args=True)
 ODIN_HANDLER = CommandHandler("odin", odin, pass_args=True)
 GSIS_HANDLER = CommandHandler("gsis", gsis, pass_args=True)
-ENES_HANDLER = CommandHandler("enes", enesrelease, pass_args=True)
 PHH_HANDLER = CommandHandler("phh", phh, pass_args=True)
 EDXPOSED_HANDLER = CommandHandler("edxposed", edxposed, pass_args=True)
 MITOOLS_HANDLER = CommandHandler("mitools", mitools, pass_args=True)
@@ -981,7 +752,6 @@ dispatcher.add_handler(MAGISK_HANDLER)
 dispatcher.add_handler(TWRP_HANDLER)
 dispatcher.add_handler(AEX_HANDLER)
 dispatcher.add_handler(BOOTLEGGERS_HANDLER)
-dispatcher.add_handler(DOTOS_HANDLER)
 dispatcher.add_handler(EVO_HANDLER)
 dispatcher.add_handler(HAVOC_HANDLER)
 dispatcher.add_handler(LOS_HANDLER)
@@ -989,16 +759,11 @@ dispatcher.add_handler(MIUI_HANDLER)
 dispatcher.add_handler(PE_HANDLER)
 dispatcher.add_handler(PE10_HANDLER)
 dispatcher.add_handler(PEPLUS_HANDLER)
-dispatcher.add_handler(PEARL_HANDLER)
-dispatcher.add_handler(PIXYS_HANDLER)
-dispatcher.add_handler(POSP_HANDLER)
-dispatcher.add_handler(VIPER_HANDLER)
 dispatcher.add_handler(SPECS_HANDLER)
 dispatcher.add_handler(GETFW_HANDLER)
 dispatcher.add_handler(CHECKFW_HANDLER)
 dispatcher.add_handler(ODIN_HANDLER)
 dispatcher.add_handler(GSIS_HANDLER)
-dispatcher.add_handler(ENES_HANDLER)
 dispatcher.add_handler(PHH_HANDLER)
 dispatcher.add_handler(EDXPOSED_HANDLER)
 dispatcher.add_handler(MITOOLS_HANDLER)

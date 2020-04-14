@@ -213,6 +213,10 @@ def stop_filter(update, context):
 def reply_filter(update, context):
 	chat = update.effective_chat  # type: Optional[Chat]
 	message = update.effective_message  # type: Optional[Message]
+	user = update.effective_user # type: Optional[User]
+
+	if int(user.id) == int(777000):
+		return
 
 	to_match = extract_text(message)
 	if not to_match:
