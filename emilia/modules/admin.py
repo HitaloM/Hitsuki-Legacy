@@ -142,15 +142,15 @@ def demote(update, context):
 
 	user_member = chat.get_member(user_id)
 	if user_member.status == 'creator':
-		send_message(update.effective_message, tl(update.effective_message, "Orang ini MENCIPTAKAN obrolan ini, bagaimana saya menurunkannya?"))
+		send_message(update.effective_message, tl(update.effective_message, "This person CREATED the chat, how would I demote them?"))
 		return ""
 
 	if not user_member.status == 'administrator':
-		send_message(update.effective_message, tl(update.effective_message, "Tidak dapat menurunkan jabatan apa yang belum dipromosikan!"))
+		send_message(update.effective_message, tl(update.effective_message, "How am I going to demote someone who hasn't been promoted?"))
 		return ""
 
 	if user_id == context.bot.id:
-		send_message(update.effective_message, tl(update.effective_message, "Saya tidak bisa menurunkan jabatan diri saya sendiri! Hanya admin yang dapat melakukanya untuk saya."))
+		send_message(update.effective_message, tl(update.effective_message, "I can't demote myself! Get an admin to do it for me."))
 		return ""
 
 	try:
@@ -195,7 +195,7 @@ def pin(update, context):
 		chat_id = conn
 		chat_name = dispatcher.bot.getChat(conn).title
 		if len(args)  <= 1:
-			send_message(update.effective_message, tl(update.effective_message, "Gunakan /pin <notify/loud/silent/violent> <link pesan>"))
+			send_message(update.effective_message, tl(update.effective_message, "Use /pin <notify/loud/silent/violent> <message link>"))
 			return ""
 		prev_message = args[1]
 		if "/" in prev_message:
@@ -210,7 +210,7 @@ def pin(update, context):
 		if update.effective_message.reply_to_message:
 			prev_message = update.effective_message.reply_to_message.message_id
 		else:
-			send_message(update.effective_message, tl(update.effective_message, "Balas pesan untuk pin pesan tersebut pada grup ini"))
+			send_message(update.effective_message, tl(update.effective_message, "Reply to a message for pin that message in this group"))
 			return ""
 
 	is_group = chat.type != "private" and chat.type != "channel"
@@ -223,7 +223,7 @@ def pin(update, context):
 		try:
 			context.bot.pinChatMessage(chat.id, prev_message, disable_notification=is_silent)
 			if conn:
-				send_message(update.effective_message, tl(update.effective_message, "Saya sudah pin pesan dalam grup {}").format(chat_name))
+				send_message(update.effective_message, tl(update.effective_message, "I have pinned messages in the group {}").format(chat_name))
 		except BadRequest as excp:
 			if excp.message == "Chat_not_modified":
 				pass
@@ -263,7 +263,7 @@ def unpin(update, context):
 	try:
 		context.bot.unpinChatMessage(chat.id)
 		if conn:
-			send_message(update.effective_message, tl(update.effective_message, "Saya sudah unpin pesan dalam grup {}").format(chat_name))
+			send_message(update.effective_message, tl(update.effective_message, "I have unpin the message in the group {}").format(chat_name))
 	except BadRequest as excp:
 		if excp.message == "Chat_not_modified":
 			pass
@@ -306,9 +306,9 @@ def invite(update, context):
 			invitelink = context.bot.exportChatInviteLink(chat.id)
 			send_message(update.effective_message, invitelink)
 		else:
-			send_message(update.effective_message, tl(update.effective_message, "Saya tidak memiliki akses ke tautan undangan, coba ubah izin saya!"))
+			send_message(update.effective_message, tl(update.effective_message, "I don't have access to the invite link, try changing my permissions!"))
 	else:
-		send_message(update.effective_message, tl(update.effective_message, "Saya hanya dapat memberi Anda tautan undangan untuk supergroup dan saluran, maaf!"))
+		send_message(update.effective_message, tl(update.effective_message, "I can only give you invite links for supergroups and channels, sorry!"))
 
 
 @run_async
@@ -332,12 +332,12 @@ def adminlist(update, context):
 		chat_name = update.effective_message.chat.title
 
 	administrators = context.bot.getChatAdministrators(chat_id)
-	text = tl(update.effective_message, "Admin di *{}*:").format(update.effective_chat.title or tl(update.effective_message, "chat ini"))
+	text = tl(update.effective_message, "Admin in *{}*:").format(update.effective_chat.title or tl(update.effective_message, "chat ini"))
 	for admin in administrators:
 		user = admin.user
 		status = admin.status
 		if user.first_name == '':
-			name = tl(update.effective_message, "☠ Akun Terhapus")
+			name = tl(update.effective_message, "☠ Deleted Account")
 		else:
 			name = "{}".format(mention_markdown(user.id, user.first_name + " " + (user.last_name or "")))
 		#if user.username:
@@ -349,7 +349,7 @@ def adminlist(update, context):
 		user = admin.user
 		status = admin.status
 		if user.first_name == '':
-			name = tl(update.effective_message, "☠ Akun Terhapus")
+			name = tl(update.effective_message, "☠ Deleted Account")
 		else:
 			name = "{}".format(mention_markdown(user.id, user.first_name + " " + (user.last_name or "")))
 		#if user.username:
@@ -397,14 +397,14 @@ def permapin(update, context):
 			sendingmsg = context.bot.send_message(chat_id, text, parse_mode="markdown",
 								 disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(tombol))
 		except BadRequest:
-			context.bot.send_message(chat_id, tl(update.effective_message, "Teks markdown salah!\nJika anda tidak tahu apa itu markdown, silahkan ketik `/markdownhelp` pada PM."), parse_mode="markdown")
+			context.bot.send_message(chat_id, tl(update.effective_message, "Wrong markdown text!\nIf you don't know what markdown is, please type `/markdownhelp` in PM."), parse_mode="markdown")
 			return
 	else:
 		sendingmsg = ENUM_FUNC_MAP[str(data_type)](chat_id, content, caption=text, parse_mode="markdown", disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(tombol))
 	try:
 		context.bot.pinChatMessage(chat_id, sendingmsg.message_id)
 	except BadRequest:
-		send_message(update.effective_message, tl(update.effective_message, "Saya tidak punya akses untuk pin pesan!"))
+		send_message(update.effective_message, tl(update.effective_message, "I don't have access to pin message!"))
 
 
 @run_async
@@ -495,7 +495,7 @@ def permanent_pin(update, context):
 				old_pin = "https://t.me/{}/{}".format(chat.username, get_permapin)
 			else:
 				old_pin = "https://t.me/c/{}/{}".format(str(chat.id)[4:], get_permapin)
-			send_message(update.effective_message, tl(update.effective_message, "*Permanen pin error:*\nSaya tidak bisa menyematkan pesan di sini!\nPastikan saya admin dan dapat pin pesan.\n\nPermanen pin di nonaktifkan, [pesan permanen pin lama ada disini]({})").format(old_pin), parse_mode="markdown")
+			send_message(update.effective_message, tl(update.effective_message, "*Permanent pin error:*\nI can't pin messages here!\nMake sure I'm admin and can pin messages.\n\nPermanent pin disabled now, [here is your old pinned message]({})").format(old_pin), parse_mode="markdown")
 			return
 
 		if to_del:
@@ -509,12 +509,12 @@ def permanent_pin(update, context):
 def __chat_settings__(chat_id, user_id):
 	administrators = dispatcher.bot.getChatAdministrators(chat_id)
 	chat = dispatcher.bot.getChat(chat_id)
-	text = "Admin di *{}*:".format(chat.title or "chat ini")
+	text = "Admin in *{}*:".format(chat.title or "chat ini")
 	for admin in administrators:
 		user = admin.user
 		status = admin.status
 		if user.first_name == '':
-			name = tl(user_id, "☠ Akun Terhapus")
+			name = tl(user_id, "☠ Deleted Account")
 		else:
 			name = "{}".format(mention_markdown(user.id, user.first_name + " " + (user.last_name or "")))
 		#if user.username:
@@ -526,14 +526,14 @@ def __chat_settings__(chat_id, user_id):
 		user = admin.user
 		status = admin.status
 		if user.first_name == '':
-			name = tl(user_id, "☠ Akun Terhapus")
+			name = tl(user_id, "☠ Deleted Account")
 		else:
 			name = "{}".format(mention_markdown(user.id, user.first_name + " " + (user.last_name or "")))
 		#if user.username:
 		#    name = escape_markdown("@" + user.username)
 		if status == "administrator":
 			text += "\n` • `{}".format(name)
-	text += tl(user_id, "\n\nKamu adalah *{}*").format(dispatcher.bot.get_chat_member(chat_id, user_id).status)
+	text += tl(user_id, "\n\nYou are *{}*").format(dispatcher.bot.get_chat_member(chat_id, user_id).status)
 	return text
 
 
