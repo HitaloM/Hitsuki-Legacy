@@ -110,7 +110,7 @@ def deepfryer(update, context):
     loop.close()
 
 
-async def process_deepfry(image: Image, reply: Message, bot: Bot):
+async def process_deepfry(image: Image, reply: Message, bot: Bot, context):
     bot = context.bot
     image = await deepfry(img=image,
                           token=DEEPFRY_TOKEN,

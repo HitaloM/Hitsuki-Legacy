@@ -16,6 +16,7 @@ import wikipedia
 import base64
 from bs4 import BeautifulSoup
 from emoji import UNICODE_EMOJI
+from platform import python_version
 
 import requests
 from telegram.error import BadRequest, Unauthorized
@@ -24,6 +25,7 @@ from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
 
+import emilia.modules.helper_funcs.git_api as git
 from emilia import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, spamcheck
 from emilia.__main__ import STATS, USER_INFO
 from emilia.modules.disable import DisableAbleCommandHandler
@@ -412,7 +414,7 @@ def wiki(update, context):
 	try:
 		pagewiki = wikipedia.page(teks)
 	except wikipedia.exceptions.PageError:
-		send_message(update.effective_message, tl(update.effective_message, "Hasil tidak ditemukan"))
+		send_message(update.effective_message, tl(update.effective_message, "Results not found"))
 		return
 	except wikipedia.exceptions.DisambiguationError as refer:
 		rujuk = str(refer).split("\n")
@@ -432,20 +434,29 @@ def wiki(update, context):
 		send_message(update.effective_message, teks, parse_mode="markdown")
 		return
 	except IndexError:
-		send_message(update.effective_message, tl(update.effective_message, "Tulis pesan untuk mencari dari sumber wikipedia"))
+		send_message(update.effective_message, tl(update.effective_message, "Write a message to search from the wikipedia source"))
 		return
 	judul = pagewiki.title
 	summary = pagewiki.summary
 	if update.effective_message.chat.type == "private":
-		send_message(update.effective_message, tl(update.effective_message, "Hasil dari {} adalah:\n\n<b>{}</b>\n{}").format(teks, judul, summary), parse_mode=ParseMode.HTML)
+		send_message(update.effective_message, tl(update.effective_message, "Results of {} is:\n\n<b>{}</b>\n{}").format(teks, judul, summary), parse_mode=ParseMode.HTML)
 	else:
 		if len(summary) >= 200:
 			judul = pagewiki.title
 			summary = summary[:200]+"..."
-			button = InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "Baca Lebih Lengkap"), url="t.me/{}?start=wiki-{}".format(context.bot.username, teks.replace(' ', '_')))]])
+			button = InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "Read More..."), url="t.me/{}?start=wiki-{}".format(context.bot.username, teks.replace(' ', '_')))]])
 		else:
 			button = None
-		send_message(update.effective_message, tl(update.effective_message, "Hasil dari {} adalah:\n\n<b>{}</b>\n{}").format(teks, judul, summary), parse_mode=ParseMode.HTML, reply_markup=button)
+		send_message(update.effective_message, tl(update.effective_message, "Results of {} is:\n\n<b>{}</b>\n{}").format(teks, judul, summary), parse_mode=ParseMode.HTML, reply_markup=button)
+
+
+@run_async
+def status(update, context):
+    reply = "*System Info:*\n\n"
+    reply += "*Hitsuki Version:* `3.0 - X`\n"
+    reply += "*Python Version:* `"+python_version()+"`\n"
+    reply += "*GitHub API Version:* `"+str(git.vercheck())+"`\n"
+    update.effective_message.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
@@ -504,11 +515,13 @@ LOG_HANDLER = DisableAbleCommandHandler("log", log, filters=Filters.user(OWNER_I
 REACT_HANDLER = DisableAbleCommandHandler("react", react)
 RHAPPY_HANDLER = DisableAbleCommandHandler("happy", rhappy)
 RANGRY_HANDLER = DisableAbleCommandHandler("angry", rangry)
+STATUS_HANDLER = DisableAbleCommandHandler("status", status)
 
+dispatcher.add_handler(STATUS_HANDLER)
 dispatcher.add_handler(REACT_HANDLER)
 dispatcher.add_handler(RHAPPY_HANDLER)
 dispatcher.add_handler(RANGRY_HANDLER)
-#dispatcher.add_handler(PING_HANDLER)
+dispatcher.add_handler(PING_HANDLER)
 dispatcher.add_handler(GETLINK_HANDLER)
 dispatcher.add_handler(LEAVECHAT_HANDLER)
 dispatcher.add_handler(FORTUNE_HANDLER)

@@ -1503,11 +1503,11 @@ This also works with /goodbye.
 	"Diterjemahkan dari `{}` ke `{}`:\n`{}`": "Translated from `{}` to `{}`:\n`{}`",
 	"Balas pesan atau tulis pesan dari bahasa lain untuk diterjemahkan kedalam bahasa yang di dituju\n\nContoh: `/tr en-id` untuk menerjemahkan dari Bahasa inggris ke Bahasa Indonesia\nAtau gunakan: `/tr id` untuk deteksi otomatis dan menerjemahkannya kedalam bahasa indonesia": "Reply to messages or write messages from other languages ​​to translate into the intended language\n\nExample: `/tr en-id` to translate from English to Indonesian\nOr use: `/tr id` for automatic detection and translating it into Indonesian",
 	"Bahasa yang di tuju tidak ditemukan!": "The destination language is not found!",
-	"Hasil tidak ditemukan": "Results not found",
-	"Tulis pesan untuk mencari dari sumber wikipedia": "Write a message to search from the wikipedia source",
-	"Hasil dari {} adalah:\n\n<b>{}</b>\n{}": "Results of {} is:\n\n<b>{}</b>\n{}",
+	"Results not found": "Nenhum resultado encontrado.",
+	"Write a message to search from the wikipedia source": "Me diga algo para que eu pesquise na wikipedia.",
+	"Results of {} is:\n\n<b>{}</b>\n{}": "Resultados para {} são:\n\n<b>{}</b>\n{}",
 	"Baca di Wikipedia": "Read on Wikipedia",
-	"Baca Lebih Lengkap": "Read More",
+	"Read More...": "Ler Mais...",
 	"exclusive_help": """
  - /stickerid: reply message sticker at PM to get ID sticker
  - /ping: check the speed of the bot
