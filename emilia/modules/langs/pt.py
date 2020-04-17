@@ -1506,7 +1506,7 @@ This also works with /goodbye.
 	"Results not found": "Nenhum resultado encontrado.",
 	"Write a message to search from the wikipedia source": "Me diga algo para que eu pesquise na wikipedia.",
 	"Results of {} is:\n\n<b>{}</b>\n{}": "Resultados para {} são:\n\n<b>{}</b>\n{}",
-	"Baca di Wikipedia": "Read on Wikipedia",
+	"Read on Wikipedia": "Ler na Wikipedia",
 	"Read More...": "Ler Mais...",
 	"exclusive_help": """
  - /stickerid: reply message sticker at PM to get ID sticker

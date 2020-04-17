@@ -26,6 +26,7 @@ from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
 
 import emilia.modules.helper_funcs.git_api as git
+import emilia.__main__ as hitsukiv
 from emilia import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, spamcheck
 from emilia.__main__ import STATS, USER_INFO
 from emilia.modules.disable import DisableAbleCommandHandler
@@ -453,7 +454,7 @@ def wiki(update, context):
 @run_async
 def status(update, context):
     reply = "*System Info:*\n\n"
-    reply += "*Hitsuki Version:* `3.0 - X`\n"
+    reply += "*Hitsuki Version:* `"+str(hitsukiv.vercheck())+"`\n"
     reply += "*Python Version:* `"+python_version()+"`\n"
     reply += "*GitHub API Version:* `"+str(git.vercheck())+"`\n"
     update.effective_message.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
