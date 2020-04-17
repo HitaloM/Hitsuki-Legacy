@@ -16,7 +16,7 @@ from telegram.ext import CommandHandler, run_async, Filters
 from telegram.error import BadRequest, Unauthorized
 
 import emilia.modules.helper_funcs.git_api as git
-import emilia.__main__ as emiliav
+import emilia.__main__ as hitsukiv
 from emilia import dispatcher, OWNER_ID, SUDO_USERS
 from emilia.modules.helper_funcs.filters import CustomFilters
 from emilia.modules.helper_funcs.extraction import extract_text, extract_user
@@ -45,12 +45,12 @@ def status(update, context):
 	chat = update.effective_chat
 	
 	stat = "--- System Status ---\n"
-	stat += "Hitsuki Version: `"+str(hitsukiv.vercheck())+"`\n"
+	stat += "Hitsuki Version: "+str(hitsukiv.vercheck())+"\n"
 	stat += "Python Version: "+python_version()+"\n"
 	stat += "GitHub API Version: "+str(git.vercheck())+"\n"
 	#Software Info
 	uname = platform.uname()
-	softw = "---  Software Information ---\n"
+	softw = "--- Software Information ---\n"
 	softw += f"System: {uname.system}\n"
 	softw += f"Node Name: {uname.node}\n"
 	softw += f"Release: {uname.release}\n"
@@ -110,7 +110,7 @@ def speedtst(update, context):
                                         parse_mode=ParseMode.HTML)
 
 
-__mod_name__ = "System Tools"
+__mod_name__ = "System Info"
 
 STATUS_HANDLER = CommandHandler("system", status, filters=CustomFilters.sudo_filter)
 SPEED_HANDLER = CommandHandler("speed", speedtst, filters=CustomFilters.sudo_filter)

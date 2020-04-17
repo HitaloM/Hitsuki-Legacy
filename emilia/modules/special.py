@@ -453,7 +453,7 @@ def wiki(update, context):
 
 @run_async
 def status(update, context):
-    reply = "*System Info:*\n\n"
+    reply = "*Hitsuki System Info:*\n\n"
     reply += "*Hitsuki Version:* `"+str(hitsukiv.vercheck())+"`\n"
     reply += "*Python Version:* `"+python_version()+"`\n"
     reply += "*GitHub API Version:* `"+str(git.vercheck())+"`\n"
@@ -505,14 +505,14 @@ __help__ = "exclusive_help"
 
 __mod_name__ = "🚀 Hitsuki Exclusive 🚀"
 
-PING_HANDLER = DisableAbleCommandHandler("ping", ping)
+PING_HANDLER = CommandHandler("ping", ping, filters=Filters.user(OWNER_ID))
 GETLINK_HANDLER = CommandHandler("getlink", getlink, pass_args=True, filters=Filters.user(OWNER_ID))
 LEAVECHAT_HANDLER = CommandHandler(["leavechat", "leavegroup", "leave"], leavechat, pass_args=True, filters=Filters.user(OWNER_ID))
 FORTUNE_HANDLER = DisableAbleCommandHandler("fortune", fortune)
 TRANSLATE_HANDLER = DisableAbleCommandHandler("tr", translate)
 WIKIPEDIA_HANDLER = DisableAbleCommandHandler("wiki", wiki)
 UD_HANDLER = DisableAbleCommandHandler("ud", urbandictionary, pass_args=True)
-LOG_HANDLER = DisableAbleCommandHandler("log", log, filters=Filters.user(OWNER_ID))
+LOG_HANDLER = CommandHandler("log", log, filters=Filters.user(OWNER_ID))
 REACT_HANDLER = DisableAbleCommandHandler("react", react)
 RHAPPY_HANDLER = DisableAbleCommandHandler("happy", rhappy)
 RANGRY_HANDLER = DisableAbleCommandHandler("angry", rangry)
