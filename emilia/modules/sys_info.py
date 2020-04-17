@@ -20,7 +20,6 @@ import emilia.__main__ as emiliav
 from emilia import dispatcher, OWNER_ID, SUDO_USERS
 from emilia.modules.helper_funcs.filters import CustomFilters
 from emilia.modules.helper_funcs.extraction import extract_text, extract_user
-from emilia.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHandler
 from emilia.modules.helper_funcs.alternate import send_message
 
 
