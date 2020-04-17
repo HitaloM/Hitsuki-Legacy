@@ -15,7 +15,7 @@ from telegram import Update, Bot, Message, Chat, ParseMode
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.error import BadRequest, Unauthorized
 
-import hitsuki.modules.helper_funcs.git_api as git
+import emilia.modules.helper_funcs.git_api as git
 import emilia.__main__ as emiliav
 from emilia import dispatcher, OWNER_ID, SUDO_USERS
 from emilia.modules.helper_funcs.filters import CustomFilters
