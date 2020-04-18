@@ -1,13 +1,7 @@
-import sys
-import traceback
-
-from functools import wraps
-from typing import Optional
-
-from telegram import User, Chat, ChatMember, Update, Bot
+from telegram import Chat, ChatMember, Update, Bot
 from telegram import error
 
-from hitsuki import dispatcher, DEL_CMDS, SUDO_USERS, WHITELIST_USERS, LOGGER
+from hitsuki import dispatcher, SUDO_USERS, LOGGER
 
 from hitsuki.modules import languages
 

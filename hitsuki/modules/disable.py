@@ -1,8 +1,8 @@
-from typing import Union, List, Optional
+from typing import Union, Optional
 
 from future.utils import string_types
-from telegram import ParseMode, Update, Bot, Chat, User, MessageEntity
-from telegram.ext import CommandHandler, MessageHandler, Filters
+from telegram import ParseMode, Update, Chat, MessageEntity
+from telegram.ext import CommandHandler, MessageHandler
 from telegram.utils.helpers import escape_markdown
 
 from hitsuki import dispatcher, spamcheck, OWNER_ID
@@ -226,15 +226,11 @@ if is_module_loaded(FILENAME):
         conn = connected(context.bot, update, chat, user.id, need_admin=True)
         if conn:
             chat = dispatcher.bot.getChat(conn)
-            chat_id = conn
-            chat_name = dispatcher.bot.getChat(conn).title
         else:
             if update.effective_message.chat.type == "private":
                 send_message(update.effective_message, languages.tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
                 return ""
             chat = update.effective_chat
-            chat_id = update.effective_chat.id
-            chat_name = update.effective_message.chat.title
 
         text = build_curr_disabled(chat.id)
         send_message(update.effective_message, text, parse_mode=ParseMode.MARKDOWN)

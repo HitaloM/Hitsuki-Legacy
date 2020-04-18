@@ -14,7 +14,7 @@ from hitsuki.modules.helper_funcs.alternate import send_message
 
 verify_code = ["🙏", "👈", "👉", "👇", "👆", "❤️", "🅰️", "🅱️", "0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
 verify_code_images = {
-"🙏": "https://telegra.ph/file/785aba452f52876c71782.jpg", 
+"🙏": "https://telegra.ph/file/785aba452f52876c71782.jpg",
 "👈": "https://telegra.ph/file/521ca6dacb63b1e1762a1.jpg",
 "👉": "https://telegra.ph/file/3ff7a4c25abd3227e4a4c.jpg",
 "👇": "https://telegra.ph/file/5ec6e0de9c518eefa0892.jpg",
@@ -71,15 +71,14 @@ def verify_welcome(update, context, chat_id):
 	context.bot.send_photo(user_id, photo=verify_code_images[real_btn], caption=tl(update.effective_message, "Tolong pilih emoji yang sama dibawah ini:"), parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(buttons))
 
 def verify_button_pressed(update, context):
-	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
-	query = update.callback_query  # type: Optional[CallbackQuery]
+	chat = update.effective_chat
+	user = update.effective_user
+	query = update.callback_query
 	match = re.match(r"verify_me\((.+?)\)", query.data)
 	match = match.group(1).split("|")
 	is_ok = match[0]
 	user_id = match[1]
 	chat_id = match[2]
-	message = update.effective_message  # type: Optional[Message]
 	print("-> {} was clicked welcome verify button".format(user.id))
 	if is_ok == "y":
 		if context.bot.getChatMember(chat_id, user_id).status in ('left'):

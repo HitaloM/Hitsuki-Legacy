@@ -1,14 +1,14 @@
 import html
-from typing import Optional, List
+from typing import Optional
 
-from telegram import Message, Chat, Update, Bot, User, InlineKeyboardMarkup, ChatPermissions
+from telegram import Message, Chat, Update, Bot, User, InlineKeyboardMarkup
 from telegram import ParseMode
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
+from telegram.utils.helpers import mention_html, mention_markdown
 
-from hitsuki import dispatcher, updater, spamcheck, LOGGER
+from hitsuki import dispatcher, spamcheck
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import bot_admin, can_promote, user_admin, can_pin
 from hitsuki.modules.helper_funcs.extraction import extract_user
@@ -288,14 +288,12 @@ def invite(update, context):
 	conn = connected(context.bot, update, chat, user.id, need_admin=True)
 	if conn:
 		chat = dispatcher.bot.getChat(conn)
-		chat_id = conn
 		chat_name = dispatcher.bot.getChat(conn).title
 	else:
 		if update.effective_message.chat.type == "private":
 			send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
 			return ""
 		chat = update.effective_chat
-		chat_id = update.effective_chat.id
 		chat_name = update.effective_message.chat.title
 
 	if chat.username:
@@ -420,7 +418,6 @@ def permanent_pin_set(update, context):
 	if conn:
 		chat = dispatcher.bot.getChat(conn)
 		chat_id = conn
-		chat_name = dispatcher.bot.getChat(conn).title
 		if not args:
 			get_permapin = sql.get_permapin(chat_id)
 			text_maker = tl(update.effective_message, "Permanen pin saat ini di atur: `{}`").format(bool(int(get_permapin)))
@@ -446,7 +443,6 @@ def permanent_pin_set(update, context):
 			return ""
 		chat = update.effective_chat
 		chat_id = update.effective_chat.id
-		chat_name = update.effective_message.chat.title
 		if update.effective_message.reply_to_message:
 			prev_message = update.effective_message.reply_to_message.message_id
 		elif len(args) >= 1 and args[0] == "off":
@@ -483,7 +479,6 @@ def permanent_pin(update, context):
 	user = update.effective_user  # type: Optional[User]
 	chat = update.effective_chat  # type: Optional[Chat]
 	message = update.effective_message
-	args = context.args
 
 	get_permapin = sql.get_permapin(chat.id)
 	if get_permapin and not user.id == context.bot.id:
@@ -503,7 +498,6 @@ def permanent_pin(update, context):
 				context.bot.deleteMessage(chat.id, message.message_id+1)
 			except BadRequest:
 				print("Permanent pin error: cannot delete pin msg")
-	
 
 
 def __chat_settings__(chat_id, user_id):

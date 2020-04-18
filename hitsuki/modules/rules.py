@@ -1,9 +1,9 @@
-from typing import Optional, List
+from typing import Optional
 
-from telegram import Message, Update, Bot, User
+from telegram import Message, Update, Bot
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, Filters
+from telegram.ext import CommandHandler, run_async
 from telegram.utils.helpers import escape_markdown
 
 import hitsuki.modules.sql.rules_sql as sql
@@ -142,14 +142,12 @@ def clear_rules(update, context):
     if conn:
         chat = dispatcher.bot.getChat(conn)
         chat_id = conn
-        chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
             send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
-        chat_name = update.effective_message.chat.title
 
     chat_id = update.effective_chat.id
     sql.set_rules(chat_id, "")

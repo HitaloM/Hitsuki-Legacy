@@ -2,7 +2,6 @@ import logging
 import os
 import sys
 import time
-from datetime import datetime
 from functools import wraps
 
 import telegram.ext as tg
@@ -165,7 +164,7 @@ if CUSTOM_CMD and len(CUSTOM_CMD) >= 1:
 	tg.CommandHandler = CustomCommandHandler
 
 try:
-	from hitsuki.antispam import antispam_restrict_user, antispam_cek_user, detect_user
+	from hitsuki.antispam import antispam_restrict_user, detect_user
 	LOGGER.info("Note: AntiSpam loaded!")
 	antispam_module = True
 except ModuleNotFoundError:
