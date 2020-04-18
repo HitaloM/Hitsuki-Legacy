@@ -53,10 +53,10 @@ RUN python3 -m ensurepip \
     rm -r /root/.cache
 
 # Clone repo and prepare working directory
-RUN git clone 'https://github.com/HitaloSama/Hitsuki.git' /root/emilia
-RUN mkdir /root/emilia/bin/
-WORKDIR /root/emilia/
+RUN git clone 'https://github.com/HitaloSama/Hitsuki.git' /root/hitsuki
+RUN mkdir /root/hitsuki/bin/
+WORKDIR /root/hitsuki/
 
 # Install requirements
 RUN pip3 install -r requirements.txt --upgrade
-CMD ["python3","-m","emilia"]
+CMD ["python3","-m","hitsuki"]
