@@ -30,7 +30,7 @@ def getData(url, index):
     assets = api.getAssets(recentRelease)
     releaseName = api.getReleaseName(recentRelease)
     message = "<b>Author:</b> <a href='{}'>{}</a>\n".format(authorUrl, url)
-    message += "<b>Release Name:</b> <code>"+releaseName+"</code>\n\n"
+    message += "<b>Release Name:</b> "+releaseName+"\n\n"
     for asset in assets:
         message += "<b>Asset:</b> \n"
         fileName = api.getReleaseFileName(asset)
@@ -40,8 +40,8 @@ def getData(url, index):
         size = "{0:.2f}".format(sizeB)
         downloadCount = api.getDownloadCount(asset)
         message += assetFile + "\n"
-        message += "<b>Size:</b> <code>" + size + "MB</code>"
-        message += "\n<b>Download Count:</b> <code>" + str(downloadCount) + "</code>\n\n"
+        message += "Size: " + size + " MB"
+        message += "\nDownload Count: " + str(downloadCount) + "\n\n"
     return message
 
 
@@ -167,7 +167,7 @@ def listRepo(update, context):
     msg = "<b>GitHub repo shotcuts in {}:</b>\n"
     des = "\nYou can retrieve these repos by using <code>/fetch repo</code>, or <code>&repo</code>\n"
     for repo in repo_list:
-        repo_name = (" • `&{}`\n".format(repo.name))
+        repo_name = (" • <code>&{}</code>\n".format(repo.name))
         if len(msg) + len(repo_name) > MAX_MESSAGE_LENGTH:
             update.effective_message.reply_text(msg, parse_mode=ParseMode.HTML)
             msg = ""
