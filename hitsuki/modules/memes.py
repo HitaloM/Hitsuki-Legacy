@@ -25,7 +25,7 @@ from zalgo_text import zalgo
 
 from deeppyer import deepfry
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki import dispatcher, spamcheck
+from hitsuki import dispatcher, spamcheck, DEEPFRY_TOKEN
 from hitsuki.modules.languages import tl
 
 MAXNUMURL = 'https://raw.githubusercontent.com/atanet90/expression-pack/master/meta'
