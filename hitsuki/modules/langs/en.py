@@ -275,6 +275,7 @@ Well, here you go.
  - /bify <reply>: Replying to a message with replace a random character with the B emoji.
  - /clap <reply>: Adds clap emojis at the begining, end, and in every space in a message.
  - /cp <reply>: A replica of mattatas copypasta command.
+ - /deepfry <reply>: for when your images/stickers need to get a little fried.
 """,
 
 # AFK

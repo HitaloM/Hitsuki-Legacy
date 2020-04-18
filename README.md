@@ -13,7 +13,6 @@ Based on [Emilia Hikari](https://github.com/AyraHikari/EmiliaHikari)
 ## Special Credits
 ----------
 
-### Thanks to this users:
 * [@PaulSonOfLars](https://github.com/PaulSonOfLars) - marie creator, inspiration to do many things.
 * [@MrYacha](https://github.com/MrYacha) - for welcome security base and connection base and maybe others.
 * [@RealAkito](https://github.com/RealAkito) - for reworked federation, Android module and other things.

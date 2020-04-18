@@ -1,20 +1,16 @@
-import html
-import random
-import re
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional
 from requests import get
 
 import hitsuki.modules.helper_funcs.git_api as api
 import hitsuki.modules.sql.github_sql as sql
 
-from hitsuki import dispatcher, OWNER_ID, LOGGER, SUDO_USERS, SUPPORT_USERS, spamcheck
-from hitsuki.modules.helper_funcs.filters import CustomFilters
+from hitsuki import dispatcher, LOGGER, SUDO_USERS, spamcheck
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.languages import tl
 
 from telegram.ext import CommandHandler, run_async, Filters, MessageHandler
-from telegram import Message, Chat, Update, Bot, User, ParseMode, InlineKeyboardMarkup, MAX_MESSAGE_LENGTH
+from telegram import Chat, Update, Bot, User, ParseMode, MAX_MESSAGE_LENGTH
 
 
 #do not async
@@ -46,8 +42,6 @@ def getData(url, index):
 
 
 def getRepo(bot, update, reponame, show_none=True, no_format=False):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
     chat_id = update.effective_chat.id
     repo = sql.get_repo(str(chat_id), reponame)
     if repo:
@@ -141,7 +135,8 @@ def saveRepo(update, context):
     sql.add_repo_to_db(str(chat_id), args[0], args[1], index)
     msg.reply_text("Repo shortcut saved successfully!")
     return
-    
+
+
 @run_async
 @user_admin
 @spamcheck
@@ -155,7 +150,8 @@ def delRepo(update, context):
     sql.rm_repo(str(chat_id), args[0])
     msg.reply_text("Repo shortcut deleted successfully!")
     return
-    
+
+
 @run_async
 @spamcheck
 def listRepo(update, context):
@@ -176,12 +172,14 @@ def listRepo(update, context):
         update.effective_message.reply_text("No repo shortcuts in this chat!")
     elif len(msg) != 0:
         update.effective_message.reply_text(msg.format(chat_name) + des, parse_mode=ParseMode.HTML)
-        
+
+
 def getVer(update, context):
     msg = update.effective_message
     ver = api.vercheck()
     msg.reply_text("GitHub API version: "+ver)
     return
+
 
 @run_async
 @spamcheck
@@ -229,7 +227,6 @@ def github(update, context):
 @run_async
 @spamcheck
 def repo(update, context):
-    args = context.args
     message = update.effective_message
     text = message.text[len('/repo '):]
     usr = get(f'https://api.github.com/users/{text}/repos?per_page=40').json()

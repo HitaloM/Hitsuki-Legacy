@@ -1,26 +1,16 @@
-import subprocess
-import time
-import os
-import requests
 import speedtest
-import json
-import sys
-import traceback
 import psutil
 import platform
 
 from datetime import datetime
 from platform import python_version, uname
 from telegram import Update, Bot, Message, Chat, ParseMode
-from telegram.ext import CommandHandler, run_async, Filters
-from telegram.error import BadRequest, Unauthorized
+from telegram.ext import CommandHandler, run_async
 
 import hitsuki.modules.helper_funcs.git_api as git
 import hitsuki.__main__ as hitsukiv
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS
+from hitsuki import dispatcher
 from hitsuki.modules.helper_funcs.filters import CustomFilters
-from hitsuki.modules.helper_funcs.extraction import extract_text, extract_user
-from hitsuki.modules.helper_funcs.alternate import send_message
 
 
 def speed_convert(size):
@@ -41,7 +31,6 @@ def get_size(bytes, suffix="B"):
 
 @run_async
 def status(update, context):
-	message = update.effective_message
 	chat = update.effective_chat
 	
 	stat = "--- System Status ---\n"
@@ -114,6 +103,6 @@ __mod_name__ = "System Info"
 
 STATUS_HANDLER = CommandHandler("system", status, filters=CustomFilters.sudo_filter)
 SPEED_HANDLER = CommandHandler("speed", speedtst, filters=CustomFilters.sudo_filter)
-                
+
 dispatcher.add_handler(STATUS_HANDLER)
 dispatcher.add_handler(SPEED_HANDLER)

@@ -1,37 +1,24 @@
-import html
 import json
 import random
-import PIL
-import os
-import urllib
-import datetime
-from typing import Optional, List
 import time
 import urbandict
 
-import pyowm
-from pyowm import timeutils, exceptions
 from googletrans import Translator
 import wikipedia
-import base64
-from bs4 import BeautifulSoup
 from emoji import UNICODE_EMOJI
 from platform import python_version
 
-import requests
-from telegram.error import BadRequest, Unauthorized
-from telegram import Message, Chat, Update, Bot, MessageEntity
+from telegram.error import BadRequest
+from telegram import Message, Chat, Update, Bot
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, run_async, Filters
-from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
+from telegram.utils.helpers import mention_html
 
 import hitsuki.modules.helper_funcs.git_api as git
 import hitsuki.__main__ as hitsukiv
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, BAN_STICKER, spamcheck
-from hitsuki.__main__ import STATS, USER_INFO
+from hitsuki import dispatcher, OWNER_ID, SUPPORT_USERS, WHITELIST_USERS, spamcheck
+from hitsuki.__main__ import USER_INFO
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.extraction import extract_user
-from hitsuki.modules.helper_funcs.filters import CustomFilters
 from hitsuki.modules.sql import languages_sql as langsql
 
 from hitsuki.modules.languages import tl
@@ -321,7 +308,7 @@ def fortune(update, context):
 	if random.randint(1,10) >= 7:
 		text += random.choice(tl(update.effective_message, "RAMALAN_FIRST"))
 	text += random.choice(tl(update.effective_message, "RAMALAN_STRINGS"))
-	send_message(update.effective_message, text)    
+	send_message(update.effective_message, text)
 
 
 @run_async
@@ -361,7 +348,7 @@ def translate(update, context):
 			else:
 				tekstr = trl.translate(teks, dest=target2, src=target)
 				send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(target, target2, tekstr.text), parse_mode=ParseMode.MARKDOWN)
-			
+
 		else:
 			args = update.effective_message.text.split(None, 2)
 			if len(args) != 1:
@@ -464,9 +451,6 @@ def status(update, context):
 @spamcheck
 def urbandictionary(update, context):
 	args = context.args
-	msg = update.effective_message
-	chat_id = update.effective_chat.id
-	message = update.effective_message
 	if args:
 		text = " ".join(args)
 		try:
