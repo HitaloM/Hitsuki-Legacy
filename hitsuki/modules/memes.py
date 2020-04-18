@@ -106,7 +106,7 @@ def deepfryer(update, context):
     bot = context.bot
     loop = asyncio.new_event_loop()
     loop.run_until_complete(
-        process_deepfry(image, message.reply_to_message, bot))
+        process_deepfry(image, message.reply_to_message, bot, context))
     loop.close()
 
 
