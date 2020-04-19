@@ -124,6 +124,16 @@ If you really are interested in donating, please visit ayrahikari.github.io/dona
  - /invitelink: Gets groups invite link.
 """,
 
+# LastFM
+"lastfm_help": """
+Share what you're what listening to with the help of this module!
+
+*Available commands:*
+ - /setuser <username>: sets your last.fm username.
+ - /clearuser: removes your last.fm username from the bot's database.
+ - /lastfm: returns what you're scrobbling on last.fm.
+""",
+
 # MyAnimeList
 "myanimelist_help": """
 Get information about anime, manga or characters from [MyAnimeList](https://myanimelist.net).

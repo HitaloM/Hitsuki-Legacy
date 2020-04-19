@@ -213,6 +213,16 @@ the message will immediately be deleted.
 - /delurl <urls>: Remove urls from the blacklist
 """,
 
+# LastFM
+"lastfm_help": """
+Share what you're what listening to with the help of this module!
+
+*Available commands:*
+ - /setuser <username>: sets your last.fm username.
+ - /clearuser: removes your last.fm username from the bot's database.
+ - /lastfm: returns what you're scrobbling on last.fm.
+""",
+
 # Direct Links
 "directlinks_help": """
 *This module allows you to generate direct links from various websites.*
