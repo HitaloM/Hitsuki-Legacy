@@ -3,12 +3,11 @@
 
 A modular telegram Python bot running on python3 with an sqlalchemy database.
 
-Originally a simple group management bot with multiple admin features, it has evolved into becoming 
-a basis for modular bots aiming to provide simple plugin expansion via a simple drag and drop.
+Originally a simple group management bot with multiple admin features, it has evolved into becoming a basis for modular bots aiming to provide simple plugin expansion via a simple drag and drop.
 
-Can be found as [Hitsuki](https://t.me/LordHitsukiBETA_BOT) on Telegram.
+Can be found as [Hitsuki](https://t.me/LordHitsuki_BOT) on Telegram.
 
-Based on [Emilia Hikari](https://github.com/AyraHikari/EmiliaHikari)
+Hitsuki is based on [Emilia Hikari](https://github.com/AyraHikari/EmiliaHikari)
 
 ## Special Credits
 ----------
@@ -20,6 +19,8 @@ Based on [Emilia Hikari](https://github.com/AyraHikari/EmiliaHikari)
 * [@AvinashReddy3108](https://github.com/AvinashReddy3108) - for the base used in Dockerfile.
 * [@AnimeKaizoku](https://github.com/AnimeKaizoku) - for MyAnimeList module.
 * [@nunopenim](https://github.com/nunopenim) - for the code of GitHub module and GitHub API.
+
+And much more that we couldn't list it here!
 
 ----------
 ```
