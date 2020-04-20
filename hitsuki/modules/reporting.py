@@ -1,13 +1,13 @@
 import html
-from typing import Optional, List
+from typing import Optional
 
-from telegram import Message, Chat, Update, Bot, User, ParseMode, ChatMember
+from telegram import Message, Chat, Bot, User, ParseMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import CommandHandler, MessageHandler, run_async, Filters, CallbackQueryHandler
 from telegram.utils.helpers import mention_html, mention_markdown
 
-from hitsuki import dispatcher, LOGGER, spamcheck, OWNER_ID, SUDO_USERS, SUPPORT_USERS, STRICT_GBAN
+from hitsuki import dispatcher, LOGGER, spamcheck, OWNER_ID, SUDO_USERS
 from hitsuki.modules.helper_funcs.chat_status import user_not_admin, user_admin
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.sql import reporting_sql as sql
@@ -24,8 +24,7 @@ CURRENT_REPORT = {}
 @spamcheck
 @user_admin
 def report_setting(update, context):
-	chat = update.effective_chat  # type: Optional[Chat]
-	msg = update.effective_message  # type: Optional[Message]
+	chat = update.effective_chat
 	args = context.args
 
 	if chat.type == chat.PRIVATE:
@@ -151,8 +150,7 @@ def report_alt(update, context) -> str:
 	user = update.effective_user  # type: Optional[User]
 
 	if chat and message.reply_to_message and sql.chat_should_report(chat.id):
-		reported_user = message.reply_to_message.from_user  # type: Optional[User]
-		chat_name = chat.title or chat.first or chat.username
+		reported_user = message.reply_to_message.from_user
 		admin_list = chat.get_administrators()
 
 		msg = tl(update.effective_message, "<b>{}:</b>" \
@@ -184,7 +182,6 @@ def report_alt(update, context) -> str:
 def button(bot, update):
 	query = update.callback_query
 	splitter = query.data.replace("rp_", "").split("=")
-	chat = update.effective_chat
 	report_chat = splitter[0]
 	report_method = splitter[1]
 	report_target = splitter[2]

@@ -1,4 +1,3 @@
-import datetime
 import importlib
 import re
 import resource
@@ -6,7 +5,7 @@ import platform
 import sys
 import traceback
 import wikipedia
-from typing import Optional, List
+from typing import Optional
 
 from telegram import Message, Chat, Update, Bot, User
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
@@ -15,7 +14,7 @@ from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryH
 from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
 from telegram.utils.helpers import escape_markdown, mention_html
 
-from hitsuki import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, spamcheck
+from hitsuki import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, CERT_PATH, PORT, URL, LOGGER, spamcheck
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from hitsuki.modules import ALL_MODULES
@@ -180,8 +179,8 @@ def m_change_langs(update, context):
 def error_callback(update, context):
     # add all the dev user_ids in this list. You can also add ids of channels or groups.
     devs = [OWNER_ID]
-    # we want to notify the user of this problem. This will always work, but not notify users if the update is an 
-    # callback or inline query, or a poll update. In case you want this, keep in mind that sending the message 
+    # we want to notify the user of this problem. This will always work, but not notify users if the update is an
+    # callback or inline query, or a poll update. In case you want this, keep in mind that sending the message
     # could fail
     if update.effective_message:
         text = "Hey. I'm sorry to inform you that an error happened while I tried to handle your update. " \
@@ -420,9 +419,9 @@ def settings_button(update, context):
 @run_async
 @spamcheck
 def get_settings(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    msg = update.effective_message  # type: Optional[Message]
+    chat = update.effective_chat
+    user = update.effective_user
+    msg = update.effective_message
     args = msg.text.split(None, 1)
 
     # ONLY send settings in PM

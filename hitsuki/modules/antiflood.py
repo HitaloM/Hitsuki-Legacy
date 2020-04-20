@@ -1,13 +1,13 @@
 import html
-from typing import Optional, List
+from typing import Optional
 
-from telegram import Message, Chat, Update, Bot, User, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, ChatPermissions
+from telegram import Message, Chat, Bot, User, InlineKeyboardButton, ParseMode, ChatPermissions
 from telegram.error import BadRequest
-from telegram.ext import Filters, MessageHandler, CommandHandler, run_async, CallbackQueryHandler
-from telegram.utils.helpers import mention_html, escape_markdown
+from telegram.ext import Filters, MessageHandler, CommandHandler, run_async
+from telegram.utils.helpers import mention_html
 
 from hitsuki import dispatcher, spamcheck
-from hitsuki.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict
+from hitsuki.modules.helper_funcs.chat_status import is_user_admin, user_admin
 from hitsuki.modules.helper_funcs.string_handling import extract_time
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.sql import antiflood_sql as sql
@@ -22,9 +22,9 @@ FLOOD_GROUP = 3
 @run_async
 @loggable
 def check_flood(update, context) -> str:
-    user = update.effective_user  # type: Optional[User]
-    chat = update.effective_chat  # type: Optional[Chat]
-    msg = update.effective_message  # type: Optional[Message]
+    user = update.effective_user
+    chat = update.effective_chat
+    msg = update.effective_message
 
     if not user:  # ignore channels
         return ""
@@ -85,9 +85,8 @@ def check_flood(update, context) -> str:
 @user_admin
 @loggable
 def set_flood(update, context) -> str:
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    message = update.effective_message  # type: Optional[Message]
+    chat = update.effective_chat
+    user = update.effective_user
     args = context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
@@ -151,8 +150,8 @@ def set_flood(update, context) -> str:
 @run_async
 @spamcheck
 def flood(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    chat = update.effective_chat
+    user = update.effective_user
 
     conn = connected(context.bot, update, chat, user.id, need_admin=False)
     if conn:
@@ -184,9 +183,8 @@ def flood(update, context):
 @spamcheck
 @user_admin
 def set_flood_mode(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    msg = update.effective_message  # type: Optional[Message]
+    chat = update.effective_chat
+    user = update.effective_user
     args = context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
@@ -272,102 +270,6 @@ def __chat_settings__(chat_id, user_id):
         return tl(user_id, "Saat ini *Tidak* menegakkan pengendalian pesan beruntun.")
     else:
         return tl(user_id, "Anti Pesan Beruntun diatur ke `{}` pesan.").format(limit)
-
-
-"""
-def __chat_settings_btn__(chat_id, user_id):
-    limit = sql.get_flood_limit(chat_id)
-    if limit == 0:
-        status = "❎ Tidak Aktif"
-    else:
-        status = "✅ Aktif"
-    button = []
-    button.append([InlineKeyboardButton(text="➖", callback_data="set_flim=-|{}".format(chat_id)),
-            InlineKeyboardButton(text="Limit {}".format(limit), callback_data="set_wlim=?|{}".format(chat_id)),
-            InlineKeyboardButton(text="➕", callback_data="set_flim=+|{}".format(chat_id))])
-    button.append([InlineKeyboardButton(text="{}".format(status), callback_data="set_flim=exec|{}".format(chat_id))])
-    return button
-
-def FLOOD_EDITBTN(update, context):
-    query = update.callback_query
-    user = update.effective_user
-    print("User {} clicked button FLOOD EDIT".format(user.id))
-    qdata = query.data.split("=")[1].split("|")[0]
-    chat_id = query.data.split("|")[1]
-    if qdata == "?":
-        context.bot.answerCallbackQuery(query.id, "Batas dari pesan beruntun. Jika pengguna mengirim pesan lebih dari batas, maka akan langsung di banned.", show_alert=True)
-    if qdata == "-":
-        button = []
-        limit = sql.get_flood_limit(chat_id)
-        limit = int(limit)-1
-        if limit == 0:
-            status = "❎ Tidak Aktif"
-        else:
-            status = "✅ Aktif"
-        if limit <= 2:
-            context.bot.answerCallbackQuery(query.id, "Batas limit Tidak boleh kurang dari 3", show_alert=True)
-            return
-        sql.set_flood(chat_id, int(limit))
-        chat = context.bot.get_chat(chat_id)
-        text = "*{}* memiliki pengaturan berikut untuk modul *Anti Pesan Beruntun*:\n\n".format(escape_markdown(chat.title))
-        text += "Batas maksimal pesan beruntun telah di setel menjadi `{}`.".format(limit)
-        button.append([InlineKeyboardButton(text="➖", callback_data="set_flim=-|{}".format(chat_id)),
-                InlineKeyboardButton(text="Limit {}".format(limit), callback_data="set_flim=?|{}".format(chat_id)),
-                InlineKeyboardButton(text="➕", callback_data="set_flim=+|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="{}".format(status), callback_data="set_flim=exec|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="Kembali", callback_data="stngs_back({})".format(chat_id))])
-        query.message.edit_text(text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(button))
-        context.bot.answer_callback_query(query.id)
-    if qdata == "+":
-        button = []
-        limit = sql.get_flood_limit(chat_id)
-        limit = int(limit)+1
-        if limit == 0:
-            status = "❎ Tidak Aktif"
-        else:
-            status = "✅ Aktif"
-        if limit <= 0:
-            context.bot.answerCallbackQuery(query.id, "Batas limit Tidak boleh kurang dari 0", show_alert=True)
-            return
-        sql.set_flood(chat_id, int(limit))
-        chat = context.bot.get_chat(chat_id)
-        text = "*{}* memiliki pengaturan berikut untuk modul *Anti Pesan Beruntun*:\n\n".format(escape_markdown(chat.title))
-        text += "Batas maksimal pesan beruntun telah di setel menjadi `{}`.".format(limit)
-        button.append([InlineKeyboardButton(text="➖", callback_data="set_flim=-|{}".format(chat_id)),
-                InlineKeyboardButton(text="Limit {}".format(limit), callback_data="set_flim=?|{}".format(chat_id)),
-                InlineKeyboardButton(text="➕", callback_data="set_flim=+|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="{}".format(status), callback_data="set_flim=exec|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="Kembali", callback_data="stngs_back({})".format(chat_id))])
-        query.message.edit_text(text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(button))
-        context.bot.answer_callback_query(query.id)
-    if qdata == "exec":
-        button = []
-        limit = sql.get_flood_limit(chat_id)
-        if limit == 0:
-            sql.set_flood(chat_id, 3)
-            limit = 3
-            status = "✅ Aktif ({})".format(limit)
-        else:
-            sql.set_flood(chat_id, 0)
-            limit = 0
-            status = "❎ Tidak Aktif"
-        chat = context.bot.get_chat(chat_id)
-        text = "*{}* memiliki pengaturan berikut untuk modul *Anti Pesan Beruntun*:\n\n".format(escape_markdown(chat.title))
-        text += "Batas maksimal pesan beruntun telah di setel menjadi `{}`.".format(status)
-        button.append([InlineKeyboardButton(text="➖", callback_data="set_flim=-|{}".format(chat_id)),
-                InlineKeyboardButton(text="Limit {}".format(limit), callback_data="set_flim=?|{}".format(chat_id)),
-                InlineKeyboardButton(text="➕", callback_data="set_flim=+|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="{}".format(status), callback_data="set_flim=exec|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="Kembali", callback_data="stngs_back({})".format(chat_id))])
-        query.message.edit_text(text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(button))
-        context.bot.answer_callback_query(query.id)
-"""
 
 
 __help__ = "antiflood_help"

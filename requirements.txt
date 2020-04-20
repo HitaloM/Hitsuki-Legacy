@@ -22,5 +22,3 @@ spongemock
 zalgo-text
 aiohttp
 tldextract
-psutil
-speedtest-cli>=2.0.2

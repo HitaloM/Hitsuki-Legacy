@@ -1,6 +1,4 @@
 import asyncio
-import base64
-import glob
 import io
 import os
 import random
@@ -10,11 +8,6 @@ import urllib.request
 
 from io import BytesIO
 from pathlib import Path
-from typing import List
-
-import nltk # shitty lib, but it does work
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
 
 from PIL import Image
 from spongemock import spongemock
@@ -80,7 +73,7 @@ def owo(update, context):
 @run_async
 def deepfryer(update, context):
     message = update.effective_message
-    chat = update.effective_chat  # type: Optional[Chat]
+    chat = update.effective_chat
     if message.reply_to_message:
         data = message.reply_to_message.photo
         data2 = message.reply_to_message.sticker
@@ -147,7 +140,7 @@ def stretch(update, context):
 def vapor(update, context):
     args = context.args
     message = update.effective_message
-    chat = update.effective_chat  # type: Optional[Chat]
+    chat = update.effective_chat
 
     noreply = False
     if message.reply_to_message:
@@ -245,35 +238,6 @@ def bmoji(update, context):
 
 @spamcheck
 @run_async
-def forbesify(update, context):
-    message = update.effective_message
-    if message.reply_to_message:
-        data = message.reply_to_message.text
-    else:
-        data = ''
-
-    data = data.lower()
-    accidentals = ['VB', 'VBD', 'VBG', 'VBN']
-    reply_text = data.split()
-    offset = 0
-
-    # use NLTK to find out where verbs are
-    tagged = dict(nltk.pos_tag(reply_text))
-
-    # let's go through every word and check if it's a verb
-    # if yes, insert ACCIDENTALLY and increase offset
-    for k in range(len(reply_text)):
-        i = reply_text[k + offset]
-        if tagged.get(i) in accidentals:
-            reply_text.insert(k + offset, 'accidentally')
-            offset += 1
-
-    reply_text = string.capwords(' '.join(reply_text))
-    message.reply_to_message.reply_text(reply_text)
-
-
-@spamcheck
-@run_async
 def spongemocktext(update, context):
     message = update.effective_message
     if message.reply_to_message:
@@ -321,10 +285,8 @@ def zalgotext(update, context):
     else:
         message.reply_to_message.reply_text(reply_text)
 
-
 # Less D A N K modules by @skittles9823 # holi fugg I did some maymays ^^^
 # shitty maymay modules made by @divadsn vvv
-
 
 @spamcheck
 @run_async
@@ -357,9 +319,9 @@ def chinesememes(update, context):
 @run_async
 def shout(update, context):
     message = update.effective_message
-    chat = update.effective_chat  # type: Optional[Chat]
+    chat = update.effective_chat
     args = context.args
- 
+
     noreply = False
     if message.reply_to_message:
         data = message.reply_to_message.text
@@ -369,7 +331,7 @@ def shout(update, context):
     else:
         noreply = True
         data = tl(chat.id, "I need a message to meme.")
- 
+
     msg = "```"
     result = []
     result.append(' '.join([s for s in data]))
