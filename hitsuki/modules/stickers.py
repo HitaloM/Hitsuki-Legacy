@@ -201,7 +201,7 @@ def kang(update, context):
             packs += f"[pack](t.me/addstickers/{packname})"
         msg.reply_text(packs, parse_mode=ParseMode.MARKDOWN)
     if os.path.isfile("cache/kangsticker.png"):
-        os.remove("cache/cache/kangsticker.png")
+        os.remove("cache/kangsticker.png")
 
 
 def makepack_internal(msg, user, png_sticker, emoji, bot, packname, packnum):
