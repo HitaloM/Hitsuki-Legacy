@@ -291,8 +291,8 @@ def deepfryer(update, context):
         image = Image.open(io.BytesIO(photodata))
     elif data2:
         sticker = context.bot.get_file(data2.file_id)
-        sticker.download('sticker.png')
-        image = Image.open("sticker.png")
+        sticker.download('cache/sticker.png')
+        image = Image.open("cache/sticker.png")
 
     # the following needs to be executed async (because dumb lib)
     bot = context.bot
@@ -315,8 +315,8 @@ async def process_deepfry(image: Image, reply: Message, bot: Bot, context):
     # send it back
     bio.seek(0)
     reply.reply_photo(bio)
-    if Path("sticker.png").is_file():
-        os.remove("sticker.png")
+    if Path("cache/sticker.png").is_file():
+        os.remove("cache/sticker.png")
 
 
 @spamcheck
