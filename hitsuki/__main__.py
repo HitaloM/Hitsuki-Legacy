@@ -134,8 +134,8 @@ def start(update, context):
                 wiki = args[0].split("-")[1].replace('_', ' ')
                 message = update.effective_message
                 getlang = langsql.get_lang(message)
-                if getlang == "id":
-                    wikipedia.set_lang("id")
+                if getlang == "pt":
+                    wikipedia.set_lang("pt")
                 pagewiki = wikipedia.page(wiki)
                 judul = pagewiki.title
                 summary = pagewiki.summary
@@ -495,7 +495,6 @@ def memory(percentage=0.5):
 
 @memory(percentage=0.8)
 def main():
-    test_handler = CommandHandler("test", test)
     start_handler = CommandHandler("start", start, pass_args=True)
 
     help_handler = CommandHandler("help", get_help)
