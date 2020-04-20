@@ -54,12 +54,12 @@ def thonkify(update, context):
 
     # put processed image in a buffer and then upload cause async
     with BytesIO() as buffer:
-        buffer.name = 'image.png'
+        buffer.name = 'cache/image.png'
         image.save(buffer, 'PNG')
         buffer.seek(0)
         context.bot.send_sticker(chat_id=message.chat_id, sticker=buffer)
 
 
 THONKIFY_HANDLER = CommandHandler("thonkify", thonkify)
-dispatcher.add_handler(THONKIFY_HANDLER)
 
+dispatcher.add_handler(THONKIFY_HANDLER)

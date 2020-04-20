@@ -20,6 +20,9 @@ emilia/modules/sql/__pycache__
 .profile
 .pgpass
 .python_history
+images/*ed*.jpg
+images/kangsticker.png
+images/sticker.png
 backupdb
 hourly_backupdb
 *-Emilia.backup
