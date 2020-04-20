@@ -14,7 +14,6 @@ alphabet_detector
 urbandict
 bs4
 lxml
-nltk
 hurry.filesize
 PyAML
 markdown2
