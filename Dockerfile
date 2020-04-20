@@ -41,6 +41,7 @@ RUN apk add --no-cache --update \
     python3 \
     python3-dev \
     imagemagick \
+    msttcorefonts-installer \
     sqlite-dev \
     zlib-dev \
     zip
