@@ -40,6 +40,7 @@ RUN apk add --no-cache --update \
     wget \
     python3 \
     python3-dev \
+    imagemagick \
     sqlite-dev \
     zlib-dev \
     zip
