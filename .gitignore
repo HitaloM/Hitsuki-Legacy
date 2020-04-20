@@ -7,10 +7,10 @@
 .vscode
 
 # Remove this shit
-emilia/__pycache__
-emilia/modules/__pycache__
-emilia/modules/helper_funcs/__pycache__
-emilia/modules/sql/__pycache__
+Hitsuki/__pycache__
+Hitsuki/modules/__pycache__
+Hitsuki/modules/helper_funcs/__pycache__
+Hitsuki/modules/sql/__pycache__
 
 # Also remove this too
 .bash_history
@@ -20,14 +20,13 @@ emilia/modules/sql/__pycache__
 .profile
 .pgpass
 .python_history
-images/*ed*.jpg
 cache/kangsticker.png
 cache/sticker.png
 cache/image.png
 backupdb
 hourly_backupdb
-*-Emilia.backup
+*-Hitsuki.backup
 
 # Remove some configs
-emilia/config.py
-emilia/antispam.py
+hitsuki/config.py
+hitsuki/antispam.py
