@@ -455,7 +455,7 @@ def evo(update, context):
             size_a = usr['size']
             size_b = sizee(int(size_a))
 
-            reply_text = tl(chat.id, "*Download:* [{}]({})\n":).format(filename, url)
+            reply_text = tl(chat.id, "*Download:* [{}]({})\n").format(filename, url)
             reply_text += tl(chat.id, "*Build Size:* `{}`\n").format(size_b)
             reply_text += tl(chat.id, "*Android Version:* `{}`\n").format(version)
             reply_text += tl(chat.id, "*Maintainer:* {}\n").format(

@@ -533,13 +533,8 @@ def main():
 
     else:
         LOGGER.info("Using long polling.")
-        # updater.start_polling(timeout=15, read_latency=4)
-        updater.start_polling(poll_interval=0.0,
-                              timeout=10,
-                              clean=True,
-                              bootstrap_retries=-1,
-                              read_latency=3.0)
-
+        updater.start_polling(timeout=15, read_latency=4)
+ 
     updater.idle()
 
 if __name__ == '__main__':
