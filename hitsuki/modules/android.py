@@ -408,27 +408,39 @@ def bootleggers(update, context):
 @run_async
 def evo(update, context):
     args = context.args
+    cmd_name = "evo"
     message = update.effective_message
-    device = message.text[len('/evo '):]
+    chat = update.effective_chat  # type: Optional[Chat]
+    device = message.text[len(f'/{cmd_name} '):]
 
-    if device == "x00t" or device == "x01bd":
-        device = device.upper()
-
-    fetch = get(f'https://raw.githubusercontent.com/Evolution-X-Devices/official_devices/master/builds/{device}.json')
-
-    if device == '':
-        reply_text = "Please type your device **codename**!\nFor example, `/evo tissot`"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+    if device == "example":
+        reply_text = tl(chat.id, "Why are you trying to get the example device?")
+        message.reply_text(reply_text,
+                           parse_mode=ParseMode.MARKDOWN,
+                           disable_web_page_preview=True)
         return
 
-    if device == 'gsi':
-        reply_text = "Please check [ExpressLuke GSI](http://t.me/joinchat/AAAAAEjIRhZRX1mOZpLR5g) for unofficial but updated GSIs" \
-                     " or click the button down to download the official GSIs!"
+    if device == "x00t":
+        device = "X00T"
 
-        keyboard = [[InlineKeyboardButton(text="Click to Download",
-                                          url="https://sourceforge.net/projects/evolution-x/files/GSI/")]]
-        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN,
+    if device == "x01bd":
+        device = "X01BD"
+
+    if device == '':
+        reply_text = tl(chat.id, "Please type your device **codename**!\nFor example, `/{} tissot`").format(cmd_name)
+        message.reply_text(reply_text,
+                           parse_mode=ParseMode.MARKDOWN,
                            disable_web_page_preview=True)
+        return
+
+    fetch = get(
+        f'https://raw.githubusercontent.com/Evolution-X-Devices/official_devices/master/builds/{device}.json'
+    )
+
+    if fetch.status_code == 500:
+        message.reply_text(
+            "Hitsuki have been trying to connect to Github User Content, It seem like Github User Content is down"
+        )
         return
 
     if fetch.status_code == 200:
@@ -442,10 +454,11 @@ def evo(update, context):
             size_a = usr['size']
             size_b = sizee(int(size_a))
 
-            reply_text = (f"*Download:* [{filename}]({url})\n"
-                          f"*Build Size:* `{size_b}`\n"
-                          f"*Android Version:* `{version}`\n"
-                          f"*Maintainer:* [{maintainer}](https://t.me/{maintainer_url})\n")
+            reply_text = tl(chat.id, "download").format(filename, url)
+            reply_text += tl(chat.id, "build_size").format(size_b)
+            reply_text += tl(chat.id, "android_version").format(version)
+            reply_text += tl(chat.id, "maintainer").format(
+                f"[{maintainer}](https://t.me/{maintainer_url})")
 
             keyboard = [[InlineKeyboardButton(text="⬇️ Download ⬇️", url=f"{url}")]]
             keyboard += [[InlineKeyboardButton(text="📃 Changelog 📃", url=f"https://raw.githubusercontent.com/Evolution-X-Devices/official_devices/master/changelogs/{device}/{filename}.txt")]]
@@ -454,50 +467,18 @@ def evo(update, context):
             return
 
         except ValueError:
-            reply_text = "Tell the rom maintainer to fix their OTA json. I'm sure this won't work with OTA and it won't work with this bot too :P"
-            message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+            reply_text = tl(chat.id, "Tell the rom maintainer to fix their OTA json. I'm sure this won't work with OTA and it won't work with this bot too :P")
+            message.reply_text(reply_text,
+                               parse_mode=ParseMode.MARKDOWN,
+                               disable_web_page_preview=True)
             return
 
     elif fetch.status_code == 404:
-        reply_text = "Device not found!"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-        return
-
-
-@spamcheck
-@run_async
-def havoc(update, context):
-    args = context.args
-    message = update.effective_message
-    device = message.text[len('/havoc '):]
-    fetch = get(f'https://raw.githubusercontent.com/Havoc-Devices/android_vendor_OTA/pie/{device}.json')
-
-    if device == '':
-        reply_text = "Please type your device **codename**!\nFor example, `/havoc tissot`"
-        message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
-        return
-
-    if fetch.status_code == 200:
-        usr = fetch.json()
-        response = usr['response'][0]
-        filename = response['filename']
-        url = response['url']
-        buildsize_a = response['size']
-        buildsize_b = sizee(int(buildsize_a))
-        version = response['version']
-
-        reply_text = (f"*Download:* [{filename}]({url})\n"
-                      f"*Build size:* `{buildsize_b}`\n"
-                      f"*Version:* `{version}`")
-
-        keyboard = [[InlineKeyboardButton(text="Click to Download", url=f"{url}")]]
-        message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN,
+        reply_text = tl(chat.id, "Couldn't find any results matching your query.")
+        message.reply_text(reply_text,
+                           parse_mode=ParseMode.MARKDOWN,
                            disable_web_page_preview=True)
         return
-
-    elif fetch.status_code == 404:
-        reply_text = "Device not found."
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 
 @spamcheck
@@ -708,7 +689,6 @@ __help__ = """
  - /aex <device> <android version>: Get the latest AEX ROM for a device
  - /bootleggers <device>: Get the latest Bootleggers ROM for a device
  - /evo <device>: Get the latest Evolution X ROM for a device
- - /havoc <device>: Get the latest Havoc ROM for a device
  - /los <device>: Get the latest LineageOS ROM for a device
  - /pe <device>: Get the latest PixelExperience ROM for a device
  - /pe10 <device>: Get the latest PixelExperience 10 ROM for a device
@@ -732,7 +712,6 @@ TWRP_HANDLER = CommandHandler("twrp", twrp, pass_args=True)
 AEX_HANDLER = CommandHandler("aex", aex, pass_args=True)
 BOOTLEGGERS_HANDLER = CommandHandler("bootleggers", bootleggers)
 EVO_HANDLER = CommandHandler("evo", evo)
-HAVOC_HANDLER = CommandHandler("havoc", havoc)
 LOS_HANDLER = CommandHandler("los", los)
 MIUI_HANDLER = CommandHandler("miui", miui)
 PE_HANDLER = CommandHandler("pe", pe)
@@ -753,7 +732,6 @@ dispatcher.add_handler(TWRP_HANDLER)
 dispatcher.add_handler(AEX_HANDLER)
 dispatcher.add_handler(BOOTLEGGERS_HANDLER)
 dispatcher.add_handler(EVO_HANDLER)
-dispatcher.add_handler(HAVOC_HANDLER)
 dispatcher.add_handler(LOS_HANDLER)
 dispatcher.add_handler(MIUI_HANDLER)
 dispatcher.add_handler(PE_HANDLER)
