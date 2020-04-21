@@ -17,6 +17,7 @@ from telegram.ext import run_async
 
 from hitsuki import dispatcher, LOGGER, spamcheck
 from hitsuki.modules.helper_funcs.misc import split_message
+from hitsuki.modules.languages import tl
 
 # DO NOT DELETE THIS, PLEASE.
 # Originally made by @RealAkito on GitHub and Telegram
@@ -454,10 +455,10 @@ def evo(update, context):
             size_a = usr['size']
             size_b = sizee(int(size_a))
 
-            reply_text = tl(chat.id, "download").format(filename, url)
-            reply_text += tl(chat.id, "build_size").format(size_b)
-            reply_text += tl(chat.id, "android_version").format(version)
-            reply_text += tl(chat.id, "maintainer").format(
+            reply_text = tl(chat.id, "Download":).format(filename, url)
+            reply_text += tl(chat.id, "Build Size:").format(size_b)
+            reply_text += tl(chat.id, "Android Version:").format(version)
+            reply_text += tl(chat.id, "Maintainer:").format(
                 f"[{maintainer}](https://t.me/{maintainer_url})")
 
             keyboard = [[InlineKeyboardButton(text="⬇️ Download ⬇️", url=f"{url}")]]
