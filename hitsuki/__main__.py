@@ -93,7 +93,8 @@ def send_help(chat_id, text, keyboard=None):
     dispatcher.bot.send_message(chat_id=chat_id,
                                 text=text,
                                 parse_mode=ParseMode.MARKDOWN,
-                                reply_markup=keyboard)
+                                reply_markup=keyboard,
+                                disable_web_page_preview=True)
 
 
 @run_async
@@ -252,7 +253,7 @@ def help_button(update, context):
             query.message.edit_text(text=text,
                                   parse_mode=ParseMode.MARKDOWN,
                                   reply_markup=InlineKeyboardMarkup(
-                                        [[InlineKeyboardButton(text=tl(query.message, "⬅️ Back"), callback_data="help_back")]]))
+                                        [[InlineKeyboardButton(text=tl(query.message, "⬅️ Back"), callback_data="help_back")]]), disable_web_page_preview=True)
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
@@ -308,7 +309,7 @@ def get_help(update, context):
         module = args[1].lower()
         text = tl(update.effective_message, "Here is the available help for the *{}* module:\n").format(HELPABLE[module].__mod_name__) \
                + tl(update.effective_message, HELPABLE[module].__help__)
-        send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "⬅️ Back"), callback_data="help_back")]]))
+        send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "⬅️ Back"), callback_data="help_back")]]), disable_web_page_preview=True)
 
     else:
         send_help(chat.id, tl(update.effective_message, HELP_STRINGS))
