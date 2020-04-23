@@ -112,9 +112,9 @@ def send(update, message, keyboard, backup_message):
 
 @run_async
 def new_member(update, context):
-	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
-	msg = update.effective_message  # type: Optional[Message]
+	chat = update.effective_chat
+	user = update.effective_user
+	msg = update.effective_message
 
 	should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
 
@@ -329,18 +329,7 @@ def new_member(update, context):
 
 				if sent:
 					sql.set_clean_welcome(chat.id, sent.message_id)
-	"""
-	fed_id = fedsql.get_fed_id(chat.id)
-	if fed_id == "HitsukiOfficial":
-		new_members = update.effective_message.new_chat_members
-		for new_mem in new_members:
-			# SpamWatch Security thread
-			t = threading.Thread(target=check_sw, args=(bot, new_mem.id, new_mem, update.effective_message,))
-			t.start()
-			# CAS Security thread
-			t = threading.Thread(target=check_cas, args=(bot, new_mem.id, new_mem, update.effective_message,))
-			t.start()
-	"""
+
 
 @run_async
 def check_bot_button(update, context):
