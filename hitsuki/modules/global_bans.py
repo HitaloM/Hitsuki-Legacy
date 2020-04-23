@@ -50,7 +50,9 @@ UNGBAN_ERRORS = {
 
 @run_async
 def gban(update, context):
-    message = update.effective_message  # type: Optional[Message]
+    message = update.effective_message
+    user = update.effective_user
+    chat = update.effective_chat
     args = context.args
     log_message = ""
 
@@ -106,7 +108,7 @@ def gban(update, context):
 
         return
 
-    message.reply_text("On it!")
+    message.reply_text("*It's gban time!* 😉")
 
     start_time = time.time()
     datetime_fmt = "%H:%M - %d-%m-%Y"
