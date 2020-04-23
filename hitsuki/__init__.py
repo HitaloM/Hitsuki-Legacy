@@ -79,7 +79,6 @@ if ENV:
 	LASTFM_API_KEY = os.environ.get('LASTFM_API_KEY', "")
 	CUSTOM_CMD = os.environ.get('CUSTOM_CMD', False)
 	TEMPORARY_DATA = os.environ.get('TEMPORARY_DATA', None)
-	SPAMWATCH_TOKEN = os.environ.get('SPAMWATCH_TOKEN', None)
 	DEEPFRY_TOKEN = os.environ.get('DEEPFRY_TOKEN', "")
 
 else:
@@ -140,10 +139,6 @@ else:
 	CUSTOM_CMD = Config.CUSTOM_CMD
 	TEMPORARY_DATA = Config.TEMPORARY_DATA
 	DEEPFRY_TOKEN = Config.DEEPFRY_TOKEN
-	try:
-		SPAMWATCH_TOKEN = Config.SPAMWATCH_TOKEN
-	except:
-		pass
 
 
 SUDO_USERS.add(OWNER_ID)

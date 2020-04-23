@@ -12,10 +12,6 @@ from telegram.utils.helpers import mention_markdown, mention_html, escape_markdo
 
 import hitsuki.modules.sql.welcome_sql as sql
 from hitsuki import dispatcher, OWNER_ID, LOGGER, spamcheck, IS_DEBUG, SUDO_USERS, MESSAGE_DUMP
-try:
-	from hitsuki import SPAMWATCH_TOKEN
-except:
-	pass
 from hitsuki.modules.helper_funcs.chat_status import user_admin, is_user_ban_protected, bot_can_restrict
 from hitsuki.modules.helper_funcs.misc import build_keyboard_parser, revert_buttons
 from hitsuki.modules.helper_funcs.msg_types import get_welcome_type
@@ -985,59 +981,6 @@ def __chat_settings__(chat_id, user_id):
 	return tl(user_id, "Obrolan ini memiliki preferensi `{}` untuk pesan sambutan.\n" \
 		   "Untuk preferensi pesan selamat tinggal `{}`.\n" \
 		   "Bot `{}` menghapus notifikasi member masuk/keluar secara otomatis").format(welcome_pref, goodbye_pref, cleanserv)
-
-
-CAS_URL = "https://combot.org/api/cas/check"
-SPAMWATCH_URL = "https://api.spamwat.ch/banlist/"
-
-def check_cas(bot: Bot, user_id, user, message):
-	json = requests.get(CAS_URL, params={"user_id": str(user_id)}, timeout=(2, 5)).json()
-	if json.get("ok"):
-		if json["result"]["offenses"] > 0:
-			is_success = False
-			try:
-				context.bot.kickChatMember(message.chat.id, user_id)
-				is_success = True
-			except:
-				context.bot.sendMessage(message.chat.id, "*⚠️ WARNING!*\n{} is a spammer from [CAS ban](https://combot.org/cas/query?u={}) and has been added to fedban list of *Hitsuki Official*!\n\nIt's recommended to banned him/her!".format(mention_markdown(user_id, user.first_name), user_id), parse_mode="markdown", disable_web_page_preview=True)
-			if is_success:
-				context.bot.sendMessage(message.chat.id, "{} has been banned and added to fedban list of *Hitsuki Official*!\nReason: [CAS ban](https://combot.org/cas/query?u={}).".format(mention_markdown(user_id, user.first_name), user_id), parse_mode="markdown", disable_web_page_preview=True)
-			fed_id = fedsql.get_fed_info("HitsukiOfficial")
-			if fed_id:
-				x = fedsql.fban_user("HitsukiOfficial", user_id, user.first_name, user.last_name, user.username, "CAS-Banned", int(time.time()))
-				if not x:
-					LOGGER.warning("Cannot fban spammer user!")
-					return
-				text = "*New FedBan*\n*Fed:* `HitsukiOfficial`\n*FedAdmin*: {}\n*User:* {}\n*User ID:* `{}`\n*Reason:* [CAS ban](https://combot.org/cas/query?u={})".format(mention_markdown(1030612159, "Hitsuki"), mention_markdown(user_id, user.first_name + (" " + user.last_name if user.last_name != None else "")), user_id, user_id)
-				context.bot.sendMessage(-1001433482821, text, parse_mode="markdown", disable_web_page_preview=True)
-				print(">>> NEW FBAN CAS: {} {} in {}".format(user.first_name, user_id, message.chat.title))
-
-
-def check_sw(bot: Bot, user_id, user, message):
-	try:
-		SWT = SPAMWATCH_TOKEN
-	except:
-		return False
-	json = requests.get(SPAMWATCH_URL + str(user_id), headers={"Authorization": "Bearer {}".format(SWT)}).json()
-	if json.get('code') == 404:
-		return False
-	is_success = False
-	try:
-		context.bot.kickChatMember(message.chat.id, user_id)
-		is_success = True
-	except:
-		context.bot.sendMessage(message.chat.id, "*⚠️ WARNING!*\n{} is a spammer from SpamWatch and has been added to fedban list of *Hitsuki Official*!\n\nIt's recommended to banned him/her!".format(mention_markdown(user_id, user.first_name)), parse_mode="markdown", disable_web_page_preview=True)
-	if is_success:
-		context.bot.sendMessage(message.chat.id, "{} has been banned and added to fedban list of *Hitsuki Official*!\nReason: {}.".format(mention_markdown(user_id, user.first_name), json.get('reason') if json.get('reason') else "Unknown reason"), parse_mode="markdown", disable_web_page_preview=True)
-	fed_id = fedsql.get_fed_info("HitsukiOfficial")
-	if fed_id:
-		x = fedsql.fban_user("HitsukiOfficial", user_id, user.first_name, user.last_name, user.username, json.get('reason') if json.get('reason') else "Unknown reason", int(time.time()))
-		if not x:
-			LOGGER.warning("Cannot fban spammer user!")
-			return
-		text = "*New FedBan*\n*Fed:* `HitsukiOfficial`\n*FedAdmin*: {}\n*User:* {}\n*User ID:* `{}`\n*Reason:* [SpamWatch] {}".format(mention_markdown(1030612159, "Hitsuki"), mention_markdown(user_id, user.first_name + (" " + user.last_name if user.last_name != None else "")), user_id, json.get('reason') if json.get('reason') else "Unknown reason")
-		context.bot.sendMessage(-1001433482821, text, parse_mode="markdown", disable_web_page_preview=True)
-		print(">>> NEW FBAN SW: {} {} in {}".format(user.first_name, user_id, message.chat.title))
 
 
 @run_async
