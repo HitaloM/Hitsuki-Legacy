@@ -18,6 +18,7 @@ from hitsuki.modules.helper_funcs.misc import send_to_list
 from hitsuki.modules.helper_funcs.filters import CustomFilters
 from hitsuki.modules.sql.users_sql import get_all_chats
 from hitsuki.modules.languages import tl
+from hitsuki.modules.helper_funcs.alternate import send_message
 
 GBAN_ENFORCE_GROUP = 6
 
@@ -317,7 +318,7 @@ def check_and_ban(update, user_id, should_message=True):
 @run_async
 def enforce_gban(update, context):
     # Not using @restrict handler to avoid spamming - just ignore if cant gban.
-    if sql.does_chat_gban(update.effective_chat.id) and update.effective_chat.get_member(bot.id).can_restrict_members:
+    if sql.does_chat_gban(update.effective_chat.id) and update.effective_chat.get_member(context.bot.id).can_restrict_members:
         user = update.effective_user
         chat = update.effective_chat
         msg = update.effective_message
