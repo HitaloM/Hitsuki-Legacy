@@ -52,6 +52,7 @@ UNGBAN_ERRORS = {
 def gban(update, context):
     message = update.effective_message  # type: Optional[Message]
     args = context.args
+    log_message = ""
 
     user_id, reason = extract_user_and_text(message, args)
     if user_id == "error":
@@ -77,11 +78,14 @@ def gban(update, context):
     try:
         user_chat = context.bot.get_chat(user_id)
     except BadRequest as excp:
-        send_message(update.effective_message, excp.message)
-        return
-
+        if excp.message == "User not found":
+            message.reply_text("I can't seem to find this user.")
+            return ""
+        else:
+            return
+ 
     if user_chat.type != 'private':
-        send_message(update.effective_message, tl(update.effective_message, "That's not a user!"))
+        message.reply_text("That's not a user!")
         return
 
     if sql.is_user_gbanned(user_id):
