@@ -310,7 +310,7 @@ def check_and_ban(update, user_id, should_message=True):
         update.effective_chat.kick_member(user_id)
         if should_message:
             update.effective_message.reply_text("Alert: This user is globally banned.\n"
-                                                "*bans them from here*.)
+                                                "*bans them from here.*")
 
 
 @run_async
