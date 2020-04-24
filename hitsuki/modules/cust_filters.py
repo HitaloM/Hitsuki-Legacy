@@ -337,7 +337,7 @@ def get_exception(excp, filt, chat):
 
 
 def __stats__():
-	return tl(OWNER_ID, "{} filter, pada {} obrolan.").format(sql.num_filters(), sql.num_chats())
+	return tl(OWNER_ID, "`{}` filters, across `{}` chats.").format(sql.num_filters(), sql.num_chats())
 
 
 def __import_data__(chat_id, data):
@@ -353,7 +353,7 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
 	cust_filters = sql.get_chat_triggers(chat_id)
-	return tl(user_id, "Ada `{}` filter khusus di sini.").format(len(cust_filters))
+	return tl(user_id, "There are `{}` custom filters here.").format(len(cust_filters))
 
 
 __help__ = "filters_help"

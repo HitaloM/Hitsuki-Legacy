@@ -346,11 +346,11 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
 	blacklisted = sql.num_blacklist_chat_filters(chat_id)
-	return tl(user_id, "Ada `{}` kata daftar hitam.").format(blacklisted)
+	return tl(user_id, "There are `{}` blacklisted words.").format(blacklisted)
 
 
 def __stats__():
-	return tl(OWNER_ID, "{} pemicu daftar hitam, di seluruh {} obrolan.").format(sql.num_blacklist_filters(),
+	return tl(OWNER_ID, "`{}` blacklist triggers, across `{}` chats.").format(sql.num_blacklist_filters(),
 															sql.num_blacklist_filter_chats())
 
 

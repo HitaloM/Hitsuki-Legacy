@@ -267,9 +267,9 @@ def __migrate__(old_chat_id, new_chat_id):
 def __chat_settings__(chat_id, user_id):
     limit = sql.get_flood_limit(chat_id)
     if limit == 0:
-        return tl(user_id, "Saat ini *Tidak* menegakkan pengendalian pesan beruntun.")
+        return tl(user_id, "*Not* currently enforcing flood control.")
     else:
-        return tl(user_id, "Anti Pesan Beruntun diatur ke `{}` pesan.").format(limit)
+        return tl(user_id, "Antiflood is set to `{}` messages.").format(limit)
 
 
 __help__ = "antiflood_help"

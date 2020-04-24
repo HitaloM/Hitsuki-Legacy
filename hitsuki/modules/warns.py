@@ -746,8 +746,8 @@ def set_warn_mode(update, context):
 
 
 def __stats__():
-    return tl(OWNER_ID, "{} seluruh peringatan, pada {} obrolan.\n" \
-           "{} menyaring peringatkan, pada {} obrolan.").format(sql.num_warns(), sql.num_warn_chats(),
+    return tl(OWNER_ID, "{} overall warns, across {} chats.\n" \
+           "{} warn filters, across {} chats.").format(sql.num_warns(), sql.num_warn_chats(),
                                                       sql.num_warn_filters(), sql.num_warn_filter_chats())
 
 
@@ -766,92 +766,6 @@ def __chat_settings__(chat_id, user_id):
     limit, soft_warn, warn_mode = sql.get_warn_setting(chat_id)
     return tl(user_id, "Obrolan ini mempunyai `{}` saringan peringatkan. Dibutuhkan `{}` peringatan " \
            "sebelum pengguna akan mendapatkan *{}*.").format(num_warn_filters, limit, "tendangan" if soft_warn else "pemblokiran")
-
-"""
-def __chat_settings_btn__(chat_id, user_id):
-    limit, soft_warn, warn_mode = sql.get_warn_setting(chat_id)
-    button = []
-    button.append([InlineKeyboardButton(text="➖", callback_data="set_wlim=-|{}".format(chat_id)),
-            InlineKeyboardButton(text="Limit {}".format(limit), callback_data="set_wlim=?|{}".format(chat_id)),
-            InlineKeyboardButton(text="➕", callback_data="set_wlim=+|{}".format(chat_id))])
-    button.append([InlineKeyboardButton(text="{}".format("❎ Tendang" if soft_warn else "⛔️ Blokir"), callback_data="set_wlim=exec|{}".format(chat_id))])
-    return button
-
-def WARN_EDITBTN(update, context):
-    query = update.callback_query
-    user = update.effective_user
-    print("User {} clicked button WARN EDIT".format(user.id))
-    qdata = query.data.split("=")[1].split("|")[0]
-    chat_id = query.data.split("|")[1]
-    if qdata == "?":
-        context.bot.answerCallbackQuery(query.id, "Batas dari peringatan. Jika peringatan melewati batas maka akan di eksekusi.", show_alert=True)
-    if qdata == "-":
-        button = []
-        limit, soft_warn, warn_mode = sql.get_warn_setting(chat_id)
-        limit = int(limit)-1
-        if limit <= 2:
-            context.bot.answerCallbackQuery(query.id, "Batas limit Tidak boleh kurang dari 3", show_alert=True)
-            return
-        sql.set_warn_limit(chat_id, int(limit))
-        chat = context.bot.get_chat(chat_id)
-        text = "*{}* memiliki pengaturan berikut untuk modul *Peringatan*:\n\n".format(escape_markdown(chat.title))
-        text += "Batas maksimal peringatan telah di setel menjadi `{}`. Dibutuhkan `{}` peringatan " \
-           "sebelum pengguna akan mendapatkan *{}*.".format(limit, limit, "tendangan" if soft_warn else "pemblokiran")
-        button.append([InlineKeyboardButton(text="➖", callback_data="set_wlim=-|{}".format(chat_id)),
-                InlineKeyboardButton(text="Limit {}".format(limit), callback_data="set_wlim=?|{}".format(chat_id)),
-                InlineKeyboardButton(text="➕", callback_data="set_wlim=+|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="{}".format("❎ Tendang" if soft_warn else "⛔️ Blokir"), callback_data="set_wlim=exec|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="Kembali", callback_data="stngs_back({})".format(chat_id))])
-        query.message.edit_text(text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(button))
-        context.bot.answer_callback_query(query.id)
-    if qdata == "+":
-        button = []
-        limit, soft_warn, warn_mode = sql.get_warn_setting(chat_id)
-        limit = int(limit)+1
-        if limit <= 0:
-            context.bot.answerCallbackQuery(query.id, "Batas limit Tidak boleh kurang dari 0", show_alert=True)
-            return
-        sql.set_warn_limit(chat_id, int(limit))
-        chat = context.bot.get_chat(chat_id)
-        text = "*{}* memiliki pengaturan berikut untuk modul *Peringatan*:\n\n".format(escape_markdown(chat.title))
-        text += "Batas maksimal peringatan telah di setel menjadi `{}`. Dibutuhkan `{}` peringatan " \
-           "sebelum pengguna akan mendapatkan *{}*.".format(limit, limit, "tendangan" if soft_warn else "pemblokiran")
-        button.append([InlineKeyboardButton(text="➖", callback_data="set_wlim=-|{}".format(chat_id)),
-                InlineKeyboardButton(text="Limit {}".format(limit), callback_data="set_wlim=?|{}".format(chat_id)),
-                InlineKeyboardButton(text="➕", callback_data="set_wlim=+|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="{}".format("❎ Tendang" if soft_warn else "⛔️ Blokir"), callback_data="set_wlim=exec|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="Kembali", callback_data="stngs_back({})".format(chat_id))])
-        query.message.edit_text(text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(button))
-        context.bot.answer_callback_query(query.id)
-    if qdata == "exec":
-        button = []
-        limit, soft_warn, warn_mode = sql.get_warn_setting(chat_id)
-        if soft_warn:
-            exc = "Blokir"
-            sql.set_warn_strength(chat_id, False)
-            soft_warn = False
-        else:
-            exc = "Tendang"
-            sql.set_warn_strength(chat_id, True)
-            soft_warn = True
-        chat = context.bot.get_chat(chat_id)
-        text = "*{}* memiliki pengaturan berikut untuk modul *Peringatan*:\n\n".format(escape_markdown(chat.title))
-        text += "Pengguna akan di `{}` jika sudah diluar batas peringatan. Dibutuhkan `{}` peringatan " \
-           "sebelum pengguna akan mendapatkan *{}*.".format(exc, limit, "tendangan" if soft_warn else "pemblokiran")
-        button.append([InlineKeyboardButton(text="➖", callback_data="set_wlim=-|{}".format(chat_id)),
-                InlineKeyboardButton(text="Limit {}".format(limit), callback_data="set_wlim=?|{}".format(chat_id)),
-                InlineKeyboardButton(text="➕", callback_data="set_wlim=+|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="{}".format("❎ Tendang" if soft_warn else "⛔️ Blokir"), callback_data="set_wlim=exec|{}".format(chat_id))])
-        button.append([InlineKeyboardButton(text="Kembali", callback_data="stngs_back({})".format(chat_id))])
-        query.message.edit_text(text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(button))
-        context.bot.answer_callback_query(query.id)
-"""
 
 
 __help__ = "warns_help"

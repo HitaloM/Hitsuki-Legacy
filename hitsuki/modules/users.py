@@ -141,7 +141,7 @@ def __user_info__(user_id, chat_id):
 
 
 def __stats__():
-    return languages.tl(OWNER_ID, "{} users, on {} chats").format(sql.num_users(), sql.num_chats())
+    return languages.tl(OWNER_ID, "`{}` users, on `{}` chats").format(sql.num_users(), sql.num_chats())
 
 
 def __migrate__(old_chat_id, new_chat_id):

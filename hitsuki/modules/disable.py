@@ -237,7 +237,7 @@ if is_module_loaded(FILENAME):
 
 
     def __stats__():
-        return languages.tl(OWNER_ID, "{} item yang dinonaktifkan, pada {} obrolan.").format(sql.num_disabled(), sql.num_chats())
+        return languages.tl(OWNER_ID, "`{}` disabled items, across `{}` chats.").format(sql.num_disabled(), sql.num_chats())
 
 
     def __import_data__(chat_id, data):

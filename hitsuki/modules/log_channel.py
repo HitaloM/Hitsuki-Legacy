@@ -138,7 +138,7 @@ if is_module_loaded(FILENAME):
 
 
     def __stats__():
-        return tl(OWNER_ID, "{} saluran log ditetapkan.").format(sql.num_logchannels())
+        return tl(OWNER_ID, "`{}` log channels set.").format(sql.num_logchannels())
 
 
     def __migrate__(old_chat_id, new_chat_id):

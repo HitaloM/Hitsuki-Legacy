@@ -187,7 +187,7 @@ def private_rules(update, context):
 
 
 def __stats__():
-    return tl(OWNER_ID, "{} obrolan memiliki aturan yang ditetapkan.").format(sql.num_chats())
+    return tl(OWNER_ID, "`{}` chats have rules set.").format(sql.num_chats())
 
 
 def __import_data__(chat_id, data):

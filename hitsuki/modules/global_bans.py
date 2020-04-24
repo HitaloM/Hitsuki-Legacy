@@ -368,7 +368,7 @@ def gbanstat(update, context):
 
 
 def __stats__():
-    return tl(OWNER_ID, "{} gbanned users.").format(sql.num_gbanned_users())
+    return tl(OWNER_ID, "`{}` gbanned users.").format(sql.num_gbanned_users())
 
 
 def __user_info__(user_id, chat_id):
