@@ -708,7 +708,10 @@ def markdown_help(update, context):
 
 @run_async
 def stats(update, context):
-    send_message(update.effective_message, tl(update.effective_message, "*Current Stats:*\n" + "\n".join([mod.__stats__() for mod in STATS]), parse_mode=ParseMode.MARKDOWN))
+    update.effective_message.reply_text(
+        # This text doesn't get translated as it is internal message.
+        "*Current Stats:*\n" + "\n".join([mod.__stats__() for mod in STATS]),
+        parse_mode=ParseMode.MARKDOWN)
 
 
 # /ip is for private use
