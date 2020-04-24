@@ -119,12 +119,13 @@ def gban(update, context):
     else:
         chat_origin = "<b>{}</b>\n".format(chat.id)
 
-    log_message = (f"#GBANNED\n"
-                   f"<b>Originated from:</b> {chat_origin}\n"
-                   f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                   f"<b>Banned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
-                   f"<b>Banned User ID:</b> {user_chat.id}\n"
-                   f"<b>Event Stamp:</b> {current_time}")
+    log_message = (f"<b>Global Ban</b>"
+                   f"#GBAN"
+                   f"<b>Originated from:</b> {chat_origin}\n\n"
+                   f"<b>Sudo Admin:</b> {mention_html(user.id, user.first_name)}\n"
+                   f"<b>User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
+                   f"<b>User ID:</b> <code>{user_chat.id}</code>\n"
+                   f"<b>At</b> <code>{current_time}</code>")
 
     if reason:
         if chat.type == chat.SUPERGROUP and chat.username:
@@ -229,12 +230,13 @@ def ungban(update, context):
     else:
         chat_origin = f"<b>{chat.id}</b>\n"
 
-    log_message = (f"#UNGBANNED\n"
-                   f"<b>Originated from:</b> {chat_origin}\n"
-                   f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                   f"<b>Unbanned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
-                   f"<b>Unbanned User ID:</b> {user_chat.id}\n"
-                   f"<b>Event Stamp:</b> {current_time}")
+    log_message = (f"Regression of Global Ban"
+                   f"#UNGBAN\n"
+                   f"<b>Originated from:</b> {chat_origin}\n\n"
+                   f"<b>Sudo Admin:</b> {mention_html(user.id, user.first_name)}\n"
+                   f"<b>User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
+                   f"<b>User ID:</b> <code>{user_chat.id}</code>\n"
+                   f"<b>At:</b> <code>{current_time}</code>")
 
     if MESSAGE_DUMP:
         try:
