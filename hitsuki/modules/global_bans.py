@@ -119,8 +119,8 @@ def gban(update, context):
     else:
         chat_origin = "<b>{}</b>\n".format(chat.id)
 
-    log_message = (f"<b>Global Ban</b>"
-                   f"#GBAN"
+    log_message = (f"<b>Global Ban</b>\n"
+                   f"#GBAN\n"
                    f"<b>Originated from:</b> {chat_origin}\n\n"
                    f"<b>Sudo Admin:</b> {mention_html(user.id, user.first_name)}\n"
                    f"<b>User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
@@ -230,7 +230,7 @@ def ungban(update, context):
     else:
         chat_origin = f"<b>{chat.id}</b>\n"
 
-    log_message = (f"Regression of Global Ban"
+    log_message = (f"Regression of Global Ban\n"
                    f"#UNGBAN\n"
                    f"<b>Originated from:</b> {chat_origin}\n\n"
                    f"<b>Sudo Admin:</b> {mention_html(user.id, user.first_name)}\n"
