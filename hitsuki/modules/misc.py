@@ -606,7 +606,7 @@ def info(update, context):
     else:
         return
 
-    text = tl(update.effective_message, "<b>User info:</b>:") \
+    text = tl(update.effective_message, "<b>User info:</b>") \
            + "\nID: <code>{}</code>".format(user.id) + \
            tl(update.effective_message, "\nFirst Name: {}").format(html.escape(user.first_name))
 

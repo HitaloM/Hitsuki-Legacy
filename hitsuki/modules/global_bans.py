@@ -258,7 +258,7 @@ def ungban(update, context):
         try:
             member = context.bot.get_chat_member(chat_id, user_id)
             if member.status == 'kicked':
-                bot.unban_chat_member(chat_id, user_id)
+                context.bot.unban_chat_member(chat_id, user_id)
                 ungbanned_chats += 1
 
         except BadRequest as excp:
