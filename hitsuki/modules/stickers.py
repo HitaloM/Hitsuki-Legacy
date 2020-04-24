@@ -26,8 +26,8 @@ def getsticker(update, context):
         file_id = msg.reply_to_message.sticker.file_id
         newFile = context.bot.get_file(file_id)
         newFile.download('sticker.png')
-        context.bot.send_document(chat_id, document=open('cache/kangsticker.png', 'rb'))
-        os.remove("cache/kangsticker.png")
+        context.bot.send_document(chat_id, document=open('cache/sticker.png', 'rb'))
+        os.remove("cache/sticker.png")
     else:
         update.effective_message.reply_text("Please reply to a sticker for me to upload its PNG.")
 
