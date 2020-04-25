@@ -3,7 +3,6 @@ import html
 import time
 from datetime import datetime
 from io import BytesIO
-from typing import List
 
 from telegram import Bot, Update, ParseMode
 from telegram.error import BadRequest, TelegramError
@@ -11,7 +10,7 @@ from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
 from telegram.utils.helpers import mention_html
 
 import hitsuki.modules.sql.global_bans_sql as sql
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, STRICT_GBAN, MESSAGE_DUMP
+from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, STRICT_GBAN, MESSAGE_DUMP
 from hitsuki.modules.helper_funcs.chat_status import user_admin, is_user_admin
 from hitsuki.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from hitsuki.modules.helper_funcs.misc import send_to_list
@@ -85,7 +84,7 @@ def gban(update, context):
             return ""
         else:
             return
- 
+
     if user_chat.type != 'private':
         message.reply_text("That's not a user!")
         return
@@ -315,7 +314,7 @@ def gbanlist(update, context):
 
 
 def check_and_ban(update, user_id, should_message=True):
-    
+
     if sql.is_user_gbanned(user_id):
         update.effective_chat.kick_member(user_id)
         if should_message:
@@ -404,7 +403,8 @@ UNGBAN_HANDLER = CommandHandler("ungban", ungban, pass_args=True,
 GBAN_LIST = CommandHandler("gbanlist", gbanlist,
                            filters=CustomFilters.sudo_filter | CustomFilters.support_filter)
 
-GBAN_STATUS = CommandHandler("gbanstat", gbanstat, pass_args=True, filters=Filters.group)
+GBAN_STATUS = CommandHandler("gbanstat", gbanstat, pass_args=True,
+                             filters=Filters.group)
 
 GBAN_ENFORCER = MessageHandler(Filters.all & Filters.group, enforce_gban)
 

@@ -93,6 +93,7 @@ def get(bot, update, notename, show_none=True, no_format=False):
 
 			VALID_WELCOME_FORMATTERS = ['first', 'last', 'fullname', 'username', 'id', 'chatname', 'mention', 'rules']
 			valid_format = escape_invalid_curly_brackets(note.value, VALID_WELCOME_FORMATTERS)
+
 			if valid_format:
 				text = valid_format.format(first=escape_markdown(message.from_user.first_name),
 											  last=escape_markdown(message.from_user.last_name or message.from_user.first_name),

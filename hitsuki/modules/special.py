@@ -9,15 +9,12 @@ from emoji import UNICODE_EMOJI
 from platform import python_version
 
 from telegram.error import BadRequest
-from telegram import Message, Chat, Update, Bot
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler, run_async, Filters
-from telegram.utils.helpers import mention_html
 
 import hitsuki.modules.helper_funcs.git_api as git
 import hitsuki.__main__ as hitsukiv
-from hitsuki import dispatcher, OWNER_ID, SUPPORT_USERS, WHITELIST_USERS, spamcheck
-from hitsuki.__main__ import USER_INFO
+from hitsuki import dispatcher, OWNER_ID, spamcheck
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.sql import languages_sql as langsql
 
@@ -254,188 +251,181 @@ def rangry(update, context):
 
 @run_async
 def getlink(update, context):
-	args = context.args
-	if args:
-		chat_id = int(args[0])
-	else:
-		send_message(update.effective_message, tl(update.effective_message, "You don't seem to be referring to chat"))
-	chat = context.bot.getChat(chat_id)
-	bot_member = chat.get_member(context.bot.id)
-	if bot_member.can_invite_users:
-		titlechat = context.bot.get_chat(chat_id).title
-		invitelink = context.bot.get_chat(chat_id).invite_link
-		send_message(update.effective_message, tl(update.effective_message, "Successfully retrieve the invite link in the group {}. \nInvite link : {}").format(titlechat, invitelink))
-	else:
-		send_message(update.effective_message, tl(update.effective_message, "I don't have access to the invitation link!"))
+    args = context.args
+    if args:
+        chat_id = int(args[0])
+    else:
+        send_message(update.effective_message, tl(update.effective_message, "You don't seem to be referring to chat"))
+    chat = context.bot.getChat(chat_id)
+    bot_member = chat.get_member(context.bot.id)
+    if bot_member.can_invite_users:
+        titlechat = context.bot.get_chat(chat_id).title
+        invitelink = context.bot.get_chat(chat_id).invite_link
+        send_message(update.effective_message, tl(update.effective_message, "Successfully retrieve the invite link in the group {}. \nInvite link : {}").format(titlechat, invitelink))
+    else:
+        send_message(update.effective_message, tl(update.effective_message, "I don't have access to the invitation link!"))
 
 
 @run_async
 def leavechat(update, context):
-	args = context.args
-	if args:
-		chat_id = int(args[0])
-	else:
-		send_message(update.effective_message, tl(update.effective_message, "Anda sepertinya tidak mengacu pada obrolan"))
-	try:
-		chat = context.bot.getChat(chat_id)
-		titlechat = context.bot.get_chat(chat_id).title
-		context.bot.sendMessage(chat_id, tl(update.effective_message, "Selamat tinggal semua 😁"))
-		context.bot.leaveChat(chat_id)
-		send_message(update.effective_message, tl(update.effective_message, "Saya telah keluar dari grup {}").format(titlechat))
+    args = context.args
+    if args:
+        chat_id = int(args[0])
+    else:
+        send_message(update.effective_message, tl(update.effective_message, "Anda sepertinya tidak mengacu pada obrolan"))
+    try:
+        titlechat = context.bot.get_chat(chat_id).title
+        context.bot.sendMessage(chat_id, tl(update.effective_message, "Selamat tinggal semua 😁"))
+        context.bot.leaveChat(chat_id)
+        send_message(update.effective_message, tl(update.effective_message, "Saya telah keluar dari grup {}").format(titlechat))
 
-	except BadRequest as excp:
-		if excp.message == "Chat not found":
-			send_message(update.effective_message, tl(update.effective_message, "Sepertinya saya sudah keluar atau di tendang di grup tersebut"))
-		else:
-			return
+    except BadRequest as excp:
+        if excp.message == "Chat not found":
+            send_message(update.effective_message, tl(update.effective_message, "Sepertinya saya sudah keluar atau di tendang di grup tersebut"))
+        else:
+            return
 
 
 @run_async
 @spamcheck
 def ping(update, context):
-	start_time = time.time()
-	test = send_message(update.effective_message, "Pong!")
-	end_time = time.time()
-	ping_time = float(end_time - start_time)
-	context.bot.editMessageText(chat_id=update.effective_chat.id, message_id=test.message_id,
-						text=tl(update.effective_message, "Pong!\nSpeed was: {0:.2f}s").format(round(ping_time, 2) % 60))
+    start_time = time.time()
+    test = send_message(update.effective_message, "Pong!")
+    end_time = time.time()
+    ping_time = float(end_time - start_time)
+    context.bot.editMessageText(chat_id=update.effective_chat.id, message_id=test.message_id,
+                        text=tl(update.effective_message, "Pong!\nSpeed was: {0:.2f}s").format(round(ping_time, 2) % 60))
 
 
 @run_async
 @spamcheck
 def fortune(update, context):
-	text = ""
-	if random.randint(1,10) >= 7:
-		text += random.choice(tl(update.effective_message, "RAMALAN_FIRST"))
-	text += random.choice(tl(update.effective_message, "RAMALAN_STRINGS"))
-	send_message(update.effective_message, text)
+    text = ""
+    if random.randint(1, 10) >= 7:
+        text += random.choice(tl(update.effective_message, "RAMALAN_FIRST"))
+    text += random.choice(tl(update.effective_message, "RAMALAN_STRINGS"))
+    send_message(update.effective_message, text)
 
 
 @run_async
 @spamcheck
 def translate(update, context):
-	msg = update.effective_message
-	chat_id = update.effective_chat.id
-	getlang = langsql.get_lang(update.effective_message.from_user.id)
-	try:
-		if msg.reply_to_message and msg.reply_to_message.text:
-			args = update.effective_message.text.split()
-			if len(args) >= 2:
-				target = args[1]
-				if "-" in target:
-					target2 = target.split("-")[1]
-					target = target.split("-")[0]
-				else:
-					target2 = None
-			else:
-				if getlang:
-					target = getlang
-					target2 = None
-				else:
-					raise IndexError
-			teks = msg.reply_to_message.text
-			#teks = deEmojify(teks)
-			exclude_list = UNICODE_EMOJI.keys()
-			for emoji in exclude_list:
-				if emoji in teks:
-					teks = teks.replace(emoji, '')
-			message = update.effective_message
-			trl = Translator()
-			if target2 == None:
-				deteksibahasa = trl.detect(teks)
-				tekstr = trl.translate(teks, dest=target)
-				send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
-			else:
-				tekstr = trl.translate(teks, dest=target2, src=target)
-				send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(target, target2, tekstr.text), parse_mode=ParseMode.MARKDOWN)
+    msg = update.effective_message
+    getlang = langsql.get_lang(update.effective_message.from_user.id)
+    try:
+        if msg.reply_to_message and msg.reply_to_message.text:
+            args = update.effective_message.text.split()
+            if len(args) >= 2:
+                target = args[1]
+                if "-" in target:
+                    target2 = target.split("-")[1]
+                    target = target.split("-")[0]
+                else:
+                    target2 = None
+            else:
+                if getlang:
+                    target = getlang
+                    target2 = None
+                else:
+                    raise IndexError
+            teks = msg.reply_to_message.text
+            exclude_list = UNICODE_EMOJI.keys()
+            for emoji in exclude_list:
+                if emoji in teks:
+                    teks = teks.replace(emoji, '')
+            message = update.effective_message
+            trl = Translator()
+            if target2 == None:
+                deteksibahasa = trl.detect(teks)
+                tekstr = trl.translate(teks, dest=target)
+                send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
+            else:
+                tekstr = trl.translate(teks, dest=target2, src=target)
+                send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(target, target2, tekstr.text), parse_mode=ParseMode.MARKDOWN)
 
-		else:
-			args = update.effective_message.text.split(None, 2)
-			if len(args) != 1:
-				target = args[1]
-				teks = args[2]
-				target2 = None
-				if "-" in target:
-					target2 = target.split("-")[1]
-					target = target.split("-")[0]
-			else:
-				target = getlang
-				teks = args[1]
-			#teks = deEmojify(teks)
-			exclude_list = UNICODE_EMOJI.keys()
-			for emoji in exclude_list:
-				if emoji in teks:
-					teks = teks.replace(emoji, '')
-			message = update.effective_message
-			trl = Translator()
-			if target2 == None:
-				deteksibahasa = trl.detect(teks)
-				tekstr = trl.translate(teks, dest=target)
-				return send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
-			else:
-				tekstr = trl.translate(teks, dest=target2, src=target)
-				send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(target, target2, tekstr.text), parse_mode=ParseMode.MARKDOWN)
-	except IndexError:
-		send_message(update.effective_message, tl(update.effective_message, "Balas pesan atau tulis pesan dari bahasa lain untuk "
-											"diterjemahkan kedalam bahasa yang di dituju\n\n"
-											"Contoh: `/tr en-id` untuk menerjemahkan dari Bahasa inggris ke Bahasa Indonesia\n"
-											"Atau gunakan: `/tr id` untuk deteksi otomatis dan menerjemahkannya kedalam bahasa indonesia"), parse_mode="markdown")
-	except ValueError:
-		send_message(update.effective_message, tl(update.effective_message, "Bahasa yang di tuju tidak ditemukan!"))
-	else:
-		return
+        else:
+            args = update.effective_message.text.split(None, 2)
+            if len(args) != 1:
+                target = args[1]
+                teks = args[2]
+                target2 = None
+                if "-" in target:
+                    target2 = target.split("-")[1]
+                    target = target.split("-")[0]
+            else:
+                target = getlang
+                teks = args[1]
+            exclude_list = UNICODE_EMOJI.keys()
+            for emoji in exclude_list:
+                if emoji in teks:
+                    teks = teks.replace(emoji, '')
+            trl = Translator()
+            if target2 == None:
+                deteksibahasa = trl.detect(teks)
+                tekstr = trl.translate(teks, dest=target)
+                return send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
+            else:
+                tekstr = trl.translate(teks, dest=target2, src=target)
+                send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(target, target2, tekstr.text), parse_mode=ParseMode.MARKDOWN)
+    except IndexError:
+        send_message(update.effective_message, tl(update.effective_message, "Balas pesan atau tulis pesan dari bahasa lain untuk "
+                                            "diterjemahkan kedalam bahasa yang di dituju\n\n"
+                                            "Contoh: `/tr en-id` untuk menerjemahkan dari Bahasa inggris ke Bahasa Indonesia\n"
+                                            "Atau gunakan: `/tr id` untuk deteksi otomatis dan menerjemahkannya kedalam bahasa indonesia"), parse_mode="markdown")
+    except ValueError:
+        send_message(update.effective_message, tl(update.effective_message, "Bahasa yang di tuju tidak ditemukan!"))
+    else:
+        return
 
 
 @run_async
 @spamcheck
 def wiki(update, context):
-	msg = update.effective_message
-	chat_id = update.effective_chat.id
-	args = update.effective_message.text.split(None, 1)
-	teks = args[1]
-	message = update.effective_message
-	getlang = langsql.get_lang(chat_id)
-	if str(getlang) == "pt":
-		wikipedia.set_lang("pt")
-	else:
-		wikipedia.set_lang("en")
-	try:
-		pagewiki = wikipedia.page(teks)
-	except wikipedia.exceptions.PageError:
-		send_message(update.effective_message, tl(update.effective_message, "Results not found"))
-		return
-	except wikipedia.exceptions.DisambiguationError as refer:
-		rujuk = str(refer).split("\n")
-		if len(rujuk) >= 6:
-			batas = 6
-		else:
-			batas = len(rujuk)
-		teks = ""
-		for x in range(batas):
-			if x == 0:
-				if getlang == "pt":
-					teks += rujuk[x].replace('may refer to', 'pode se referir a')+"\n"
-				else:
-					teks += rujuk[x]+"\n"
-			else:
-				teks += "- `"+rujuk[x]+"`\n"
-		send_message(update.effective_message, teks, parse_mode="markdown")
-		return
-	except IndexError:
-		send_message(update.effective_message, tl(update.effective_message, "Write a message to search from the wikipedia source"))
-		return
-	judul = pagewiki.title
-	summary = pagewiki.summary
-	if update.effective_message.chat.type == "private":
-		send_message(update.effective_message, tl(update.effective_message, "Results of {} is:\n\n<b>{}</b>\n{}").format(teks, judul, summary), parse_mode=ParseMode.HTML)
-	else:
-		if len(summary) >= 200:
-			judul = pagewiki.title
-			summary = summary[:200]+"..."
-			button = InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "Read More..."), url="t.me/{}?start=wiki-{}".format(context.bot.username, teks.replace(' ', '_')))]])
-		else:
-			button = None
-		send_message(update.effective_message, tl(update.effective_message, "Results of {} is:\n\n<b>{}</b>\n{}").format(teks, judul, summary), parse_mode=ParseMode.HTML, reply_markup=button)
+    chat_id = update.effective_chat.id
+    args = update.effective_message.text.split(None, 1)
+    teks = args[1]
+    getlang = langsql.get_lang(chat_id)
+    if str(getlang) == "pt":
+        wikipedia.set_lang("pt")
+    else:
+        wikipedia.set_lang("en")
+    try:
+        pagewiki = wikipedia.page(teks)
+    except wikipedia.exceptions.PageError:
+        send_message(update.effective_message, tl(update.effective_message, "Results not found"))
+        return
+    except wikipedia.exceptions.DisambiguationError as refer:
+        rujuk = str(refer).split("\n")
+        if len(rujuk) >= 6:
+            batas = 6
+        else:
+            batas = len(rujuk)
+        teks = ""
+        for x in range(batas):
+            if x == 0:
+                if getlang == "pt":
+                    teks += rujuk[x].replace('may refer to', 'pode se referir a')+"\n"
+                else:
+                    teks += rujuk[x]+"\n"
+            else:
+                teks += "- `"+rujuk[x]+"`\n"
+        send_message(update.effective_message, teks, parse_mode="markdown")
+        return
+    except IndexError:
+        send_message(update.effective_message, tl(update.effective_message, "Write a message to search from the wikipedia source"))
+        return
+    judul = pagewiki.title
+    summary = pagewiki.summary
+    if update.effective_message.chat.type == "private":
+        send_message(update.effective_message, tl(update.effective_message, "Results of {} is:\n\n<b>{}</b>\n{}").format(teks, judul, summary), parse_mode=ParseMode.HTML)
+    else:
+        if len(summary) >= 200:
+            judul = pagewiki.title
+            summary = summary[:200]+"..."
+            button = InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "Read More..."), url="t.me/{}?start=wiki-{}".format(context.bot.username, teks.replace(' ', '_')))]])
+        else:
+            button = None
+        send_message(update.effective_message, tl(update.effective_message, "Results of {} is:\n\n<b>{}</b>\n{}").format(teks, judul, summary), parse_mode=ParseMode.HTML, reply_markup=button)
 
 
 @run_async
@@ -450,35 +440,35 @@ def status(update, context):
 @run_async
 @spamcheck
 def urbandictionary(update, context):
-	args = context.args
-	if args:
-		text = " ".join(args)
-		try:
-			mean = urbandict.define(text)
-		except Exception as err:
-			send_message(update.effective_message, "Error: " + str(err))
-			return
-		if len(mean) >= 0:
-			teks = ""
-			if len(mean) >= 3:
-				for x in range(3):
-					teks = "*Result of {}*\n\n*{}*\n*Meaning:*\n`{}`\n\n*Example:*\n`{}`\n\n".format(text, mean[x].get("word")[:-7], mean[x].get("def"), mean[x].get("example"))
-			else:
-				for x in range(len(mean)):
-					teks = "*Result of {}*\n\n*{}*\n**Meaning:*\n`{}`\n\n*Example:*\n`{}`\n\n".format(text, mean[x].get("word")[:-7], mean[x].get("def"), mean[x].get("example"))
-			send_message(update.effective_message, teks, parse_mode=ParseMode.MARKDOWN)
-		else:
-			send_message(update.effective_message, "{} couldn't be found in urban dictionary!".format(text), parse_mode=ParseMode.MARKDOWN)
-	else:
-		send_message(update.effective_message, "Use `/ud <text` for search meaning from urban dictionary.", parse_mode=ParseMode.MARKDOWN)
+    args = context.args
+    if args:
+        text = " ".join(args)
+        try:
+            mean = urbandict.define(text)
+        except Exception as err:
+            send_message(update.effective_message, "Error: " + str(err))
+            return
+        if len(mean) >= 0:
+            teks = ""
+            if len(mean) >= 3:
+                for x in range(3):
+                    teks = "*Result of {}*\n\n*{}*\n*Meaning:*\n`{}`\n\n*Example:*\n`{}`\n\n".format(text, mean[x].get("word")[:-7], mean[x].get("def"), mean[x].get("example"))
+            else:
+                for x in range(len(mean)):
+                    teks = "*Result of {}*\n\n*{}*\n**Meaning:*\n`{}`\n\n*Example:*\n`{}`\n\n".format(text, mean[x].get("word")[:-7], mean[x].get("def"), mean[x].get("example"))
+            send_message(update.effective_message, teks, parse_mode=ParseMode.MARKDOWN)
+        else:
+            send_message(update.effective_message, "{} couldn't be found in urban dictionary!".format(text), parse_mode=ParseMode.MARKDOWN)
+    else:
+        send_message(update.effective_message, "Use `/ud <text` for search meaning from urban dictionary.", parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
 def log(update, context):
-	message = update.effective_message
-	eventdict = message.to_dict()
-	jsondump = json.dumps(eventdict, indent=4)
-	send_message(update.effective_message, jsondump)
+    message = update.effective_message
+    eventdict = message.to_dict()
+    jsondump = json.dumps(eventdict, indent=4)
+    send_message(update.effective_message, jsondump)
 
 
 def deEmojify(inputString):

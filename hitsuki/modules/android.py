@@ -1,11 +1,9 @@
 import json
 import re
-import html
 import time
 import yaml
 
 from datetime import datetime
-from typing import List
 from bs4 import BeautifulSoup
 from hurry.filesize import size as sizee
 from requests import get
@@ -16,7 +14,6 @@ from telegram.ext import CommandHandler
 from telegram.ext import run_async
 
 from hitsuki import dispatcher, LOGGER, spamcheck
-from hitsuki.modules.helper_funcs.misc import split_message
 from hitsuki.modules.languages import tl
 
 # DO NOT DELETE THIS, PLEASE.
@@ -54,7 +51,7 @@ def device(update, context):
         codename = newdevice
         reply += f'<b>{brand} {name}</b>\n' \
             f'Model: <code>{model}</code>\n' \
-            f'Codename: <code>{codename}</code>\n\n'  
+            f'Codename: <code>{codename}</code>\n\n'
     except KeyError as err:
         reply = f"Couldn't find info about {device}!\n"
         update.effective_message.reply_text("{}".format(reply),
@@ -225,7 +222,7 @@ def checkfw(update, context):
     else:
         md5=page2.find("latest").text.strip()
         reply += f' • Hash: `{md5}`\n • Android: `{os2}`\n\n'
-    
+
     update.message.reply_text("{}".format(reply),
                            parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
