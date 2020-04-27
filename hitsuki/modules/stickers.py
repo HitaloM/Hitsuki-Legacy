@@ -25,7 +25,7 @@ def getsticker(update, context):
     if msg.reply_to_message and msg.reply_to_message.sticker:
         file_id = msg.reply_to_message.sticker.file_id
         newFile = context.bot.get_file(file_id)
-        newFile.download('sticker.png')
+        newFile.download('cache/sticker.png')
         context.bot.send_document(chat_id, document=open('cache/sticker.png', 'rb'))
         os.remove("cache/sticker.png")
     else:
