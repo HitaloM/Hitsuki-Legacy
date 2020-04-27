@@ -1,4 +1,7 @@
 # Hitsuki
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/630d285e84d143bfb39ccdf07131656c)](https://app.codacy.com/manual/HitaloSama/Hitsuki?utm_source=github.com&utm_medium=referral&utm_content=HitaloSama/Hitsuki&utm_campaign=Badge_Grade_Settings)
+
 ----------
 
 A modular telegram Python bot running on python3 with an sqlalchemy database.
