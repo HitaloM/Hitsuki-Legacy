@@ -22,6 +22,9 @@ class CustomCommandHandler(tg.CommandHandler):
         if isinstance(update, Update) and update.effective_message:
             message = update.effective_message
 
+            if update.effective_user and int(update.effective_user.id) == 777000:
+                return False
+
             if message.text and len(message.text) > 1:
                 fst_word = message.text.split(None, 1)[0]
                 if len(fst_word) > 1 and any(fst_word.startswith(start) for start in CMD_STARTERS):

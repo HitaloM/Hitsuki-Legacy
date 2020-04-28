@@ -1,9 +1,9 @@
-# thonkify initially made by @devrism for discord. ported to telegram bot api (and) improved by @rupansh
+# thonkify initially made by @devrism for discord
+# Ported to telegram bot api (and) improved by @rupansh
 
 import base64
 from io import BytesIO
 from PIL import Image
-from telegram import Message, Update, Bot, User
 from telegram.ext import run_async, CommandHandler
 from hitsuki import dispatcher, spamcheck
 from hitsuki.modules.languages import tl
@@ -12,7 +12,6 @@ from hitsuki.modules.languages import tl
 @spamcheck
 @run_async
 def thonkify(update, context):
-    args = context.args
 
     from hitsuki.modules.thonkify_dict import thonkifydict
 
@@ -23,19 +22,20 @@ def thonkify(update, context):
     else:
         msg = message.reply_to_message.text
 
-    # the processed photo becomes too long and unreadable + the telegram doesn't support any longer dimensions + you have the lulz.
+    # the processed photo becomes too long and unreadable +
+    # the telegram doesnt support any longer dimensions +
+    # you have the lulz
     if (len(msg)) > 39:
         message.reply_text(tl(chat.id, "Thonk yourself!"))
         return
 
-    tracking = Image.open(BytesIO(base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAYAAAOACAYAAAAZzQIQAAAALElEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwZV4AAAfA8WFIAAAAASUVORK5CYII='))) # base64 encoded empty image(but longer)
+    tracking = Image.open(BytesIO(base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAYAAAOACAYAAAAZzQIQAAAALElEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwZV4AAAfA8WFIAAAAASUVORK5CYII=')))  # base64 encoded empty image(but longer)
 
     # remove characters thonkify can't parse
     for character in msg:
         if character not in thonkifydict:
             msg = msg.replace(character, "")
 
-    # idk PIL. this part was untouched and ask @devrism for better explanation. According to my understanding, Image.new creates a new image and paste "pastes" the character one by one comparing it with "value" variable
     x = 0
     y = 896
     image = Image.new('RGBA', [x, y], (0, 0, 0))
