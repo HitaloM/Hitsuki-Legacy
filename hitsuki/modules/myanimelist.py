@@ -1,11 +1,8 @@
-import datetime
-import html
 import textwrap
-
-import bs4
 import jikanpy
 import requests
-from telegram import Bot, Update, InlineKeyboardMarkup, InlineKeyboardButton, ParseMode
+
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ParseMode
 from telegram.ext import CallbackQueryHandler, run_async
 
 from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, spamcheck
@@ -280,7 +277,7 @@ def character(update, context):
     about_string = ' '.join(about)
 
     for entity in character:
-        if character[entity] == None:
+        if character[entity] is None:
             character[entity] = "Unknown"
 
     caption += f"\n*About*: {about_string}..."

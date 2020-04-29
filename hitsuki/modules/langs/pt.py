@@ -1383,17 +1383,18 @@ be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is
 	"Gagal! Kamu telah salah mengklik tombol verifikasi": "Failed! You are clicked wrong button",
 
 # cleaner
-	"Penghapus pesan biru telah di *non-aktifkan* di *{}*.": "Blue text cleaner was *disabled* in *{}*.",
-	"Penghapus pesan biru telah di *non-aktifkan*.": "Blue text cleaner was *disabled*.",
-	"Penghapus pesan biru telah di *aktifkan* di *{}*.": "Blue text cleaner was *enabled* in *{}*.",
-	"Penghapus pesan biru telah di *aktifkan*.": "Blue text cleaner was *enabled*.",
-	"Pengaturan untuk penghapus pesan biru saat ini di {}: *{}*": "Curent settings for Blue text cleaner at {}: *{}*",
+	"Blue text cleaner was *disabled* in *{}*.": "O limpador de texto azul foi *desativado* em *{}*.",
+	"Blue text cleaner was *disabled*.": "O limpador de texto azul foi *desativado*.",
+	"Blue text cleaner was *enabled* in *{}*.": "O limpador de texto azul foi *ativado* em *{}*.",
+	"Blue text cleaner was *enabled*.": "O limpador de texto azul foi *ativado*.",
+	"Curent settings for Blue text cleaner at {}: *{}*": "",
+	"Unknown argument - please use 'yes', or 'no'.": "Argumento inválido - por favor use 'yes' ou 'no'",
 	"cleaner_help": """
-*Admin only:*
- - /cleanbluetext <on/off>: Delete all blue text message.
+*Apenas administrador:*
+ - /cleanbluetext <on/off>: Exclui todas as mensagens de texto azul.
 
 Note:
-- This feature may broke others bot
+- Esse recurso pode quebrar outros bot
 """,
 
 	# This is optional since it disabled by default

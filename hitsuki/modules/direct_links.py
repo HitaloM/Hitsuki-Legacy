@@ -5,16 +5,11 @@
 #
 
 import re
-import urllib.parse
-import json
 import requests
 
-from os import popen
 from random import choice
 from bs4 import BeautifulSoup
-from hurry.filesize import size as naturalsize
 
-from telegram import Bot, Update
 from telegram.ext import run_async, CommandHandler
 
 from hitsuki import dispatcher, spamcheck
@@ -43,8 +38,6 @@ def direct_link_generator(update, context):
             reply.append(mediafire(link))
         elif 'sourceforge.net' in link:
             reply.append(sourceforge(link))
-        elif 'androidfilehost.com' in link:
-            reply.append(androidfilehost(link))
         else:
             reply.append(
                 re.findall(

@@ -1,15 +1,14 @@
 import math
 import os
 import urllib.request as urllib
-from typing import List
 
 from PIL import Image
+
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import TelegramError
-from telegram import Update, Bot, Chat
 from telegram.ext import run_async
 from telegram.ext import CommandHandler
-from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
+from telegram.utils.helpers import mention_markdown
 
 from hitsuki import dispatcher, spamcheck
 from hitsuki.modules.disable import DisableAbleCommandHandler
@@ -35,13 +34,13 @@ def getsticker(update, context):
 @run_async
 @spamcheck
 def stickerid(update, context):
-	msg = update.effective_message
-	if msg.reply_to_message and msg.reply_to_message.sticker:
-		send_message(update.effective_message, tl(update.effective_message, "Hai {}, Id stiker yang anda balas adalah :\n```{}```").format(mention_markdown(msg.from_user.id, msg.from_user.first_name), msg.reply_to_message.sticker.file_id),
-											parse_mode=ParseMode.MARKDOWN)
-	else:
-		send_message(update.effective_message, tl(update.effective_message, "Tolong balas pesan stiker untuk mendapatkan id stiker"),
-											parse_mode=ParseMode.MARKDOWN)
+    msg = update.effective_message
+    if msg.reply_to_message and msg.reply_to_message.sticker:
+        send_message(update.effective_message, tl(update.effective_message, "Hai {}, Id stiker yang anda balas adalah :\n```{}```").format(mention_markdown(msg.from_user.id, msg.from_user.first_name), msg.reply_to_message.sticker.file_id),
+                                            parse_mode=ParseMode.MARKDOWN)
+    else:
+        send_message(update.effective_message, tl(update.effective_message, "Tolong balas pesan stiker untuk mendapatkan id stiker"),
+                                            parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
@@ -191,7 +190,7 @@ def kang(update, context):
     else:
         packs = "Please reply to a sticker, or image to kang it!\nOh, by the way. here are your packs:\n"
         if packnum > 0:
-            firstpackname = "f" + str(user.id) + "_by_" + bot.username
+            firstpackname = "f" + str(user.id) + "_by_" + context.bot.username
             for i in range(0, packnum + 1):
                 if i == 0:
                     packs += f"[pack](t.me/addstickers/{firstpackname})\n"

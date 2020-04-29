@@ -7,11 +7,11 @@ import traceback
 import wikipedia
 from typing import Optional
 
-from telegram import Message, Chat, Update, Bot, User
+from telegram import Chat
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import Unauthorized, BadRequest, TimedOut, NetworkError, ChatMigrated, TelegramError
-from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler
-from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
+from telegram.ext import CommandHandler, CallbackQueryHandler
+from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown, mention_html
 
 from hitsuki import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, CERT_PATH, PORT, URL, LOGGER, spamcheck
@@ -29,16 +29,18 @@ from hitsuki.modules.languages import set_language
 
 PM_START_TEXT = "start_text"
 
-HELP_STRINGS = "help_text"#.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
+HELP_STRINGS = "help_text"  # .format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
 
-VERSION = "3.0.0"
-
-def vercheck() -> str:
-    return str(VERSION)
+VERSION = "4.0.2"
 
 SOURCE_STRING = """
 I'm built in python3, using the python-telegram-bot library, and am fully opensource - you can find what makes me tick [here](https://github.com/HitaloSama/Hitsuki)
 """
+
+
+def vercheck() -> str:
+    return str(VERSION)
+
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -85,6 +87,7 @@ for module_name in ALL_MODULES:
 
     if hasattr(imported_module, "__user_settings__"):
         USER_SETTINGS[imported_module.__mod_name__.lower()] = imported_module
+
 
 # do not async
 def send_help(chat_id, text, keyboard=None):
@@ -172,9 +175,11 @@ def m_connect_button(update, context):
     context.bot.delete_message(update.effective_chat.id, update.effective_message.message_id)
     connect_button(update, context)
 
+
 def m_change_langs(update, context):
     context.bot.delete_message(update.effective_chat.id, update.effective_message.message_id)
     set_language(update, context)
+
 
 # for test purposes
 def error_callback(update, context):
@@ -274,7 +279,6 @@ def help_button(update, context):
                                   parse_mode=ParseMode.MARKDOWN,
                                   reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help")))
 
-
         context.bot.answer_callback_query(query.id)
     except Exception as excp:
         if excp.message == "Message is not modified":
@@ -356,7 +360,7 @@ def settings_button(update, context):
             chat = context.bot.get_chat(chat_id)
             getstatusadmin = context.bot.get_chat_member(chat_id, user.id)
             isadmin = getstatusadmin.status in ('administrator', 'creator')
-            if isadmin == False or user.id != OWNER_ID:
+            if isadmin is False or user.id != OWNER_ID:
                 query.message.edit_text("Your admin status has changed")
                 return
             text = tl(update.effective_message, "*{}* has the following settings for the *{}* module:\n\n").format(escape_markdown(chat.title),

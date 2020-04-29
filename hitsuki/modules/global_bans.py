@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 from io import BytesIO
 
-from telegram import Bot, Update, ParseMode
+from telegram import ParseMode
 from telegram.error import BadRequest, TelegramError
 from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
 from telegram.utils.helpers import mention_html
