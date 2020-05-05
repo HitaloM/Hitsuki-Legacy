@@ -1,7 +1,6 @@
 import html
-from typing import Optional
 
-from telegram import Message, Chat, Bot, User, InlineKeyboardButton, ParseMode, ChatPermissions
+from telegram import ParseMode, ChatPermissions
 from telegram.error import BadRequest
 from telegram.ext import Filters, MessageHandler, CommandHandler, run_async
 from telegram.utils.helpers import mention_html
@@ -277,13 +276,11 @@ __help__ = "antiflood_help"
 __mod_name__ = "Antiflood"
 
 FLOOD_BAN_HANDLER = MessageHandler(Filters.all & ~Filters.status_update & Filters.group, check_flood)
-SET_FLOOD_HANDLER = CommandHandler("setflood", set_flood, pass_args=True)#, filters=Filters.group)
-SET_FLOOD_MODE_HANDLER = CommandHandler("setfloodmode", set_flood_mode, pass_args=True)#, filters=Filters.group)
-FLOOD_HANDLER = CommandHandler("flood", flood)#, filters=Filters.group)
-# FLOOD_BTNSET_HANDLER = CallbackQueryHandler(FLOOD_EDITBTN, pattern=r"set_flim")
+SET_FLOOD_HANDLER = CommandHandler("setflood", set_flood, pass_args=True)
+SET_FLOOD_MODE_HANDLER = CommandHandler("setfloodmode", set_flood_mode, pass_args=True)
+FLOOD_HANDLER = CommandHandler("flood", flood)
 
 dispatcher.add_handler(FLOOD_BAN_HANDLER, FLOOD_GROUP)
 dispatcher.add_handler(SET_FLOOD_HANDLER)
 dispatcher.add_handler(SET_FLOOD_MODE_HANDLER)
 dispatcher.add_handler(FLOOD_HANDLER)
-# dispatcher.add_handler(FLOOD_BTNSET_HANDLER)

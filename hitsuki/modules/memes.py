@@ -3,7 +3,6 @@ import io
 import os
 import random
 import re
-import string
 import urllib.request
 
 from io import BytesIO
@@ -11,9 +10,9 @@ from pathlib import Path
 
 from PIL import Image
 from spongemock import spongemock
-from telegram import Message, Update, Bot
+from telegram import Message, Bot
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async
+from telegram.ext import run_async
 from zalgo_text import zalgo
 
 from deeppyer import deepfry
@@ -25,7 +24,6 @@ MAXNUMURL = 'https://raw.githubusercontent.com/atanet90/expression-pack/master/m
 WIDE_MAP = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
 WIDE_MAP[0x20] = 0x3000
 
-# D A N K modules by @deletescape vvv
 
 @spamcheck
 @run_async
@@ -104,7 +102,6 @@ def deepfryer(update, context):
 
 
 async def process_deepfry(image: Image, reply: Message, bot: Bot, context):
-    bot = context.bot
     image = await deepfry(img=image,
                           token=DEEPFRY_TOKEN,
                           url_base='westeurope')
@@ -285,8 +282,6 @@ def zalgotext(update, context):
     else:
         message.reply_to_message.reply_text(reply_text)
 
-# Less D A N K modules by @skittles9823 # holi fugg I did some maymays ^^^
-# shitty maymay modules made by @divadsn vvv
 
 @spamcheck
 @run_async

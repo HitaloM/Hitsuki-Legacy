@@ -1,19 +1,18 @@
 from datetime import datetime
-from typing import Optional
 from requests import get
 
 import hitsuki.modules.helper_funcs.git_api as api
 import hitsuki.modules.sql.github_sql as sql
 
-from hitsuki import dispatcher, LOGGER, SUDO_USERS, spamcheck
+from hitsuki import dispatcher, spamcheck
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.languages import tl
 
 from telegram.ext import CommandHandler, run_async, Filters, MessageHandler
-from telegram import Chat, Update, Bot, User, ParseMode, MAX_MESSAGE_LENGTH
+from telegram import ParseMode, MAX_MESSAGE_LENGTH
 
 
-#do not async
+# Do not async
 def getData(url, index):
     if not api.getData(url):
         return "Invalid <user>/<repo> combo"
@@ -48,6 +47,7 @@ def getRepo(bot, update, reponame, show_none=True, no_format=False):
         return repo.value, repo.backoffset
     return None, None
 
+
 @run_async
 @spamcheck
 def getRelease(update, context):
@@ -64,10 +64,10 @@ def getRelease(update, context):
     msg.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     return
 
+
 @run_async
 @spamcheck
 def hashFetch(update, context):
-    args = context.args
     message = update.effective_message.text
     msg = update.effective_message
     fst_word = message.split()[0]
@@ -79,7 +79,8 @@ def hashFetch(update, context):
     text = getData(url, index)
     msg.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
     return
-    
+
+
 @run_async
 @spamcheck
 def cmdFetch(update, context):
@@ -144,7 +145,7 @@ def delRepo(update, context):
     args = context.args
     chat_id = update.effective_chat.id
     msg = update.effective_message
-    if(len(args)!=1):
+    if(len(args) != 1):
         msg.reply_text("Invalid repo name!")
         return
     sql.rm_repo(str(chat_id), args[0])
@@ -155,7 +156,6 @@ def delRepo(update, context):
 @run_async
 @spamcheck
 def listRepo(update, context):
-    args = context.args
     chat_id = update.effective_chat.id
     chat = update.effective_chat
     chat_name = chat.title or chat.first or chat.username
@@ -184,7 +184,6 @@ def getVer(update, context):
 @run_async
 @spamcheck
 def github(update, context):
-    args = context.args
     message = update.effective_message
     text = message.text[len('/git '):]
     usr = get(f'https://api.github.com/users/{text}').json()

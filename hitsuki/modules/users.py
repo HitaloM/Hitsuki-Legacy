@@ -3,7 +3,6 @@ from time import sleep
 from typing import Optional
 
 from telegram import TelegramError, Chat, Message
-from telegram import Update, Bot
 from telegram.error import BadRequest
 from telegram.ext import MessageHandler, Filters, CommandHandler
 from telegram.ext.dispatcher import run_async
@@ -87,7 +86,7 @@ def log_user(update, context):
                 try:
                     context.bot.kick_chat_member(chat.id, user.id)
                 except:
-                	print("Fban: cannot banned this user")
+                    print("Fban: cannot banned this user")
 
     sql.update_user(msg.from_user.id,
                     msg.from_user.username,

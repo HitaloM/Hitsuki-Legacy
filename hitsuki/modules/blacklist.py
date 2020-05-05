@@ -1,11 +1,11 @@
 import html
 import re
-from typing import Optional, List
+from typing import Optional
 
-from telegram import Message, Chat, Update, Bot, ParseMode
+from telegram import Message, Chat, ParseMode
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
-from telegram.utils.helpers import mention_html, escape_markdown
+from telegram.utils.helpers import mention_html
 
 import hitsuki.modules.sql.blacklist_sql as sql
 from hitsuki import dispatcher, LOGGER, spamcheck, OWNER_ID
@@ -28,11 +28,10 @@ BLACKLIST_GROUP = 11
 @run_async
 @spamcheck
 def blacklist(update, context):
-	msg = update.effective_message  # type: Optional[Message]
 	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
+	user = update.effective_user
 	args = context.args
-	
+
 	conn = connected(context.bot, update, chat, user.id, need_admin=False)
 	if conn:
 		chat_id = conn
@@ -43,7 +42,7 @@ def blacklist(update, context):
 		else:
 			chat_id = update.effective_chat.id
 			chat_name = chat.title
-	
+
 	filter_list = tl(update.effective_message, "<b>Kata daftar hitam saat ini di {}:</b>\n").format(chat_name)
 
 	all_blacklisted = sql.get_chat_blacklist(chat_id)
@@ -72,7 +71,7 @@ def blacklist(update, context):
 def add_blacklist(update, context):
 	msg = update.effective_message  # type: Optional[Message]
 	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
+	user = update.effective_user
 	words = msg.text.split(None, 1)
 
 	conn = connected(context.bot, update, chat, user.id)
@@ -109,7 +108,7 @@ def add_blacklist(update, context):
 def unblacklist(update, context):
 	msg = update.effective_message  # type: Optional[Message]
 	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
+	user = update.effective_user
 	words = msg.text.split(None, 1)
 
 	conn = connected(context.bot, update, chat, user.id)

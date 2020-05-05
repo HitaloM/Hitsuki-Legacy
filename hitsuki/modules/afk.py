@@ -1,12 +1,13 @@
 from typing import Optional
 
-from telegram import Message, Update, Bot, User
+from telegram import Message, User
 from telegram import MessageEntity
 from telegram.error import BadRequest
 from telegram.ext import Filters, MessageHandler, run_async
 
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, spamcheck
-from hitsuki.modules.disable import DisableAbleCommandHandler, DisableAbleMessageHandler
+from hitsuki import dispatcher, spamcheck
+from hitsuki.modules.disable import DisableAbleCommandHandler, \
+    DisableAbleMessageHandler
 from hitsuki.modules.sql import afk_sql as sql
 from hitsuki.modules.users import get_user_id
 
@@ -52,7 +53,7 @@ def reply_afk(update, context):
             if ent.type == MessageEntity.TEXT_MENTION:
                 user_id = ent.user.id
                 fst_name = ent.user.first_name
-                
+
             elif ent.type == MessageEntity.MENTION:
                 user_id = get_user_id(message.text[ent.offset:ent.offset + ent.length])
                 if not user_id:
@@ -64,8 +65,8 @@ def reply_afk(update, context):
                     print("Error: Could not fetch userid {} for AFK module".format(user_id))
                     return
                 fst_name = chat.first_name
-                
-            else:   
+
+            else:
                 return
 
             if sql.is_afk(user_id):
@@ -85,9 +86,7 @@ __mod_name__ = "AFK"
 AFK_HANDLER = DisableAbleCommandHandler("afk", afk)
 AFK_REGEX_HANDLER = DisableAbleMessageHandler(Filters.regex("(?i)brb"), afk, friendly="afk")
 NO_AFK_HANDLER = MessageHandler(Filters.all & Filters.group & ~Filters.update.edited_message, no_longer_afk)
-AFK_REPLY_HANDLER = MessageHandler(Filters.all & Filters.group , reply_afk)
-# AFK_REPLY_HANDLER = MessageHandler(Filters.entity(MessageEntity.MENTION) | Filters.entity(MessageEntity.TEXT_MENTION),
-#                                   reply_afk)
+AFK_REPLY_HANDLER = MessageHandler(Filters.all & Filters.group, reply_afk)
 
 dispatcher.add_handler(AFK_HANDLER, AFK_GROUP)
 dispatcher.add_handler(AFK_REGEX_HANDLER, AFK_GROUP)

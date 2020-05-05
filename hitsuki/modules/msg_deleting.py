@@ -1,7 +1,7 @@
 import html
-from typing import Optional, List
+from typing import Optional
 
-from telegram import Message, Chat, Update, Bot, User
+from telegram import Message, Chat, User
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters
 from telegram.ext.dispatcher import run_async
@@ -31,13 +31,18 @@ def purge(update, context):
                 delete_to = message_id + int(args[0])
             else:
                 delete_to = msg.message_id - 1
-            for m_id in range(delete_to, message_id - 1, -1):  # Reverse iteration over message ids
+            for m_id in range(
+                    delete_to, message_id - 1, -1):  # Reverse iteration over message ids
                 try:
                     context.bot.deleteMessage(chat.id, m_id)
                 except BadRequest as err:
                     if err.message == "Message can't be deleted":
-                        send_message(update.effective_message, tl(update.effective_message, "Tidak dapat menghapus semua pesan. Pesannya mungkin terlalu lama, saya mungkin "
-                                                  "tidak memiliki hak menghapus, atau ini mungkin bukan supergrup."))
+                        send_message(
+                            update.effective_message,
+                            tl(
+                                update.effective_message,
+                                "Tidak dapat menghapus semua pesan. Pesannya mungkin terlalu lama, saya mungkin "
+                                "tidak memiliki hak menghapus, atau ini mungkin bukan supergrup."))
 
                     elif err.message != "Message to delete not found":
                         LOGGER.exception("Error while purging chat messages.")
@@ -46,13 +51,19 @@ def purge(update, context):
                 msg.delete()
             except BadRequest as err:
                 if err.message == "Message can't be deleted":
-                    send_message(update.effective_message, tl(update.effective_message, "Tidak dapat menghapus semua pesan. Pesannya mungkin terlalu lama, saya mungkin "
-                                              "tidak memiliki hak menghapus, atau ini mungkin bukan supergrup."))
+                    send_message(
+                        update.effective_message,
+                        tl(
+                            update.effective_message,
+                            "Tidak dapat menghapus semua pesan. Pesannya mungkin terlalu lama, saya mungkin "
+                            "tidak memiliki hak menghapus, atau ini mungkin bukan supergrup."))
 
                 elif err.message != "Message to delete not found":
                     LOGGER.exception("Error while purging chat messages.")
 
-            send_message(update.effective_message, tl(update.effective_message, "Pembersihan selesai."))
+            send_message(
+                update.effective_message, tl(
+                    update.effective_message, "Pembersihan selesai."))
             return "<b>{}:</b>" \
                    "\n#PURGE" \
                    "\n<b>Admin:</b> {}" \
@@ -61,7 +72,9 @@ def purge(update, context):
                                                                delete_to - message_id)
 
     else:
-        send_message(update.effective_message, tl(update.effective_message, "Balas pesan untuk memilih tempat mulai membersihkan."))
+        send_message(update.effective_message,
+                     tl(update.effective_message,
+                        "Balas pesan untuk memilih tempat mulai membersihkan."))
 
     return ""
 
@@ -83,7 +96,9 @@ def del_message(update, context) -> str:
                    "\nMessage deleted.".format(html.escape(chat.title),
                                                mention_html(user.id, user.first_name))
     else:
-        send_message(update.effective_message, tl(update.effective_message, "Apa yang ingin di hapus?"))
+        send_message(
+            update.effective_message, tl(
+                update.effective_message, "Apa yang ingin di hapus?"))
 
     return ""
 
@@ -93,7 +108,11 @@ __help__ = "msgdel_help"
 __mod_name__ = "Purges"
 
 DELETE_HANDLER = CommandHandler("del", del_message, filters=Filters.group)
-PURGE_HANDLER = CommandHandler("purge", purge, filters=Filters.group, pass_args=True)
+PURGE_HANDLER = CommandHandler(
+    "purge",
+    purge,
+    filters=Filters.group,
+    pass_args=True)
 
 dispatcher.add_handler(DELETE_HANDLER)
 dispatcher.add_handler(PURGE_HANDLER)

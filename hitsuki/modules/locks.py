@@ -1,8 +1,7 @@
 import html
-from typing import Optional, List
+from typing import Optional
 
-import telegram.ext as tg
-from telegram import Message, Chat, Update, Bot, ParseMode, User, MessageEntity
+from telegram import Message, Chat, ParseMode, User, MessageEntity
 from telegram import TelegramError, ChatPermissions
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, Filters
@@ -14,11 +13,9 @@ from alphabet_detector import AlphabetDetector
 import hitsuki.modules.sql.locks_sql as sql
 from hitsuki import dispatcher, spamcheck, SUDO_USERS, LOGGER
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.chat_status import can_delete, is_user_admin, user_not_admin, user_admin, \
-	bot_can_delete, is_bot_admin
-from hitsuki.modules.helper_funcs.filters import CustomFilters
+from hitsuki.modules.helper_funcs.chat_status import can_delete, \
+    is_user_admin, user_not_admin, user_admin, is_bot_admin
 from hitsuki.modules.log_channel import loggable
-from hitsuki.modules.sql import users_sql
 from hitsuki.modules.warns import warn
 from hitsuki.modules.connection import connected
 
@@ -28,98 +25,85 @@ from hitsuki.modules.helper_funcs.alternate import send_message
 ad = AlphabetDetector()
 
 LOCK_TYPES = {'audio': Filters.audio,
-			  'voice': Filters.voice,
-			  'document': Filters.document,
-			  'video': Filters.video,
-			  'contact': Filters.contact,
-			  'photo': Filters.photo,
-			  'url': Filters.entity(MessageEntity.URL) | Filters.caption_entity(MessageEntity.URL),
-			  'bots': Filters.status_update.new_chat_members,
-			  'forward': Filters.forwarded,
-			  'game': Filters.game,
-			  'location': Filters.location,
-			  'rtl': 'rtl',
-			  'button': 'button'
-			  }
+              'voice': Filters.voice,
+              'document': Filters.document,
+              'video': Filters.video,
+              'contact': Filters.contact,
+              'photo': Filters.photo,
+              'url': Filters.entity(MessageEntity.URL) | Filters.caption_entity(MessageEntity.URL),
+              'bots': Filters.status_update.new_chat_members,
+              'forward': Filters.forwarded,
+              'game': Filters.game,
+              'location': Filters.location,
+              'rtl': 'rtl',
+              'button': 'button'
+              }
 
 
 LOCK_CHAT_RESTRICTION = {"all": {'can_send_messages': False, 'can_send_media_messages': False, 'can_send_polls': False, 'can_send_other_messages': False, 'can_add_web_page_previews': False, 'can_change_info': False, 'can_invite_users': False, 'can_pin_messages': False},
-						"messages": {'can_send_messages': False},
-						"media": {'can_send_media_messages': False},
-						"sticker": {'can_send_other_messages': False},
-						"gif": {'can_send_other_messages': False},
-						"poll": {'can_send_polls': False},
-						"other": {'can_send_other_messages': False},
-						"previews": {'can_add_web_page_previews': False},
-						"info": {'can_change_info': False},
-						"invite": {'can_invite_users': False},
-						"pin": {'can_pin_messages': False}}
+                        "messages": {'can_send_messages': False},
+                        "media": {'can_send_media_messages': False},
+                        "sticker": {'can_send_other_messages': False},
+                        "gif": {'can_send_other_messages': False},
+                        "poll": {'can_send_polls': False},
+                        "other": {'can_send_other_messages': False},
+                        "previews": {'can_add_web_page_previews': False},
+                        "info": {'can_change_info': False},
+                        "invite": {'can_invite_users': False},
+                        "pin": {'can_pin_messages': False}}
 
 UNLOCK_CHAT_RESTRICTION = {"all": {'can_send_messages': True, 'can_send_media_messages': True, 'can_send_polls': True, 'can_send_other_messages': True, 'can_add_web_page_previews': True, 'can_invite_users': True},
-						"messages": {'can_send_messages': True},
-						"media": {'can_send_media_messages': True},
-						"sticker": {'can_send_other_messages': True},
-						"gif": {'can_send_other_messages': True},
-						"poll": {'can_send_polls': True},
-						"other": {'can_send_other_messages': True},
-						"previews": {'can_add_web_page_previews': True},
-						"info": {'can_change_info': True},
-						"invite": {'can_invite_users': True},
-						"pin": {'can_pin_messages': True}}
+                        "messages": {'can_send_messages': True},
+                        "media": {'can_send_media_messages': True},
+                        "sticker": {'can_send_other_messages': True},
+                        "gif": {'can_send_other_messages': True},
+                        "poll": {'can_send_polls': True},
+                        "other": {'can_send_other_messages': True},
+                        "previews": {'can_add_web_page_previews': True},
+                        "info": {'can_change_info': True},
+                        "invite": {'can_invite_users': True},
+                        "pin": {'can_pin_messages': True}}
 
 PERM_GROUP = 1
 REST_GROUP = 2
 
-"""
-class CustomCommandHandler(tg.CommandHandler):
-	def __init__(self, command, callback, **kwargs):
-		super().__init__(command, callback, **kwargs)
-
-	def check_update(self, update):
-		return super().check_update(update) and not (
-				sql.is_restr_locked(update.effective_chat.id, 'messages') and not is_user_admin(update.effective_chat,
-																								update.effective_user.id))
-
-
-tg.CommandHandler = CustomCommandHandler"""
-
 
 # NOT ASYNC
 def restr_members(bot, chat_id, members, messages=False, media=False, other=False, previews=False):
-	for mem in members:
-		if mem.user in SUDO_USERS:
-			pass
-		try:
-			bot.restrict_chat_member(chat_id, mem.user,
-									 can_send_messages=messages,
-									 can_send_media_messages=media,
-									 can_send_other_messages=other,
-									 can_add_web_page_previews=previews)
-		except TelegramError:
-			pass
+    for mem in members:
+        if mem.user in SUDO_USERS:
+            pass
+        try:
+            bot.restrict_chat_member(chat_id, mem.user,
+                                     can_send_messages=messages,
+                                     can_send_media_messages=media,
+                                     can_send_other_messages=other,
+                                     can_add_web_page_previews=previews)
+        except TelegramError:
+            pass
 
 
 # NOT ASYNC
 def unrestr_members(bot, chat_id, members, messages=True, media=True, other=True, previews=True):
-	for mem in members:
-		try:
-			bot.restrict_chat_member(chat_id, mem.user,
-									 can_send_messages=messages,
-									 can_send_media_messages=media,
-									 can_send_other_messages=other,
-									 can_add_web_page_previews=previews)
-		except TelegramError:
-			pass
+    for mem in members:
+        try:
+            bot.restrict_chat_member(chat_id, mem.user,
+                                     can_send_messages=messages,
+                                     can_send_media_messages=media,
+                                     can_send_other_messages=other,
+                                     can_add_web_page_previews=previews)
+        except TelegramError:
+            pass
 
 
 @run_async
 @spamcheck
 def locktypes(update, context):
-	locklist = list(LOCK_TYPES)
-	locklist.sort()
-	perm = list(LOCK_CHAT_RESTRICTION)
-	perm.sort()
-	send_message(update.effective_message, "\n - ".join([tl(update.effective_message, "*Jenis kunci yang tersedia adalah:* ")] + locklist) + "\n\n" + "\n - ".join([tl(update.effective_message, "*Jenis izin kunci yang tersedia adalah:* ")] + perm), parse_mode="markdown")
+    locklist = list(LOCK_TYPES)
+    locklist.sort()
+    perm = list(LOCK_CHAT_RESTRICTION)
+    perm.sort()
+    send_message(update.effective_message, "\n - ".join([tl(update.effective_message, "*Jenis kunci yang tersedia adalah:* ")] + locklist) + "\n\n" + "\n - ".join([tl(update.effective_message, "*Jenis izin kunci yang tersedia adalah:* ")] + perm), parse_mode="markdown")
 
 
 @user_admin
@@ -129,7 +113,6 @@ def lock(update, context) -> str:
 	args = context.args
 	chat = update.effective_chat  # type: Optional[Chat]
 	user = update.effective_user  # type: Optional[User]
-	message = update.effective_message  # type: Optional[Message]
 
 	if can_delete(chat, context.bot.id) or update.effective_message.chat.type == "private":
 		if len(args) >= 1:

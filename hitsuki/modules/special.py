@@ -333,9 +333,8 @@ def translate(update, context):
             for emoji in exclude_list:
                 if emoji in teks:
                     teks = teks.replace(emoji, '')
-            message = update.effective_message
             trl = Translator()
-            if target2 == None:
+            if target2 is None:
                 deteksibahasa = trl.detect(teks)
                 tekstr = trl.translate(teks, dest=target)
                 send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
@@ -360,7 +359,7 @@ def translate(update, context):
                 if emoji in teks:
                     teks = teks.replace(emoji, '')
             trl = Translator()
-            if target2 == None:
+            if target2 is None:
                 deteksibahasa = trl.detect(teks)
                 tekstr = trl.translate(teks, dest=target)
                 return send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)

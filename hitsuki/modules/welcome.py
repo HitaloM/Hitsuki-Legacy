@@ -1,27 +1,27 @@
-import html, time
+import html
 import re
-import threading
-import requests
-from typing import Optional, List
+from typing import Optional
 
-from telegram import Message, Chat, Update, Bot, User, CallbackQuery
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, ChatPermissions
+from telegram import Message, Chat, User, CallbackQuery
+from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, \
+    ChatPermissions
 from telegram.error import BadRequest
-from telegram.ext import MessageHandler, Filters, CommandHandler, run_async, CallbackQueryHandler
-from telegram.utils.helpers import mention_markdown, mention_html, escape_markdown
+from telegram.ext import MessageHandler, Filters, CommandHandler, run_async, \
+    CallbackQueryHandler
+from telegram.utils.helpers import mention_markdown, mention_html, \
+    escape_markdown
 
 import hitsuki.modules.sql.welcome_sql as sql
-from hitsuki import dispatcher, OWNER_ID, LOGGER, spamcheck, IS_DEBUG, SUDO_USERS, MESSAGE_DUMP
-from hitsuki.modules.helper_funcs.chat_status import user_admin, is_user_ban_protected, bot_can_restrict
-from hitsuki.modules.helper_funcs.misc import build_keyboard_parser, revert_buttons
+from hitsuki import dispatcher, OWNER_ID, LOGGER, spamcheck, IS_DEBUG, \
+    SUDO_USERS, MESSAGE_DUMP
+from hitsuki.modules.helper_funcs.chat_status import user_admin, \
+    is_user_ban_protected, bot_can_restrict
+from hitsuki.modules.helper_funcs.misc import build_keyboard_parser, \
+    revert_buttons
 from hitsuki.modules.helper_funcs.msg_types import get_welcome_type
 from hitsuki.modules.helper_funcs.string_handling import markdown_parser, \
-	escape_invalid_curly_brackets, extract_time, make_time
-
-from hitsuki.modules.helper_funcs.welcome_timeout import welcome_timeout
+    escape_invalid_curly_brackets, extract_time, make_time
 from hitsuki.modules.log_channel import loggable
-
-import hitsuki.modules.sql.feds_sql as fedsql
 from hitsuki.modules.languages import tl
 from hitsuki.modules.helper_funcs.alternate import send_message, leave_chat
 
@@ -30,305 +30,305 @@ OWNER_SPECIAL = False
 VALID_WELCOME_FORMATTERS = ['first', 'last', 'fullname', 'username', 'id', 'count', 'chatname', 'mention', 'rules']
 
 ENUM_FUNC_MAP = {
-	sql.Types.TEXT.value: dispatcher.bot.send_message,
-	sql.Types.BUTTON_TEXT.value: dispatcher.bot.send_message,
-	sql.Types.STICKER.value: dispatcher.bot.send_sticker,
-	sql.Types.DOCUMENT.value: dispatcher.bot.send_document,
-	sql.Types.PHOTO.value: dispatcher.bot.send_photo,
-	sql.Types.AUDIO.value: dispatcher.bot.send_audio,
-	sql.Types.VOICE.value: dispatcher.bot.send_voice,
-	sql.Types.VIDEO.value: dispatcher.bot.send_video
+    sql.Types.TEXT.value: dispatcher.bot.send_message,
+    sql.Types.BUTTON_TEXT.value: dispatcher.bot.send_message,
+    sql.Types.STICKER.value: dispatcher.bot.send_sticker,
+    sql.Types.DOCUMENT.value: dispatcher.bot.send_document,
+    sql.Types.PHOTO.value: dispatcher.bot.send_photo,
+    sql.Types.AUDIO.value: dispatcher.bot.send_audio,
+    sql.Types.VOICE.value: dispatcher.bot.send_voice,
+    sql.Types.VIDEO.value: dispatcher.bot.send_video
 }
 
 
 # do not async
 def send(update, message, keyboard, backup_message):
-	chat = update.effective_chat
-	cleanserv = sql.clean_service(chat.id)
-	reply = update.message.message_id
-	# Clean service welcome
-	if cleanserv:
-		reply = False
-	try:
-		msg = dispatcher.bot.send_message(chat.id, message, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard, reply_to_message_id=reply, disable_web_page_preview=True)
-	except IndexError:
-		msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
-																  tl(update.effective_message, "\nCatatan: pesan saat ini tidak valid "
-																  "karena masalah markdown. Bisa jadi "
-																  "karena nama pengguna.")),
-												  reply_to_message_id=reply, 
-												  parse_mode=ParseMode.MARKDOWN)
-	except KeyError:
-		msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
-																  tl(update.effective_message, "\nCatatan: pesan saat ini tidak valid "
-																  "karena ada masalah dengan beberapa salah tempat. "
-																  "Harap perbarui")),
-												  reply_to_message_id=reply, 
-												  parse_mode=ParseMode.MARKDOWN)
-	except BadRequest as excp:
-		if excp.message == "Button_url_invalid":
-			msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
-																	  tl(update.effective_message, "\nCatatan: pesan saat ini memiliki url yang tidak "
-																	  "valid di salah satu tombolnya. Harap perbarui.")),
-													  reply_to_message_id=reply, 
-													  parse_mode=ParseMode.MARKDOWN)
-		elif excp.message == "Unsupported url protocol":
-			msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
-																	  tl(update.effective_message, "\nCatatan: pesan saat ini memiliki tombol yang "
-																	  "menggunakan protokol url yang tidak didukung "
-																	  "oleh telegram. Harap perbarui.")),
-													  reply_to_message_id=reply, 
-													  parse_mode=ParseMode.MARKDOWN)
-		elif excp.message == "Wrong url host":
-			msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
-																	  tl(update.effective_message, "\nCatatan: pesan saat ini memiliki beberapa url "
-																	  "yang buruk. Harap perbarui.")),
-													  reply_to_message_id=reply, 
-													  parse_mode=ParseMode.MARKDOWN)
-			LOGGER.warning(message)
-			LOGGER.warning(keyboard)
-			LOGGER.exception("Could not parse! got invalid url host errors")
-		elif excp.message == "Reply message not found":
-			msg = dispatcher.bot.send_message(chat.id, message, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard, disable_web_page_preview=True)
-		else:
-			try:
-				msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
-																	  tl(update.effective_message, "\nCatatan: Terjadi kesalahan saat mengirim pesan "
-																	  "kustom. Harap perbarui.")),
-													  reply_to_message_id=reply, 
-													  parse_mode=ParseMode.MARKDOWN)
-				LOGGER.exception("ERROR!")
-			except BadRequest:
-				if IS_DEBUG:
-					print("Cannot send welcome msg, bot is muted!")
-			except BadRequest as err:
-				if IS_DEBUG:
-					print("Cannot send welcome msg at {} ({})".format(chat.title, chat.id))
-				if str(err) == "Have no rights to send a message":
-					leave_chat(update.message)
-				return ""
-	return msg
+    chat = update.effective_chat
+    cleanserv = sql.clean_service(chat.id)
+    reply = update.message.message_id
+    # Clean service welcome
+    if cleanserv:
+        reply = False
+    try:
+        msg = dispatcher.bot.send_message(chat.id, message, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard, reply_to_message_id=reply, disable_web_page_preview=True)
+    except IndexError:
+        msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
+                                                                  tl(update.effective_message, "\nCatatan: pesan saat ini tidak valid "
+                                                                  "karena masalah markdown. Bisa jadi "
+                                                                  "karena nama pengguna.")),
+                                                  reply_to_message_id=reply,
+                                                  parse_mode=ParseMode.MARKDOWN)
+    except KeyError:
+        msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
+                                                                  tl(update.effective_message, "\nCatatan: pesan saat ini tidak valid "
+                                                                  "karena ada masalah dengan beberapa salah tempat. "
+                                                                  "Harap perbarui")),
+                                                  reply_to_message_id=reply,
+                                                  parse_mode=ParseMode.MARKDOWN)
+    except BadRequest as excp:
+        if excp.message == "Button_url_invalid":
+            msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
+                                                                      tl(update.effective_message, "\nCatatan: pesan saat ini memiliki url yang tidak "
+                                                                      "valid di salah satu tombolnya. Harap perbarui.")),
+                                                      reply_to_message_id=reply,
+                                                      parse_mode=ParseMode.MARKDOWN)
+        elif excp.message == "Unsupported url protocol":
+            msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
+                                                                      tl(update.effective_message, "\nCatatan: pesan saat ini memiliki tombol yang "
+                                                                      "menggunakan protokol url yang tidak didukung "
+                                                                      "oleh telegram. Harap perbarui.")),
+                                                      reply_to_message_id=reply,
+                                                      parse_mode=ParseMode.MARKDOWN)
+        elif excp.message == "Wrong url host":
+            msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
+                                                                      tl(update.effective_message, "\nCatatan: pesan saat ini memiliki beberapa url "
+                                                                      "yang buruk. Harap perbarui.")),
+                                                      reply_to_message_id=reply,
+                                                      parse_mode=ParseMode.MARKDOWN)
+            LOGGER.warning(message)
+            LOGGER.warning(keyboard)
+            LOGGER.exception("Could not parse! got invalid url host errors")
+        elif excp.message == "Reply message not found":
+            msg = dispatcher.bot.send_message(chat.id, message, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard, disable_web_page_preview=True)
+        else:
+            try:
+                msg = dispatcher.bot.send_message(chat.id, markdown_parser(backup_message +
+                                                                      tl(update.effective_message, "\nCatatan: Terjadi kesalahan saat mengirim pesan "
+                                                                      "kustom. Harap perbarui.")),
+                                                      reply_to_message_id=reply,
+                                                      parse_mode=ParseMode.MARKDOWN)
+                LOGGER.exception("ERROR!")
+            except BadRequest:
+                if IS_DEBUG:
+                    print("Cannot send welcome msg, bot is muted!")
+            except BadRequest as err:
+                if IS_DEBUG:
+                    print("Cannot send welcome msg at {} ({})".format(chat.title, chat.id))
+                if str(err) == "Have no rights to send a message":
+                    leave_chat(update.message)
+                return ""
+    return msg
 
 
 @run_async
 def new_member(update, context):
-	chat = update.effective_chat
-	user = update.effective_user
-	msg = update.effective_message
+    chat = update.effective_chat
+    user = update.effective_user
+    msg = update.effective_message
 
-	should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
+    should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
 
-	isAllowed = sql.isWhitelisted(str(chat.id))
+    isAllowed = sql.isWhitelisted(str(chat.id))
 
-	if isAllowed or user.id in SUDO_USERS:
-		sql.whitelistChat(str(chat.id))
-	else:
-		msg.reply_text("Thanks for adding me to your group! But this group is not whitelisted to use the bot, sorry.\n\nFollow my news channel. @HitsukiNews")
-		context.bot.leave_chat(int(chat.id))
-		return
-	
-	cleanserv = sql.clean_service(chat.id)
-	if cleanserv:
-		new_members = update.effective_message.new_chat_members
-		for new_mem in new_members:
-			try:
-				dispatcher.bot.delete_message(chat.id, update.message.message_id)
-			except BadRequest:
-				pass
-	if should_welc:
-		sent = None
-		new_members = update.effective_message.new_chat_members
-		for new_mem in new_members:
-			# Give the owner a special welcome
-			if OWNER_SPECIAL and new_mem.id == OWNER_ID:
-				if cleanserv:
-					context.bot.send_message(chat.id, tl(update.effective_message, "Master has come home! Let's start this party! 😆"))
-				else:
-					send_message(update.effective_message, tl(update.effective_message, "Master has come home! Let's start this party! 😆"))
-				continue
+    if isAllowed or user.id in SUDO_USERS:
+        sql.whitelistChat(str(chat.id))
+    else:
+        msg.reply_text("Thanks for adding me to your group! But this group is not whitelisted to use the bot, sorry.\n\nFollow my news channel. @HitsukiNews")
+        context.bot.leave_chat(int(chat.id))
+        return
 
-			# Don't welcome yourself
-			elif new_mem.id == context.bot.id:
-				context.bot.send_message(
-					MESSAGE_DUMP,
-					"<b>I was added in a group</b>\n" \
-					"#AddGroup\n" \
-					"<b>Chat name:</b> {}\n" \
-					"<b>ID:</b> <code>{}</code>".format(chat.title, chat.id),
-					parse_mode=ParseMode.HTML
-				)
-				context.bot.send_message(chat.id,
-								"Thanks for adding me into your group! Don't forgot to checkout the Hitalo's channel (@AndroidRepo)! And follow my news channel @HitsukiNews.")
+    cleanserv = sql.clean_service(chat.id)
+    if cleanserv:
+        new_members = update.effective_message.new_chat_members
+        for new_mem in new_members:
+            try:
+                dispatcher.bot.delete_message(chat.id, update.message.message_id)
+            except BadRequest:
+                pass
+    if should_welc:
+        sent = None
+        new_members = update.effective_message.new_chat_members
+        for new_mem in new_members:
+            # Give the owner a special welcome
+            if OWNER_SPECIAL and new_mem.id == OWNER_ID:
+                if cleanserv:
+                    context.bot.send_message(chat.id, tl(update.effective_message, "Master has come home! Let's start this party! 😆"))
+                else:
+                    send_message(update.effective_message, tl(update.effective_message, "Master has come home! Let's start this party! 😆"))
+                continue
 
-			else:
-				# If welcome message is media, send with appropriate function
-				if welc_type != sql.Types.TEXT and welc_type != sql.Types.BUTTON_TEXT:
-					reply = update.message.message_id
-					# Clean service welcome
-					if cleanserv:
-						reply = False
-					# Formatting text
-					first_name = new_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
-					if new_mem.last_name:
-						fullname = "{} {}".format(first_name, new_mem.last_name)
-					else:
-						fullname = first_name
-					count = chat.get_members_count()
-					mention = mention_markdown(new_mem.id, first_name)
-					if new_mem.username:
-						username = "@" + escape_markdown(new_mem.username)
-					else:
-						username = mention
-					rules = "https://t.me/" + context.bot.username + "?start=" + str(chat.id)
+            # Don't welcome yourself
+            elif new_mem.id == context.bot.id:
+                context.bot.send_message(
+                    MESSAGE_DUMP,
+                    "<b>I was added in a group</b>\n"
+                    "#AddGroup\n"
+                    "<b>Chat name:</b> {}\n"
+                    "<b>ID:</b> <code>{}</code>".format(chat.title, chat.id),
+                    parse_mode=ParseMode.HTML
+                )
+                context.bot.send_message(chat.id,
+                                "Thanks for adding me into your group! Don't forgot to checkout the Hitalo's channel (@AndroidRepo)! And follow my news channel @HitsukiNews.")
 
-					if cust_welcome:
-						formatted_text = cust_welcome.format(first=escape_markdown(first_name),
-											  last=escape_markdown(new_mem.last_name or first_name),
-											  fullname=escape_markdown(fullname), username=username, mention=mention,
-											  count=count, chatname=escape_markdown(chat.title), id=new_mem.id, rules=rules)
-					else:
-						formatted_text = ""
-					# Build keyboard
-					buttons = sql.get_welc_buttons(chat.id)
-					keyb = build_keyboard_parser(context.bot, chat.id, buttons)
-					getsec, extra_verify, mutetime, timeout, timeout_mode, custom_text = sql.welcome_security(chat.id)
+            else:
+                # If welcome message is media, send with appropriate function
+                if welc_type != sql.Types.TEXT and welc_type != sql.Types.BUTTON_TEXT:
+                    reply = update.message.message_id
+                    # Clean service welcome
+                    if cleanserv:
+                        reply = False
+                    # Formatting text
+                    first_name = new_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
+                    if new_mem.last_name:
+                        fullname = "{} {}".format(first_name, new_mem.last_name)
+                    else:
+                        fullname = first_name
+                    count = chat.get_members_count()
+                    mention = mention_markdown(new_mem.id, first_name)
+                    if new_mem.username:
+                        username = "@" + escape_markdown(new_mem.username)
+                    else:
+                        username = mention
+                    rules = "https://t.me/" + context.bot.username + "?start=" + str(chat.id)
 
-					# If user ban protected don't apply security on him
-					if is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id)):
-						pass
-					elif getsec:
-						# If mute time is turned on
-						is_clicked = sql.get_chat_userlist(chat.id)
-						if mutetime:
-							if mutetime[:1] == "0":
-								if new_mem.id not in list(is_clicked):
-									try:
-										context.bot.restrict_chat_member(chat.id, new_mem.id, permissions=ChatPermissions(can_send_messages=False))
-										canrest = True
-									except BadRequest:
-										canrest = False
-								else:
-									canrest = bot_can_restrict(chat, context.bot.id)
-							else:
-								if new_mem.id not in list(is_clicked):
-									mutetime = extract_time(update.effective_message, mutetime)
-									try:
-										context.bot.restrict_chat_member(chat.id, new_mem.id, until_date=mutetime, permissions=ChatPermissions(can_send_messages=False))
-										canrest = True
-									except BadRequest:
-										canrest = False
-								else:
-									canrest = bot_can_restrict(chat, context.bot.id)
-						# If security welcome is turned on
-						if is_clicked.get(new_mem.id) and is_clicked[new_mem.id] == True:
-							sql.add_to_userlist(chat.id, new_mem.id, True)
-						else:
-							sql.add_to_userlist(chat.id, new_mem.id, False)
-						if canrest:
-							if new_mem.id not in list(is_clicked):
-								keyb.append([InlineKeyboardButton(text=str(custom_text), callback_data="check_bot_({})".format(new_mem.id))])
-							elif new_mem.id in list(is_clicked) and is_clicked[new_mem.id] == False:
-								keyb.append([InlineKeyboardButton(text=str(custom_text), callback_data="check_bot_({})".format(new_mem.id))])
-					keyboard = InlineKeyboardMarkup(keyb)
-					# Send message
-					try:
-						sent = ENUM_FUNC_MAP[welc_type](chat.id, cust_content, caption=formatted_text, reply_markup=keyboard, parse_mode="markdown", reply_to_message_id=reply)
-					except BadRequest:
-						sent = send_message(update.effective_message, tl(update.effective_message, "Catatan: Terjadi kesalahan saat mengirim pesan kustom. Harap perbarui."))
-					return
-				else:
-					# else, move on
-					first_name = new_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
+                    if cust_welcome:
+                        formatted_text = cust_welcome.format(first=escape_markdown(first_name),
+                                              last=escape_markdown(new_mem.last_name or first_name),
+                                              fullname=escape_markdown(fullname), username=username, mention=mention,
+                                              count=count, chatname=escape_markdown(chat.title), id=new_mem.id, rules=rules)
+                    else:
+                        formatted_text = ""
+                    # Build keyboard
+                    buttons = sql.get_welc_buttons(chat.id)
+                    keyb = build_keyboard_parser(context.bot, chat.id, buttons)
+                    getsec, extra_verify, mutetime, timeout, timeout_mode, custom_text = sql.welcome_security(chat.id)
 
-					if cust_welcome:
-						if new_mem.last_name:
-							fullname = "{} {}".format(first_name, new_mem.last_name)
-						else:
-							fullname = first_name
-						count = chat.get_members_count()
-						mention = mention_markdown(new_mem.id, first_name)
-						if new_mem.username:
-							username = "@" + escape_markdown(new_mem.username)
-						else:
-							username = mention
-						rules = "https://t.me/" + context.bot.username + "?start=" + str(chat.id)
+                    # If user ban protected don't apply security on him
+                    if is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id)):
+                        pass
+                    elif getsec:
+                        # If mute time is turned on
+                        is_clicked = sql.get_chat_userlist(chat.id)
+                        if mutetime:
+                            if mutetime[:1] == "0":
+                                if new_mem.id not in list(is_clicked):
+                                    try:
+                                        context.bot.restrict_chat_member(chat.id, new_mem.id, permissions=ChatPermissions(can_send_messages=False))
+                                        canrest = True
+                                    except BadRequest:
+                                        canrest = False
+                                else:
+                                    canrest = bot_can_restrict(chat, context.bot.id)
+                            else:
+                                if new_mem.id not in list(is_clicked):
+                                    mutetime = extract_time(update.effective_message, mutetime)
+                                    try:
+                                        context.bot.restrict_chat_member(chat.id, new_mem.id, until_date=mutetime, permissions=ChatPermissions(can_send_messages=False))
+                                        canrest = True
+                                    except BadRequest:
+                                        canrest = False
+                                else:
+                                    canrest = bot_can_restrict(chat, context.bot.id)
+                        # If security welcome is turned on
+                        if is_clicked.get(new_mem.id) and is_clicked[new_mem.id] is True:
+                            sql.add_to_userlist(chat.id, new_mem.id, True)
+                        else:
+                            sql.add_to_userlist(chat.id, new_mem.id, False)
+                        if canrest:
+                            if new_mem.id not in list(is_clicked):
+                                keyb.append([InlineKeyboardButton(text=str(custom_text), callback_data="check_bot_({})".format(new_mem.id))])
+                            elif new_mem.id in list(is_clicked) and is_clicked[new_mem.id] is False:
+                                keyb.append([InlineKeyboardButton(text=str(custom_text), callback_data="check_bot_({})".format(new_mem.id))])
+                    keyboard = InlineKeyboardMarkup(keyb)
+                    # Send message
+                    try:
+                        sent = ENUM_FUNC_MAP[welc_type](chat.id, cust_content, caption=formatted_text, reply_markup=keyboard, parse_mode="markdown", reply_to_message_id=reply)
+                    except BadRequest:
+                        sent = send_message(update.effective_message, tl(update.effective_message, "Catatan: Terjadi kesalahan saat mengirim pesan kustom. Harap perbarui."))
+                    return
+                else:
+                    # else, move on
+                    first_name = new_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
 
-						valid_format = escape_invalid_curly_brackets(cust_welcome, VALID_WELCOME_FORMATTERS)
-						if valid_format:
-							res = valid_format.format(first=escape_markdown(first_name),
-												  last=escape_markdown(new_mem.last_name or first_name),
-												  fullname=escape_markdown(fullname), username=username, mention=mention,
-												  count=count, chatname=escape_markdown(chat.title), id=new_mem.id, rules=rules)
-						else:
-							res = ""
-						buttons = sql.get_welc_buttons(chat.id)
-						keyb = build_keyboard_parser(context.bot, chat.id, buttons)
-					else:
-						res = sql.DEFAULT_WELCOME.format(first=first_name)
-						keyb = []
+                    if cust_welcome:
+                        if new_mem.last_name:
+                            fullname = "{} {}".format(first_name, new_mem.last_name)
+                        else:
+                            fullname = first_name
+                        count = chat.get_members_count()
+                        mention = mention_markdown(new_mem.id, first_name)
+                        if new_mem.username:
+                            username = "@" + escape_markdown(new_mem.username)
+                        else:
+                            username = mention
+                        rules = "https://t.me/" + context.bot.username + "?start=" + str(chat.id)
 
-					getsec, extra_verify, mutetime, timeout, timeout_mode, custom_text = sql.welcome_security(chat.id)
+                        valid_format = escape_invalid_curly_brackets(cust_welcome, VALID_WELCOME_FORMATTERS)
+                        if valid_format:
+                            res = valid_format.format(first=escape_markdown(first_name),
+                                                  last=escape_markdown(new_mem.last_name or first_name),
+                                                  fullname=escape_markdown(fullname), username=username, mention=mention,
+                                                  count=count, chatname=escape_markdown(chat.title), id=new_mem.id, rules=rules)
+                        else:
+                            res = ""
+                        buttons = sql.get_welc_buttons(chat.id)
+                        keyb = build_keyboard_parser(context.bot, chat.id, buttons)
+                    else:
+                        res = sql.DEFAULT_WELCOME.format(first=first_name)
+                        keyb = []
+
+                    getsec, extra_verify, mutetime, timeout, timeout_mode, custom_text = sql.welcome_security(chat.id)
 					
-					# If user ban protected don't apply security on him
-					if is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id)):
-						pass
-					elif getsec:
-						is_clicked = sql.get_chat_userlist(chat.id)
-						if mutetime:
-							if mutetime[:1] == "0":
-								if new_mem.id not in list(is_clicked):
-									try:
-										context.bot.restrict_chat_member(chat.id, new_mem.id, permissions=ChatPermissions(can_send_messages=False))
-										canrest = True
-									except BadRequest:
-										canrest = False
-								else:
-									canrest = bot_can_restrict(chat, context.bot.id)
-							else:
-								if new_mem.id not in list(is_clicked):
-									mutetime = extract_time(update.effective_message, mutetime)
-									try:
-										context.bot.restrict_chat_member(chat.id, new_mem.id, until_date=mutetime, permissions=ChatPermissions(can_send_messages=False))
-										canrest = True
-									except BadRequest:
-										canrest = False
-								else:
-									canrest = bot_can_restrict(chat, context.bot.id)
-						if is_clicked.get(new_mem.id) and is_clicked[new_mem.id] == True:
-							sql.add_to_userlist(chat.id, new_mem.id, True)
-						else:
-							sql.add_to_userlist(chat.id, new_mem.id, False)
-						if canrest:
-							if new_mem.id not in list(is_clicked):
-								if extra_verify:
-									keyb.append([InlineKeyboardButton(text=str(custom_text), url="t.me/{}?start=verify_{}".format(context.bot.username, chat.id))])
-								else:
-									keyb.append([InlineKeyboardButton(text=str(custom_text), callback_data="check_bot_({})".format(new_mem.id))])
-								if timeout != "0":
-									sql.add_to_timeout(chat.id, new_mem.id, int(timeout))
-							elif new_mem.id in list(is_clicked) and is_clicked[new_mem.id] == False:
-								if extra_verify:
-									keyb.append([InlineKeyboardButton(text=str(custom_text), url="t.me/{}?start=verify_{}".format(context.bot.username, chat.id))])
-								else:
-									keyb.append([InlineKeyboardButton(text=str(custom_text), callback_data="check_bot_({})".format(new_mem.id))])
-								if timeout != "0":
-									sql.add_to_timeout(chat.id, new_mem.id, int(timeout))
-					keyboard = InlineKeyboardMarkup(keyb)
+                    # If user ban protected don't apply security on him
+                    if is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id)):
+                        pass
+                    elif getsec:
+                        is_clicked = sql.get_chat_userlist(chat.id)
+                        if mutetime:
+                            if mutetime[:1] == "0":
+                                if new_mem.id not in list(is_clicked):
+                                    try:
+                                        context.bot.restrict_chat_member(chat.id, new_mem.id, permissions=ChatPermissions(can_send_messages=False))
+                                        canrest = True
+                                    except BadRequest:
+                                        canrest = False
+                                else:
+                                    canrest = bot_can_restrict(chat, context.bot.id)
+                            else:
+                                if new_mem.id not in list(is_clicked):
+                                    mutetime = extract_time(update.effective_message, mutetime)
+                                    try:
+                                        context.bot.restrict_chat_member(chat.id, new_mem.id, until_date=mutetime, permissions=ChatPermissions(can_send_messages=False))
+                                        canrest = True
+                                    except BadRequest:
+                                        canrest = False
+                                else:
+                                    canrest = bot_can_restrict(chat, context.bot.id)
+                        if is_clicked.get(new_mem.id) and is_clicked[new_mem.id] == True:
+                            sql.add_to_userlist(chat.id, new_mem.id, True)
+                        else:
+                            sql.add_to_userlist(chat.id, new_mem.id, False)
+                        if canrest:
+                            if new_mem.id not in list(is_clicked):
+                                if extra_verify:
+                                    keyb.append([InlineKeyboardButton(text=str(custom_text), url="t.me/{}?start=verify_{}".format(context.bot.username, chat.id))])
+                                else:
+                                    keyb.append([InlineKeyboardButton(text=str(custom_text), callback_data="check_bot_({})".format(new_mem.id))])
+                                if timeout != "0":
+                                    sql.add_to_timeout(chat.id, new_mem.id, int(timeout))
+                            elif new_mem.id in list(is_clicked) and is_clicked[new_mem.id] == False:
+                                if extra_verify:
+                                    keyb.append([InlineKeyboardButton(text=str(custom_text), url="t.me/{}?start=verify_{}".format(context.bot.username, chat.id))])
+                                else:
+                                    keyb.append([InlineKeyboardButton(text=str(custom_text), callback_data="check_bot_({})".format(new_mem.id))])
+                                if timeout != "0":
+                                    sql.add_to_timeout(chat.id, new_mem.id, int(timeout))
+                    keyboard = InlineKeyboardMarkup(keyb)
 
-					sent = send(update, res, keyboard,
-								sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
+                    sent = send(update, res, keyboard,
+                                sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
 
 				
-			prev_welc = sql.get_clean_pref(chat.id)
-			if prev_welc:
-				try:
-					if int(prev_welc) != 1:
-						context.bot.delete_message(chat.id, prev_welc)
-				except BadRequest as excp:
-				   pass
+            prev_welc = sql.get_clean_pref(chat.id)
+            if prev_welc:
+                try:
+                    if int(prev_welc) != 1:
+                        context.bot.delete_message(chat.id, prev_welc)
+                except BadRequest as excp:
+                    pass
 
-				if sent:
-					sql.set_clean_welcome(chat.id, sent.message_id)
+                if sent:
+                    sql.set_clean_welcome(chat.id, sent.message_id)
 
 
 @run_async
@@ -342,63 +342,6 @@ def check_bot_button(update, context):
 	if IS_DEBUG:
 		print("-> {} was clicked welcome sec button".format(user.id))
 
-	# This method will unmute user when that user is clicked welc security button
-	# It has two method, so select one method. I'm using first method as default.
-
-	# With second script, bot will edit welcome message and remove welcome security button
-	# But when muted user in old welcomes, bot will remove that button,
-	# and then new member will not have welcome security button.
-	# The problem is bot using list of new member which has been muted,
-	# and when that user is match, bot will response True and unmute him/her.
-	# All we need is using different filter, it easy but old member has muted by
-	# welcome security is no longer unmuted on any welcome security button,
-	# need to search their welcome button to get unmute.
-	# And you will need two decision, unmute specific user or unmute all user
-	# who has muted by security button.
-	# Also you can remove add_to_userlist and rm_from_userlist script
-	# if you want to use second method since it unused.
-	# 
-	# 
-	# Edit 14/03/2020
-	# Now welcome security is more secure!
-	# When user was clicked welcome, no need to restirect him/her again,
-	# And when they're got muted by admins, and want to rejoin group to
-	# bypass mute, he/she will not muted again or send 'unmute me' to them.
-	# 
-
-	# PLEASE SELECT ONE
-	# use """ to set it as comment and disable that script
-
-	# => Use this if you want to unmute user who has muted by welcome security
-	"""
-	getalluser = sql.get_chat_userlist(chat.id)
-	if getalluser and user.id in list(getalluser) and getalluser[user.id] == False:
-		try:
-			query.answer(text=tl(update.effective_message, "Kamu telah disuarakan!"))
-		except BadRequest as err:
-			print("-> Failed: {}".format(err))
-			return
-		# Unmute user
-		context.bot.restrict_chat_member(chat.id, user.id, permissions=ChatPermissions(can_send_messages=True, can_send_media_messages=True, can_send_other_messages=True, can_add_web_page_previews=True))
-		# sql.rm_from_userlist(chat.id, user.id)
-		sql.add_to_userlist(chat.id, user.id, True)
-	else:
-		print("Not new user")
-		if getalluser.get(user.id) and getalluser.get(user.id) == True:
-			try:
-				query.answer(text=tl(update.effective_message, "Kamu sudah pernah mengklik ini sebelumnya!"))
-			except BadRequest as err:
-				print("-> Failed: {}".format(err))
-				return
-		else:
-			try:
-				query.answer(text=tl(update.effective_message, "Kamu bukan pengguna baru!"))
-			except BadRequest as err:
-				print("-> Failed: {}".format(err))
-				return
-	"""
-
-	# => Or use this to unmute specific user and remove that security button
 	getalluser = sql.get_chat_userlist(chat.id)
 	if int(user.id) != int(user_id):
 		if IS_DEBUG:
@@ -479,7 +422,7 @@ def check_bot_button(update, context):
 	keyboard = InlineKeyboardMarkup(keyb)
 	context.bot.editMessageText(chat_id=chat.id, message_id=query.message.message_id, text=res, reply_markup=keyboard, parse_mode="markdown")
 	query.answer(text=tl(update.effective_message, "Kamu telah disuarakan!"))
-	#TODO need kick users after 2 hours and remove message 
+	# TODO need kick users after 2 hours and remove message 
 
 
 @run_async

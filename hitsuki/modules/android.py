@@ -9,7 +9,6 @@ from hurry.filesize import size as sizee
 from requests import get
 
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram import Update, Bot
 from telegram.ext import CommandHandler
 from telegram.ext import run_async
 
@@ -21,7 +20,7 @@ from hitsuki.modules.languages import tl
 # This module was inspired by Android Helper Bot by Vachounet.
 
 # This module has been modified by @HitaloSama on GitHub
-# Command /getfw /magisk /twrp and /device were obtained thanks to corsicanu bot (originally kanged from UserBot PaperplaneExtended)
+# Command /magisk /twrp and /device were obtained thanks to corsicanu bot (originally kanged from UserBot PaperplaneExtended)
 # Command /specs was only possible thanks to the help of AvinashReddy3108
 
 LOGGER.info("Original Android Modules by @RealAkito on Telegram, modified by @HitaloSama on GitHub")
@@ -64,7 +63,6 @@ def device(update, context):
 @spamcheck
 @run_async
 def odin(update, context):
-    args = context.args
     message = "*Tool to flash the stock firmware of your Samsung Galaxy*\nDownload from below!\n\nYou can download a firmware by the `/getfw` command or on the @SamFirm channel"
     keyboard = [
         [InlineKeyboardButton("Odin", url="https://odin3download.com/tool/Odin3-v3.14.1.zip"),
@@ -79,7 +77,6 @@ def odin(update, context):
 @spamcheck
 @run_async
 def gsis(update, context):
-    args = context.args
     message = "*Channels recommended by my creator for you to download GSIs:*\n\n - @VegaGSIs\n - [@Expressluke](http://t.me/joinchat/AAAAAEjIRhZRX1mOZpLR5g)\n - @ErfanGSI\n - @canalvegadata"
     keyboard = [
         [InlineKeyboardButton("What is GSI?", url="https://github.com/phhusson/treble_experimentations/wiki/Home"),
@@ -94,7 +91,6 @@ def gsis(update, context):
 @spamcheck
 @run_async
 def edxposed(update, context):
-    args = context.args
     message = update.effective_message
     usr = get(f'https://api.github.com/repos/elderdrivers/edxposed/releases/latest').json()
     reply_text = "*Latest EdXposed release(s):*\n"

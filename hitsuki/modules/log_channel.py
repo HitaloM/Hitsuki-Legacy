@@ -10,7 +10,7 @@ from hitsuki.modules.helper_funcs.alternate import send_message
 FILENAME = __name__.rsplit(".", 1)[-1]
 
 if is_module_loaded(FILENAME):
-    from telegram import Bot, Update, ParseMode, Message, Chat
+    from telegram import Bot, ParseMode, Message, Chat
     from telegram.error import BadRequest, Unauthorized
     from telegram.ext import CommandHandler, run_async
     from telegram.utils.helpers import escape_markdown
@@ -18,7 +18,6 @@ if is_module_loaded(FILENAME):
     from hitsuki import dispatcher, LOGGER
     from hitsuki.modules.helper_funcs.chat_status import user_admin
     from hitsuki.modules.sql import log_channel_sql as sql
-
 
     def loggable(func):
         @wraps(func)
@@ -46,7 +45,6 @@ if is_module_loaded(FILENAME):
 
         return log_action
 
-
     def send_log(bot: Bot, log_chat_id: str, orig_chat_id: str, result: str):
         try:
             bot.send_message(log_chat_id, result, parse_mode=ParseMode.HTML)
@@ -61,25 +59,22 @@ if is_module_loaded(FILENAME):
 
                 bot.send_message(log_chat_id, result + tl(update.effective_message, "\n\nFormatting has been disabled due to an unexpected error."))
 
-
     @run_async
     @spamcheck
     @user_admin
     def logging(update, context):
-        message = update.effective_message  # type: Optional[Message]
         chat = update.effective_chat  # type: Optional[Chat]
 
         log_channel = sql.get_chat_log_channel(chat.id)
         if log_channel:
             log_channel_info = context.bot.get_chat(log_channel)
-            send_message(update.effective_message, 
+            send_message(update.effective_message,
                 tl(update.effective_message, "These group have all logs sent to: {} (`{}`)").format(escape_markdown(log_channel_info.title),
                                                                          log_channel),
                 parse_mode=ParseMode.MARKDOWN)
 
         else:
             send_message(update.effective_message, tl(update.effective_message, "Tidak ada saluran log yang telah ditetapkan untuk grup ini!"))
-
 
     @run_async
     @spamcheck
@@ -99,7 +94,7 @@ if is_module_loaded(FILENAME):
                     pass
                 else:
                     LOGGER.exception("Error deleting message in log channel. Should work anyway though.")
-                    
+
             try:
                 context.bot.send_message(message.forward_from_chat.id,
                              tl(update.effective_message, "Saluran ini telah ditetapkan sebagai saluran log untuk {}.").format(
@@ -111,7 +106,7 @@ if is_module_loaded(FILENAME):
                     return
                 else:
                     LOGGER.exception("ERROR in setting the log channel.")
-                    
+
             context.bot.send_message(chat.id, tl(update.effective_message, "Berhasil mengatur saluran log!"))
 
         else:
@@ -120,12 +115,10 @@ if is_module_loaded(FILENAME):
                                " - Kirimkan /setlog ke saluran\n"
                                " - Teruskan /setlog ke grup\n"))
 
-
     @run_async
     @spamcheck
     @user_admin
     def unsetlog(update, context):
-        message = update.effective_message  # type: Optional[Message]
         chat = update.effective_chat  # type: Optional[Chat]
 
         log_channel = sql.stop_chat_logging(chat.id)
@@ -136,14 +129,11 @@ if is_module_loaded(FILENAME):
         else:
             send_message(update.effective_message, tl(update.effective_message, "Belum ada saluran log yang ditetapkan!"))
 
-
     def __stats__():
         return tl(OWNER_ID, "`{}` log channels set.").format(sql.num_logchannels())
 
-
     def __migrate__(old_chat_id, new_chat_id):
         sql.migrate_chat(old_chat_id, new_chat_id)
-
 
     def __chat_settings__(chat_id, user_id):
         log_channel = sql.get_chat_log_channel(chat_id)
@@ -152,7 +142,6 @@ if is_module_loaded(FILENAME):
             return tl(user_id, "Grup ini memiliki semua log yang dikirim ke: {} (`{}`)").format(escape_markdown(log_channel_info.title),
                                                                             log_channel)
         return tl(user_id, "Tidak ada saluran masuk yang ditetapkan untuk grup ini!")
-
 
     __help__ = "logchannel_help"
 

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from telegram import Message, Update, Bot
+from telegram import Message
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
@@ -10,7 +10,8 @@ import hitsuki.modules.sql.rules_sql as sql
 from hitsuki import dispatcher, spamcheck, OWNER_ID
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.helper_funcs.misc import build_keyboard_alternate
-from hitsuki.modules.helper_funcs.string_handling import markdown_parser, button_markdown_parser
+from hitsuki.modules.helper_funcs.string_handling import markdown_parser, \
+    button_markdown_parser
 from hitsuki.modules.connection import connected
 
 from hitsuki.modules.languages import tl
@@ -27,7 +28,7 @@ def get_rules(update, context):
 # Do not async - not from a handler
 def send_rules(update, chat_id, from_pm=False):
     bot = dispatcher.bot
-    user = update.effective_user  # type: Optional[User]
+    user = update.effective_user
     try:
         chat = bot.get_chat(chat_id)
     except BadRequest as excp:
@@ -159,8 +160,8 @@ def clear_rules(update, context):
 @user_admin
 def private_rules(update, context):
     args = context.args
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    chat = update.effective_chat
+    user = update.effective_user
     conn = connected(context.bot, update, chat, user.id)
     if conn:
         chat_id = conn
@@ -208,9 +209,9 @@ __help__ = "rules_help"
 
 __mod_name__ = "Rules"
 
-GET_RULES_HANDLER = CommandHandler("rules", get_rules)#, filters=Filters.group)
-SET_RULES_HANDLER = CommandHandler("setrules", set_rules)#, filters=Filters.group)
-RESET_RULES_HANDLER = CommandHandler("clearrules", clear_rules)#, filters=Filters.group)
+GET_RULES_HANDLER = CommandHandler("rules", get_rules)
+SET_RULES_HANDLER = CommandHandler("setrules", set_rules)
+RESET_RULES_HANDLER = CommandHandler("clearrules", clear_rules)
 PRIVATERULES_HANDLER = CommandHandler("privaterules", private_rules, pass_args=True)
 
 dispatcher.add_handler(GET_RULES_HANDLER)
