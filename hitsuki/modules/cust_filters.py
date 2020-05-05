@@ -2,7 +2,7 @@ import re
 from typing import Optional
 
 import telegram
-from telegram import Chat, InlineKeyboardMarkup, Message, ParseMode, chat
+from telegram import Chat, InlineKeyboardMarkup, Message, ParseMode
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, DispatcherHandlerStop, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_markdown
@@ -21,7 +21,6 @@ from hitsuki.modules.connection import connected
 
 from hitsuki.modules.languages import tl
 from hitsuki.modules.helper_funcs.alternate import send_message
-from logging import warning
 
 HANDLER_GROUP = 10
 
@@ -342,10 +341,10 @@ def reply_filter(update, context):
                                     update.effective_message, tl(
                                         update.effective_message, get_exception(
                                             excp, filt, chat)))
-                        except BadRequest as excp:
-                            LOGGER.exception(
-                                "Gagal mengirim pesan: " + excp.message)
-                            pass
+                            except BadRequest as excp:
+                                LOGGER.exception(
+                                    "Gagal mengirim pesan: " + excp.message)
+                                pass
                 else:
                     ENUM_FUNC_MAP[filt.file_type](chat.id,
                                                   filt.file_id,
