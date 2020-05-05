@@ -2,7 +2,7 @@ import re
 from typing import Optional
 
 import telegram
-from telegram import Chat, InlineKeyboardMarkup, Message, ParseMode
+from telegram import ParseMode, InlineKeyboardMarkup, Message, Chat
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, DispatcherHandlerStop, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_markdown
@@ -41,10 +41,10 @@ ENUM_FUNC_MAP = {
 @spamcheck
 def list_handlers(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user
+    user = update.effective_user  # type: Optional[User]
 
     conn = connected(context.bot, update, chat, user.id, need_admin=False)
-    if conn is False:
+    if not conn is False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
         filter_list = "*Filter di {}:*\n"
@@ -60,26 +60,18 @@ def list_handlers(update, context):
     all_handlers = sql.get_chat_triggers(chat_id)
 
     if not all_handlers:
-        send_message(
-            update.effective_message, tl(
-                update.effective_message, "Tidak ada filter di {}!").format(chat_name))
+        send_message(update.effective_message, tl(update.effective_message, "Tidak ada filter di {}!").format(chat_name))
         return
 
     for keyword in all_handlers:
         entry = " - {}\n".format(escape_markdown(keyword))
         if len(entry) + len(filter_list) > telegram.MAX_MESSAGE_LENGTH:
-            send_message(
-                update.effective_message,
-                filter_list.format(chat_name),
-                parse_mode=telegram.ParseMode.MARKDOWN)
+            send_message(update.effective_message, filter_list.format(chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
             filter_list = entry
         else:
             filter_list += entry
 
-    send_message(
-        update.effective_message,
-        filter_list.format(chat_name),
-        parse_mode=telegram.ParseMode.MARKDOWN)
+    send_message(update.effective_message, filter_list.format(chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
 
 
 # NOT ASYNC BECAUSE DISPATCHER HANDLER RAISED
@@ -87,13 +79,12 @@ def list_handlers(update, context):
 @user_admin
 def filters(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user
+    user = update.effective_user  # type: Optional[User]
     msg = update.effective_message  # type: Optional[Message]
-    # use python's maxsplit to separate Cmd, keyword, and reply_text
-    args = msg.text.split(None, 1)
+    args = msg.text.split(None, 1)  # use python's maxsplit to separate Cmd, keyword, and reply_text
 
     conn = connected(context.bot, update, chat, user.id)
-    if conn is False:
+    if not conn is False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
@@ -104,16 +95,12 @@ def filters(update, context):
             chat_name = chat.title
 
     if not msg.reply_to_message and len(args) < 2:
-        send_message(
-            update.effective_message, tl(
-                update.effective_message, "Anda harus memberi nama untuk filter ini!"))
+        send_message(update.effective_message, tl(update.effective_message, "Anda harus memberi nama untuk filter ini!"))
         return
 
     if msg.reply_to_message:
         if len(args) < 2:
-            send_message(
-                update.effective_message, tl(
-                    update.effective_message, "Anda harus memberi nama untuk filter ini!"))
+            send_message(update.effective_message, tl(update.effective_message, "Anda harus memberi nama untuk filter ini!"))
             return
         else:
             keyword = args[1]
@@ -121,8 +108,7 @@ def filters(update, context):
         extracted = split_quotes(args[1])
         if len(extracted) < 1:
             return
-        # set trigger -> lower, so as to avoid adding duplicate filters with
-        # different cases
+        # set trigger -> lower, so as to avoid adding duplicate filters with different cases
         keyword = extracted[0].lower()
 
     # Add the filter
@@ -133,17 +119,11 @@ def filters(update, context):
 
     text, file_type, file_id = get_filter_type(msg)
     if not msg.reply_to_message and len(extracted) >= 2:
-        # set correct offset relative to command + notename
-        offset = len(extracted[1]) - len(msg.text)
-        text, buttons = button_markdown_parser(
-            extracted[1], entities=msg.parse_entities(), offset=offset)
+        offset = len(extracted[1]) - len(msg.text)  # set correct offset relative to command + notename
+        text, buttons = button_markdown_parser(extracted[1], entities=msg.parse_entities(), offset=offset)
         text = text.strip()
         if not text:
-            send_message(
-                update.effective_message,
-                tl(
-                    update.effective_message,
-                    "Tidak ada pesan catatan - Anda tidak bisa HANYA menekan tombol, Anda perlu pesan untuk melakukannya!"))
+            send_message(update.effective_message, tl(update.effective_message, "Tidak ada pesan catatan - Anda tidak bisa HANYA menekan tombol, Anda perlu pesan untuk melakukannya!"))
             return
 
     elif msg.reply_to_message and len(args) >= 2:
@@ -153,16 +133,12 @@ def filters(update, context):
             text_to_parsing = msg.reply_to_message.caption
         else:
             text_to_parsing = ""
-        # set correct offset relative to command + notename
-        offset = len(text_to_parsing)
-        text, buttons = button_markdown_parser(
-            text_to_parsing, entities=msg.parse_entities(), offset=offset)
+        offset = len(text_to_parsing)  # set correct offset relative to command + notename
+        text, buttons = button_markdown_parser(text_to_parsing, entities=msg.parse_entities(), offset=offset)
         text = text.strip()
 
     elif not text and not file_type:
-        send_message(
-            update.effective_message, tl(
-                update.effective_message, "Anda harus memberi nama untuk filter ini!"))
+        send_message(update.effective_message, tl(update.effective_message, "Anda harus memberi nama untuk filter ini!"))
         return
 
     elif msg.reply_to_message:
@@ -172,31 +148,20 @@ def filters(update, context):
             text_to_parsing = msg.reply_to_message.caption
         else:
             text_to_parsing = ""
-        # set correct offset relative to command + notename
-        offset = len(text_to_parsing)
-        text, buttons = button_markdown_parser(
-            text_to_parsing, entities=msg.parse_entities(), offset=offset)
+        offset = len(text_to_parsing)  # set correct offset relative to command + notename
+        text, buttons = button_markdown_parser(text_to_parsing, entities=msg.parse_entities(), offset=offset)
         text = text.strip()
         if (msg.reply_to_message.text or msg.reply_to_message.caption) and not text:
-            send_message(
-                update.effective_message,
-                tl(
-                    update.effective_message,
-                    "Tidak ada pesan catatan - Anda tidak bisa HANYA menekan tombol, Anda perlu pesan untuk melakukannya!"))
+            send_message(update.effective_message, tl(update.effective_message, "Tidak ada pesan catatan - Anda tidak bisa HANYA menekan tombol, Anda perlu pesan untuk melakukannya!"))
             return
 
     else:
-        send_message(update.effective_message, tl(
-            update.effective_message, "Invalid filter!"))
+        send_message(update.effective_message, tl(update.effective_message, "Invalid filter!"))
         return
 
     sql.new_add_filter(chat_id, keyword, text, file_type, file_id, buttons)
 
-    send_message(update.effective_message,
-                 tl(update.effective_message,
-                    "Handler '{}' ditambahkan di *{}*!").format(keyword,
-                                                                chat_name),
-                 parse_mode=telegram.ParseMode.MARKDOWN)
+    send_message(update.effective_message, tl(update.effective_message, "Handler '{}' ditambahkan di *{}*!").format(keyword, chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
     raise DispatcherHandlerStop
 
 
@@ -205,11 +170,11 @@ def filters(update, context):
 @user_admin
 def stop_filter(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user
+    user = update.effective_user  # type: Optional[User]
     args = update.effective_message.text.split(None, 1)
 
     conn = connected(context.bot, update, chat, user.id)
-    if conn is not False:
+    if not conn is False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
@@ -220,38 +185,29 @@ def stop_filter(update, context):
             chat_name = chat.title
 
     if len(args) < 2:
-        send_message(
-            update.effective_message, tl(
-                update.effective_message, "Apa yang harus saya hentikan?"))
+        send_message(update.effective_message, tl(update.effective_message, "Apa yang harus saya hentikan?"))
         return
 
     chat_filters = sql.get_chat_triggers(chat_id)
 
     if not chat_filters:
-        send_message(
-            update.effective_message, tl(
-                update.effective_message, "Tidak ada filter aktif di sini!"))
+        send_message(update.effective_message, tl(update.effective_message, "Tidak ada filter aktif di sini!"))
         return
 
     for keyword in chat_filters:
         if keyword == args[1]:
             sql.remove_filter(chat_id, args[1])
-            send_message(update.effective_message,
-                         tl(update.effective_message,
-                            "Ya, saya akan berhenti menjawabnya di *{}*.").format(chat_name),
-                         parse_mode=telegram.ParseMode.MARKDOWN)
+            send_message(update.effective_message, tl(update.effective_message, "Ya, saya akan berhenti menjawabnya di *{}*.").format(chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
             raise DispatcherHandlerStop
 
-    send_message(
-        update.effective_message,
-        "Itu bukan filter aktif - jalankan /filter untuk semua filter aktif.")
+    send_message(update.effective_message, "Itu bukan filter aktif - jalankan /filter untuk semua filter aktif.")
 
 
 @run_async
 def reply_filter(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
-    user = update.effective_user
+    user = update.effective_user # type: Optional[User]
 
     if int(user.id) == int(777000):
         return
@@ -270,39 +226,13 @@ def reply_filter(update, context):
                 keyb = build_keyboard_parser(context.bot, chat.id, buttons)
                 keyboard = InlineKeyboardMarkup(keyb)
 
-                VALID_WELCOME_FORMATTERS = [
-                    'first',
-                    'last',
-                    'fullname',
-                    'username',
-                    'id',
-                    'chatname',
-                    'mention']
+                VALID_WELCOME_FORMATTERS = ['first', 'last', 'fullname', 'username', 'id', 'chatname', 'mention']
                 if filt.reply_text:
-                    valid_format = escape_invalid_curly_brackets(
-                        filt.reply_text, VALID_WELCOME_FORMATTERS)
+                    valid_format = escape_invalid_curly_brackets(filt.reply_text, VALID_WELCOME_FORMATTERS)
                     if valid_format:
-                        filtext = valid_format.format(
-                            first=escape_markdown(
-                                message.from_user.first_name),
-                            last=escape_markdown(
-                                message.from_user.last_name or message.from_user.first_name),
-                            fullname=escape_markdown(
-                                " ".join(
-                                    [
-                                        message.from_user.first_name,
-                                        message.from_user.last_name] if message.from_user.last_name else [
-                                        message.from_user.first_name])),
-                            username="@" +
-                            message.from_user.username if message.from_user.username else mention_markdown(
-                                message.from_user.id,
-                                message.from_user.first_name),
-                            mention=mention_markdown(
-                                message.from_user.id,
-                                message.from_user.first_name),
-                            chatname=escape_markdown(
-                                message.chat.title if message.chat.type != "private" else message.from_user.first_name),
-                            id=message.from_user.id)
+                        filtext = valid_format.format(first=escape_markdown(message.from_user.first_name),
+                                                      last=escape_markdown(message.from_user.last_name or message.from_user.first_name),
+                                                      fullname=escape_markdown(" ".join([message.from_user.first_name, message.from_user.last_name] if message.from_user.last_name else [message.from_user.first_name])), username="@" + message.from_user.username if message.from_user.username else mention_markdown(message.from_user.id, message.from_user.first_name), mention=mention_markdown(message.from_user.id, message.from_user.first_name), chatname=escape_markdown(message.chat.title if message.chat.type != "private" else message.from_user.first_name), id=message.from_user.id)
                     else:
                         filtext = ""
                 else:
@@ -310,49 +240,26 @@ def reply_filter(update, context):
 
                 if filt.file_type in (sql.Types.BUTTON_TEXT, sql.Types.TEXT):
                     try:
-                        context.bot.send_message(
-                            chat.id,
-                            filtext,
-                            reply_to_message_id=message.message_id,
-                            parse_mode="markdown",
-                            disable_web_page_preview=True,
-                            reply_markup=keyboard)
+                        context.bot.send_message(chat.id, filtext, reply_to_message_id=message.message_id,
+                                         parse_mode="markdown", disable_web_page_preview=True,
+                                         reply_markup=keyboard)
                     except BadRequest as excp:
                         error_catch = get_exception(excp, filt, chat)
                         if error_catch == "noreply":
                             try:
-                                context.bot.send_message(
-                                    chat.id,
-                                    filtext,
-                                    parse_mode="markdown",
-                                    disable_web_page_preview=True,
-                                    reply_markup=keyboard)
+                                context.bot.send_message(chat.id, filtext, parse_mode="markdown", disable_web_page_preview=True, reply_markup=keyboard)
                             except BadRequest as excp:
-                                LOGGER.exception(
-                                    "Gagal mengirim pesan: " + excp.message)
-                                send_message(
-                                    update.effective_message, tl(
-                                        update.effective_message, get_exception(
-                                            excp, filt, chat)))
+                                LOGGER.exception("Gagal mengirim pesan: " + excp.message)
+                                send_message(update.effective_message, tl(update.effective_message, get_exception(excp, filt, chat)))
                                 pass
                         else:
                             try:
-                                send_message(
-                                    update.effective_message, tl(
-                                        update.effective_message, get_exception(
-                                            excp, filt, chat)))
+                                send_message(update.effective_message, tl(update.effective_message, get_exception(excp, filt, chat)))
                             except BadRequest as excp:
-                                LOGGER.exception(
-                                    "Gagal mengirim pesan: " + excp.message)
+                                LOGGER.exception("Gagal mengirim pesan: " + excp.message)
                                 pass
                 else:
-                    ENUM_FUNC_MAP[filt.file_type](chat.id,
-                                                  filt.file_id,
-                                                  caption=filtext,
-                                                  reply_to_message_id=message.message_id,
-                                                  parse_mode="markdown",
-                                                  disable_web_page_preview=True,
-                                                  reply_markup=keyboard)
+                    ENUM_FUNC_MAP[filt.file_type](chat.id, filt.file_id, caption=filtext, reply_to_message_id=message.message_id, parse_mode="markdown", disable_web_page_preview=True, reply_markup=keyboard)
                 break
             else:
                 if filt.is_sticker:
@@ -373,63 +280,41 @@ def reply_filter(update, context):
                     keyboard = InlineKeyboardMarkup(keyb)
 
                     try:
-                        send_message(
-                            update.effective_message,
-                            filt.reply,
-                            parse_mode=ParseMode.MARKDOWN,
-                            disable_web_page_preview=True,
-                            reply_markup=keyboard)
+                        send_message(update.effective_message, filt.reply, parse_mode=ParseMode.MARKDOWN,
+                                           disable_web_page_preview=True,
+                                           reply_markup=keyboard)
                     except BadRequest as excp:
                         if excp.message == "Unsupported url protocol":
                             try:
-                                send_message(
-                                    update.effective_message,
-                                    tl(
-                                        update.effective_message,
-                                        "Anda tampaknya mencoba menggunakan protokol url yang tidak didukung. Telegram "
-                                        "tidak mendukung tombol untuk beberapa protokol, seperti tg://. Silakan coba "
-                                        "lagi."))
+                                send_message(update.effective_message, tl(update.effective_message, "Anda tampaknya mencoba menggunakan protokol url yang tidak didukung. Telegram "
+                                                   "tidak mendukung tombol untuk beberapa protokol, seperti tg://. Silakan coba "
+                                                   "lagi."))
                             except BadRequest as excp:
-                                LOGGER.exception(
-                                    "Gagal mengirim pesan: " + excp.message)
+                                LOGGER.exception("Gagal mengirim pesan: " + excp.message)
                                 pass
                         elif excp.message == "Reply message not found":
                             try:
-                                context.bot.send_message(
-                                    chat.id,
-                                    filt.reply,
-                                    parse_mode=ParseMode.MARKDOWN,
-                                    disable_web_page_preview=True,
-                                    reply_markup=keyboard)
+                                context.bot.send_message(chat.id, filt.reply, parse_mode=ParseMode.MARKDOWN,
+                                                 disable_web_page_preview=True,
+                                                 reply_markup=keyboard)
                             except BadRequest as excp:
-                                LOGGER.exception(
-                                    "Gagal mengirim pesan: " + excp.message)
+                                LOGGER.exception("Gagal mengirim pesan: " + excp.message)
                                 pass
                         else:
                             try:
-                                send_message(
-                                    update.effective_message, tl(
-                                        update.effective_message, "Catatan ini tidak dapat dikirim karena formatnya salah."))
+                                send_message(update.effective_message, tl(update.effective_message, "Catatan ini tidak dapat dikirim karena formatnya salah."))
                             except BadRequest as excp:
-                                LOGGER.exception(
-                                    "Gagal mengirim pesan: " + excp.message)
+                                LOGGER.exception("Gagal mengirim pesan: " + excp.message)
                                 pass
-                            LOGGER.warning(
-                                "Message %s could not be parsed", str(
-                                    filt.reply))
-                            LOGGER.exception(
-                                "Could not parse filter %s in chat %s", str(
-                                    filt.keyword), str(
-                                    chat.id))
+                            LOGGER.warning("Message %s could not be parsed", str(filt.reply))
+                            LOGGER.exception("Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id))
 
                 else:
-                    # LEGACY - all new filters will have has_markdown set to
-                    # True.
+                    # LEGACY - all new filters will have has_markdown set to True.
                     try:
                         send_message(update.effective_message, filt.reply)
                     except BadRequest as excp:
-                        LOGGER.exception(
-                            "Gagal mengirim pesan: " + excp.message)
+                        LOGGER.exception("Gagal mengirim pesan: " + excp.message)
                         pass
                 break
 
@@ -441,19 +326,12 @@ def get_exception(excp, filt, chat):
         return "noreply"
     else:
         LOGGER.warning("Message %s could not be parsed", str(filt.reply))
-        LOGGER.exception(
-            "Could not parse filter %s in chat %s", str(
-                filt.keyword), str(
-                chat.id))
+        LOGGER.exception("Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id))
         return "Catatan ini tidak dapat dikirim karena formatnya salah."
 
 
 def __stats__():
-    return tl(
-        OWNER_ID,
-        "`{}` filters, across `{}` chats.").format(
-        sql.num_filters(),
-        sql.num_chats())
+    return tl(OWNER_ID, "`{}` filters, across `{}` chats.").format(sql.num_filters(), sql.num_chats())
 
 
 def __import_data__(chat_id, data):
@@ -469,10 +347,7 @@ def __migrate__(old_chat_id, new_chat_id):
 
 def __chat_settings__(chat_id, user_id):
     cust_filters = sql.get_chat_triggers(chat_id)
-    return tl(
-        user_id,
-        "There are `{}` custom filters here.").format(
-        len(cust_filters))
+    return tl(user_id, "There are `{}` custom filters here.").format(len(cust_filters))
 
 
 __help__ = "filters_help"
@@ -481,11 +356,8 @@ __mod_name__ = "Filters"
 
 FILTER_HANDLER = CommandHandler("filter", filters)
 STOP_HANDLER = CommandHandler("stop", stop_filter)
-LIST_HANDLER = DisableAbleCommandHandler(
-    "filters", list_handlers, admin_ok=True)
-CUST_FILTER_HANDLER = MessageHandler(
-    CustomFilters.has_text & ~Filters.update.edited_message,
-    reply_filter)
+LIST_HANDLER = DisableAbleCommandHandler("filters", list_handlers, admin_ok=True)
+CUST_FILTER_HANDLER = MessageHandler(CustomFilters.has_text & ~Filters.update.edited_message, reply_filter)
 
 dispatcher.add_handler(FILTER_HANDLER)
 dispatcher.add_handler(STOP_HANDLER)
