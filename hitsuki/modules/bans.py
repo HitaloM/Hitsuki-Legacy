@@ -42,7 +42,7 @@ def ban(update, context):
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
@@ -156,7 +156,7 @@ def temp_ban(update, context):
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
@@ -180,7 +180,7 @@ def temp_ban(update, context):
             return ""
 
     if not user_id:
-        send_message(update.effective_message, tl(update.effective_message, "Anda sepertinya tidak mengacu pada pengguna."))
+        send_message(update.effective_message, tl(update.effective_message, "You don't seem to be referring to a user."))
         return ""
 
     try:
@@ -278,7 +278,7 @@ def kick(update, context):
         return ""
 
     if not user_id:
-        send_message(update.effective_message, tl(update.effective_message, "Anda sepertinya tidak mengacu pada pengguna."))
+        send_message(update.effective_message, tl(update.effective_message, "You don't seem to be referring to a user."))
         return ""
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
@@ -288,7 +288,7 @@ def kick(update, context):
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
@@ -415,7 +415,7 @@ def unban(update, context):
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
