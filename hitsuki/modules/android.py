@@ -7,6 +7,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from hurry.filesize import size as sizee
 from requests import get
+import rapidjson as json
 
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CommandHandler
@@ -230,7 +231,8 @@ def magisk(update, context):
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     releases = ""
     for type, branch in {"Stable":["master/stable","master"], "Beta":["master/beta","master"], "Canary (release)":["canary/release","canary"], "Canary (debug)":["canary/debug","canary"]}.items():
-        data = get(url + branch[0] + '.json').json()
+        fetch = get(url + branch[0] + '.json')
+        data = json.loads(fetch.content)
         releases += f'*{type}*: \n' \
                     f'• [Changelog](https://github.com/topjohnwu/magisk_files/blob/{branch[1]}/notes.md)\n' \
                     f'• Zip - [{data["magisk"]["version"]}-{data["magisk"]["versionCode"]}]({data["magisk"]["link"]}) \n' \
@@ -355,7 +357,7 @@ def bootleggers(update, context):
 
     fetch = get('https://bootleggersrom-devices.github.io/api/devices.json')
     if fetch.status_code == 200:
-        nestedjson = fetch.json()
+        nestedjson = json.loads(fetch.content)
 
         if codename.lower() == 'x00t':
             devicetoget = 'X00T'
@@ -439,7 +441,7 @@ def evo(update, context):
 
     if fetch.status_code == 200:
         try:
-            usr = fetch.json()
+            usr = json.loads(fetch.content)
             filename = usr['filename']
             url = usr['url']
             version = usr['version']
@@ -492,7 +494,7 @@ def los(update, context):
 
     fetch = get(f'https://download.lineageos.org/api/v1/{device}/nightly/*')
     if fetch.status_code == 200 and len(fetch.json()['response']) != 0:
-        usr = fetch.json()
+        usr = json.loads(fetch.content)
         response = usr['response'][0]
         filename = response['filename']
         url = response['url']
@@ -576,7 +578,7 @@ def pe(update, context):
 
     fetch = get(f'https://download.pixelexperience.org/ota_v3/{device}/{variant}')
     if not fetch.json()['error']:
-        usr = fetch.json()
+        usr = json.loads(fetch.content)
         filename = usr['filename']
         url = usr['url']
         buildsize_a = usr['size']
@@ -655,7 +657,9 @@ def specs(update, context):
 def phh(update, context):
     args = context.args
     message = update.effective_message
-    usr = get(f'https://api.github.com/repos/phhusson/treble_experimentations/releases/latest').json()
+    fetch = get(
+        "https://api.github.com/repos/phhusson/treble_experimentations/releases/latest")
+    usr = json.loads(fetch.content)
     reply_text = "*Phh's lastest release(s):*\n"
     for i in range(len(usr)):
         try:
