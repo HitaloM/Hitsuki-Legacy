@@ -515,6 +515,43 @@ def __import_data__(chat_id, data):
 												 "avoided. Sorry for the inconvenience!"))
 
 
+@run_async
+@spamcheck
+@user_admin
+def remove_all_notes(update, context):
+    chat = update.effective_chat
+    user = update.effective_user
+    message = update.effective_message
+
+    if chat.type == "private":
+        chat.title = tl(chat.id, "local notes")
+    else:
+        owner = chat.get_member(user.id)
+        chat.title = chat.title
+        if owner.status != 'creator':
+            message.reply_text(tl(chat.id, "You must be this chat creator."))
+            return
+
+    note_list = sql.get_all_chat_notes(chat.id)
+    if not note_list:
+        message.reply_text(tl(chat.id,
+                               "No notes in *{}*!").format(chat.title),
+                           parse_mode=ParseMode.MARKDOWN)
+        return
+
+    x = 0
+    a_note = []
+    for notename in note_list:
+        x += 1
+        note = notename.name.lower()
+        a_note.append(note)
+
+    for note in a_note:
+        sql.rm_note(chat.id, note)
+
+    message.reply_text(tl(chat.id, "{} notes from this chat have been removed.").format(x))
+
+
 def __stats__():
 	return tl(OWNER_ID, "`{}` notes, on `{}` chat.").format(sql.num_notes(), sql.num_chats())
 
@@ -536,6 +573,7 @@ GET_HANDLER = CommandHandler("get", cmd_get, pass_args=True)
 HASH_GET_HANDLER = MessageHandler(Filters.regex(r"^#[^\s]+"), hash_get)
 
 SAVE_HANDLER = CommandHandler("save", save)
+REMOVE_ALL_NOTES_HANDLER = CommandHandler("clearall", remove_all_notes)
 DELETE_HANDLER = CommandHandler("clear", clear, pass_args=True)
 
 PMNOTE_HANDLER = CommandHandler("privatenote", private_note, pass_args=True)
@@ -548,3 +586,4 @@ dispatcher.add_handler(LIST_HANDLER)
 dispatcher.add_handler(DELETE_HANDLER)
 dispatcher.add_handler(PMNOTE_HANDLER)
 dispatcher.add_handler(HASH_GET_HANDLER)
+dispatcher.add_handler(REMOVE_ALL_NOTES_HANDLER)
