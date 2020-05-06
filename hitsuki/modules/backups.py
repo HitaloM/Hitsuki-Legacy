@@ -1258,7 +1258,7 @@ def export_data(update, context):
     try:
         context.bot.sendMessage(
             TEMPORARY_DATA,
-            "*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`".format(
+            "*Successfully backed up to:*\nChat name: `{}`\nChat ID: `{}`\nAt: `{}`".format(
                 chat.title,
                 chat_id,
                 tgl),
@@ -1272,7 +1272,7 @@ def export_data(update, context):
             'rb'),
         caption=tl(
             update.effective_message,
-            "*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`\n\nNote: cadangan ini khusus untuk bot ini, jika di import ke bot lain maka catatan dokumen, video, audio, voice, dan lain-lain akan hilang").format(
+            "*Successfully backed up to:*\nChat name: `{}`\nChat ID: `{}`\nAt: `{}`\n\nNote: this backup is specific to this bot, if it is imported to another bot then the document, video, audio, voice, etc. will be lost").format(
                 chat.title,
                 chat_id,
                 tgl),
@@ -1286,7 +1286,7 @@ def export_data(update, context):
             document=send.document.file_id,
             caption=tl(
                 update.effective_message,
-                "*Berhasil mencadangan untuk:*\nNama chat: `{}`\nID chat: `{}`\nPada: `{}`\n\nNote: cadangan ini khusus untuk bot ini, jika di import ke bot lain maka catatan dokumen, video, audio, voice, dan lain-lain akan hilang").format(
+                "*Successfully backed up to:*\nChat name: `{}`\nChat ID: `{}`\nAt: `{}`\n\nNote: this backup is specific to this bot, if it is imported to another bot then the document, video, audio, voice, etc. will be lost").format(
                 chat.title,
                 chat_id,
                 tgl),
