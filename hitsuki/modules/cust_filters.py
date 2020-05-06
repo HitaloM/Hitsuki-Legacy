@@ -195,8 +195,8 @@ def stop_filter(update, context):
         return
 
     for keyword in chat_filters:
-        if keyword == args[1]:
-            sql.remove_filter(chat_id, args[1])
+        if keyword == args[1].lower():
+            sql.remove_filter(chat_id, args[1].lower())
             send_message(update.effective_message, tl(update.effective_message, "Ya, saya akan berhenti menjawabnya di *{}*.").format(chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
             raise DispatcherHandlerStop
 
@@ -209,7 +209,7 @@ def reply_filter(update, context):
     message = update.effective_message  # type: Optional[Message]
     user = update.effective_user # type: Optional[User]
 
-    if int(user.id) == int(777000):
+    if update.effective_user.id == 777000:
         return
 
     to_match = extract_text(message)
