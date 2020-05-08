@@ -9,8 +9,8 @@ from requests import get
 import rapidjson as json
 
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.ext import CommandHandler
-from telegram.ext import run_async
+from telegram.ext import CommandHandler, run_async
+from telegram.error import BadRequest
 
 from hitsuki import dispatcher, LOGGER, spamcheck
 from hitsuki.modules.languages import tl
@@ -51,7 +51,7 @@ def device(update, context):
         reply += f'<b>{brand} {name}</b>\n' \
             f'Model: <code>{model}</code>\n' \
             f'Codename: <code>{codename}</code>\n\n'
-    except KeyError as err:
+    except KeyError:
         reply = f"Couldn't find info about {device}!\n"
         update.effective_message.reply_text("{}".format(reply),
                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
@@ -138,7 +138,7 @@ def getfw(update, context):
         update.effective_message.reply_text("{}".format(reply),
                     parse_mode=ParseMode.HTML)
         return
-    temp,csc = args
+    temp, csc = args
     model = f'sm-'+temp if not temp.upper().startswith('SM-') else temp
     test = get(f'https://samfrew.com/model/{model.upper()}/region/{csc.upper()}/')
     if test.status_code == 404:
@@ -155,7 +155,7 @@ def getfw(update, context):
     os = page.find("latest").get("o")
     reply = ""
     if page.find("latest").text.strip():
-        pda,csc2,phone=page.find("latest").text.strip().split('/')
+        pda, csc2, phone = page.find("latest").text.strip().split('/')
         reply += f'*Latest firmware for {model.upper()} {csc.upper()}:*\n'
         reply += f' • PDA: `{pda}`\n • CSC: `{csc2}`\n'
         if phone:
@@ -182,7 +182,7 @@ def checkfw(update, context):
         update.effective_message.reply_text("{}".format(reply),
                     parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         return
-    temp,csc = args
+    temp, csc = args
     model = f'sm-'+temp if not temp.upper().startswith('SM-') else temp
     fota = get(f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.xml')
     test = get(f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.test.xml')
@@ -196,7 +196,7 @@ def checkfw(update, context):
     os1 = page1.find("latest").get("o")
     os2 = page2.find("latest").get("o")
     if page1.find("latest").text.strip():
-        pda1,csc1,phone1=page1.find("latest").text.strip().split('/')
+        pda1, csc1, phone1 = page1.find("latest").text.strip().split('/')
         reply = f'*Latest released firmware for {model.upper()} {csc.upper()}:*\n'
         reply += f' • PDA: `{pda1}`\n • CSC: `{csc1}`\n'
         if phone1:
@@ -208,7 +208,7 @@ def checkfw(update, context):
         reply = f'*No public release found for {model.upper()} {csc.upper()}.*\n\n'
     reply += f'*Latest test firmware for {model.upper()} {csc.upper()}:*\n'
     if len(page2.find("latest").text.strip().split('/')) == 3:
-        pda2,csc2,phone2=page2.find("latest").text.strip().split('/')
+        pda2, csc2, phone2 = page2.find("latest").text.strip().split('/')
         reply += f' • PDA: `{pda2}`\n • CSC: `{csc2}`\n'
         if phone2:
             reply += f' • Phone: `{phone2}`\n'
@@ -216,7 +216,7 @@ def checkfw(update, context):
             reply += f' • Android: `{os2}`\n'
         reply += f'\n'
     else:
-        md5=page2.find("latest").text.strip()
+        md5 = page2.find("latest").text.strip()
         reply += f' • Hash: `{md5}`\n • Android: `{os2}`\n\n'
 
     update.message.reply_text("{}".format(reply),
@@ -229,7 +229,7 @@ def magisk(update, context):
     args = context.args
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     releases = ""
-    for type, branch in {"Stable":["master/stable","master"], "Beta":["master/beta","master"], "Canary (release)":["canary/release","canary"], "Canary (debug)":["canary/debug","canary"]}.items():
+    for type, branch in {"Stable": ["master/stable", "master"], "Beta": ["master/beta", "master"], "Canary (release)": ["canary/release", "canary"], "Canary (debug)": ["canary/debug", "canary"]}.items():
         fetch = get(url + branch[0] + '.json')
         data = json.loads(fetch.content)
         releases += f'*{type}*: \n' \
@@ -247,7 +247,7 @@ def magisk(update, context):
 def twrp(update, context):
     args = context.args
     if len(args) == 0:
-        reply='No codename provided, write a codename for fetching informations.'
+        reply = 'No codename provided, write a codename for fetching informations.'
         del_msg = update.effective_message.reply_text("{}".format(reply),
                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         time.sleep(5)
@@ -255,7 +255,7 @@ def twrp(update, context):
             del_msg.delete()
             update.effective_message.delete()
         except BadRequest as err:
-            if (err.message == "Message to delete not found" ) or (err.message == "Message can't be deleted" ):
+            if (err.message == "Message to delete not found") or (err.message == "Message can't be deleted"):
                 return
 
     device = " ".join(args)
@@ -269,17 +269,17 @@ def twrp(update, context):
             del_msg.delete()
             update.effective_message.delete()
         except BadRequest as err:
-            if (err.message == "Message to delete not found" ) or (err.message == "Message can't be deleted" ):
+            if (err.message == "Message to delete not found") or (err.message == "Message can't be deleted"):
                 return
     else:
-        reply = f'*Latest Official TWRP for {device}*\n'            
+        reply = f'*Latest Official TWRP for {device}*\n'
         db = get(DEVICES_DATA).json()
         newdevice = device.strip('lte') if device.startswith('beyond') else device
         try:
             brand = db[newdevice][0]['brand']
             name = db[newdevice][0]['name']
             reply += f'*{brand} - {name}*\n'
-        except KeyError as err:
+        except KeyError:
             pass
         page = BeautifulSoup(url.content, 'lxml')
         date = page.find("em").text.strip()
@@ -294,7 +294,7 @@ def twrp(update, context):
             reply += f'[{dl_file}]({dl_link}) - {size}\n'
 
         update.message.reply_text("{}".format(reply),
-                               parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
+                                parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 
 @spamcheck
@@ -405,7 +405,7 @@ def evo(update, context):
     args = context.args
     cmd_name = "evo"
     message = update.effective_message
-    chat = update.effective_chat  # type: Optional[Chat]
+    chat = update.effective_chat
     device = message.text[len(f'/{cmd_name} '):]
 
     if device == "example":
@@ -480,9 +480,6 @@ def evo(update, context):
 @run_async
 def los(update, context):
     args = context.args
-    spam = spamfilters(update.effective_message.text, update.effective_message.from_user.id, update.effective_chat.id, update.effective_message)
-    if spam == True:
-        return
     message = update.effective_message
     device = message.text[len('/los '):]
 
@@ -589,8 +586,7 @@ def pe(update, context):
         reply_text = (f"*PixelExperience build for {device}*\n"
                       f"*Download:* [{filename}]({url})\n"
                       f"*Build size:* `{buildsize_b}`\n"
-                      f"*Version:* `{version}`\n"
-                      f"*Maintainer:* [{maintainer}]({maintainerurl})")
+                      f"*Version:* `{version}`")
 
         keyboard = [[InlineKeyboardButton(text="Click to Download", url=url)]]
         message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN,
