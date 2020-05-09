@@ -1,9 +1,10 @@
-import re, ast
+import re
+import ast
 from io import BytesIO
-from typing import Optional, List
+from typing import Optional
 
 from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
-from telegram import Message, Update, Bot
+from telegram import Message
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
@@ -32,171 +33,171 @@ MYVIDEO_MATCHER = re.compile(r"^###video(!photo)?###:")
 MYVIDEONOTE_MATCHER = re.compile(r"^###video_note(!photo)?###:")
 
 ENUM_FUNC_MAP = {
-	sql.Types.TEXT.value: dispatcher.bot.send_message,
-	sql.Types.BUTTON_TEXT.value: dispatcher.bot.send_message,
-	sql.Types.STICKER.value: dispatcher.bot.send_sticker,
-	sql.Types.DOCUMENT.value: dispatcher.bot.send_document,
-	sql.Types.PHOTO.value: dispatcher.bot.send_photo,
-	sql.Types.AUDIO.value: dispatcher.bot.send_audio,
-	sql.Types.VOICE.value: dispatcher.bot.send_voice,
-	sql.Types.VIDEO.value: dispatcher.bot.send_video,
-	sql.Types.VIDEO_NOTE.value: dispatcher.bot.send_video_note
+    sql.Types.TEXT.value: dispatcher.bot.send_message,
+    sql.Types.BUTTON_TEXT.value: dispatcher.bot.send_message,
+    sql.Types.STICKER.value: dispatcher.bot.send_sticker,
+    sql.Types.DOCUMENT.value: dispatcher.bot.send_document,
+    sql.Types.PHOTO.value: dispatcher.bot.send_photo,
+    sql.Types.AUDIO.value: dispatcher.bot.send_audio,
+    sql.Types.VOICE.value: dispatcher.bot.send_voice,
+    sql.Types.VIDEO.value: dispatcher.bot.send_video,
+    sql.Types.VIDEO_NOTE.value: dispatcher.bot.send_video_note
 }
 
 
 # Do not async
 def get(bot, update, notename, show_none=True, no_format=False):
-	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
-	conn = connected(bot, update, chat, user.id, need_admin=False)
-	if conn:
-		chat_id = conn
-		send_id = user.id
-	else:
-		chat_id = update.effective_chat.id
-		send_id = chat_id
+    chat = update.effective_chat
+    user = update.effective_user
+    conn = connected(bot, update, chat, user.id, need_admin=False)
+    if conn:
+        chat_id = conn
+        send_id = user.id
+    else:
+        chat_id = update.effective_chat.id
+        send_id = chat_id
 
-	note = sql.get_note(chat_id, notename)
-	message = update.effective_message  # type: Optional[Message]
+    note = sql.get_note(chat_id, notename)
+    message = update.effective_message  # type: Optional[Message]
 
-	if note:
-		# If we're replying to a message, reply to that message (unless it's an error)
-		if message.reply_to_message:
-			reply_id = message.reply_to_message.message_id
-		else:
-			reply_id = message.message_id
+    if note:
+        # If we're replying to a message, reply to that message (unless it's an error)
+        if message.reply_to_message:
+            reply_id = message.reply_to_message.message_id
+        else:
+            reply_id = message.message_id
 
-		if note.is_reply:
-			if MESSAGE_DUMP:
-				try:
-					bot.forward_message(chat_id=chat_id, from_chat_id=MESSAGE_DUMP, message_id=note.value)
-				except BadRequest as excp:
-					if excp.message == "Message to forward not found":
-						send_message(update.effective_message, tl(update.effective_message, "Pesan ini tampaknya telah hilang - saya akan menghapusnya "
-										   "from your list of notes."))
-						sql.rm_note(chat_id, notename)
-					else:
-						raise
-			else:
-				try:
-					bot.forward_message(chat_id=chat_id, from_chat_id=chat_id, message_id=note.value)
-				except BadRequest as excp:
-					if excp.message == "Message to forward not found":
-						send_message(update.effective_message, tl(update.effective_message, "Sepertinya pengirim asli dari catatan ini telah dihapus "
-										   "pesan mereka - maaf! Dapatkan admin bot Anda untuk mulai menggunakan "
-										   "pesan dump untuk menghindari ini. Saya akan menghapus catatan ini dari "
-										   "catatan tersimpan Anda."))
-						sql.rm_note(chat_id, notename)
-					else:
-						raise
-		else:
+        if note.is_reply:
+            if MESSAGE_DUMP:
+                try:
+                    bot.forward_message(chat_id=chat_id, from_chat_id=MESSAGE_DUMP, message_id=note.value)
+                except BadRequest as excp:
+                    if excp.message == "Message to forward not found":
+                        send_message(update.effective_message, tl(update.effective_message, "Pesan ini tampaknya telah hilang - saya akan menghapusnya "
+                                           "from your list of notes."))
+                        sql.rm_note(chat_id, notename)
+                    else:
+                        raise
+            else:
+                try:
+                    bot.forward_message(chat_id=chat_id, from_chat_id=chat_id, message_id=note.value)
+                except BadRequest as excp:
+                    if excp.message == "Message to forward not found":
+                        send_message(update.effective_message, tl(update.effective_message, "Sepertinya pengirim asli dari catatan ini telah dihapus "
+                                           "pesan mereka - maaf! Dapatkan admin bot Anda untuk mulai menggunakan "
+                                           "pesan dump untuk menghindari ini. Saya akan menghapus catatan ini dari "
+                                           "catatan tersimpan Anda."))
+                        sql.rm_note(chat_id, notename)
+                    else:
+                        raise
+        else:
 
-			VALID_WELCOME_FORMATTERS = ['first', 'last', 'fullname', 'username', 'id', 'chatname', 'mention', 'rules']
-			valid_format = escape_invalid_curly_brackets(note.value, VALID_WELCOME_FORMATTERS)
+            VALID_WELCOME_FORMATTERS = ['first', 'last', 'fullname', 'username', 'id', 'chatname', 'mention', 'rules']
+            valid_format = escape_invalid_curly_brackets(note.value, VALID_WELCOME_FORMATTERS)
 
-			if valid_format:
-				text = valid_format.format(first=escape_markdown(message.from_user.first_name),
-											  last=escape_markdown(message.from_user.last_name or message.from_user.first_name),
-											  fullname=escape_markdown(" ".join([message.from_user.first_name, message.from_user.last_name] if message.from_user.last_name else [message.from_user.first_name])), username="@" + message.from_user.username if message.from_user.username else mention_markdown(message.from_user.id, message.from_user.first_name), mention=mention_markdown(message.from_user.id, message.from_user.first_name), chatname=escape_markdown(message.chat.title if message.chat.type != "private" else message.from_user.first_name), id=message.from_user.id, rules="http://t.me/{}?start={}".format(bot.username, chat_id))
-			else:
-				text = ""
+            if valid_format:
+                text = valid_format.format(first=escape_markdown(message.from_user.first_name),
+                                              last=escape_markdown(message.from_user.last_name or message.from_user.first_name),
+                                              fullname=escape_markdown(" ".join([message.from_user.first_name, message.from_user.last_name] if message.from_user.last_name else [message.from_user.first_name])), username="@" + message.from_user.username if message.from_user.username else mention_markdown(message.from_user.id, message.from_user.first_name), mention=mention_markdown(message.from_user.id, message.from_user.first_name), chatname=escape_markdown(message.chat.title if message.chat.type != "private" else message.from_user.first_name), id=message.from_user.id, rules="http://t.me/{}?start={}".format(bot.username, chat_id))
+            else:
+                text = ""
 
-			keyb = []
-			parseMode = ParseMode.MARKDOWN
-			buttons = sql.get_buttons(chat_id, notename)
-			if no_format:
-				parseMode = None
-				text += revert_buttons(buttons)
-			else:
-				keyb = build_keyboard_parser(bot, chat_id, buttons)
+            keyb = []
+            parseMode = ParseMode.MARKDOWN
+            buttons = sql.get_buttons(chat_id, notename)
+            if no_format:
+                parseMode = None
+                text += revert_buttons(buttons)
+            else:
+                keyb = build_keyboard_parser(bot, chat_id, buttons)
 
-			keyboard = InlineKeyboardMarkup(keyb)
+            keyboard = InlineKeyboardMarkup(keyb)
 
-			try:
-				is_private, is_delete = sql.get_private_note(chat.id)
-				if note.msgtype in (sql.Types.BUTTON_TEXT, sql.Types.TEXT):
-					try:
-						if is_delete:
-							update.effective_message.delete()
-						if is_private:
-							bot.send_message(user.id, text,
-										 parse_mode=parseMode, disable_web_page_preview=True,
-										 reply_markup=keyboard)
-						else:
-							bot.send_message(send_id, text, reply_to_message_id=reply_id,
-										 parse_mode=parseMode, disable_web_page_preview=True,
-										 reply_markup=keyboard)
-					except BadRequest as excp:
-						if excp.message == "Wrong http url":
-							failtext = tl(update.effective_message, "Error: URL on the button is invalid! Please update this note.")
-							failtext += "\n\n```\n{}```".format(note.value + revert_buttons(buttons))
-							send_message(update.effective_message, failtext, parse_mode="markdown")
-						elif excp.message == "Button_url_invalid":
-							failtext = tl(update.effective_message, "Error: URL on the button is invalid! Please update this note.")
-							failtext += "\n\n```\n{}```".format(note.value + revert_buttons(buttons))
-							send_message(update.effective_message, failtext, parse_mode="markdown")
-						elif excp.message == "Message can't be deleted":
-							pass
-						elif excp.message == "Have no rights to send a message":
-							pass
-					except Unauthorized as excp:
-						send_message(update.effective_message, tl(update.effective_message, "Contact me at PM to get this notes."), parse_mode="markdown")
-						pass
-				else:
-					try:
-						if is_delete:
-							update.effective_message.delete()
-						if is_private:
-							ENUM_FUNC_MAP[note.msgtype](user.id, note.file, caption=text, parse_mode=parseMode, disable_web_page_preview=True, reply_markup=keyboard)
-						else:
-							ENUM_FUNC_MAP[note.msgtype](send_id, note.file, caption=text, reply_to_message_id=reply_id, parse_mode=parseMode, disable_web_page_preview=True, reply_markup=keyboard)
-					except BadRequest as excp:
-						if excp.message == "Message can't be deleted":
-							pass
-						elif excp.message == "Have no rights to send a message":
-							pass
-					except Unauthorized as excp:
-						send_message(update.effective_message, tl(update.effective_message, "Contact me at PM to get this note."), parse_mode="markdown")
-						pass
-					
-			except BadRequest as excp:
-				if excp.message == "Entity_mention_user_invalid":
-					send_message(update.effective_message, tl(update.effective_message, "It looks like you tried to mention someone who has never seen before. "
-									   "If you really want to mention, forwarding one of their messages to me, "
-									   "and I will be able to mark them!"))
-				elif FILE_MATCHER.match(note.value):
-					send_message(update.effective_message, tl(update.effective_message, "Catatan ini adalah file yang salah diimpor dari bot lain - saya tidak bisa menggunakan "
-									   "ini. Jika Anda benar-benar membutuhkannya, Anda harus menyimpannya lagi. "
-									   "Sementara itu, saya akan menghapusnya dari daftar catatan Anda."))
-					sql.rm_note(chat_id, notename)
-				else:
-					send_message(update.effective_message, tl(update.effective_message, "Catatan ini tidak dapat dikirim karena formatnya salah."))
-					LOGGER.exception("Tidak dapat menguraikan pesan #%s di obrolan %s", notename, str(chat_id))
-					LOGGER.warning("Pesan itu: %s", str(note.value))
-		return
-	elif show_none:
-		send_message(update.effective_message, tl(update.effective_message, "Catatan ini tidak ada"))
+            try:
+                is_private, is_delete = sql.get_private_note(chat.id)
+                if note.msgtype in (sql.Types.BUTTON_TEXT, sql.Types.TEXT):
+                    try:
+                        if is_delete:
+                            update.effective_message.delete()
+                        if is_private:
+                            bot.send_message(user.id, text,
+                                         parse_mode=parseMode, disable_web_page_preview=True,
+                                         reply_markup=keyboard)
+                        else:
+                            bot.send_message(send_id, text, reply_to_message_id=reply_id,
+                                         parse_mode=parseMode, disable_web_page_preview=True,
+                                         reply_markup=keyboard)
+                    except BadRequest as excp:
+                        if excp.message == "Wrong http url":
+                            failtext = tl(update.effective_message, "Error: URL on the button is invalid! Please update this note.")
+                            failtext += "\n\n```\n{}```".format(note.value + revert_buttons(buttons))
+                            send_message(update.effective_message, failtext, parse_mode="markdown")
+                        elif excp.message == "Button_url_invalid":
+                            failtext = tl(update.effective_message, "Error: URL on the button is invalid! Please update this note.")
+                            failtext += "\n\n```\n{}```".format(note.value + revert_buttons(buttons))
+                            send_message(update.effective_message, failtext, parse_mode="markdown")
+                        elif excp.message == "Message can't be deleted":
+                            pass
+                        elif excp.message == "Have no rights to send a message":
+                            pass
+                    except Unauthorized:
+                        send_message(update.effective_message, tl(update.effective_message, "Contact me at PM to get this notes."), parse_mode="markdown")
+                        pass
+                else:
+                    try:
+                        if is_delete:
+                            update.effective_message.delete()
+                        if is_private:
+                            ENUM_FUNC_MAP[note.msgtype](user.id, note.file, caption=text, parse_mode=parseMode, disable_web_page_preview=True, reply_markup=keyboard)
+                        else:
+                            ENUM_FUNC_MAP[note.msgtype](send_id, note.file, caption=text, reply_to_message_id=reply_id, parse_mode=parseMode, disable_web_page_preview=True, reply_markup=keyboard)
+                    except BadRequest as excp:
+                        if excp.message == "Message can't be deleted":
+                            pass
+                        elif excp.message == "Have no rights to send a message":
+                            pass
+                    except Unauthorized:
+                        send_message(update.effective_message, tl(update.effective_message, "Contact me at PM to get this note."), parse_mode="markdown")
+                        pass
+
+            except BadRequest as excp:
+                if excp.message == "Entity_mention_user_invalid":
+                    send_message(update.effective_message, tl(update.effective_message, "It looks like you tried to mention someone who has never seen before. "
+                                       "If you really want to mention, forwarding one of their messages to me, "
+                                       "and I will be able to mark them!"))
+                elif FILE_MATCHER.match(note.value):
+                    send_message(update.effective_message, tl(update.effective_message, "Catatan ini adalah file yang salah diimpor dari bot lain - saya tidak bisa menggunakan "
+                                       "ini. Jika Anda benar-benar membutuhkannya, Anda harus menyimpannya lagi. "
+                                       "Sementara itu, saya akan menghapusnya dari daftar catatan Anda."))
+                    sql.rm_note(chat_id, notename)
+                else:
+                    send_message(update.effective_message, tl(update.effective_message, "Catatan ini tidak dapat dikirim karena formatnya salah."))
+                    LOGGER.exception("Tidak dapat menguraikan pesan #%s di obrolan %s", notename, str(chat_id))
+                    LOGGER.warning("Pesan itu: %s", str(note.value))
+        return
+    elif show_none:
+        send_message(update.effective_message, tl(update.effective_message, "Catatan ini tidak ada"))
 
 
 @run_async
 @spamcheck
 def cmd_get(update, context):
-	args = context.args
-	if len(args) >= 2 and args[1].lower() == "noformat":
-		get(context.bot, update, args[0], show_none=True, no_format=True)
-	elif len(args) >= 1:
-		get(context.bot, update, args[0], show_none=True)
-	else:
-		send_message(update.effective_message, tl(update.effective_message, "Get apa?"))
+    args = context.args
+    if len(args) >= 2 and args[1].lower() == "noformat":
+        get(context.bot, update, args[0], show_none=True, no_format=True)
+    elif len(args) >= 1:
+        get(context.bot, update, args[0], show_none=True)
+    else:
+        send_message(update.effective_message, tl(update.effective_message, "Get apa?"))
 
 
 @run_async
 @spamcheck
 def hash_get(update, context):
-	message = update.effective_message.text
-	fst_word = message.split()[0]
-	no_hash = fst_word[1:]
-	get(context.bot, update, no_hash, show_none=False)
+    message = update.effective_message.text
+    fst_word = message.split()[0]
+    no_hash = fst_word[1:]
+    get(context.bot, update, no_hash, show_none=False)
 
 
 # TODO: FIX THIS
@@ -204,232 +205,220 @@ def hash_get(update, context):
 @spamcheck
 @user_admin
 def save(update, context):
-	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
-	conn = connected(context.bot, update, chat, user.id)
-	if conn:
-		chat_id = conn
-		chat_name = dispatcher.bot.getChat(conn).title
-	else:
-		chat_id = update.effective_chat.id
-		if chat.type == "private":
-			chat_name = "local notes"
-		else:
-			chat_name = chat.title
+    chat = update.effective_chat
+    user = update.effective_user
+    conn = connected(context.bot, update, chat, user.id)
+    if conn:
+        chat_id = conn
+        chat_name = dispatcher.bot.getChat(conn).title
+    else:
+        chat_id = update.effective_chat.id
+        if chat.type == "private":
+            chat_name = "local notes"
+        else:
+            chat_name = chat.title
 
-	msg = update.effective_message  # type: Optional[Message]
+    msg = update.effective_message  # type: Optional[Message]
 
-	checktext = msg.text.split()
-	if msg.reply_to_message:
-		if len(checktext) <= 1:
-			send_message(update.effective_message, tl(update.effective_message, "Anda harus memberi nama untuk catatan ini!"))
-			return
-	else:
-		if len(checktext) <= 2:
-			send_message(update.effective_message, tl(update.effective_message, "Anda harus memberi nama untuk catatan ini!"))
-			return
+    checktext = msg.text.split()
+    if msg.reply_to_message:
+        if len(checktext) <= 1:
+            send_message(update.effective_message, tl(update.effective_message, "Anda harus memberi nama untuk catatan ini!"))
+            return
+    else:
+        if len(checktext) <= 2:
+            send_message(update.effective_message, tl(update.effective_message, "Anda harus memberi nama untuk catatan ini!"))
+            return
 
-	note_name, text, data_type, content, buttons = get_note_type(msg)
+    note_name, text, data_type, content, buttons = get_note_type(msg)
 
-	if data_type is None:
-		send_message(update.effective_message, tl(update.effective_message, "Tidak ada catatan!"))
-		return
+    if data_type is None:
+        send_message(update.effective_message, tl(update.effective_message, "Tidak ada catatan!"))
+        return
 
-	if len(text.strip()) == 0:
-		text = "`" + note_name + "`"
-		
-	sql.add_note_to_db(chat_id, note_name, text, data_type, buttons=buttons, file=content)
-	if conn:
-		savedtext = tl(update.effective_message, "Ok, catatan `{note_name}` disimpan di *{chat_name}*.").format(note_name=note_name, chat_name=chat_name)
-	else:
-		savedtext = tl(update.effective_message, "Ok, catatan `{note_name}` disimpan.").format(note_name=note_name)
-	try:
-		send_message(update.effective_message, savedtext, parse_mode=ParseMode.MARKDOWN)
-	except BadRequest:
-		if conn:
-			savedtext = tl(update.effective_message, "Ok, catatan <code>{note_name}</code> disimpan di <b>{chat_name}</b>.").format(note_name=note_name, chat_name=chat_name)
-		else:
-			savedtext = tl(update.effective_message, "Ok, catatan <code>{note_name}</code> disimpan.").format(note_name=note_name)
-		send_message(update.effective_message, savedtext, parse_mode=ParseMode.HTML)
+    if len(text.strip()) == 0:
+        text = "`" + note_name + "`"
 
-	#if msg.reply_to_message and msg.reply_to_message.from_user.is_bot:
-	#    if text:
-	#        send_message(update.effective_message, "Sepertinya Anda mencoba menyimpan pesan dari bot. Sayangnya, "
-	#                       "bot tidak dapat meneruskan pesan bot, jadi saya tidak dapat menyimpan pesan yang tepat. "
-	#                       "\nSaya akan menyimpan semua teks yang saya bisa, tetapi jika Anda menginginkan lebih banyak, "
-	#                       "Anda harus melakukannya meneruskan pesan sendiri, lalu simpan.")
-	#    else:
-	#        send_message(update.effective_message, "Bot agak cacat oleh telegram, sehingga sulit untuk berinteraksi dengan "
-	#                       "bot lain, jadi saya tidak dapat menyimpan pesan ini. "
-	#                       "Apakah Anda keberatan meneruskannya dan "
-	#                       "lalu menyimpan pesan baru itu? Terima kasih! ☺️")
-	#    return
+    sql.add_note_to_db(chat_id, note_name, text, data_type, buttons=buttons, file=content)
+    if conn:
+        savedtext = tl(update.effective_message, "Ok, catatan `{note_name}` disimpan di *{chat_name}*.").format(note_name=note_name, chat_name=chat_name)
+    else:
+        savedtext = tl(update.effective_message, "Ok, catatan `{note_name}` disimpan.").format(note_name=note_name)
+    try:
+        send_message(update.effective_message, savedtext, parse_mode=ParseMode.MARKDOWN)
+    except BadRequest:
+        if conn:
+            savedtext = tl(update.effective_message, "Ok, catatan <code>{note_name}</code> disimpan di <b>{chat_name}</b>.").format(note_name=note_name, chat_name=chat_name)
+        else:
+            savedtext = tl(update.effective_message, "Ok, catatan <code>{note_name}</code> disimpan.").format(note_name=note_name)
+        send_message(update.effective_message, savedtext, parse_mode=ParseMode.HTML)
 
 
 @run_async
 @spamcheck
 @user_admin
 def clear(update, context):
-	args = context.args
-	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
-	conn = connected(context.bot, update, chat, user.id)
-	if conn:
-		chat_id = conn
-		chat_name = dispatcher.bot.getChat(conn).title
-	else:
-		chat_id = update.effective_chat.id
-		if chat.type == "private":
-			chat_name = "local notes"
-		else:
-			chat_name = chat.title
+    args = context.args
+    chat = update.effective_chat
+    user = update.effective_user
+    conn = connected(context.bot, update, chat, user.id)
+    if conn:
+        chat_id = conn
+        chat_name = dispatcher.bot.getChat(conn).title
+    else:
+        chat_id = update.effective_chat.id
+        if chat.type == "private":
+            chat_name = "local notes"
+        else:
+            chat_name = chat.title
 
-	if len(args) >= 1:
-		catatan = []
-		catatangagal = []
-		for x in range(len(args)):
-			notename = args[x]
-			if sql.rm_note(chat_id, notename):
-				catatan.append(notename)
-			else:
-				catatangagal.append(notename)
-		if len(catatan) >= 1 and len(catatangagal) == 0:
-			if conn:
-				rtext = tl(update.effective_message, "Catatan di *{chat_name}* untuk `{note_name}` dihapus 😁").format(chat_name=chat_name, note_name=", ".join(catatan))
-			else:
-				rtext = tl(update.effective_message, "Catatan `{note_name}` dihapus 😁").format(note_name=", ".join(catatan))
-			try:
-				send_message(update.effective_message, rtext, parse_mode=ParseMode.MARKDOWN)
-			except BadRequest:
-				if conn:
-					rtext = tl(update.effective_message, "Catatan di <b>{chat_name}</b> untuk <code>{note_name}</code> dihapus 😁").format(chat_name=chat_name, note_name=", ".join(catatan))
-				else:
-					rtext = tl(update.effective_message, "Catatan <code>{note_name}</code> dihapus 😁").format(note_name=", ".join(catatan))
-				send_message(update.effective_message, rtext, parse_mode=ParseMode.HTML)
-		elif len(catatangagal) >= 0 and len(catatan) == 0:
-			if conn:
-				rtext = tl(update.effective_message, "Catatan di *{chat_name}* untuk `{fnote_name}` gagal dihapus!").format(chat_name=chat_name, fnote_name=", ".join(catatangagal))
-			else:
-				rtext = tl(update.effective_message, "Catatan `{fnote_name}` gagal dihapus!").format(fnote_name=", ".join(catatangagal))
-			try:
-				send_message(update.effective_message, rtext, parse_mode=ParseMode.MARKDOWN)
-			except BadRequest:
-				if conn:
-					rtext = tl(update.effective_message, "Catatan di <b>{chat_name}</b> untuk <code>{fnote_name}</code> gagal dihapus!").format(chat_name=chat_name, fnote_name=", ".join(catatangagal))
-				else:
-					rtext = tl(update.effective_message, "Catatan <code>{fnote_name}</code> gagal dihapus!").format(fnote_name=", ".join(catatangagal))
-				send_message(update.effective_message, tl(update.effective_message, rtext), parse_mode=ParseMode.HTML)
-		else:
-			if conn:
-				rtext = tl(update.effective_message, "Catatan di *{chat_name}* untuk `{note_name}` dihapus 😁\nCatatan `{fnote_name}` gagal dihapus!").format(chat_name=chat_name, note_name=", ".join(catatan), fnote_name=", ".join(catatangagal))
-			else:
-				rtext = tl(update.effective_message, "Catatan `{note_name}` dihapus 😁\nCatatan `{fnote_name}` gagal dihapus!").format(note_name=", ".join(catatan), fnote_name=", ".join(catatangagal))
-			try:
-				send_message(update.effective_message, rtext, parse_mode=ParseMode.MARKDOWN)
-			except BadRequest:
-				if conn:
-					rtext = tl(update.effective_message, "Catatan di <b>{chat_name}</b> untuk <code>{note_name}</code> dihapus 😁\nCatatan <code>{fnote_name}</code> gagal dihapus!").format(chat_name=chat_name, note_name=", ".join(catatan), fnote_name=", ".join(catatangagal))
-				else:
-					rtext = tl(update.effective_message, "Catatan <code>{note_name}</code> dihapus 😁\nCatatan <code>{fnote_name}</code> gagal dihapus!").format(note_name=", ".join(catatan), fnote_name=", ".join(catatangagal))
-				send_message(update.effective_message, tl(update.effective_message, rtext), parse_mode=ParseMode.HTML)
+    if len(args) >= 1:
+        catatan = []
+        catatangagal = []
+        for x in range(len(args)):
+            notename = args[x]
+            if sql.rm_note(chat_id, notename):
+                catatan.append(notename)
+            else:
+                catatangagal.append(notename)
+        if len(catatan) >= 1 and len(catatangagal) == 0:
+            if conn:
+                rtext = tl(update.effective_message, "Catatan di *{chat_name}* untuk `{note_name}` dihapus 😁").format(chat_name=chat_name, note_name=", ".join(catatan))
+            else:
+                rtext = tl(update.effective_message, "Catatan `{note_name}` dihapus 😁").format(note_name=", ".join(catatan))
+            try:
+                send_message(update.effective_message, rtext, parse_mode=ParseMode.MARKDOWN)
+            except BadRequest:
+                if conn:
+                    rtext = tl(update.effective_message, "Catatan di <b>{chat_name}</b> untuk <code>{note_name}</code> dihapus 😁").format(chat_name=chat_name, note_name=", ".join(catatan))
+                else:
+                    rtext = tl(update.effective_message, "Catatan <code>{note_name}</code> dihapus 😁").format(note_name=", ".join(catatan))
+                send_message(update.effective_message, rtext, parse_mode=ParseMode.HTML)
+        elif len(catatangagal) >= 0 and len(catatan) == 0:
+            if conn:
+                rtext = tl(update.effective_message, "Catatan di *{chat_name}* untuk `{fnote_name}` gagal dihapus!").format(chat_name=chat_name, fnote_name=", ".join(catatangagal))
+            else:
+                rtext = tl(update.effective_message, "Catatan `{fnote_name}` gagal dihapus!").format(fnote_name=", ".join(catatangagal))
+            try:
+                send_message(update.effective_message, rtext, parse_mode=ParseMode.MARKDOWN)
+            except BadRequest:
+                if conn:
+                    rtext = tl(update.effective_message, "Catatan di <b>{chat_name}</b> untuk <code>{fnote_name}</code> gagal dihapus!").format(chat_name=chat_name, fnote_name=", ".join(catatangagal))
+                else:
+                    rtext = tl(update.effective_message, "Catatan <code>{fnote_name}</code> gagal dihapus!").format(fnote_name=", ".join(catatangagal))
+                send_message(update.effective_message, tl(update.effective_message, rtext), parse_mode=ParseMode.HTML)
+        else:
+            if conn:
+                    rtext = tl(update.effective_message, "Catatan di *{chat_name}* untuk `{note_name}` dihapus 😁\nCatatan `{fnote_name}` gagal dihapus!").format(chat_name=chat_name, note_name=", ".join(catatan), fnote_name=", ".join(catatangagal))
+            else:
+                rtext = tl(update.effective_message, "Catatan `{note_name}` dihapus 😁\nCatatan `{fnote_name}` gagal dihapus!").format(note_name=", ".join(catatan), fnote_name=", ".join(catatangagal))
+            try:
+                send_message(update.effective_message, rtext, parse_mode=ParseMode.MARKDOWN)
+            except BadRequest:
+                if conn:
+                    rtext = tl(update.effective_message, "Catatan di <b>{chat_name}</b> untuk <code>{note_name}</code> dihapus 😁\nCatatan <code>{fnote_name}</code> gagal dihapus!").format(chat_name=chat_name, note_name=", ".join(catatan), fnote_name=", ".join(catatangagal))
+                else:
+                    rtext = tl(update.effective_message, "Catatan <code>{note_name}</code> dihapus 😁\nCatatan <code>{fnote_name}</code> gagal dihapus!").format(note_name=", ".join(catatan), fnote_name=", ".join(catatangagal))
+                send_message(update.effective_message, tl(update.effective_message, rtext), parse_mode=ParseMode.HTML)
 
-	else:
-		send_message(update.effective_message, tl(update.effective_message, "Apa yang ingin dihapus?"))
+    else:
+        send_message(update.effective_message, tl(update.effective_message, "Apa yang ingin dihapus?"))
+
 
 @run_async
 @spamcheck
 @user_admin
 def private_note(update, context):
-	args = context.args
-	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
-	conn = connected(context.bot, update, chat, user.id)
-	if conn:
-		chat_id = conn
-		chat_name = dispatcher.bot.getChat(conn).title
-	else:
-		chat_id = update.effective_chat.id
-		if chat.type == "private":
-			chat_name = chat.title
-		else:
-			chat_name = chat.title
+    args = context.args
+    chat = update.effective_chat
+    user = update.effective_user
+    conn = connected(context.bot, update, chat, user.id)
+    if conn:
+        chat_id = conn
+        chat_name = dispatcher.bot.getChat(conn).title
+    else:
+        chat_id = update.effective_chat.id
+        if chat.type == "private":
+            chat_name = chat.title
+        else:
+            chat_name = chat.title
 
-	if len(args) >= 1:
-		if args[0] in ("yes", "on", "ya"):
-			if len(args) >= 2:
-				if args[1] == "del":
-					sql.private_note(str(chat_id), True, True)
-					send_message(update.effective_message, tl(update.effective_message, "Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM dan pesan pengguna akan segera di hapus."), parse_mode="markdown")
-				else:
-					sql.private_note(str(chat_id), True, False)
-					send_message(update.effective_message, tl(update.effective_message, "Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM."), parse_mode="markdown")
-			else:
-				sql.private_note(str(chat_id), True, False)
-				send_message(update.effective_message, tl(update.effective_message, "Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM."), parse_mode="markdown")
-		elif args[0] in ("no", "off"):
-			sql.private_note(str(chat_id), False, False)
-			send_message(update.effective_message, tl(update.effective_message, "Private Note di *non-aktifkan*, pesan catatan akan di kirim di grup."), parse_mode="markdown")
-		else:
-			send_message(update.effective_message, tl(update.effective_message, "Argumen tidak dikenal - harap gunakan 'yes', atau 'no'."))
-	else:
-		is_private, is_delete = sql.get_private_note(chat_id)
-		print(is_private, is_delete)
-		send_message(update.effective_message, tl(update.effective_message, "Pengaturan Private Note di {}: *{}*{}").format(chat_name, "Enabled" if is_private else "Disabled", " - *Hash will be deleted*" if is_delete else ""), parse_mode="markdown")
+    if len(args) >= 1:
+        if args[0] in ("yes", "on"):
+            if len(args) >= 2:
+                if args[1] == "del":
+                    sql.private_note(str(chat_id), True, True)
+                    send_message(update.effective_message, tl(update.effective_message, "Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM dan pesan pengguna akan segera di hapus."), parse_mode="markdown")
+                else:
+                    sql.private_note(str(chat_id), True, False)
+                    send_message(update.effective_message, tl(update.effective_message, "Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM."), parse_mode="markdown")
+            else:
+                sql.private_note(str(chat_id), True, False)
+                send_message(update.effective_message, tl(update.effective_message, "Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM."), parse_mode="markdown")
+        elif args[0] in ("no", "off"):
+            sql.private_note(str(chat_id), False, False)
+            send_message(update.effective_message, tl(update.effective_message, "Private Note di *non-aktifkan*, pesan catatan akan di kirim di grup."), parse_mode="markdown")
+        else:
+            send_message(update.effective_message, tl(update.effective_message, "Argumen tidak dikenal - harap gunakan 'yes', atau 'no'."))
+    else:
+        is_private, is_delete = sql.get_private_note(chat_id)
+        print(is_private, is_delete)
+        send_message(update.effective_message, tl(update.effective_message, "Pengaturan Private Note di {}: *{}*{}").format(chat_name, "Enabled" if is_private else "Disabled", " - *Hash will be deleted*" if is_delete else ""), parse_mode="markdown")
 
 
 @run_async
 @spamcheck
 def list_notes(update, context):
-	chat = update.effective_chat  # type: Optional[Chat]
-	user = update.effective_user  # type: Optional[User]
-	conn = connected(context.bot, update, chat, user.id, need_admin=False)
-	if conn:
-		chat_id = conn
-		chat_name = dispatcher.bot.getChat(conn).title
-		msg = tl(update.effective_message, "*Notes on {}:*\n").format(chat_name)
-	else:
-		chat_id = update.effective_chat.id
-		if chat.type == "private":
-			chat_name = ""
-			msg = tl(update.effective_message, "*Local notes:*\n")
-		else:
-			chat_name = chat.title
-			msg = tl(update.effective_message, "*Notes on {}:*\n").format(chat_name)
+    chat = update.effective_chat
+    user = update.effective_user
+    conn = connected(context.bot, update, chat, user.id, need_admin=False)
+    if conn:
+        chat_id = conn
+        chat_name = dispatcher.bot.getChat(conn).title
+        msg = tl(update.effective_message, "*Notes on {}:*\n").format(chat_name)
+    else:
+        chat_id = update.effective_chat.id
+        if chat.type == "private":
+            chat_name = ""
+            msg = tl(update.effective_message, "*Local notes:*\n")
+        else:
+            chat_name = chat.title
+            msg = tl(update.effective_message, "*Notes on {}:*\n").format(chat_name)
 
-	note_list = sql.get_all_chat_notes(chat_id)
+    note_list = sql.get_all_chat_notes(chat_id)
 
-	for note in note_list:
-		note_name = " • `#{}`\n".format(note.name)
-		if len(msg) + len(note_name) > MAX_MESSAGE_LENGTH:
-			send_message(update.effective_message, msg, parse_mode=ParseMode.MARKDOWN)
-			msg = ""
-		msg += note_name
+    for note in note_list:
+        note_name = " • `#{}`\n".format(note.name)
+        if len(msg) + len(note_name) > MAX_MESSAGE_LENGTH:
+            send_message(update.effective_message, msg, parse_mode=ParseMode.MARKDOWN)
+            msg = ""
+        msg += note_name
 
-	if msg == tl(update.effective_message, "*Notes on {}:*\n").format(chat_name) or msg == tl(update.effective_message, "*Local notes:*\n"):
-		if conn:
-			send_message(update.effective_message, tl(update.effective_message, "No notes in *{}*!").format(chat_name), parse_mode="markdown")
-		else:
-			send_message(update.effective_message, tl(update.effective_message, "No notes in this chat!"))
+    if msg == tl(update.effective_message, "*Notes on {}:*\n").format(chat_name) or msg == tl(update.effective_message, "*Local notes:*\n"):
+        if conn:
+            send_message(update.effective_message, tl(update.effective_message, "No notes in *{}*!").format(chat_name), parse_mode="markdown")
+        else:
+            send_message(update.effective_message, tl(update.effective_message, "No notes in this chat!"))
 
-	elif len(msg) != 0:
-		msg += tl(update.effective_message, "\nYou can retrieve these notes by using `/get notename`, or `#notename`")
-		try:
-			send_message(update.effective_message, msg, parse_mode=ParseMode.MARKDOWN)
-		except BadRequest:
-			if chat.type == "private":
-				chat_name = ""
-				msg = tl(update.effective_message, "<b>Local notes:</b>\n")
-			else:
-				chat_name = chat.title
-				msg = tl(update.effective_message, "<b>Notes on {}:</b>\n").format(chat_name)
-			for note in note_list:
-				note_name = " - <code>{}</code>\n".format(note.name)
-				if len(msg) + len(note_name) > MAX_MESSAGE_LENGTH:
-					send_message(update.effective_message, msg, parse_mode=ParseMode.MARKDOWN)
-					msg = ""
-				msg += note_name
-			msg += tl(update.effective_message, "\nYou can retrieve these notes by using <code>/get notename</code>, or <code>#notename</code>")
-			send_message(update.effective_message, msg, parse_mode=ParseMode.HTML)
+    elif len(msg) != 0:
+        msg += tl(update.effective_message, "\nYou can retrieve these notes by using `/get notename`, or `#notename`")
+        try:
+            send_message(update.effective_message, msg, parse_mode=ParseMode.MARKDOWN)
+        except BadRequest:
+            if chat.type == "private":
+                chat_name = ""
+                msg = tl(update.effective_message, "<b>Local notes:</b>\n")
+            else:
+                chat_name = chat.title
+                msg = tl(update.effective_message, "<b>Notes on {}:</b>\n").format(chat_name)
+            for note in note_list:
+                note_name = " - <code>{}</code>\n".format(note.name)
+                if len(msg) + len(note_name) > MAX_MESSAGE_LENGTH:
+                    send_message(update.effective_message, msg, parse_mode=ParseMode.MARKDOWN)
+                    msg = ""
+                msg += note_name
+            msg += tl(update.effective_message, "\nYou can retrieve these notes by using <code>/get notename</code>, or <code>#notename</code>")
+            send_message(update.effective_message, msg, parse_mode=ParseMode.HTML)
 
 
 def __import_data__(chat_id, data):
