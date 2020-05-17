@@ -152,8 +152,8 @@ def lock(update, context) -> str:
                     text = tl(update.effective_message, "Izin terkunci pesan *{}* untuk semua non-admin pada *{}*!").format(ltype, chat_name)
                 else:
                     if update.effective_message.chat.type == "private":
-                    send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
-                        return ""
+                            send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+                            return ""
                     chat = update.effective_chat
                     chat_id = update.effective_chat.id
                     chat_name = update.effective_message.chat.title
