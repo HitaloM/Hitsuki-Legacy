@@ -336,13 +336,11 @@ def del_lockables(update, context):
                 break
 
 
-def build_lock_message(update, chat_id):
-    chat_id = update.effective_chat.id
+def build_lock_message(chat_id):
     locks = sql.get_locks(chat_id)
     res = ""
     locklist = []
     permslist = []
-    chat_id = update.effective_chat.id
     if locks:
         res += "*" + tl(chat_id, "Ini adalah kunci dalam obrolan ini:") + "*"
         if locks:
