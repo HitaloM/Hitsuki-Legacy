@@ -1,7 +1,10 @@
 from PIL import Image, ImageOps, ImageEnhance
 from io import BytesIO
 from enum import Enum
-import aiohttp, asyncio, math, argparse
+import aiohttp
+import asyncio
+import math
+import argparse
 
 
 class DeepfryTypes(Enum):

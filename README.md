@@ -13,6 +13,7 @@ Can be found as [Hitsuki](https://t.me/LordHitsuki_BOT) on Telegram.
 Hitsuki is based on [Emilia Hikari](https://github.com/AyraHikari/EmiliaHikari)
 
 ## Special Credits
+
 ----------
 
 * [@PaulSonOfLars](https://github.com/PaulSonOfLars) - marie creator, inspiration to do many things.
@@ -26,8 +27,10 @@ Hitsuki is based on [Emilia Hikari](https://github.com/AyraHikari/EmiliaHikari)
 And much more that we couldn't list it here!
 
 ----------
+
 ```
 If you want to use some files of this repo, always make sure to give the proper credits to the 
 creators of each module, but please do not remove the credits to me or placed by me in the modules.
 ```
+
 ----------
