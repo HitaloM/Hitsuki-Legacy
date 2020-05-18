@@ -444,16 +444,12 @@ def evo(update, context):
             filename = usr['filename']
             url = usr['url']
             version = usr['version']
-            maintainer = usr['maintainer']
-            maintainer_url = usr['telegram_username']
             size_a = usr['size']
             size_b = sizee(int(size_a))
 
             reply_text = tl(chat.id, "*Download:* [{}]({})\n").format(filename, url)
             reply_text += tl(chat.id, "*Build Size:* `{}`\n").format(size_b)
             reply_text += tl(chat.id, "*Android Version:* `{}`\n").format(version)
-            reply_text += tl(chat.id, "*Maintainer:* {}\n").format(
-                f"[{maintainer}](https://t.me/{maintainer_url})")
 
             keyboard = [[InlineKeyboardButton(text="⬇️ Download ⬇️", url=f"{url}")]]
             keyboard += [[InlineKeyboardButton(text="📃 Changelog 📃", url=f"https://raw.githubusercontent.com/Evolution-X-Devices/official_devices/master/changelogs/{device}/{filename}.txt")]]
