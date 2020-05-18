@@ -11,7 +11,6 @@ googletrans>=2.4.0
 wikipedia>=1.4.0
 Pillow>=7.1.2
 alphabet_detector>=0.0.7
-urbandict>=0.6.1
 bs4>=0.0.1
 lxml>=4.5.0
 python-rapidjson>=0.9.1
