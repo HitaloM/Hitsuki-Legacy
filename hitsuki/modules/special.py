@@ -1,10 +1,11 @@
 import json
 import random
 import time
+import wikipedia
 
 from googletrans import Translator
-import wikipedia
 from emoji import UNICODE_EMOJI
+from requests import get
 from platform import python_version
 
 from telegram.error import BadRequest

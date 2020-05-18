@@ -3,9 +3,10 @@ import json
 import random
 import urllib.request
 import urllib.parse
+import requests
+
 from typing import Optional
 
-import requests
 from telegram.error import BadRequest
 from telegram import Message, Chat, MessageEntity, InlineKeyboardMarkup
 from telegram import ParseMode

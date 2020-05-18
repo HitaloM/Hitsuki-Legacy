@@ -576,8 +576,6 @@ def pe(update, context):
         buildsize_a = usr['size']
         buildsize_b = sizee(int(buildsize_a))
         version = usr['version']
-        maintainerurl = usr['maintainer_url']
-        maintainer = usr['maintainer']
 
         reply_text = (f"*PixelExperience build for {device}*\n"
                       f"*Download:* [{filename}]({url})\n"
