@@ -36,10 +36,6 @@ Os comandos disponíveis são:
 Oi {}! Meu nome é *{}* - estou aqui para ajudá-lo a gerenciar seus grupos!
 Clique no botão Ajuda para descobrir mais sobre como me usar em todo o meu potencial.
 
-Siga o [Hitsuki](https://t.me/HitsukiNews) (@HitsukiNews) se você quiser acompanhar as notícias, atualizações e tempo de inatividade do bot!
-
-Este bot é gerenciado por @HitaloSama
-
 Deseja me adicionar ao seu grupo? [Clique aqui!](t.me/LordHitsuki_BOT?startgroup=true)‌‌
 """,
 	"help_text": """
@@ -58,19 +54,19 @@ Eu tenho muitos recursos úteis, como controle de flood, um sistema de avisos, u
 Todos os comandos podem ser usados ​​com `/` ou `!`‌‌
 """,
 	"⬅️ Back": "⬅️ Voltar",
-	"Contact me in PM to get the list of possible commands..": "Entre em contato comigo no PV para obter a lista de possíveis comandos.‌‌",
+	"Contact me in PM to get the list of possible commands.": "Entre em contato comigo no PV para obter a lista de possíveis comandos.‌‌",
 	"Help": "Ajuda",
-	"Ini adalah bantuan yang tersedia untuk modul *{}*:\n": "Here is the available help for the *{}* module:\n",
-	"Ini adalah pengaturan Anda saat ini:": "These are your current settings:",
-	"Sepertinya tidak ada pengaturan khusus pengguna yang tersedia 😢": "Seems like there aren't any user specific settings available 😢",
-	"Modul mana yang ingin Anda periksa untuk pengaturan {}?": "Which module would you like to check {}'s settings for?",
-	"Sepertinya tidak ada pengaturan obrolan yang tersedia 😢\nKirim ini ke obrolan Anda sebagai admin untuk menemukan pengaturannya saat ini!": "Seems like there aren't any chat settings available :'(\nSend this in a group chat you're admin in to find its current settings!",
-	"*{}* memiliki pengaturan berikut untuk modul *{}*:\n\n": "*{}* has the following settings for the *{}* module:\n\n",
-	"Hai! Ada beberapa pengaturan untuk {} - lanjutkan dan pilih apa yang Anda minati.": "Hi there! There are quite a few settings for {} - go ahead and pick what you're interested in.",
-	"Klik di sini untuk mendapatkan pengaturan obrolan ini, serta milik Anda.": "Click here to get this chat's settings, as well as yours.",
-	"Klik di sini untuk memeriksa pengaturan Anda.": "Click here to check your settings.",
+	"Here is the available help for the *{}* module:\n": "Aqui está a ajuda disponível para o módulo *{}*:\n",
+	"These are your current settings:": "Estas são as suas configurações atuais:",
+	"Seems like there aren't any user specific settings available 😢": "Parece que não há configurações específicas do usuário disponíveis 😢",
+	"Which module would you like to check {}'s settings for?": "Para qual módulo você gostaria de verificar as configurações de {}?",
+	"Seems like there aren't any chat settings available \nSend this in a group chat you're admin in to find its current settings!": "Parece que não há configurações de bate-papo disponíveis: \nEnvie isso em um bate-papo em grupo em que você é administrador para encontrar as configurações atuais!",
+	"*{}* has the following settings for the *{}* module:\n\n": "*{}* possui as seguintes configurações para o módulo *{}*:\n\n",
+	"Hi there! There are quite a few settings for {} - go ahead and pick what you're interested in.": "Olá! Existem algumas configurações para {} - vá em frente e escolha o que lhe interessa.",
+	"Click here to get this chat's settings, as well as yours.": "Clique aqui para obter as configurações deste bate-papo e as suas.",
+	"Click here to check your settings.": "Clique aqui para verificar suas configurações.",
 	"Here is the help for the *{}* module:\n": "Aqui está a ajuda para o módulo *{}*:\n",
-	"Anda sekarang dapat mengambil catatan di grup.": "Now you can get notes in group.",
+	"Now you can get notes in group.": "Agora você pode obter notas em grupo.",
 
 # admin
 	"How am I meant to promote someone that's already an admin?": "Como vou promover alguém que já é um administrador?",
@@ -136,10 +132,10 @@ Get information about anime, manga or characters from [MyAnimeList](https://myan
 	"{} is AFK!": "{} está AFK!",
 	"{} is AFK! says its because of: {}": "{} está AFK! Motivo: {}",
 	"afk_help": """
- - /afk <reason>: mark yourself as AFK.
- - brb <reason>: same as the afk command - but not a command.
+ - /afk <motivo>: marque-se como AFK.
+ - brb <motivo>: mesmo que o comando afk - mas não é um comando.
 
-When marked as AFK, any mentions will be replied to with a message to say you're not available!
+Quando marcado como AFK, qualquer menção será respondida com uma mensagem dizendo que você não está disponível!
 """,
 
 # Antiflood
@@ -281,17 +277,6 @@ Well, here you go.
  - /cp <reply>: A replica of mattatas copypasta command.
 """,
 
-# AFK
-	"{} sekarang AFK!": "{} is now AFK!",
-	"{} sudah tidak AFK!": "{} is no longer AFK!",
-	"{} sedang AFK!": "{} is AFK!",
-	"{} sedang AFK!\nKarena : {}": "{} is AFK! says its because of: {}",
-	"afk_help": """
- - /afk <reason>: mark yourself as AFK.
- - brb <reason>: same as the afk command - but not a command.
-
-When marked as AFK, any mentions will be replied to with a message to say you're not available!
-""",
 
 # Backups
 	"Coba unduh dan unggah ulang file seperti Anda sendiri sebelum mengimpor - yang ini sepertinya rusak!": "Try downloading and reuploading the file as yourself before importing - this one seems to be iffy!",

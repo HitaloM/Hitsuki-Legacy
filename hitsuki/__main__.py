@@ -159,9 +159,8 @@ def start(update, context):
         else:
             first_name = update.effective_user.first_name
             buttons = InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="📃 HitaloSama's Docs", url="https://telegra.ph/HitaloKun-doc-07-15")],
-                [InlineKeyboardButton(text="⚙️ Connections", callback_data="main_connect")],
-                [InlineKeyboardButton(text="🇺🇸 Language", callback_data="main_setlang"), InlineKeyboardButton(text="❓ Help", url="https://t.me/LordHitsuki_BOT?start=help")]])
+                [[InlineKeyboardButton(text="🇺🇸 Language", callback_data="main_setlang"), InlineKeyboardButton(text="⚙️ Connections", callback_data="main_connect")],
+                [InlineKeyboardButton(text="📡 Hitsuki News", url="https://telegram.me/HitsukiNews"), InlineKeyboardButton(text="❓ Help", url="https://t.me/LordHitsuki_BOT?start=help")]])
             update.effective_message.reply_text(
                 tl(update.effective_message, PM_START_TEXT).format(escape_markdown(first_name), escape_markdown(context.bot.first_name), OWNER_ID),
                 disable_web_page_preview=True,

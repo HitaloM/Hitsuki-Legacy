@@ -32,10 +32,6 @@ This is where translations come in; you can change the language of most replies 
 Hi {}! My name is *{}* - I'm here to help you manage your groups!
 Click Help button to find out more about how to use me to my full potential.
 
-Follow [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) if you want to keep up with the news, updates and bot downtime!
-
-This bot is managed by @HitaloSama
-
 Want to add me to your group? [Click here!](t.me/LordHitsuki_BOT?startgroup=true)
 """,
 	"help_text": """
@@ -53,31 +49,6 @@ Helpful commands:
 
 All commands can either be used with / or !.
 """,
-	"donate_text": """Hello, glad to hear you want to donate!
-Need a lot of work for [my creator](tg://user?id=388576209) to take me to my place now, and \
-every donation helps and motivates him to make me better.
-
-All donated money will be given to a better VPS to host me, and or some food. \
-He is just an ordinary person, so it will really help him!
-
-If you really are interested in donating, please visit ayrahikari.github.io/donations.html, Thank you 😁""",
-	"Kembali": "Back",
-	"Hubungi saya di PM untuk mendapatkan daftar perintah.": "Contact me in PM to get the list of possible commands.",
-	"Tolong": "Help",
-	"Ini adalah bantuan yang tersedia untuk modul *{}*:\n": "Here is the available help for the *{}* module:\n",
-	"Ini adalah pengaturan Anda saat ini:": "These are your current settings:",
-	"Sepertinya tidak ada pengaturan khusus pengguna yang tersedia 😢": "Seems like there aren't any user specific settings available 😢",
-	"Modul mana yang ingin Anda periksa untuk pengaturan {}?": "Which module would you like to check {}'s settings for?",
-	"Sepertinya tidak ada pengaturan obrolan yang tersedia 😢\nKirim ini ke obrolan Anda sebagai admin untuk menemukan pengaturannya saat ini!": "Seems like there aren't any chat settings available :'(\nSend this in a group chat you're admin in to find its current settings!",
-	"*{}* memiliki pengaturan berikut untuk modul *{}*:\n\n": "*{}* has the following settings for the *{}* module:\n\n",
-	"Hai! Ada beberapa pengaturan untuk {} - lanjutkan dan pilih apa yang Anda minati.": "Hi there! There are quite a few settings for {} - go ahead and pick what you're interested in.",
-	"Klik di sini untuk mendapatkan pengaturan obrolan ini, serta milik Anda.": "Click here to get this chat's settings, as well as yours.",
-	"Klik di sini untuk memeriksa pengaturan Anda.": "Click here to check your settings.",
-	"Anda juga dapat menyumbang kepada orang yang saat ini menjalankan saya [disini]({})": "You can also donate to the person currently running me [here]({})",
-	"Saya sudah PM Anda tentang donasi untuk pencipta saya!": "I've PM'ed you about donating to my creator!",
-	"Hubungi saya di PM dulu untuk mendapatkan informasi donasi.": "Contact me in PM first to get donation information.",
-	"Ini bantuan untuk modul *{}*:\n": "Here is the help for the *{}* module:\n",
-	"Anda sekarang dapat mengambil catatan di grup.": "Now you can get notes in group.",
 
 # admin
 	"Bagaimana saya ingin menaikan jabatan seseorang yang sudah menjadi admin?": "How am I meant to promote someone that's already an admin?",
@@ -147,10 +118,6 @@ Get information about anime, manga or characters from [MyAnimeList](https://myan
 """,
 
 # AFK
-	"{} sekarang AFK!": "{} is now AFK!",
-	"{} sudah tidak AFK!": "{} is no longer AFK!",
-	"{} sedang AFK!": "{} is AFK!",
-	"{} sedang AFK!\nKarena : {}": "{} is AFK! says its because of: {}",
 	"afk_help": """
  - /afk <reason>: mark yourself as AFK.
  - brb <reason>: same as the afk command - but not a command.
@@ -288,17 +255,6 @@ Well, here you go.
  - /deepfry <reply>: for when your images/stickers need to get a little fried.
 """,
 
-# AFK
-	"{} sekarang AFK!": "{} is now AFK!",
-	"{} sudah tidak AFK!": "{} is no longer AFK!",
-	"{} sedang AFK!": "{} is AFK!",
-	"{} sedang AFK!\nKarena : {}": "{} is AFK! says its because of: {}",
-	"afk_help": """
- - /afk <reason>: mark yourself as AFK.
- - brb <reason>: same as the afk command - but not a command.
-
-When marked as AFK, any mentions will be replied to with a message to say you're not available!
-""",
 
 # Backups
 	"Coba unduh dan unggah ulang file seperti Anda sendiri sebelum mengimpor - yang ini sepertinya rusak!": "Try downloading and reuploading the file as yourself before importing - this one seems to be iffy!",
