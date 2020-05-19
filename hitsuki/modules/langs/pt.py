@@ -63,7 +63,7 @@ Todos os comandos podem ser usados ​​com `/` ou `!`‌‌
 	"Seems like there aren't any chat settings available \nSend this in a group chat you're admin in to find its current settings!": "Parece que não há configurações de bate-papo disponíveis: \nEnvie isso em um bate-papo em grupo em que você é administrador para encontrar as configurações atuais!",
 	"*{}* has the following settings for the *{}* module:\n\n": "*{}* possui as seguintes configurações para o módulo *{}*:\n\n",
 	"Hi there! There are quite a few settings for {} - go ahead and pick what you're interested in.": "Olá! Existem algumas configurações para {} - vá em frente e escolha o que lhe interessa.",
-	"Click here to get this chat's settings, as well as yours.": "Clique aqui para obter as configurações deste bate-papo e as suas.",
+	"Click here to get this chat's settings, as well as yours.": "Clique aqui para obter as configurações deste bate-papo.",
 	"Click here to check your settings.": "Clique aqui para verificar suas configurações.",
 	"Here is the help for the *{}* module:\n": "Aqui está a ajuda para o módulo *{}*:\n",
 	"Now you can get notes in group.": "Agora você pode obter notas em grupo.",
@@ -99,31 +99,30 @@ Todos os comandos podem ser usados ​​com `/` ou `!`‌‌
 	"Permanent pin berhasil di atur!": "Successfully set permanent pin!",
 	"*Permanent pin error:*\nI can't pin messages here!\nMake sure I'm admin and can pin messages.\n\nPermanent pin disabled now, [here is your old pinned message]({})": "*Erro no permanentpin:*\nEu não posso fixar mensagens aqui!\nCertifique-se que eu seja administrador e possa fixar mensagens.\n\nPermanent pin foi desativado agora, [aqui está sua antiga mensagem fixada]({})",
 	"admin_help": """
-*Make it easy to promote and demote users or pin and unpin messages with the the admin module!*
+*Torne mais fácil promover e rebaixar usuários ou fixar e desafixar mensagens com o módulo de administração!*
 
-*Available commands:*
- - /adminlist | /admins: List the admins in the current chat.
+*Comandos disponíveis:*
+ - /adminlist | /admins: Lista os administradores no bate-papo atual.
 
-*Admin only:*
-- /promote <reply/username/mention/username>: Promote a user.
-- /demote <reply/username/mention/username>: Demote a user.
- - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
- - /unpin: unpins the currently pinned message
- - /permapin <text>: Pin a custom messages via bots. This message can contain markdown, and can be used in replies to the media include additional buttons and text.
- - /permanentpin: Set a permanent pin for supergroup chat, when an admin or telegram channel change pinned message, bot will change pinned message immediatelly
- - /invitelink: Gets groups invite link.
+*Apenas administrador:*
+- /promote <resposta/menção/nome de usuário>: Promove um usuário.
+- /demote <resposta/menção/nome de usuário>: Rebaixa um usuário.
+ - /pin: fixa silenciosamente a mensagem respondida - adicione 'loud' ou 'notify' para enviar notificações aos usuários.
+ - /unpin: desafixa a mensagem atualmente afixada.
+ - /permapin <texto>: Fixar mensagens personalizadas por meio do bot. Essa mensagem pode conter markdown e pode ser usada em resposta à mídias como botões e texto adicionais.
+ - /permanentpin: Defina uma mensagem fixada permanente para o supergrupo. Quando um canal conectado ou Telegram alterar a mensagem fixada, o bot altera a mensagem fixada imediatamente.
+ - /invitelink: Obtém o link para convite de grupos.
 """,
 
 # MyAnimeList
 "myanimelist_help": """
-Get information about anime, manga or characters from [MyAnimeList](https://myanimelist.net).
+Obtenha informações sobre anime, mangá ou personagens em [MyAnimeList](https://myanimelist.net).
 
-*Available commands:*
-
- - /anime <anime>: returns information about the anime.
- - /character <character>: returns information about the character.
- - /manga <manga>: returns information about the manga.
- - /upcoming: returns a list of new anime in the upcoming seasons.
+*Comandos disponíveis:*
+ - /anime <anime>: retorna informações sobre o anime.
+ - /character <personagem>: retorna informações sobre o personagem.
+ - /manga <mangá>: retorna informações sobre o mangá.
+ - /upcoming: retorna uma lista de novos animes nas próximas temporadas.
 """,
 
 # AFK
@@ -183,98 +182,95 @@ Antiflood allows you to take action on users that send more than x messages in a
  - /flood: Get the current antiflood settings
 
 *Admin only:*
- - /setflood <number>: Set the number of messages after which to take action on a user.
- - /setfloodmode <action type> <value>: Choose which action to take on a user who has been flooding. Options: ban/kick/mute/tban/tmute
+ - /setflood <número>: Defina o número de mensagens após as quais deve se executar uma ação em um usuário.
+ - /setfloodmode <tipo de acão> <valor>: Escolha qual ação executar em um usuário que está fazendo flood. Opções: ban/kick/mute/tban/tmute
 
-*Note:*
- - Value must be filled for tban and tmute, Can be:
-	`4m` = 4 minutes
-	`3h` = 4 hours
-	`2d` = 2 days
-	`1w` = 1 week
+*Nota:*
+ - O valor que deve ser preenchido para tban e tmute, pode ser:
+	`4m` = 4 minutos
+	`3h` = 4 horas
+	`2d` = 2 dias
+	`1w` = 1 semana
 """,
 
 # URL Blacklist
 "urlblacklist_help": """
-Domain blacklisting is used to stop certain domains from being mentioned in a group, Any time an url on that domain is mentioned, /
-the message will immediately be deleted.
+A lista negra de domínios é usada para impedir que determinados domínios sejam mencionados em um grupo. Sempre que um URL desse domínio é mencionada, /
+a mensagem será excluída imediatamente.
 
-*NOTE:* domain blacklisting do not affect group admins.
+*NOTA:* a lista negra de domínios não afeta os administradores do grupo.
 
-- /geturl: View the current blacklisted urls
+- /geturl: Mostra os URLs atuais da lista negra
 
-*Admin only:*
-
-- /addurl <urls>: Add a domain to the blacklist. The bot will automatically parse the url.
-- /delurl <urls>: Remove urls from the blacklist
+*Apenas administrador:*
+- /addurl <url>: Adicione um domínio à lista negra. O bot analisará automaticamente o URL.
+- /delurl <url>: Remove URLs da lista negra.
 """,
 
 # LastFM
 "lastfm_help": """
-Share what you're what listening to with the help of this module!
+Compartilhe o que você está ouvindo com a ajuda deste módulo!
 
 *Available commands:*
- - /setuser <username>: sets your last.fm username.
- - /clearuser: removes your last.fm username from the bot's database.
- - /lastfm: returns what you're scrobbling on last.fm.
+ - /setuser <nome do usuário>: define seu nome de usuário last.fm.
+ - /clearuser: remove seu nome de usuário last.fm do banco de dados do bot.
+ - /lastfm: retorna o que você está ouvindo no last.fm.
 """,
 
 # Direct Links
 "directlinks_help": """
-*This module allows you to generate direct links from various websites.*
+*Este módulo permite gerar links diretos a partir de vários sites.*
 
-/direct <url>: paste a URL to generate a direct download link.
+/direct <url>: cole um URL para gerar um link de download direto.
 
-*List of supported URLs:*
+*Lista de URLs suportados:*
 `Google Drive - MediaFire - SourceForge`
 """,
 
 # GitHub
 "github_help": """
-*Need some GitHub release but don't want to have to go to GitHub and go to the repository? Here are some commands that can make your life easier with GitHub.*
+*Precisa de alguma release do GitHub, mas não deseja acessar o GitHub e o repositório? Aqui estão alguns comandos que podem facilitar sua vida com o GitHub.*
 
-*Available commands are:*
- - /gitr <user>/<repo>: will fetch the most recent release from that repo.
- - /gitr <user>/<repo> <number>: will fetch releases in past.
- - /git: Returns info about a GitHub user or organization.
- - /repo: Return the GitHub user or organization repository list (Limited at 40).
- - /fetch <word>: get the repo shortcut registered to that word.
- - &<word>: same as /get word
- - /changelog <word>: gets the changelog of a saved repo shortcut
- - /listrepo: List all repo shortcuts in the current chat
- - /gitver: returns the current API version.
+*Comandos disponíveis:*
+ - /gitr <usuário>/<repo>: buscará a release mais recente desse repositório.
+ - /gitr <usuário>/<repo> <número>: buscará lançamentos no passado.
+ - /git: Retorna informações sobre um usuário ou organização do GitHub.
+ - /repo: Retorne a lista de repositórios de usuários ou organizações do GitHub (limitada em 40).
+ - /fetch <palavra>: obtenha o atalho do repositório registrado para essa palavra.
+ - &<palavra>: mesmo que /get palavra
+ - /changelog <palavra>: obtém o registro de alterações de um atalho de repositório salvo
+ - /listrepo: Listar todos os atalhos de repositórios no bate-papo atual
+ - /gitver: retorna a versão atual da API.
 
-*Admin only:*
- - /saverepo <name> <user>/<repo> <number (optional)>: saves a repo value as shortcut
- - /delrepo <word>: delete the repo shortcut called "word"
+*Apenas administrador:*
+ - /saverepo <nome> <usuário>/<repo> <número (opcional)>: salva um repositório como atalho
+ - /delrepo <palavra>: exclua o atalho do repositório chamado "palavra"
 
-An example of how to save a repo shortcut would be via:
+Um exemplo de como salvar um atalho de repositório seria via:
 `/saverepo ptb python-telegram-bot/python-telegram-bot`
-Now, anyone using "`/fetch ptb`", or "`&ptb`" will be answered with the releases of the given repository.
-
-*Note:* Note names are case-insensitive, and they are automatically converted to lowercase before getting saved.
+Agora, qualquer pessoa usando "`/fetch ptb`", ou "`&ptb`" será respondido com as releases do repositório fornecido.
  
-This module was only possible thanks to the [pyGitHyb_API](https://github.com/nunopenim/pyGitHyb_API)
+Este módulo só foi possível graças ao [pyGitHyb_API](https://github.com/nunopenim/pyGitHyb_API)
 """,
 
 # Memes
 "memes_help": """
-Ohai, I see you'd like to know what memes I have for sale.
-Well, here you go.
+Opa, vejo que você gostaria de saber quais memes tenho à venda.
+Bem, aqui está alguns.
 
-*Some memes command:*
- - /owo: OwO whats this? OwOfies a message.
- - /stretch: Stretches vowels in a message a random number of times.
- - /vapor: Turns a message into vaporwave text.
- - /mock: Mocks a replied message lick the spongebob meme.
- - /zalgofy: corrupts a message.
- - /shout <keyword>: Write anything you want to give loud shout
+*Alguns memes comandam:*
+ - /owo: OwO o que é isso? OwOfies uma mensagem.
+ - /stretch: Estica vogais em uma mensagem em um número aleatório de vezes.
+ - /vapor: Transforma uma mensagem em texto vaporwave.
+ - /mock: Zomba de uma mensagem respondida com o meme do bob esponja.
+ - /zalgofy: corrompe uma mensagem.
+ - /shout <palavra>: Escreva qualquer coisa que você queira gritar alto
  - /dllm: Some chinese memes
- - /thonkify <reply>/<args>: turns text into thonk text (only supports letters and none symbols for now).
- - /forbes <reply>: turns a message into a Forbes headline.
- - /bify <reply>: Replying to a message with replace a random character with the B emoji.
- - /clap <reply>: Adds clap emojis at the begining, end, and in every space in a message.
- - /cp <reply>: A replica of mattatas copypasta command.
+ - /thonkify <resposta>/<args>: transforma texto em thonk (apenas suporta letras e nenhum símbolo no momento).
+ - /forbes <resposta>: transforma uma mensagem em uma manchete da Forbes.
+ - /bify <resposta>: Responde a uma mensagem substituindo um caractere aleatório pelo emoji B.
+ - /clap <resposta>: Adiciona emojis de palmas no início, final e em todos os espaços da mensagem.
+ - /cp <resposta>: Uma réplica do comando mattatas copypasta.
 """,
 
 
