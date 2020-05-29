@@ -920,15 +920,19 @@ def whChat(update, context):
     args = context.args
     if args and len(args) == 1:
         chat_id = str(args[0])
-        banner = update.effective_user
-        context.bot.send_message(MESSAGE_DUMP,
-                 "<b>Chat WhiteList</b>" \
-                 "\n#WHCHAT" \
-                 "\n<b>Status:</b> <code>Whitelisted</code>" \
-                 "\n<b>Sudo Admin:</b> {}" \
-                 "\n<b>ID:</b> <code>{}</code>".format(mention_html(banner.id, banner.first_name),chat_id), parse_mode=ParseMode.HTML)
-        sql.whitelistChat(chat_id)
-        update.effective_message.reply_text("Chat has been successfully whitelisted!")
+        try:
+            banner = update.effective_user
+            context.bot.send_message(MESSAGE_DUMP,
+                                     "<b>Chat WhiteList</b>" \
+                                     "\n#WHCHAT" \
+                                     "\n<b>Status:</b> <code>Whitelisted</code>" \
+                                     "\n<b>Sudo Admin:</b> {}" \
+                                     "\n<b>ID:</b> <code>{}</code>".format(mention_html(banner.id, banner.first_name),
+                                                                           chat_id), parse_mode=ParseMode.HTML)
+            sql.whitelistChat(chat_id)
+            update.effective_message.reply_text("Chat has been successfully whitelisted!")
+        except:
+            update.effective_message.reply_text("Error whitelisting chat!")
     else:
         update.effective_message.reply_text("Give me a valid chat id!")
 
@@ -938,7 +942,6 @@ def unwhChat(update, context):
     args = context.args
     if args and len(args) == 1:
         chat_id = str(args[0])
-        del args[0]
         try:
             banner = update.effective_user
             context.bot.send_message(MESSAGE_DUMP,
