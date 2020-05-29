@@ -518,8 +518,16 @@ def unwhitelistChat(chat_id):
         __load_whitelisted_chats_list()
 
 
+#def isWhitelisted(chat_id):
+#    return chat_id in WHITELIST
+
 def isWhitelisted(chat_id):
-    return chat_id in WHITELIST
+    with ALLOWCHATLOCK:
+        chat = SESSION.query(AllowedChat).get(chat_id)
+        if chat:
+            return true
+        else:
+            return false
 
 __load_whitelisted_chats_list()
 
