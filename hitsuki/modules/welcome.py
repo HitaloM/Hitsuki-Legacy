@@ -920,7 +920,6 @@ def whChat(update, context):
     args = context.args
     if args and len(args) == 1:
         chat_id = str(args[0])
-        del args[0]
         try:
             banner = update.effective_user
             context.bot.send_message(MESSAGE_DUMP,
