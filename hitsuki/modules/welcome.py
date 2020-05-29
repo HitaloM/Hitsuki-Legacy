@@ -946,8 +946,7 @@ def unwhChat(update, context):
                      "\n#UNWHCHAT" \
                      "\n<b>Status:</b> <code>Un-Whitelisted</code>" \
                      "\n<b>Sudo Admin:</b> {}" \
-                     "\n<b>Chat Name:</b> {}" \
-                     "\n<b>ID:</b> <code>{}</code>".format(mention_html(banner.id, banner.first_name),userssql.get_chat_name(chat_id),chat_id), parse_mode=ParseMode.HTML)
+                     "\n<b>ID:</b> <code>{}</code>".format(mention_html(banner.id, banner.first_name),chat_id), parse_mode=ParseMode.HTML)
             sql.unwhitelistChat(chat_id)
             update.effective_message.reply_text("Chat has been successfully un-whitelisted!")
             context.bot.leave_chat(int(chat_id))
