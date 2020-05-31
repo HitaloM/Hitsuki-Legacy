@@ -525,9 +525,9 @@ def isWhitelisted(chat_id):
     with ALLOWCHATLOCK:
         chat = SESSION.query(AllowedChat).get(chat_id)
         if chat:
-            return true
+            return True
         else:
-            return false
+            return False
 
 __load_whitelisted_chats_list()
 
