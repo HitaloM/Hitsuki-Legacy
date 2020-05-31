@@ -942,19 +942,26 @@ def unwhChat(update, context):
     args = context.args
     if args and len(args) == 1:
         chat_id = str(args[0])
-        #try:
-        banner = update.effective_user
-        context.bot.send_message(MESSAGE_DUMP,
-                 "<b>Regression of Chat WhiteList</b>" \
-                 "\n#UNWHCHAT" \
-                 "\n<b>Status:</b> <code>Un-Whitelisted</code>" \
-                 "\n<b>Sudo Admin:</b> {}" \
-                 "\n<b>ID:</b> <code>{}</code>".format(mention_html(banner.id, banner.first_name),chat_id), parse_mode=ParseMode.HTML)
-        sql.unwhitelistChat(chat_id)
-        update.effective_message.reply_text("Chat has been successfully un-whitelisted!")
-        context.bot.leave_chat(int(chat_id))
-        #except:
-        #    update.effective_message.reply_text("Error un-whitelisting chat!")
+        try:
+            banner = update.effective_user
+            context.bot.send_message(MESSAGE_DUMP,
+                     "<b>Regression of Chat WhiteList</b>" \
+                     "\n#UNWHCHAT" \
+                     "\n<b>Status:</b> <code>Un-Whitelisted</code>" \
+                     "\n<b>Sudo Admin:</b> {}" \
+                     "\n<b>ID:</b> <code>{}</code>".format(mention_html(banner.id, banner.first_name),chat_id), parse_mode=ParseMode.HTML)
+            sql.unwhitelistChat(chat_id)
+            update.effective_message.reply_text("Chat has been successfully un-whitelisted!")
+            context.bot.leave_chat(int(chat_id))
+            return
+        except BadRequest as excp:
+            if excp.message == "Chat not found":
+                return
+            else:
+                update.effective_message.reply_text("There has been an unspecified error while un-whitelisting this chat.")
+                return
+        except:
+            update.effective_message.reply_text("Error un-whitelisting chat!")
     else:
         update.effective_message.reply_text("Give me a valid chat id!")
 
