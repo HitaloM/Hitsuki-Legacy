@@ -655,7 +655,7 @@ Organize your group via PM easily.
 	"Ya, saya akan berhenti menjawabnya di *{}*.": "Yep, I'll stop replying than in *{}*.",
 	"Itu bukan filter aktif - jalankan /filter untuk semua filter aktif.": "That's not a current filter - run /filters for all active filters.",
 	"Anda tampaknya mencoba menggunakan protokol url yang tidak didukung. Telegram tidak mendukung tombol untuk beberapa protokol, seperti tg://. Silakan coba lagi.": "You seem to be trying to use an unsupported url protocol. Telegram doesn't support buttons for some protocols, such as tg://. Please try again",
-	"Catatan ini tidak dapat dikirim karena formatnya salah.": "This note could not be sent, as it is incorrectly formatted.",
+	"This note could not be sent, as it is incorrectly formatted.": "Não foi possível enviar esta nota pois está formatada incorretamente.",
 	"{} filter, pada {} obrolan.": "{} filters, across {} chats.",
 	"Ada `{}` filter khusus di sini.": "There are `{}` custom filters here.",
 	"filters_help": """
@@ -1078,14 +1078,14 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 """,
 
 # notes
-	"Pesan ini tampaknya telah hilang - saya akan menghapusnya dari daftar catatan Anda.": "This message seems to have been lost - I'll remove it from your notes list.",
-	"Sepertinya pengirim asli dari catatan ini telah dihapus pesan mereka - maaf! Dapatkan admin bot Anda untuk mulai menggunakan pesan dump untuk menghindari ini. Saya akan menghapus catatan ini dari catatan tersimpan Anda.": "Looks like the original sender of this note has deleted their message - sorry! Get your bot admin to start using a message dump to avoid this. I'll remove this note from your saved notes.",
+	"This message seems to have been lost - I'll remove it from your notes list.": "Esta mensagem parece ter sido perdida - eu a removerei da sua lista de anotações.",
+	"Looks like the original sender of this note has deleted their message - sorry! Get your bot admin to start using a message dump to avoid this. I'll remove this note from your saved notes.": "Parece que o remetente original desta nota excluiu a mensagem. Desculpe! Fale com seu administrador de bot para começar a usar um dump de mensagens para evitar isso. Vou remover esta nota das suas anotações salvas.",
 	"Kesalahan: URL pada tombol tidak valid! Harap perbaruhi catatan ini.": "Error: URL on the button is invalid! Please update this note.",
 	"Sepertinya Anda mencoba menyebutkan seseorang yang belum pernah saya lihat sebelumnya. Jika kamu benar-benar ingin menyebutkannya, meneruskan salah satu pesan mereka kepada saya, dan saya akan dapat untuk menandai mereka!": "Looks like you tried to mention someone I've never seen before. If you really want to mention them, forward one of their messages to me, and I'll be able to tag them!",
-	"Catatan ini adalah file yang salah diimpor dari bot lain - saya tidak bisa menggunakan ini. Jika Anda benar-benar membutuhkannya, Anda harus menyimpannya lagi. Sementara itu, saya akan menghapusnya dari daftar catatan Anda.": "This note was an incorrectly imported file from another bot - I can't use it. If you really need it, you'll have to save it again. In the meantime, I'll remove it from your notes list.",
+	"This note was an incorrectly imported file from another bot - I can't use it. If you really need it, you'll have to save it again. In the meantime, I'll remove it from your notes list.": "Esta nota foi um arquivo importado incorretamente de outro bot - não posso usá-lo. Se você realmente precisar, precisará salvá-lo novamente. Enquanto isso, vou removê-lo da sua lista de anotações.",
 	"Catatan ini tidak dapat dikirim karena formatnya salah.": "This note could not be sent, as it is incorrectly formatted.",
-	"Catatan ini tidak ada": "This note doesn't exist",
-	"Get apa?": "Get rekt",
+	"This note doesn't exist": "Esta nota não existe",
+	"Get what?": "Obter o que?",
 	"Anda harus memberi nama untuk catatan ini!": "You must give a name for this note!",
 	"Tidak ada catatan!": "Dude, there's no note",
 	"Ok, catatan `{note_name}` disimpan di *{chat_name}*.": "Ok, saved note `{note_name}` in *{chat_name}*.",
@@ -1115,10 +1115,10 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 	"File/foto ini gagal diimpor karena berasal dari bot lain. Ini adalah pembatasan API telegram, dan tidak bisa dihindari. Maaf untuk ketidaknyamanannya!": "These files/photos failed to import due to originating from another bot. This is a telegram API restriction, and can't be avoided. Sorry for the inconvenience!",
 	"{} catatan, pada {} obrolan.": "{} notes, accross {} chats.",
 	"Ada catatan `{}` dalam obrolan ini.": "There are {} notes in this chat.",
-	"Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM dan pesan pengguna akan segera di hapus.": "Private Note was *enabled*, when users get notes, the message will be sent to the PM and the hashtag message will be deleted.",
-	"Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM.": "Private Note was *enabled*, when users get notes, the message will be sent to the PM.",
-	"Private Note di *non-aktifkan*, pesan catatan akan di kirim di grup.": "Private Note was *disabled*, notes will be sent to group.",
-	"Pengaturan Private Note di {}: *{}*{}": "Current Private Note settings at {}: *{}*{}",
+	"Private Note was *enabled*, when users get notes, the message will be sent to the PM and the hashtag message will be deleted.": "Aas notas no privado foram *ativadas*, a partir de agora as notas serão enviadas por mim em conversa privada e a mensagem com a hashtag será excluída.",
+	"Private Note was *enabled*, when users get notes, the message will be sent to the PM.": "Aas notas no privado foram *ativadas*, a partir de agora as notas serão enviadas por mim em conversa privada.",
+	"Private Note was *disabled*, notes will be sent to group.": "A s notas privadas foram *desativadas*; as notas serão enviadas no grupo.",
+	"Current Private Note settings at {}: *{}*{}": "As configurações atuais de notas privadas são {}: *{}*{}",
 	"notes_help": """
  - /get <notename>: get the note with this notename
  - #<notename>: same as /get

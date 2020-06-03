@@ -73,7 +73,7 @@ def get(bot, update, notename, show_none=True, no_format=False):
                     bot.forward_message(chat_id=chat_id, from_chat_id=MESSAGE_DUMP, message_id=note.value)
                 except BadRequest as excp:
                     if excp.message == "Message to forward not found":
-                        send_message(update.effective_message, tl(update.effective_message, "Pesan ini tampaknya telah hilang - saya akan menghapusnya "
+                        send_message(update.effective_message, tl(update.effective_message, "This message seems to have been lost - I'll remove it "
                                            "from your list of notes."))
                         sql.rm_note(chat_id, notename)
                     else:
@@ -83,10 +83,9 @@ def get(bot, update, notename, show_none=True, no_format=False):
                     bot.forward_message(chat_id=chat_id, from_chat_id=chat_id, message_id=note.value)
                 except BadRequest as excp:
                     if excp.message == "Message to forward not found":
-                        send_message(update.effective_message, tl(update.effective_message, "Sepertinya pengirim asli dari catatan ini telah dihapus "
-                                           "pesan mereka - maaf! Dapatkan admin bot Anda untuk mulai menggunakan "
-                                           "pesan dump untuk menghindari ini. Saya akan menghapus catatan ini dari "
-                                           "catatan tersimpan Anda."))
+                        send_message(update.effective_message, tl(update.effective_message, "Looks like the original sender of this note has deleted "
+                                           "their message - sorry! Get your bot admin to start using a message "
+                                           "dump to avoid this. I'll remove this note from your saved notes. "))
                         sql.rm_note(chat_id, notename)
                     else:
                         raise
@@ -166,17 +165,17 @@ def get(bot, update, notename, show_none=True, no_format=False):
                                        "If you really want to mention, forwarding one of their messages to me, "
                                        "and I will be able to mark them!"))
                 elif FILE_MATCHER.match(note.value):
-                    send_message(update.effective_message, tl(update.effective_message, "Catatan ini adalah file yang salah diimpor dari bot lain - saya tidak bisa menggunakan "
-                                       "ini. Jika Anda benar-benar membutuhkannya, Anda harus menyimpannya lagi. "
-                                       "Sementara itu, saya akan menghapusnya dari daftar catatan Anda."))
+                    send_message(update.effective_message, tl(update.effective_message, "This note was an incorrectly imported file from another bot - "
+                                       "I can't use it. If you really need it, you'll have to save it again. "
+                                       "In the meantime, I'll remove it from your notes list."))
                     sql.rm_note(chat_id, notename)
                 else:
-                    send_message(update.effective_message, tl(update.effective_message, "Catatan ini tidak dapat dikirim karena formatnya salah."))
-                    LOGGER.exception("Tidak dapat menguraikan pesan #%s di obrolan %s", notename, str(chat_id))
-                    LOGGER.warning("Pesan itu: %s", str(note.value))
+                    send_message(update.effective_message, tl(update.effective_message, "This note could not be sent, as it is incorrectly formatted."))
+                    LOGGER.exception("Could not parse message #%s in the chat %s", notename, str(chat_id))
+                    LOGGER.warning("The message: %s", str(note.value))
         return
     elif show_none:
-        send_message(update.effective_message, tl(update.effective_message, "Catatan ini tidak ada"))
+        send_message(update.effective_message, tl(update.effective_message, "This note doesn't exist"))
 
 
 @run_async
@@ -188,7 +187,7 @@ def cmd_get(update, context):
     elif len(args) >= 1:
         get(context.bot, update, args[0], show_none=True)
     else:
-        send_message(update.effective_message, tl(update.effective_message, "Get apa?"))
+        send_message(update.effective_message, tl(update.effective_message, "Get what?"))
 
 
 @run_async
@@ -348,22 +347,22 @@ def private_note(update, context):
             if len(args) >= 2:
                 if args[1] == "del":
                     sql.private_note(str(chat_id), True, True)
-                    send_message(update.effective_message, tl(update.effective_message, "Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM dan pesan pengguna akan segera di hapus."), parse_mode="markdown")
+                    send_message(update.effective_message, tl(update.effective_message, "Private Note was *enabled*, when users get notes, the message will be sent to the PM and the hashtag message will be deleted."), parse_mode="markdown")
                 else:
                     sql.private_note(str(chat_id), True, False)
-                    send_message(update.effective_message, tl(update.effective_message, "Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM."), parse_mode="markdown")
+                    send_message(update.effective_message, tl(update.effective_message, "Private Note was *enabled*, when users get notes, the message will be sent to the PM."), parse_mode="markdown")
             else:
                 sql.private_note(str(chat_id), True, False)
-                send_message(update.effective_message, tl(update.effective_message, "Private Note di *aktifkan*, ketika pengguna mengambil catatan, pesan catatan akan dikirim ke PM."), parse_mode="markdown")
+                send_message(update.effective_message, tl(update.effective_message, "Private Note was *enabled*, when users get notes, the message will be sent to the PM."), parse_mode="markdown")
         elif args[0] in ("no", "off"):
             sql.private_note(str(chat_id), False, False)
-            send_message(update.effective_message, tl(update.effective_message, "Private Note di *non-aktifkan*, pesan catatan akan di kirim di grup."), parse_mode="markdown")
+            send_message(update.effective_message, tl(update.effective_message, "Private Note was *disabled*, notes will be sent to group."), parse_mode="markdown")
         else:
             send_message(update.effective_message, tl(update.effective_message, "Argumen tidak dikenal - harap gunakan 'yes', atau 'no'."))
     else:
         is_private, is_delete = sql.get_private_note(chat_id)
         print(is_private, is_delete)
-        send_message(update.effective_message, tl(update.effective_message, "Pengaturan Private Note di {}: *{}*{}").format(chat_name, "Enabled" if is_private else "Disabled", " - *Hash will be deleted*" if is_delete else ""), parse_mode="markdown")
+        send_message(update.effective_message, tl(update.effective_message, "Current Private Note settings at {}: *{}*{}").format(chat_name, "Enabled" if is_private else "Disabled", " - *Hash will be deleted*" if is_delete else ""), parse_mode="markdown")
 
 
 @run_async
