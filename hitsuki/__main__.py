@@ -31,7 +31,7 @@ PM_START_TEXT = "start_text"
 
 HELP_STRINGS = "help_text"  # .format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
 
-VERSION = "4.0.2"
+VERSION = "4.1.1"
 
 SOURCE_STRING = """
 I'm built in python3, using the python-telegram-bot library, and am fully opensource - you can find what makes me tick [here](https://github.com/HitaloSama/Hitsuki)
