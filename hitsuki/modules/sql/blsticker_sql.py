@@ -22,6 +22,7 @@ class StickersFilters(BASE):
                     and self.chat_id == other.chat_id
                     and self.trigger == other.trigger)
 
+
 class StickerSettings(BASE):
     __tablename__ = "blsticker_settings"
     chat_id = Column(String(14), primary_key=True)
@@ -123,6 +124,7 @@ def set_blacklist_strength(chat_id, blacklist_type, value):
         SESSION.add(curr_setting)
         SESSION.commit()
 
+
 def get_blacklist_setting(chat_id):
     try:
         setting = CHAT_BLSTICK_BLACKLISTS.get(str(chat_id))
@@ -161,6 +163,7 @@ def __load_chat_stickerset_blacklists():
 
     finally:
         SESSION.close()
+
 
 def migrate_chat(old_chat_id, new_chat_id):
     with STICKERS_FILTER_INSERTION_LOCK:

@@ -169,16 +169,18 @@ def del_fed(update, context):
 
     send_message(
         update.effective_message, tl(
-            update.effective_message, "Anda yakin ingin menghapus federasi Anda? Tindakan ini tidak bisa dibatalkan, Anda akan kehilangan seluruh daftar larangan Anda, dan '{}' akan hilang secara permanen.").format(
+            update.effective_message,
+            "Anda yakin ingin menghapus federasi Anda? Tindakan ini tidak bisa dibatalkan, Anda akan kehilangan seluruh daftar larangan Anda, dan '{}' akan hilang secara permanen.").format(
             getinfo['fname']), reply_markup=InlineKeyboardMarkup(
+            [
                 [
-                    [
-                        InlineKeyboardButton(
-                            text=tl(
-                                update.effective_message, "⚠️ Hapus Federasi ⚠️"), callback_data="rmfed_{}".format(fed_id))], [
-                                    InlineKeyboardButton(
-                                        text=tl(
-                                            update.effective_message, "Batalkan"), callback_data="rmfed_cancel")]]))
+                    InlineKeyboardButton(
+                        text=tl(
+                            update.effective_message, "⚠️ Hapus Federasi ⚠️"),
+                        callback_data="rmfed_{}".format(fed_id))], [
+                InlineKeyboardButton(
+                    text=tl(
+                        update.effective_message, "Batalkan"), callback_data="rmfed_cancel")]]))
 
 
 @run_async
@@ -339,8 +341,8 @@ def user_join_fed(update, context):
         elif not msg.reply_to_message and not args:
             user = msg.from_user
         elif not msg.reply_to_message and (not args or (
-            len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
-                [MessageEntity.TEXT_MENTION]))):
+                len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
+            [MessageEntity.TEXT_MENTION]))):
             send_message(
                 update.effective_message, tl(
                     update.effective_message, "Saya tidak dapat mengekstrak pengguna dari ini."))
@@ -409,8 +411,8 @@ def user_demote_fed(update, context):
             user = msg.from_user
 
         elif not msg.reply_to_message and (not args or (
-            len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
-                [MessageEntity.TEXT_MENTION]))):
+                len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
+            [MessageEntity.TEXT_MENTION]))):
             send_message(
                 update.effective_message, tl(
                     update.effective_message, "Saya tidak dapat mengekstrak pengguna dari ini."))
@@ -1009,10 +1011,10 @@ def unfban(update, context):
     context.bot.send_message(
         chat.id, tl(
             update.effective_message, "<b>Un-FedBan</b>"
-            "\n<b>Federasi:</b> {}"
-            "\n<b>Federasi Admin:</b> {}"
-            "\n<b>Pengguna:</b> {}"
-            "\n<b>Pengguna ID:</b> <code>{}</code>").format(
+                                      "\n<b>Federasi:</b> {}"
+                                      "\n<b>Federasi Admin:</b> {}"
+                                      "\n<b>Pengguna:</b> {}"
+                                      "\n<b>Pengguna ID:</b> <code>{}</code>").format(
             info['fname'], mention_html(
                 user.id, user.first_name), user_target, fban_user_id), parse_mode="HTML")
     # Send message to owner if fednotif is enabled
@@ -1020,10 +1022,10 @@ def unfban(update, context):
         context.bot.send_message(
             info['owner'], tl(
                 update.effective_message, "<b>Un-FedBan</b>"
-                "\n<b>Federasi:</b> {}"
-                "\n<b>Federasi Admin:</b> {}"
-                "\n<b>Pengguna:</b> {}"
-                "\n<b>Pengguna ID:</b> <code>{}</code>").format(
+                                          "\n<b>Federasi:</b> {}"
+                                          "\n<b>Federasi Admin:</b> {}"
+                                          "\n<b>Pengguna:</b> {}"
+                                          "\n<b>Pengguna ID:</b> <code>{}</code>").format(
                 info['fname'], mention_html(
                     user.id, user.first_name), user_target, fban_user_id), parse_mode="HTML")
     # If fedlog is set, then send message, except fedlog is current chat
@@ -1033,10 +1035,10 @@ def unfban(update, context):
             context.bot.send_message(
                 get_fedlog, tl(
                     update.effective_message, "<b>Un-FedBan</b>"
-                    "\n<b>Federasi:</b> {}"
-                    "\n<b>Federasi Admin:</b> {}"
-                    "\n<b>Pengguna:</b> {}"
-                    "\n<b>Pengguna ID:</b> <code>{}</code>").format(
+                                              "\n<b>Federasi:</b> {}"
+                                              "\n<b>Federasi Admin:</b> {}"
+                                              "\n<b>Pengguna:</b> {}"
+                                              "\n<b>Pengguna ID:</b> <code>{}</code>").format(
                     info['fname'], mention_html(
                         user.id, user.first_name), user_target, fban_user_id), parse_mode="HTML")
     for fedchats in chat_list:
@@ -1159,7 +1161,7 @@ def set_frules(update, context):
     else:
         send_message(
             update.effective_message, tl(
-        update.effective_message, "Silakan tulis aturan untuk mengaturnya!"))
+                update.effective_message, "Silakan tulis aturan untuk mengaturnya!"))
 
 
 @run_async
@@ -1178,7 +1180,7 @@ def get_frules(update, context):
     if not fed_id:
         send_message(
             update.effective_message, tl(
-        update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
+                update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
     rules = sql.get_frules(fed_id)
@@ -1271,7 +1273,7 @@ def fed_ban_list(update, context):
     if not fed_id:
         send_message(
             update.effective_message, tl(
-        update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
+                update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
     if is_user_fed_owner(fed_id, user.id) == False:
@@ -1305,7 +1307,8 @@ def fed_ban_list(update, context):
                         update.effective_message,
                         tl(
                             update.effective_message,
-                            "Anda dapat mendapatkan data 30 menit sekali!\nAnda dapat mendapatkan data ini lagi pada `{}`").format(waktu),
+                            "Anda dapat mendapatkan data 30 menit sekali!\nAnda dapat mendapatkan data ini lagi pada `{}`").format(
+                            waktu),
                         parse_mode=ParseMode.MARKDOWN)
                     return
                 else:
@@ -1350,7 +1353,8 @@ def fed_ban_list(update, context):
                         update.effective_message,
                         tl(
                             update.effective_message,
-                            "Anda dapat mendapatkan data 30 menit sekali!\nAnda dapat mendapatkan data ini lagi pada `{}`").format(waktu),
+                            "Anda dapat mendapatkan data 30 menit sekali!\nAnda dapat mendapatkan data ini lagi pada `{}`").format(
+                            waktu),
                         parse_mode=ParseMode.MARKDOWN)
                     return
                 else:
@@ -1416,7 +1420,8 @@ def fed_ban_list(update, context):
                     update.effective_message,
                     tl(
                         update.effective_message,
-                        "Anda dapat mendapatkan data 30 menit sekali!\nAnda dapat mendapatkan data ini lagi pada `{}`").format(waktu),
+                        "Anda dapat mendapatkan data 30 menit sekali!\nAnda dapat mendapatkan data ini lagi pada `{}`").format(
+                        waktu),
                     parse_mode=ParseMode.MARKDOWN)
                 return
             else:
@@ -1450,7 +1455,7 @@ def fed_notif(update, context):
     if not fed_id:
         send_message(
             update.effective_message, tl(
-        update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
+                update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
     if args:
@@ -1500,7 +1505,7 @@ def fed_chats(update, context):
     if not fed_id:
         send_message(
             update.effective_message, tl(
-        update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
+                update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
     if is_user_fed_admin(fed_id, user.id) == False:
@@ -1560,7 +1565,7 @@ def fed_import_bans(update, context):
     if not fed_id:
         send_message(
             update.effective_message, tl(
-        update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
+                update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
     if is_user_fed_owner(fed_id, user.id) == False:
@@ -1583,7 +1588,8 @@ def fed_import_bans(update, context):
                     update.effective_message,
                     tl(
                         update.effective_message,
-                        "Anda dapat mendapatkan data 30 menit sekali!\nAnda dapat mendapatkan data ini lagi pada `{}`").format(waktu),
+                        "Anda dapat mendapatkan data 30 menit sekali!\nAnda dapat mendapatkan data ini lagi pada `{}`").format(
+                        waktu),
                     parse_mode=ParseMode.MARKDOWN)
                 return
             else:
@@ -2009,7 +2015,7 @@ def subs_feds(update, context):
     if not fed_id:
         send_message(
             update.effective_message, tl(
-        update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
+                update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
     if is_user_fed_owner(fed_id, user.id) == False:
@@ -2072,7 +2078,7 @@ def unsubs_feds(update, context):
     if not fed_id:
         send_message(
             update.effective_message, tl(
-        update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
+                update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
     if is_user_fed_owner(fed_id, user.id) == False:
@@ -2131,7 +2137,7 @@ def get_myfedsubs(update, context):
     if not fed_id:
         send_message(
             update.effective_message, tl(
-        update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
+                update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
     if is_user_fed_owner(fed_id, user.id) == False:

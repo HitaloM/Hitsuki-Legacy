@@ -214,7 +214,7 @@ def unblackliststicker(update, context):
             send_message(
                 update.effective_message, tl(
                     update.effective_message, "Stiker <code>{}</code> dihapus dari daftar hitam. {} Tidak ada, "
-                    "jadi tidak dihapus.").format(
+                                              "jadi tidak dihapus.").format(
                     successful, len(to_unblacklist) - successful), parse_mode=ParseMode.HTML)
     elif msg.reply_to_message:
         trigger = msg.reply_to_message.sticker.set_name
@@ -336,9 +336,10 @@ Contoh nilai waktu: 4m = 4 menit, 3h = 3 jam, 6d = 6 hari, 5w = 5 minggu.""")
                 "Mode blacklist sticker diubah, Pengguna akan `{}`!").format(settypeblacklist)
         send_message(update.effective_message, text, parse_mode="markdown")
         return "<b>{}:</b>\n" \
-            "<b>Admin:</b> {}\n" \
-            "Changed sticker blacklist mode. Will {}.".format(html.escape(chat.title),
-                                                              mention_html(user.id, user.first_name), settypeblacklist)
+               "<b>Admin:</b> {}\n" \
+               "Changed sticker blacklist mode. Will {}.".format(html.escape(chat.title),
+                                                                 mention_html(user.id, user.first_name),
+                                                                 settypeblacklist)
     else:
         getmode, getvalue = sql.get_blacklist_setting(chat.id)
         if getmode == 0:

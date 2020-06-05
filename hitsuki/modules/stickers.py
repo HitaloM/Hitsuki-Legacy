@@ -73,7 +73,7 @@ def kang(update, context):
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
                 packname = "f" + str(packnum) + "_" + \
-                    str(user.id) + "_by_" + context.bot.username
+                           str(user.id) + "_by_" + context.bot.username
             else:
                 packname_found = 1
         except TelegramError as e:

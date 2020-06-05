@@ -85,7 +85,6 @@ Permissions.__table__.create(checkfirst=True)
 Restrictions.__table__.create(checkfirst=True)
 LockConfig.__table__.create(checkfirst=True)
 
-
 PERM_LOCK = threading.RLock()
 RESTR_LOCK = threading.RLock()
 CONF_LOCK = threading.RLock()
@@ -272,6 +271,7 @@ def set_lockconf(chat_id, should_warn):
         lock_setting.warn = should_warn
         SESSION.add(lock_setting)
         SESSION.commit()
+
 
 def get_lockconf(chat_id) -> bool:
     try:

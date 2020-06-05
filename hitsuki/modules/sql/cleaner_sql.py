@@ -34,7 +34,7 @@ def set_cleanbt(chat_id, is_enable):
         curr = SESSION.query(CleanerBlueText).get(str(chat_id))
         if curr:
             SESSION.delete(curr)
-        
+
         curr = CleanerBlueText(str(chat_id), is_enable)
 
         if is_enable:

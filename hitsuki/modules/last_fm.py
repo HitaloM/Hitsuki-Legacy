@@ -44,7 +44,8 @@ def last_fm(update, context):
         return
 
     base_url = "http://ws.audioscrobbler.com/2.0"
-    res = requests.get(f"{base_url}?method=user.getrecenttracks&limit=3&extended=1&user={username}&api_key={LASTFM_API_KEY}&format=json")
+    res = requests.get(
+        f"{base_url}?method=user.getrecenttracks&limit=3&extended=1&user={username}&api_key={LASTFM_API_KEY}&format=json")
     if not res.status_code == 200:
         msg.reply_text("Hmm... something went wrong.\nPlease ensure that you've set the correct username!")
         return
@@ -73,7 +74,8 @@ def last_fm(update, context):
         rep = f"{user} was listening to:\n"
         for artist, song in track_dict.items():
             rep += f"🎧  <code>{artist} - {song}</code>\n"
-        last_user = requests.get(f"{base_url}?method=user.getinfo&user={username}&api_key={LASTFM_API_KEY}&format=json").json().get("user")
+        last_user = requests.get(
+            f"{base_url}?method=user.getinfo&user={username}&api_key={LASTFM_API_KEY}&format=json").json().get("user")
         scrobbles = last_user.get("playcount")
         rep += f"\n(<code>{scrobbles}</code> scrobbles so far)"
 
@@ -83,7 +85,6 @@ def last_fm(update, context):
 __help__ = "lastfm_help"
 
 __mod_name__ = "Last.FM"
-
 
 SET_USER_HANDLER = CommandHandler("setuser", set_user, pass_args=True)
 CLEAR_USER_HANDLER = CommandHandler("clearuser", clear_user)

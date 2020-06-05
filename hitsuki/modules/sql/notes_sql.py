@@ -44,6 +44,7 @@ class Buttons(BASE):
         self.url = url
         self.same_line = same_line
 
+
 class PrivateNote(BASE):
     __tablename__ = "note_private"
 
@@ -58,6 +59,7 @@ class PrivateNote(BASE):
 
     def __repr__(self):
         return "note_private for {}".format(self.chat_id)
+
 
 Notes.__table__.create(checkfirst=True)
 Buttons.__table__.create(checkfirst=True)
@@ -136,16 +138,18 @@ def get_buttons(chat_id, note_name):
     finally:
         SESSION.close()
 
+
 def private_note(chat_id, is_private, is_delete):
     with PMNOTE_INSERTION_LOCK:
         curr = SESSION.query(PrivateNote).get(str(chat_id))
         if curr:
             SESSION.delete(curr)
-        
+
         curr = PrivateNote(str(chat_id), is_private, is_delete)
 
         SESSION.add(curr)
         SESSION.commit()
+
 
 def get_private_note(chat_id):
     curr = SESSION.query(PrivateNote).get(str(chat_id))
@@ -153,6 +157,7 @@ def get_private_note(chat_id):
         return curr.is_private, curr.is_delete
     else:
         return False, False
+
 
 def num_notes():
     try:

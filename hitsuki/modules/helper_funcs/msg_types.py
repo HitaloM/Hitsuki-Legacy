@@ -142,7 +142,7 @@ def get_welcome_type(msg: Message):
     if args:
         if msg.reply_to_message:
             argumen = msg.reply_to_message.caption if msg.reply_to_message.caption else ""
-            offset = 0 # offset is no need since target was in reply
+            offset = 0  # offset is no need since target was in reply
             entities = msg.reply_to_message.parse_entities()
         else:
             argumen = args[1]
@@ -157,6 +157,7 @@ def get_welcome_type(msg: Message):
             data_type = Types.TEXT
 
     return text, data_type, content, buttons
+
 
 def get_message_type(msg: Message):
     data_type = None
@@ -225,7 +226,6 @@ def get_message_type(msg: Message):
 
 
 def get_filter_type(msg: Message):
-
     if msg.text and len(msg.text.split()) >= 3:
         content = None
         text = msg.text.split(None, 2)[2]

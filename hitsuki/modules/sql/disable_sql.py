@@ -17,6 +17,7 @@ class Disable(BASE):
     def __repr__(self):
         return "Disabled cmd {} in {}".format(self.command, self.chat_id)
 
+
 class DisableDelete(BASE):
     __tablename__ = "disabled_del"
 
@@ -47,7 +48,7 @@ def disable_command(chat_id, disable):
 
         if not disabled:
             DISABLED.setdefault(str(chat_id), set()).add(disable)
-            
+
             disabled = Disable(str(chat_id), disable)
             SESSION.add(disabled)
             SESSION.commit()
@@ -64,13 +65,14 @@ def enable_command(chat_id, enable):
         if disabled:
             if enable in DISABLED.get(str(chat_id)):  # sanity check
                 DISABLED.setdefault(str(chat_id), set()).remove(enable)
-                
+
             SESSION.delete(disabled)
             SESSION.commit()
             return True
 
         SESSION.close()
         return False
+
 
 def disabledel_set(chat_id, is_enable):
     with DISABLEDEL_INSERTION_LOCK:
@@ -90,8 +92,10 @@ def disabledel_set(chat_id, is_enable):
         SESSION.add(curr)
         SESSION.commit()
 
+
 def is_disable_del(chat_id):
     return str(chat_id) in DISABLEDEL
+
 
 def is_command_disabled(chat_id, cmd):
     return cmd in DISABLED.get(str(chat_id), set())
@@ -121,11 +125,12 @@ def migrate_chat(old_chat_id, new_chat_id):
         for chat in chats:
             chat.chat_id = str(new_chat_id)
             SESSION.add(chat)
-            
+
         if str(old_chat_id) in DISABLED:
             DISABLED[str(new_chat_id)] = DISABLED.get(str(old_chat_id), set())
 
         SESSION.commit()
+
 
 def disableable_cache(cmd):
     global DISABLEABLE
@@ -135,8 +140,10 @@ def disableable_cache(cmd):
     else:
         DISABLEABLE.append(cmd)
 
+
 def get_disableable():
     return DISABLEABLE
+
 
 def __load_disabled_commands():
     global DISABLED
@@ -147,6 +154,7 @@ def __load_disabled_commands():
 
     finally:
         SESSION.close()
+
 
 def __load_disabledel():
     global DISABLEDEL

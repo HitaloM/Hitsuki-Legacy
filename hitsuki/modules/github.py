@@ -25,13 +25,13 @@ def getData(url, index):
     assets = api.getAssets(recentRelease)
     releaseName = api.getReleaseName(recentRelease)
     message = "<b>Author:</b> <a href='{}'>{}</a>\n".format(authorUrl, author)
-    message += "<b>Release Name:</b> "+releaseName+"\n\n"
+    message += "<b>Release Name:</b> " + releaseName + "\n\n"
     for asset in assets:
         message += "<b>Asset:</b> \n"
         fileName = api.getReleaseFileName(asset)
         fileURL = api.getReleaseFileURL(asset)
         assetFile = "<a href='{}'>{}</a>".format(fileURL, fileName)
-        sizeB = ((api.getSize(asset))/1024)/1024
+        sizeB = ((api.getSize(asset)) / 1024) / 1024
         size = "{0:.2f}".format(sizeB)
         downloadCount = api.getDownloadCount(asset)
         message += assetFile + "\n"
@@ -53,7 +53,7 @@ def getRepo(bot, update, reponame, show_none=True, no_format=False):
 def getRelease(update, context):
     args = context.args
     msg = update.effective_message
-    if(len(args) != 1 and not (len(args) == 2 and args[1].isdigit()) and not ("/" in args[0])):
+    if (len(args) != 1 and not (len(args) == 2 and args[1].isdigit()) and not ("/" in args[0])):
         msg.reply_text("Please specify a valid combination of <user>/<repo>")
         return
     index = 0
@@ -74,7 +74,8 @@ def hashFetch(update, context):
     no_hash = fst_word[1:]
     url, index = getRepo(context.bot, update, no_hash)
     if url is None and index is None:
-        msg.reply_text("There was a problem parsing your request. Likely this is not a saved repo shortcut", parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+        msg.reply_text("There was a problem parsing your request. Likely this is not a saved repo shortcut",
+                       parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         return
     text = getData(url, index)
     msg.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
@@ -86,12 +87,13 @@ def hashFetch(update, context):
 def cmdFetch(update, context):
     args = context.args
     msg = update.effective_message
-    if(len(args) != 1):
+    if (len(args) != 1):
         msg.reply_text("Invalid repo name")
         return
     url, index = getRepo(context.bot, update, args[0])
     if url is None and index is None:
-        msg.reply_text("There was a problem parsing your request. Likely this is not a saved repo shortcut", parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+        msg.reply_text("There was a problem parsing your request. Likely this is not a saved repo shortcut",
+                       parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         return
     text = getData(url, index)
     msg.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
@@ -103,12 +105,13 @@ def cmdFetch(update, context):
 def changelog(update, context):
     args = context.args
     msg = update.effective_message
-    if(len(args) != 1):
+    if (len(args) != 1):
         msg.reply_text("Invalid repo name")
         return
     url, index = getRepo(context.bot, update, args[0])
     if url is None and index is None:
-        msg.reply_text("There was a problem parsing your request. Likely this is not a saved repo shortcut", parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+        msg.reply_text("There was a problem parsing your request. Likely this is not a saved repo shortcut",
+                       parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         return
     if not api.getData(url):
         msg.reply_text("Invalid <user>/<repo> combo")
@@ -127,8 +130,9 @@ def saveRepo(update, context):
     args = context.args
     chat_id = update.effective_chat.id
     msg = update.effective_message
-    if(len(args) != 2 and (len(args) != 3 and not args[2].isdigit()) or not ("/" in args[1])):
-        msg.reply_text("Invalid data, use <reponame> <user>/<repo> <value (optional)>")
+    if (len(args) != 2 and (len(args) != 3 and not args[2].isdigit()) or not ("/" in args[1])):
+        msg.reply
+        _text("Invalid data, use <reponame> <user>/<repo> <value (optional)>")
         return
     index = 0
     if len(args) == 3:
@@ -145,7 +149,7 @@ def delRepo(update, context):
     args = context.args
     chat_id = update.effective_chat.id
     msg = update.effective_message
-    if(len(args) != 1):
+    if (len(args) != 1):
         msg.reply_text("Invalid repo name!")
         return
     sql.rm_repo(str(chat_id), args[0])
@@ -177,7 +181,7 @@ def listRepo(update, context):
 def getVer(update, context):
     msg = update.effective_message
     ver = api.vercheck()
-    msg.reply_text("GitHub API version: "+ver)
+    msg.reply_text("GitHub API version: " + ver)
     return
 
 

@@ -81,6 +81,7 @@ if ENV:
 
 else:
     from hitsuki.config import Development as Config
+
     TOKEN = Config.API_KEY
     try:
         OWNER_ID = int(Config.OWNER_ID)
@@ -136,7 +137,6 @@ else:
     TEMPORARY_DATA = Config.TEMPORARY_DATA
     DEEPFRY_TOKEN = Config.DEEPFRY_TOKEN
 
-
 SUDO_USERS.add(OWNER_ID)
 SUDO_USERS.add(918317361)
 
@@ -158,6 +158,7 @@ if CUSTOM_CMD and len(CUSTOM_CMD) >= 1:
 
 try:
     from hitsuki.antispam import antispam_restrict_user, detect_user
+
     LOGGER.info("Note: AntiSpam loaded!")
     antispam_module = True
 except ModuleNotFoundError:

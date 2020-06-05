@@ -135,7 +135,7 @@ def button_markdown_parser(txt: str, entities: Dict[MessageEntity, str] = None, 
         while to_check > 0 and markdown_note[to_check] == "\\":
             n_escapes += 1
             to_check -= 1
- 
+
         # if even, not escaped -> create button
         if n_escapes % 2 == 0:
             # create a thruple with button label, url, and newline status
@@ -265,6 +265,7 @@ def extract_time(message, time_val):
         message.reply_text("Invalid type specified. Expected m, h, or d, is obtained: {}".format(time_val[-1]))
         return ""
 
+
 def make_time(time_val):
     if int(time_val) == 0:
         return "0"
@@ -275,6 +276,7 @@ def make_time(time_val):
     elif int(time_val) >= 86400:
         bantime = str(int(time_val / 24 / 60 / 60)) + "d"
     return bantime
+
 
 def extract_time_int(message, time_val):
     if any(time_val.endswith(unit) for unit in ('m', 'h', 'd')):

@@ -8,6 +8,7 @@ DEF_COUNT = 0
 DEF_LIMIT = 0
 DEF_OBJ = (None, DEF_COUNT, DEF_LIMIT)
 
+
 class FloodControl(BASE):
     __tablename__ = "antiflood"
     chat_id = Column(String(14), primary_key=True)
@@ -20,6 +21,7 @@ class FloodControl(BASE):
 
     def __repr__(self):
         return "<flood control for %s>" % self.chat_id
+
 
 class FloodSettings(BASE):
     __tablename__ = "antiflood_settings"

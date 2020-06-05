@@ -22,6 +22,7 @@ class BlackListFilters(BASE):
                     and self.chat_id == other.chat_id
                     and self.trigger == other.trigger)
 
+
 class BlacklistSettings(BASE):
     __tablename__ = "blacklist_settings"
     chat_id = Column(String(14), primary_key=True)
@@ -123,6 +124,7 @@ def set_blacklist_strength(chat_id, blacklist_type, value):
         SESSION.add(curr_setting)
         SESSION.commit()
 
+
 def get_blacklist_setting(chat_id):
     try:
         setting = CHAT_SETTINGS_BLACKLISTS.get(str(chat_id))
@@ -133,6 +135,7 @@ def get_blacklist_setting(chat_id):
 
     finally:
         SESSION.close()
+
 
 def __load_chat_blacklists():
     global CHAT_BLACKLISTS
@@ -149,6 +152,7 @@ def __load_chat_blacklists():
 
     finally:
         SESSION.close()
+
 
 def __load_chat_settings_blacklists():
     global CHAT_SETTINGS_BLACKLISTS

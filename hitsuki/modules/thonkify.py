@@ -12,7 +12,6 @@ from hitsuki.modules.languages import tl
 @spamcheck
 @run_async
 def thonkify(update, context):
-
     from hitsuki.modules.thonkify_dict import thonkifydict
 
     chat = update.effective_chat
@@ -29,7 +28,8 @@ def thonkify(update, context):
         message.reply_text(tl(chat.id, "Thonk yourself!"))
         return
 
-    tracking = Image.open(BytesIO(base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAYAAAOACAYAAAAZzQIQAAAALElEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwZV4AAAfA8WFIAAAAASUVORK5CYII=')))  # base64 encoded empty image(but longer)
+    tracking = Image.open(BytesIO(base64.b64decode(
+        'iVBORw0KGgoAAAANSUhEUgAAAAYAAAOACAYAAAAZzQIQAAAALElEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwZV4AAAfA8WFIAAAAASUVORK5CYII=')))  # base64 encoded empty image(but longer)
 
     # remove characters thonkify can't parse
     for character in msg:

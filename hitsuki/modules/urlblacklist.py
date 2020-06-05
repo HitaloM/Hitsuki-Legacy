@@ -137,7 +137,8 @@ def get_blacklisted_urls(update, context):
     message.reply_text(base_string, parse_mode=ParseMode.HTML)
 
 
-URL_BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", add_blacklist_url, filters=Filters.group, pass_args=True, admin_ok=True)
+URL_BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", add_blacklist_url, filters=Filters.group, pass_args=True,
+                                                  admin_ok=True)
 ADD_URL_BLACKLIST_HANDLER = CommandHandler("addurl", add_blacklist_url,
                                            filters=Filters.group)
 RM_BLACKLIST_URL_HANDLER = CommandHandler("delurl", rm_blacklist_url,
@@ -145,7 +146,6 @@ RM_BLACKLIST_URL_HANDLER = CommandHandler("delurl", rm_blacklist_url,
 GET_BLACKLISTED_URLS = CommandHandler("geturl", get_blacklisted_urls,
                                       filters=Filters.group)
 URL_DELETE_HANDLER = MessageHandler(Filters.entity("url"), del_blacklist_url)
-
 
 __mod_name__ = "Domain Blacklists"
 

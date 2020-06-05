@@ -39,30 +39,33 @@ LOCK_TYPES = {'audio': Filters.audio,
               'button': 'button'
               }
 
+LOCK_CHAT_RESTRICTION = {"all": {'can_send_messages': False, 'can_send_media_messages': False, 'can_send_polls': False,
+                                 'can_send_other_messages': False, 'can_add_web_page_previews': False,
+                                 'can_change_info': False, 'can_invite_users': False, 'can_pin_messages': False},
+                         "messages": {'can_send_messages': False},
+                         "media": {'can_send_media_messages': False},
+                         "sticker": {'can_send_other_messages': False},
+                         "gif": {'can_send_other_messages': False},
+                         "poll": {'can_send_polls': False},
+                         "other": {'can_send_other_messages': False},
+                         "previews": {'can_add_web_page_previews': False},
+                         "info": {'can_change_info': False},
+                         "invite": {'can_invite_users': False},
+                         "pin": {'can_pin_messages': False}}
 
-LOCK_CHAT_RESTRICTION = {"all": {'can_send_messages': False, 'can_send_media_messages': False, 'can_send_polls': False, 'can_send_other_messages': False, 'can_add_web_page_previews': False, 'can_change_info': False, 'can_invite_users': False, 'can_pin_messages': False},
-                        "messages": {'can_send_messages': False},
-                        "media": {'can_send_media_messages': False},
-                        "sticker": {'can_send_other_messages': False},
-                        "gif": {'can_send_other_messages': False},
-                        "poll": {'can_send_polls': False},
-                        "other": {'can_send_other_messages': False},
-                        "previews": {'can_add_web_page_previews': False},
-                        "info": {'can_change_info': False},
-                        "invite": {'can_invite_users': False},
-                        "pin": {'can_pin_messages': False}}
-
-UNLOCK_CHAT_RESTRICTION = {"all": {'can_send_messages': True, 'can_send_media_messages': True, 'can_send_polls': True, 'can_send_other_messages': True, 'can_add_web_page_previews': True, 'can_invite_users': True},
-                        "messages": {'can_send_messages': True},
-                        "media": {'can_send_media_messages': True},
-                        "sticker": {'can_send_other_messages': True},
-                        "gif": {'can_send_other_messages': True},
-                        "poll": {'can_send_polls': True},
-                        "other": {'can_send_other_messages': True},
-                        "previews": {'can_add_web_page_previews': True},
-                        "info": {'can_change_info': True},
-                        "invite": {'can_invite_users': True},
-                        "pin": {'can_pin_messages': True}}
+UNLOCK_CHAT_RESTRICTION = {"all": {'can_send_messages': True, 'can_send_media_messages': True, 'can_send_polls': True,
+                                   'can_send_other_messages': True, 'can_add_web_page_previews': True,
+                                   'can_invite_users': True},
+                           "messages": {'can_send_messages': True},
+                           "media": {'can_send_media_messages': True},
+                           "sticker": {'can_send_other_messages': True},
+                           "gif": {'can_send_other_messages': True},
+                           "poll": {'can_send_polls': True},
+                           "other": {'can_send_other_messages': True},
+                           "previews": {'can_add_web_page_previews': True},
+                           "info": {'can_change_info': True},
+                           "invite": {'can_invite_users': True},
+                           "pin": {'can_pin_messages': True}}
 
 PERM_GROUP = 1
 REST_GROUP = 2
@@ -103,7 +106,9 @@ def locktypes(update, context):
     locklist.sort()
     perm = list(LOCK_CHAT_RESTRICTION)
     perm.sort()
-    send_message(update.effective_message, "\n - ".join([tl(update.effective_message, "*Jenis kunci yang tersedia adalah:* ")] + locklist) + "\n\n" + "\n - ".join([tl(update.effective_message, "*Jenis izin kunci yang tersedia adalah:* ")] + perm), parse_mode="markdown")
+    send_message(update.effective_message, "\n - ".join(
+        [tl(update.effective_message, "*Jenis kunci yang tersedia adalah:* ")] + locklist) + "\n\n" + "\n - ".join(
+        [tl(update.effective_message, "*Jenis izin kunci yang tersedia adalah:* ")] + perm), parse_mode="markdown")
 
 
 @user_admin
@@ -124,10 +129,12 @@ def lock(update, context) -> str:
                     chat = dispatcher.bot.getChat(conn)
                     chat_id = conn
                     chat_name = chat.title
-                    text = tl(update.effective_message, "Terkunci pesan *{}* untuk semua non-admin pada *{}*!").format(ltype, chat_name)
+                    text = tl(update.effective_message, "Terkunci pesan *{}* untuk semua non-admin pada *{}*!").format(
+                        ltype, chat_name)
                 else:
                     if update.effective_message.chat.type == "private":
-                        send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+                        send_message(update.effective_message, tl(update.effective_message,
+                                                                  "Anda bisa lakukan command ini pada grup, bukan pada PM"))
                         return ""
                     chat = update.effective_chat
                     chat_id = update.effective_chat.id
@@ -149,18 +156,22 @@ def lock(update, context) -> str:
                     chat = dispatcher.bot.getChat(conn)
                     chat_id = conn
                     chat_name = chat.title
-                    text = tl(update.effective_message, "Izin terkunci pesan *{}* untuk semua non-admin pada *{}*!").format(ltype, chat_name)
+                    text = tl(update.effective_message,
+                              "Izin terkunci pesan *{}* untuk semua non-admin pada *{}*!").format(ltype, chat_name)
                 else:
                     if update.effective_message.chat.type == "private":
-                            send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
-                            return ""
+                        send_message(update.effective_message, tl(update.effective_message,
+                                                                  "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+                        return ""
                     chat = update.effective_chat
                     chat_id = update.effective_chat.id
                     chat_name = update.effective_message.chat.title
                     text = tl(update.effective_message, "Izin terkunci pesan *{}* untuk semua non-admin!").format(ltype)
 
                 current_permission = context.bot.getChat(chat_id).permissions
-                context.bot.set_chat_permissions(chat_id=chat_id, permissions=get_permission_list(eval(str(current_permission)), LOCK_CHAT_RESTRICTION[ltype.lower()]))
+                context.bot.set_chat_permissions(chat_id=chat_id,
+                                                 permissions=get_permission_list(eval(str(current_permission)),
+                                                                                 LOCK_CHAT_RESTRICTION[ltype.lower()]))
 
                 send_message(update.effective_message, text, parse_mode="markdown")
                 return "<b>{}:</b>" \
@@ -170,12 +181,14 @@ def lock(update, context) -> str:
                                                           mention_html(user.id, user.first_name), ltype)
 
             else:
-                send_message(update.effective_message, tl(update.effective_message, "Apa yang Anda coba untuk kunci...? Coba /locktypes untuk daftar kunci yang dapat dikunci"))
+                send_message(update.effective_message, tl(update.effective_message,
+                                                          "Apa yang Anda coba untuk kunci...? Coba /locktypes untuk daftar kunci yang dapat dikunci"))
         else:
             send_message(update.effective_message, tl(update.effective_message, "Apa yang Anda ingin kunci...?"))
 
     else:
-        send_message(update.effective_message, tl(update.effective_message, "Saya bukan admin, atau tidak punya hak menghapus."))
+        send_message(update.effective_message,
+                     tl(update.effective_message, "Saya bukan admin, atau tidak punya hak menghapus."))
 
     return ""
 
@@ -199,10 +212,12 @@ def unlock(update, context) -> str:
                     chat = dispatcher.bot.getChat(conn)
                     chat_id = conn
                     chat_name = chat.title
-                    text = tl(update.effective_message, "Tidak terkunci *{}* untuk semua orang pada *{}*!").format(ltype, chat_name)
+                    text = tl(update.effective_message, "Tidak terkunci *{}* untuk semua orang pada *{}*!").format(
+                        ltype, chat_name)
                 else:
                     if update.effective_message.chat.type == "private":
-                        send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+                        send_message(update.effective_message, tl(update.effective_message,
+                                                                  "Anda bisa lakukan command ini pada grup, bukan pada PM"))
                         return ""
                     chat = update.effective_chat
                     chat_id = update.effective_chat.id
@@ -223,10 +238,12 @@ def unlock(update, context) -> str:
                     chat = dispatcher.bot.getChat(conn)
                     chat_id = conn
                     chat_name = chat.title
-                    text = tl(update.effective_message, "Izin tidak terkunci *{}* untuk semua orang pada *{}*!").format(ltype, chat_name)
+                    text = tl(update.effective_message, "Izin tidak terkunci *{}* untuk semua orang pada *{}*!").format(
+                        ltype, chat_name)
                 else:
                     if update.effective_message.chat.type == "private":
-                        send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+                        send_message(update.effective_message, tl(update.effective_message,
+                                                                  "Anda bisa lakukan command ini pada grup, bukan pada PM"))
                         return ""
                     chat = update.effective_chat
                     chat_id = update.effective_chat.id
@@ -234,7 +251,10 @@ def unlock(update, context) -> str:
                     text = tl(update.effective_message, "Izin tidak terkunci *{}* untuk semua orang!").format(ltype)
 
                 current_permission = context.bot.getChat(chat_id).permissions
-                context.bot.set_chat_permissions(chat_id=chat_id, permissions=get_permission_list(eval(str(current_permission)), UNLOCK_CHAT_RESTRICTION[ltype.lower()]))
+                context.bot.set_chat_permissions(chat_id=chat_id,
+                                                 permissions=get_permission_list(eval(str(current_permission)),
+                                                                                 UNLOCK_CHAT_RESTRICTION[
+                                                                                     ltype.lower()]))
 
                 send_message(update.effective_message, text, parse_mode="markdown")
 
@@ -244,10 +264,12 @@ def unlock(update, context) -> str:
                        "\nUnlocked <code>{}</code>.".format(html.escape(chat.title),
                                                             mention_html(user.id, user.first_name), ltype)
             else:
-                send_message(update.effective_message, tl(update.effective_message, "Apa yang Anda coba untuk membuka kunci...? Coba /locktypes untuk daftar kunci yang dapat dikunci"))
+                send_message(update.effective_message, tl(update.effective_message,
+                                                          "Apa yang Anda coba untuk membuka kunci...? Coba /locktypes untuk daftar kunci yang dapat dikunci"))
 
         else:
-            send_message(update.effective_message, tl(update.effective_message, "Apa yang Anda coba untuk buka kunci...?"))
+            send_message(update.effective_message,
+                         tl(update.effective_message, "Apa yang Anda coba untuk buka kunci...?"))
 
     return ""
 
@@ -273,7 +295,9 @@ def del_lockables(update, context):
                                 LOGGER.exception("ERROR in lockables")
                         getconf = sql.get_lockconf(chat.id)
                         if getconf:
-                            warn(update.effective_user, chat, tl(update.effective_message, "Mengirim 'Teks RTL' yang sedang di kunci saat ini"), message, update.effective_user, conn=False)
+                            warn(update.effective_user, chat,
+                                 tl(update.effective_message, "Mengirim 'Teks RTL' yang sedang di kunci saat ini"),
+                                 message, update.effective_user, conn=False)
                         break
                 if message.text:
                     check = ad.detect_alphabet(u'{}'.format(message.text))
@@ -287,7 +311,9 @@ def del_lockables(update, context):
                                 LOGGER.exception("ERROR in lockables")
                         getconf = sql.get_lockconf(chat.id)
                         if getconf:
-                            warn(update.effective_user, chat, tl(update.effective_message, "Mengirim 'Teks RTL' yang sedang di kunci saat ini"), message, update.effective_user, conn=False)
+                            warn(update.effective_user, chat,
+                                 tl(update.effective_message, "Mengirim 'Teks RTL' yang sedang di kunci saat ini"),
+                                 message, update.effective_user, conn=False)
                         break
             continue
         if lockable == "button":
@@ -302,7 +328,9 @@ def del_lockables(update, context):
                             LOGGER.exception("ERROR in lockables")
                     getconf = sql.get_lockconf(chat.id)
                     if getconf:
-                        warn(update.effective_user, chat, tl(update.effective_message, "Mengirim 'Pesan Tombol' yang sedang di kunci saat ini"), message, update.effective_user, conn=False)
+                        warn(update.effective_user, chat,
+                             tl(update.effective_message, "Mengirim 'Pesan Tombol' yang sedang di kunci saat ini"),
+                             message, update.effective_user, conn=False)
                     break
             continue
         if filter(update) and sql.is_locked(chat.id, lockable) and can_delete(chat, context.bot.id):
@@ -311,15 +339,19 @@ def del_lockables(update, context):
                 for new_mem in new_members:
                     if new_mem.is_bot:
                         if not is_bot_admin(chat, context.bot.id):
-                            send_message(update.effective_message, tl(update.effective_message, "Saya melihat bot, dan saya diberitahu untuk menghentikan mereka bergabung... "
-                                               "tapi saya bukan admin!"))
+                            send_message(update.effective_message, tl(update.effective_message,
+                                                                      "Saya melihat bot, dan saya diberitahu untuk menghentikan mereka bergabung... "
+                                                                      "tapi saya bukan admin!"))
                             return
 
                         chat.kick_member(new_mem.id)
-                        send_message(update.effective_message, tl(update.effective_message, "Hanya admin yang diizinkan menambahkan bot ke obrolan ini! Keluar dari sini!"))
+                        send_message(update.effective_message, tl(update.effective_message,
+                                                                  "Hanya admin yang diizinkan menambahkan bot ke obrolan ini! Keluar dari sini!"))
                         getconf = sql.get_lockconf(chat.id)
                         if getconf:
-                            warn(update.effective_user, chat, tl(update.effective_message, "Memasukan 'Bot' yang sedang di kunci saat ini"), message, update.effective_user, conn=False)
+                            warn(update.effective_user, chat,
+                                 tl(update.effective_message, "Memasukan 'Bot' yang sedang di kunci saat ini"), message,
+                                 update.effective_user, conn=False)
                         break
             else:
                 try:
@@ -331,7 +363,9 @@ def del_lockables(update, context):
                         LOGGER.exception("ERROR in lockables")
                 getconf = sql.get_lockconf(chat.id)
                 if getconf:
-                    warn(update.effective_user, chat, tl(update.effective_message, "Mengirim '{}' yang sedang di kunci saat ini").format(lockable), message, update.effective_user, conn=False)
+                    warn(update.effective_user, chat,
+                         tl(update.effective_message, "Mengirim '{}' yang sedang di kunci saat ini").format(lockable),
+                         message, update.effective_user, conn=False)
 
                 break
 
@@ -396,7 +430,8 @@ def list_locks(update, context):
         chat_name = chat.title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+            send_message(update.effective_message,
+                         tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
@@ -424,7 +459,8 @@ def lock_warns(update, context):
         chat_name = chat.title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
+            send_message(update.effective_message,
+                         tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
@@ -434,38 +470,58 @@ def lock_warns(update, context):
         if args[0] == "on" or args[0] == "yes":
             sql.set_lockconf(chat_id, True)
             try:
-                send_message(update.effective_message, tl(update.effective_message, "Saya *akan* memperingati pengguna jika dia mengirim pesan yang dikunci"), parse_mode="markdown")
+                send_message(update.effective_message, tl(update.effective_message,
+                                                          "Saya *akan* memperingati pengguna jika dia mengirim pesan yang dikunci"),
+                             parse_mode="markdown")
             except BadRequest:
-                send_message(update.effective_message, tl(update.effective_message, "Saya *akan* memperingati pengguna jika dia mengirim pesan yang dikunci", parse_mode="markdown", quote=False))
+                send_message(update.effective_message, tl(update.effective_message,
+                                                          "Saya *akan* memperingati pengguna jika dia mengirim pesan yang dikunci",
+                                                          parse_mode="markdown", quote=False))
         elif args[0] == "off" or args[0] == "no":
             sql.set_lockconf(chat_id, False)
             try:
-                send_message(update.effective_message, tl(update.effective_message, "Saya *tidak akan* memperingati pengguna jika dia mengirim pesan yang dikunci"), parse_mode="markdown")
+                send_message(update.effective_message, tl(update.effective_message,
+                                                          "Saya *tidak akan* memperingati pengguna jika dia mengirim pesan yang dikunci"),
+                             parse_mode="markdown")
             except BadRequest:
-                send_message(update.effective_message, tl(update.effective_message, "Saya *tidak akan* memperingati pengguna jika dia mengirim pesan yang dikunci", parse_mode="markdown", quote=False))
+                send_message(update.effective_message, tl(update.effective_message,
+                                                          "Saya *tidak akan* memperingati pengguna jika dia mengirim pesan yang dikunci",
+                                                          parse_mode="markdown", quote=False))
         else:
             try:
-                send_message(update.effective_message, tl(update.effective_message, "Saya hanya mengerti 'on/yes' atau 'off/no' saja!"), parse_mode="markdown")
+                send_message(update.effective_message,
+                             tl(update.effective_message, "Saya hanya mengerti 'on/yes' atau 'off/no' saja!"),
+                             parse_mode="markdown")
             except BadRequest:
-                send_message(update.effective_message, tl(update.effective_message, "Saya hanya mengerti 'on/yes' atau 'off/no' saja!"), parse_mode="markdown", quote=False)
+                send_message(update.effective_message,
+                             tl(update.effective_message, "Saya hanya mengerti 'on/yes' atau 'off/no' saja!"),
+                             parse_mode="markdown", quote=False)
     else:
         getconf = sql.get_lockconf(chat_id)
         if getconf:
             try:
-                send_message(update.effective_message, tl(update.effective_message, "Saat ini saya *akan* memperingati pengguna jika dia mengirim pesan yang dikunci"), parse_mode="markdown")
+                send_message(update.effective_message, tl(update.effective_message,
+                                                          "Saat ini saya *akan* memperingati pengguna jika dia mengirim pesan yang dikunci"),
+                             parse_mode="markdown")
             except BadRequest:
-                send_message(update.effective_message, tl(update.effective_message, "Saat ini saya *akan* memperingati pengguna jika dia mengirim pesan yang dikunci"), parse_mode="markdown", quote=False)
+                send_message(update.effective_message, tl(update.effective_message,
+                                                          "Saat ini saya *akan* memperingati pengguna jika dia mengirim pesan yang dikunci"),
+                             parse_mode="markdown", quote=False)
         else:
             try:
-                send_message(update.effective_message, tl(update.effective_message, "Saat ini saya *tidak akan* memperingati pengguna jika dia mengirim pesan yang dikunci"), parse_mode="markdown")
+                send_message(update.effective_message, tl(update.effective_message,
+                                                          "Saat ini saya *tidak akan* memperingati pengguna jika dia mengirim pesan yang dikunci"),
+                             parse_mode="markdown")
             except BadRequest:
-                send_message(update.effective_message, tl(update.effective_message, "Saat ini saya *tidak akan* memperingati pengguna jika dia mengirim pesan yang dikunci"), parse_mode="markdown", quote=False)
+                send_message(update.effective_message, tl(update.effective_message,
+                                                          "Saat ini saya *tidak akan* memperingati pengguna jika dia mengirim pesan yang dikunci"),
+                             parse_mode="markdown", quote=False)
 
 
 def get_permission_list(current, new):
     permissions = {'can_send_messages': None, 'can_send_media_messages': None, 'can_send_polls': None,
-        'can_send_other_messages': None, 'can_add_web_page_previews': None,
-        'can_change_info': None, 'can_invite_users': None, 'can_pin_messages': None}
+                   'can_send_other_messages': None, 'can_add_web_page_previews': None,
+                   'can_change_info': None, 'can_invite_users': None, 'can_pin_messages': None}
     permissions.update(current)
     permissions.update(new)
     new_permissions = ChatPermissions(**permissions)
@@ -477,11 +533,11 @@ def __import_data__(chat_id, data):
     locks = data.get('locks', {})
     for itemlock in locks:
         if itemlock in LOCK_TYPES:
-          sql.update_lock(chat_id, itemlock, locked=True)
+            sql.update_lock(chat_id, itemlock, locked=True)
         elif itemlock in LOCK_CHAT_RESTRICTION:
-          sql.update_restriction(chat_id, itemlock, locked=True)
+            sql.update_restriction(chat_id, itemlock, locked=True)
         else:
-          pass
+            pass
 
 
 def __migrate__(old_chat_id, new_chat_id):
@@ -497,9 +553,9 @@ __help__ = "locks_help"
 __mod_name__ = "Locks"
 
 LOCKTYPES_HANDLER = DisableAbleCommandHandler("locktypes", locktypes)
-LOCK_HANDLER = CommandHandler("lock", lock, pass_args=True)#, filters=Filters.group)
-UNLOCK_HANDLER = CommandHandler("unlock", unlock, pass_args=True)#, filters=Filters.group)
-LOCKED_HANDLER = CommandHandler("locks", list_locks)#, filters=Filters.group)
+LOCK_HANDLER = CommandHandler("lock", lock, pass_args=True)  # , filters=Filters.group)
+UNLOCK_HANDLER = CommandHandler("unlock", unlock, pass_args=True)  # , filters=Filters.group)
+LOCKED_HANDLER = CommandHandler("locks", list_locks)  # , filters=Filters.group)
 LOCKWARNS_HANDLER = CommandHandler("lockwarns", lock_warns, pass_args=True)
 
 dispatcher.add_handler(LOCK_HANDLER)

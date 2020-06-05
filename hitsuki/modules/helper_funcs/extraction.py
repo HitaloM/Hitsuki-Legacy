@@ -25,10 +25,10 @@ def extract_user(message: Message, args: List[str]) -> Optional[int]:
 def extract_user_and_text(message: Message, args: List[str]) -> (Optional[int], Optional[str]):
     prev_message = message.reply_to_message
     split_text = message.text.split(None, 1)
-    
+
     if len(split_text) < 2:
         return id_from_reply(message)  # only option possible
-    
+
     text_to_parse = split_text[1]
 
     text = ""
@@ -38,7 +38,7 @@ def extract_user_and_text(message: Message, args: List[str]) -> (Optional[int], 
         ent = entities[0]
     else:
         ent = None
-        
+
     # if entity offset matches (command end/text start) then all good
     if entities and ent and ent.offset == len(message.text) - len(text_to_parse):
         ent = entities[0]
@@ -90,10 +90,10 @@ def extract_text(message) -> str:
 def extract_unt_fedban(message: Message, args: List[str]) -> (Optional[int], Optional[str]):
     prev_message = message.reply_to_message
     split_text = message.text.split(None, 1)
-    
+
     if len(split_text) < 2:
         return id_from_reply(message)  # only option possible
-    
+
     text_to_parse = split_text[1]
 
     text = ""
@@ -103,7 +103,7 @@ def extract_unt_fedban(message: Message, args: List[str]) -> (Optional[int], Opt
         ent = entities[0]
     else:
         ent = None
-        
+
     # if entity offset matches (command end/text start) then all good
     if entities and ent and ent.offset == len(message.text) - len(text_to_parse):
         ent = entities[0]
@@ -114,7 +114,8 @@ def extract_unt_fedban(message: Message, args: List[str]) -> (Optional[int], Opt
         user = args[0]
         user_id = get_user_id(user)
         if not user_id and not str(user_id).isdigit():
-            message.reply_text("I don't have that user in my db. You'll be able to interact with them if you reply to that person's message instead, or forward one of that user's messages.")
+            message.reply_text(
+                "I don't have that user in my db. You'll be able to interact with them if you reply to that person's message instead, or forward one of that user's messages.")
             return None, None
 
         else:
@@ -139,7 +140,8 @@ def extract_unt_fedban(message: Message, args: List[str]) -> (Optional[int], Opt
         message.bot.get_chat(user_id)
     except BadRequest as excp:
         if excp.message in ("User_id_invalid", "Chat not found") and not str(user_id).isdigit():
-            message.reply_text("I don't seem to have interacted with this user before - please forward a message from them to give me control!")
+            message.reply_text(
+                "I don't seem to have interacted with this user before - please forward a message from them to give me control!")
             return None, None
         elif excp.message != "Chat not found":
             LOGGER.exception("Exception %s on user %s", excp.message, user_id)
@@ -148,6 +150,7 @@ def extract_unt_fedban(message: Message, args: List[str]) -> (Optional[int], Opt
             return None, None
 
     return user_id, text
+
 
 def extract_user_fban(message: Message, args: List[str]) -> Optional[int]:
     return extract_unt_fedban(message, args)[0]

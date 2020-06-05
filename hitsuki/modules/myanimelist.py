@@ -331,7 +331,7 @@ def button(update, context):
             progress_message = context.bot.sendMessage(message.chat.id, "Searching.... ")
             caption, buttons, image = get_anime_manga(mal_id, query_type, original_user_id)
             context.bot.sendPhoto(message.chat.id, photo=image, caption=caption, parse_mode=ParseMode.HTML,
-                          reply_markup=InlineKeyboardMarkup(buttons), disable_web_page_preview=False)
+                                  reply_markup=InlineKeyboardMarkup(buttons), disable_web_page_preview=False)
             progress_message.delete()
         else:
             query.answer("You are not allowed to use this.")
