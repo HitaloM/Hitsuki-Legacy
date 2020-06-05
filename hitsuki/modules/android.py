@@ -563,9 +563,10 @@ def pe(update, context):
 
     if cmd.startswith("/peplus"):
         variant = "pie_plus"
-    elif cmd.startswith("/pe10plus"):
+    else:
         variant = "ten_plus"
-    elif cmd.startswith("/pe10"):
+
+    if cmd.startswith("/pe10"):
         variant = "ten"
     else:
         variant = "pie"
