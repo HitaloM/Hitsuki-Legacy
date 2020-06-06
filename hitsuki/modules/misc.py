@@ -559,7 +559,7 @@ def pat(update, context):
     pats = json.loads(urllib.request.urlopen(urllib.request.Request(
         'http://headp.at/js/pats.json',
         headers={'User-Agent': 'Mozilla/5.0 (X11; U; Linux i686) '
-                 'Gecko/20071127 Firefox/2.0.0.11'}
+                               'Gecko/20071127 Firefox/2.0.0.11'}
     )).read().decode('utf-8'))
     if "@" in msg and len(msg) > 5:
         context.bot.send_photo(
@@ -710,7 +710,7 @@ def info(update, context):
 
     elif not msg.reply_to_message and (not args or (
             len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not msg.parse_entities(
-                [MessageEntity.TEXT_MENTION]))):
+        [MessageEntity.TEXT_MENTION]))):
         send_message(
             update.effective_message, tl(
                 update.effective_message, "Saya tidak dapat mengekstrak pengguna dari ini."))
@@ -720,8 +720,8 @@ def info(update, context):
         return
 
     text = tl(update.effective_message, "<b>User info:</b>") \
-        + "\nID: <code>{}</code>".format(user.id) + \
-        tl(update.effective_message, "\nFirst Name: {}").format(html.escape(user.first_name))
+           + "\nID: <code>{}</code>".format(user.id) + \
+           tl(update.effective_message, "\nFirst Name: {}").format(html.escape(user.first_name))
 
     if user.last_name:
         text += tl(update.effective_message,

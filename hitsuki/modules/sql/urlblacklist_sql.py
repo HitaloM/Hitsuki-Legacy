@@ -62,7 +62,7 @@ def _load_chat_blacklist():
             CHAT_URL_BLACKLISTS[url.chat_id] += [url.domain]
         CHAT_URL_BLACKLISTS = {
             k: set(v) for k,
-            v in CHAT_URL_BLACKLISTS.items()}
+                          v in CHAT_URL_BLACKLISTS.items()}
     finally:
         SESSION.close()
 

@@ -115,7 +115,7 @@ def enable_gbans(chat_id):
         if str(chat_id) in GBANSTAT_LIST:
             GBANSTAT_LIST.remove(str(chat_id))
 
-            
+
 def disable_gbans(chat_id):
     with GBAN_SETTING_LOCK:
         chat = SESSION.query(GbanSettings).get(str(chat_id))
@@ -126,7 +126,7 @@ def disable_gbans(chat_id):
         SESSION.add(chat)
         SESSION.commit()
         GBANSTAT_LIST.add(str(chat_id))
-        
+
 
 def does_chat_gban(chat_id):
     return str(chat_id) not in GBANSTAT_LIST
@@ -143,14 +143,14 @@ def __load_gbanned_userid_list():
     finally:
         SESSION.close()
 
-        
+
 def __load_gban_stat_list():
     global GBANSTAT_LIST
     try:
         GBANSTAT_LIST = {x.chat_id for x in SESSION.query(GbanSettings).all() if not x.setting}
     finally:
         SESSION.close()
-        
+
 
 def migrate_chat(old_chat_id, new_chat_id):
     with GBAN_SETTING_LOCK:

@@ -33,7 +33,8 @@ def set_blue_text_must_click(update, context):
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
+            send_message(update.effective_message,
+                         tl(update.effective_message, "You can do this command in groups, not PM"))
             return ""
         chat_id = update.effective_chat.id
         chat_name = update.effective_message.chat.title
@@ -57,9 +58,14 @@ def set_blue_text_must_click(update, context):
             send_message(update.effective_message, text, parse_mode="markdown")
 
         else:
-            send_message(update.effective_message, tl(update.effective_message, "Unknown argument - please use 'yes', or 'no'."))
+            send_message(update.effective_message,
+                         tl(update.effective_message, "Unknown argument - please use 'yes', or 'no'."))
     else:
-        send_message(update.effective_message, tl(update.effective_message, "Curent settings for Blue text cleaner at {}: *{}*").format(chat_name, "Enabled" if sql.is_enable(chat_id) else "Disabled"), parse_mode="markdown")
+        send_message(update.effective_message,
+                     tl(update.effective_message, "Curent settings for Blue text cleaner at {}: *{}*").format(chat_name,
+                                                                                                              "Enabled" if sql.is_enable(
+                                                                                                                  chat_id) else "Disabled"),
+                     parse_mode="markdown")
 
 
 __help__ = "cleaner_help"
@@ -68,7 +74,6 @@ __mod_name__ = "Cleaner"
 
 SET_CLEAN_BLUE_TEXT_HANDLER = DisableAbleCommandHandler("cleanbluetext", set_blue_text_must_click, pass_args=True)
 CLEAN_BLUE_TEXT_HANDLER = MessageHandler(Filters.command & Filters.group, clean_blue_text_must_click)
-
 
 dispatcher.add_handler(SET_CLEAN_BLUE_TEXT_HANDLER)
 dispatcher.add_handler(CLEAN_BLUE_TEXT_HANDLER, 15)

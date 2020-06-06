@@ -42,7 +42,8 @@ def ban(update, context):
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
+            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, "
+                                                                                "not PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
@@ -51,9 +52,11 @@ def ban(update, context):
     check = context.bot.getChatMember(chat_id, context.bot.id)
     if check.status == 'member' or check['can_restrict_members'] is False:
         if conn:
-            text = tl(update.effective_message, "I can not restrict people on {}! Make sure that I am the admin and can appoint a new admin.").format(chat_name)
+            text = tl(update.effective_message, "I can not restrict people on {}! Make sure that I am the admin and "
+                                                "can appoint a new admin.").format(chat_name)
         else:
-            text = tl(update.effective_message, "I can not restrict people here! Make sure that I am the admin and can appoint a new admin.")
+            text = tl(update.effective_message, "I can not restrict people here! Make sure that I am the admin and "
+                                                "can appoint a new admin.")
         send_message(update.effective_message, text, parse_mode="markdown")
         return ""
 
@@ -78,11 +81,13 @@ def ban(update, context):
             raise
 
     if user_id == context.bot.id:
-        send_message(update.effective_message, tl(update.effective_message, "Saya tidak akan BAN diri saya sendiri, apakah kamu gila? 😠"))
+        send_message(update.effective_message, tl(update.effective_message, "Saya tidak akan BAN diri saya sendiri, "
+                                                                            "apakah kamu gila? 😠"))
         return ""
 
     if is_user_ban_protected(chat, user_id, member):
-        send_message(update.effective_message, tl(update.effective_message, "Saya tidak bisa banned orang ini karena dia adalah admin 😒"))
+        send_message(update.effective_message, tl(update.effective_message, "Saya tidak bisa banned orang ini karena "
+                                                                            "dia adalah admin 😒"))
         return ""
 
     if member['can_restrict_members'] is False:
@@ -156,7 +161,8 @@ def temp_ban(update, context):
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
+            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, "
+                                                                                "not PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
@@ -165,17 +171,21 @@ def temp_ban(update, context):
     check = context.bot.getChatMember(chat_id, context.bot.id)
     if check.status == 'member':
         if conn:
-            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di *{}*! Pastikan saya admin dan dapat menunjuk admin baru.").format(chat_name)
+            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di *{}*! Pastikan saya admin dan "
+                                                "dapat menunjuk admin baru.").format(chat_name)
         else:
-            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan dapat menunjuk admin baru.")
+            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan "
+                                                "dapat menunjuk admin baru.")
         send_message(update.effective_message, text, parse_mode="markdown")
         return ""
     else:
         if check['can_restrict_members'] is False:
             if conn:
-                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di *{}*! Pastikan saya admin dan dapat menunjuk admin baru.").format(chat_name)
+                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di *{}*! Pastikan saya admin dan "
+                                                    "dapat menunjuk admin baru.").format(chat_name)
             else:
-                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan dapat menunjuk admin baru.")
+                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan "
+                                                    "dapat menunjuk admin baru.")
             send_message(update.effective_message, text, parse_mode="markdown")
             return ""
 
@@ -190,25 +200,30 @@ def temp_ban(update, context):
             member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            send_message(update.effective_message, tl(update.effective_message, "Saya tidak dapat menemukan pengguna ini 😣"))
+            send_message(update.effective_message, tl(update.effective_message, "Saya tidak dapat menemukan pengguna "
+                                                                                "ini 😣"))
             return ""
         else:
             raise
 
     if user_id == context.bot.id:
-        send_message(update.effective_message, tl(update.effective_message, "Saya tidak akan BAN diri saya sendiri, apakah kamu gila? 😠"))
+        send_message(update.effective_message, tl(update.effective_message, "Saya tidak akan BAN diri saya sendiri, "
+                                                                            "apakah kamu gila? 😠"))
         return ""
 
     if is_user_ban_protected(chat, user_id, member):
-        send_message(update.effective_message, tl(update.effective_message, "Saya tidak bisa banned orang ini karena dia adalah admin 😒"))
+        send_message(update.effective_message, tl(update.effective_message, "Saya tidak bisa banned orang ini karena "
+                                                                            "dia adalah admin 😒"))
         return ""
 
     if member['can_restrict_members'] is False:
-        send_message(update.effective_message, tl(update.effective_message, "Anda tidak punya hak untuk membatasi seseorang."))
+        send_message(update.effective_message, tl(update.effective_message, "Anda tidak punya hak untuk membatasi "
+                                                                            "seseorang."))
         return ""
 
     if not reason:
-        send_message(update.effective_message, tl(update.effective_message, "Anda belum menetapkan waktu untuk banned pengguna ini!"))
+        send_message(update.effective_message, tl(update.effective_message, "Anda belum menetapkan waktu untuk banned "
+                                                                            "pengguna ini!"))
         return ""
 
     split_reason = reason.split(None, 1)
@@ -240,7 +255,10 @@ def temp_ban(update, context):
         if conn:
             context.bot.kickChatMember(chat_id, user_id, until_date=bantime)
             context.bot.send_sticker(currentchat.id, BAN_STICKER)  # banhammer marie sticker
-            send_message(update.effective_message, tl(update.effective_message, "Banned! Pengguna diblokir untuk *{}* pada *{}*.").format(time_val, chat_name), parse_mode="markdown")
+            send_message(update.effective_message, tl(update.effective_message, "Banned! Pengguna diblokir untuk *{}* "
+                                                                                "pada *{}*.").format(time_val,
+                                                                                                     chat_name),
+                         parse_mode="markdown")
         else:
             chat.kick_member(user_id, until_date=bantime)
             context.bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
@@ -288,7 +306,8 @@ def kick(update, context):
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
+            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, "
+                                                                                "not PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
@@ -297,17 +316,21 @@ def kick(update, context):
     check = context.bot.getChatMember(chat_id, context.bot.id)
     if check.status == 'member':
         if conn:
-            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di {}! Pastikan saya admin dan dapat menunjuk admin baru.").format(chat_name)
+            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di {}! Pastikan saya admin dan dapat "
+                                                "menunjuk admin baru.").format(chat_name)
         else:
-            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan dapat menunjuk admin baru.")
+            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan "
+                                                "dapat menunjuk admin baru.")
         send_message(update.effective_message, text, parse_mode="markdown")
         return ""
     else:
         if check['can_restrict_members'] is False:
             if conn:
-                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di *{}*! Pastikan saya admin dan dapat menunjuk admin baru.").format(chat_name)
+                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di *{}*! Pastikan saya admin dan "
+                                                    "dapat menunjuk admin baru.").format(chat_name)
             else:
-                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan dapat menunjuk admin baru.")
+                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan "
+                                                    "dapat menunjuk admin baru.")
             send_message(update.effective_message, text, parse_mode="markdown")
             return ""
 
@@ -327,11 +350,13 @@ def kick(update, context):
             raise
 
     if user_id == context.bot.id:
-        send_message(update.effective_message, tl(update.effective_message, "I'm not going to kick myself, are you crazy? 😠"))
+        send_message(update.effective_message, tl(update.effective_message, "I'm not going to kick myself, are you "
+                                                                            "crazy? 😠"))
         return ""
 
     if is_user_ban_protected(chat, user_id):
-        send_message(update.effective_message, tl(update.effective_message, "I can not kick this guy because he is admin"))
+        send_message(update.effective_message, tl(update.effective_message, "I can not kick this guy because he is "
+                                                                            "admin"))
         return ""
 
     if user_id == context.bot.id:
@@ -371,7 +396,8 @@ def kick(update, context):
         return log
 
     else:
-        send_message(update.effective_message, tl(update.effective_message, "Yah sial, aku tidak bisa menendang pengguna itu 😒"))
+        send_message(update.effective_message, tl(update.effective_message, "Yah sial, aku tidak bisa menendang "
+                                                                            "pengguna itu 😒"))
 
     return ""
 
@@ -383,7 +409,8 @@ def kick(update, context):
 def kickme(update, context):
     user_id = update.effective_message.from_user.id
     if is_user_admin(update.effective_chat, user_id):
-        send_message(update.effective_message, tl(update.effective_message, "Saya berharap saya bisa... tetapi Anda seorang admin 😒"))
+        send_message(update.effective_message, tl(update.effective_message, "Saya berharap saya bisa... tetapi Anda "
+                                                                            "seorang admin 😒"))
         return
 
     res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
@@ -415,7 +442,8 @@ def unban(update, context):
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
-            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, not PM"))
+            send_message(update.effective_message, tl(update.effective_message, "You can do this command in groups, "
+                                                                                "not PM"))
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
@@ -427,17 +455,21 @@ def unban(update, context):
     check = context.bot.getChatMember(chat_id, context.bot.id)
     if check.status == 'member':
         if conn:
-            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di {}! Pastikan saya admin dan dapat menunjuk admin baru.").format(chat_name)
+            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di {}! Pastikan saya admin dan dapat "
+                                                "menunjuk admin baru.").format(chat_name)
         else:
-            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan dapat menunjuk admin baru.")
+            text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan "
+                                                "dapat menunjuk admin baru.")
         send_message(update.effective_message, text, parse_mode="markdown")
         return ""
     else:
         if check['can_restrict_members'] is False:
             if conn:
-                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di {}! Pastikan saya admin dan dapat menunjuk admin baru.").format(chat_name)
+                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di {}! Pastikan saya admin dan "
+                                                    "dapat menunjuk admin baru.").format(chat_name)
             else:
-                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan dapat menunjuk admin baru.")
+                text = tl(update.effective_message, "Saya tidak bisa membatasi orang di sini! Pastikan saya admin dan "
+                                                    "dapat menunjuk admin baru.")
             send_message(update.effective_message, text, parse_mode="markdown")
             return ""
 
@@ -448,27 +480,33 @@ def unban(update, context):
             member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            send_message(update.effective_message, tl(update.effective_message, "Saya tidak dapat menemukan pengguna ini"))
+            send_message(update.effective_message, tl(update.effective_message, "Saya tidak dapat menemukan pengguna "
+                                                                                "ini"))
             return ""
         else:
             raise
 
     if user_id == context.bot.id:
-        send_message(update.effective_message, tl(update.effective_message, "Bagaimana saya akan unban diri saya sendiri jika saya tidak ada di sini...? 🤔"))
+        send_message(update.effective_message, tl(update.effective_message, "Bagaimana saya akan unban diri saya "
+                                                                            "sendiri jika saya tidak ada di sini...? "
+                                                                            "🤔"))
         return ""
 
     if is_user_in_chat(chat, user_id):
-        send_message(update.effective_message, tl(update.effective_message, "Mengapa Anda mencoba unban seseorang yang sudah ada di obrolan? 😑"))
+        send_message(update.effective_message, tl(update.effective_message, "Mengapa Anda mencoba unban seseorang "
+                                                                            "yang sudah ada di obrolan? 😑"))
         return ""
 
     check = context.bot.getChatMember(chat.id, user.id)
     if check['can_restrict_members'] is False:
-        send_message(update.effective_message, tl(update.effective_message, "Anda tidak punya hak untuk membatasi seseorang."))
+        send_message(update.effective_message, tl(update.effective_message, "Anda tidak punya hak untuk membatasi "
+                                                                            "seseorang."))
         return ""
 
     if conn:
         context.bot.unbanChatMember(chat_id, user_id)
-        send_message(update.effective_message, tl(update.effective_message, "Ya, pengguna ini dapat bergabung pada {}! 😁").format(chat_name))
+        send_message(update.effective_message, tl(update.effective_message, "Ya, pengguna ini dapat bergabung pada {"
+                                                                            "}! 😁").format(chat_name))
     else:
         chat.unban_member(user_id)
         send_message(update.effective_message, tl(update.effective_message, "Ya, pengguna ini dapat bergabung! 😁"))

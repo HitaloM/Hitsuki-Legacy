@@ -31,7 +31,7 @@ PM_START_TEXT = "start_text"
 
 HELP_STRINGS = "help_text"  # .format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
 
-VERSION = "4.0.2"
+VERSION = "4.1.1"
 
 SOURCE_STRING = """
 I'm built in python3, using the python-telegram-bot library, and am fully opensource - you can find what makes me tick [here](https://github.com/HitaloSama/Hitsuki)
@@ -143,10 +143,11 @@ def start(update, context):
                 judul = pagewiki.title
                 summary = pagewiki.summary
                 if len(summary) >= 4096:
-                    summary = summary[:4000]+"..."
+                    summary = summary[:4000] + "..."
                 message.reply_text("<b>{}</b>\n{}".format(judul, summary), parse_mode=ParseMode.HTML,
-                    reply_markup=InlineKeyboardMarkup(
-                            [[InlineKeyboardButton(text=tl(update.effective_message, "Read on Wikipedia"), url=pagewiki.url)]]))
+                                   reply_markup=InlineKeyboardMarkup(
+                                       [[InlineKeyboardButton(text=tl(update.effective_message, "Read on Wikipedia"),
+                                                              url=pagewiki.url)]]))
 
             elif args[0][:6].lower() == "verify":
                 chat_id = args[0].split("_")[1]
@@ -159,10 +160,13 @@ def start(update, context):
         else:
             first_name = update.effective_user.first_name
             buttons = InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="🇺🇸 Language", callback_data="main_setlang"), InlineKeyboardButton(text="⚙️ Connections", callback_data="main_connect")],
-                [InlineKeyboardButton(text="📡 Hitsuki News", url="https://telegram.me/HitsukiNews"), InlineKeyboardButton(text="❓ Help", url="https://t.me/LordHitsuki_BOT?start=help")]])
+                [[InlineKeyboardButton(text="🇺🇸 Language", callback_data="main_setlang"),
+                  InlineKeyboardButton(text="⚙️ Connections", callback_data="main_connect")],
+                 [InlineKeyboardButton(text="📡 Hitsuki News", url="https://telegram.me/HitsukiNews"),
+                  InlineKeyboardButton(text="❓ Help", url="https://t.me/LordHitsuki_BOT?start=help")]])
             update.effective_message.reply_text(
-                tl(update.effective_message, PM_START_TEXT).format(escape_markdown(first_name), escape_markdown(context.bot.first_name), OWNER_ID),
+                tl(update.effective_message, PM_START_TEXT).format(escape_markdown(first_name),
+                                                                   escape_markdown(context.bot.first_name), OWNER_ID),
                 disable_web_page_preview=True,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=buttons)
@@ -251,32 +255,35 @@ def help_button(update, context):
     try:
         if mod_match:
             module = mod_match.group(1)
-            text = tl(update.effective_message, "Here is the help for the *{}* module:\n").format(HELPABLE[module].__mod_name__) \
+            text = tl(update.effective_message, "Here is the help for the *{}* module:\n").format(
+                HELPABLE[module].__mod_name__) \
                    + tl(update.effective_message, HELPABLE[module].__help__)
 
             query.message.edit_text(text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(
-                                        [[InlineKeyboardButton(text=tl(query.message, "⬅️ Back"), callback_data="help_back")]]), disable_web_page_preview=True)
+                                    parse_mode=ParseMode.MARKDOWN,
+                                    reply_markup=InlineKeyboardMarkup(
+                                        [[InlineKeyboardButton(text=tl(query.message, "⬅️ Back"),
+                                                               callback_data="help_back")]]),
+                                    disable_web_page_preview=True)
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
             query.message.edit_text(text=tl(query.message, HELP_STRINGS),
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(
+                                    parse_mode=ParseMode.MARKDOWN,
+                                    reply_markup=InlineKeyboardMarkup(
                                         paginate_modules(curr_page - 1, HELPABLE, "help")))
 
         elif next_match:
             next_page = int(next_match.group(1))
             query.message.edit_text(text=tl(query.message, HELP_STRINGS),
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(
+                                    parse_mode=ParseMode.MARKDOWN,
+                                    reply_markup=InlineKeyboardMarkup(
                                         paginate_modules(next_page + 1, HELPABLE, "help")))
 
         elif back_match:
             query.message.edit_text(text=tl(query.message, HELP_STRINGS),
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help")))
+                                    parse_mode=ParseMode.MARKDOWN,
+                                    reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help")))
 
         context.bot.answer_callback_query(query.id)
     except Exception as excp:
@@ -301,18 +308,22 @@ def get_help(update, context):
     if chat.type != chat.PRIVATE:
 
         # update.effective_message.reply_text("Contact me in PM to get the list of possible commands.",
-        update.effective_message.reply_text(tl(update.effective_message, "Contact me in PM to get the list of possible commands."),
-                                            reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text=tl(update.effective_message, "Help"),
-                                                                       url="t.me/{}?start=help".format(
-                                                                           context.bot.username))]]))
+        update.effective_message.reply_text(
+            tl(update.effective_message, "Contact me in PM to get the list of possible commands."),
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton(text=tl(update.effective_message, "Help"),
+                                       url="t.me/{}?start=help".format(
+                                           context.bot.username))]]))
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
-        text = tl(update.effective_message, "Here is the available help for the *{}* module:\n").format(HELPABLE[module].__mod_name__) \
+        text = tl(update.effective_message, "Here is the available help for the *{}* module:\n").format(
+            HELPABLE[module].__mod_name__) \
                + tl(update.effective_message, HELPABLE[module].__help__)
-        send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "⬅️ Back"), callback_data="help_back")]]), disable_web_page_preview=True)
+        send_help(chat.id, text, InlineKeyboardMarkup(
+            [[InlineKeyboardButton(text=tl(update.effective_message, "⬅️ Back"), callback_data="help_back")]]),
+                  disable_web_page_preview=True)
 
     else:
         send_help(chat.id, tl(update.effective_message, HELP_STRINGS))
@@ -327,20 +338,23 @@ def send_settings(chat_id, user_id, user=False):
                                         parse_mode=ParseMode.MARKDOWN)
 
         else:
-            dispatcher.bot.send_message(user_id, tl(chat_id, "Seems like there aren't any user specific settings available 😢"),
+            dispatcher.bot.send_message(user_id,
+                                        tl(chat_id, "Seems like there aren't any user specific settings available 😢"),
                                         parse_mode=ParseMode.MARKDOWN)
 
     else:
         if CHAT_SETTINGS:
             chat_name = dispatcher.bot.getChat(chat_id).title
             dispatcher.bot.send_message(user_id,
-                                        text=tl(chat_id, "Which module would you like to check {}'s settings for?").format(
+                                        text=tl(chat_id,
+                                                "Which module would you like to check {}'s settings for?").format(
                                             chat_name),
                                         reply_markup=InlineKeyboardMarkup(
                                             paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)))
         else:
-            dispatcher.bot.send_message(user_id, tl(chat_id, "Seems like there aren't any chat settings available :'(\n "
-                                                 "Send this in a group chat you're admin in to find its current settings!"),
+            dispatcher.bot.send_message(user_id,
+                                        tl(chat_id, "Seems like there aren't any chat settings available :'(\n "
+                                                    "Send this in a group chat you're admin in to find its current settings!"),
                                         parse_mode=ParseMode.MARKDOWN)
 
 
@@ -362,48 +376,52 @@ def settings_button(update, context):
             if isadmin is False or user.id != OWNER_ID:
                 query.message.edit_text("Your admin status has changed")
                 return
-            text = tl(update.effective_message, "*{}* has the following settings for the *{}* module:\n\n").format(escape_markdown(chat.title),
-                                                                                     CHAT_SETTINGS[
-                                                                                        module].__mod_name__) + \
+            text = tl(update.effective_message, "*{}* has the following settings for the *{}* module:\n\n").format(
+                escape_markdown(chat.title),
+                CHAT_SETTINGS[
+                    module].__mod_name__) + \
                    CHAT_SETTINGS[module].__chat_settings__(chat_id, user.id)
             try:
                 set_button = CHAT_SETTINGS[module].__chat_settings_btn__(chat_id, user.id)
             except AttributeError:
                 set_button = []
             set_button.append([InlineKeyboardButton(text=tl(query.message, "⬅️ Back"),
-                                                               callback_data="stngs_back({})".format(chat_id))])
+                                                    callback_data="stngs_back({})".format(chat_id))])
             query.message.edit_text(text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(set_button))
+                                    parse_mode=ParseMode.MARKDOWN,
+                                    reply_markup=InlineKeyboardMarkup(set_button))
 
         elif prev_match:
             chat_id = prev_match.group(1)
             curr_page = int(prev_match.group(2))
             chat = context.bot.get_chat(chat_id)
-            query.message.reply_text(text=tl(update.effective_message, "Hi there! There are quite a few settings for {} - go ahead and "
-                                       "pick what you're interested in").format(chat.title),
-                                  reply_markup=InlineKeyboardMarkup(
-                                        paginate_modules(curr_page - 1, CHAT_SETTINGS, "stngs",
-                                                         chat=chat_id)))
+            query.message.reply_text(
+                text=tl(update.effective_message, "Hi there! There are quite a few settings for {} - go ahead and "
+                                                  "pick what you're interested in").format(chat.title),
+                reply_markup=InlineKeyboardMarkup(
+                    paginate_modules(curr_page - 1, CHAT_SETTINGS, "stngs",
+                                     chat=chat_id)))
 
         elif next_match:
             chat_id = next_match.group(1)
             next_page = int(next_match.group(2))
             chat = context.bot.get_chat(chat_id)
-            query.message.reply_text(text=tl(update.effective_message, "Hi there! There are quite a few settings for {} - go ahead and "
-                                       "pick what you're interested in").format(chat.title),
-                                  reply_markup=InlineKeyboardMarkup(
-                                        paginate_modules(next_page + 1, CHAT_SETTINGS, "stngs",
-                                                         chat=chat_id)))
+            query.message.reply_text(
+                text=tl(update.effective_message, "Hi there! There are quite a few settings for {} - go ahead and "
+                                                  "pick what you're interested in").format(chat.title),
+                reply_markup=InlineKeyboardMarkup(
+                    paginate_modules(next_page + 1, CHAT_SETTINGS, "stngs",
+                                     chat=chat_id)))
 
         elif back_match:
             chat_id = back_match.group(1)
             chat = context.bot.get_chat(chat_id)
-            query.message.reply_text(text=tl(update.effective_message, "Hi there! There are quite a few settings for {} - go ahead and "
-                                       "pick what you're interested in").format(escape_markdown(chat.title)),
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(paginate_modules(0, CHAT_SETTINGS, "stngs",
-                                                                                     chat=chat_id)))
+            query.message.reply_text(
+                text=tl(update.effective_message, "Hi there! There are quite a few settings for {} - go ahead and "
+                                                  "pick what you're interested in").format(escape_markdown(chat.title)),
+                parse_mode=ParseMode.MARKDOWN,
+                reply_markup=InlineKeyboardMarkup(paginate_modules(0, CHAT_SETTINGS, "stngs",
+                                                                   chat=chat_id)))
 
         # ensure no spinny white circle
 
@@ -462,8 +480,6 @@ def source(update, context):
             update.effective_message.reply_text("Contact me in PM first to get source information.")
 
 
-
-
 # Avoid memory dead
 def memory_limit(percentage: float):
     if platform.system() != "Linux":
@@ -471,6 +487,7 @@ def memory_limit(percentage: float):
         return
     soft, hard = resource.getrlimit(resource.RLIMIT_AS)
     resource.setrlimit(resource.RLIMIT_AS, (int(get_memory() * 1024 * percentage), hard))
+
 
 def get_memory():
     with open('/proc/meminfo', 'r') as mem:
@@ -481,6 +498,7 @@ def get_memory():
                 free_memory += int(sline[1])
     return free_memory
 
+
 def memory(percentage=0.5):
     def decorator(function):
         def wrapper(*args, **kwargs):
@@ -488,11 +506,13 @@ def memory(percentage=0.5):
             try:
                 function(*args, **kwargs)
             except MemoryError:
-                mem = get_memory() / 1024 /1024
+                mem = get_memory() / 1024 / 1024
                 print('Remain: %.2f GB' % mem)
                 sys.stderr.write('\n\nERROR: Memory Exception\n')
                 sys.exit(1)
+
         return wrapper
+
     return decorator
 
 
@@ -537,8 +557,9 @@ def main():
     else:
         LOGGER.info("Using long polling.")
         updater.start_polling(timeout=15, read_latency=4)
- 
+
     updater.idle()
+
 
 if __name__ == '__main__':
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))

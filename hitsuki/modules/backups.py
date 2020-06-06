@@ -918,7 +918,8 @@ def import_data(update, context):
                 if conn:
                     text = tl(
                         update.effective_message,
-                        "Backup berasal chat lain, Saya tidak bisa mengembalikan chat lain kedalam chat *{}*").format(chat_name)
+                        "Backup berasal chat lain, Saya tidak bisa mengembalikan chat lain kedalam chat *{}*").format(
+                        chat_name)
                 else:
                     text = tl(
                         update.effective_message,
@@ -939,7 +940,8 @@ def import_data(update, context):
             if str(context.bot.id) != str(data[str(chat_id)]['bot']):
                 return send_message(
                     update.effective_message, tl(
-                        update.effective_message, "Backup berasal dari bot lain, dokumen, foto, video, audio, suara tidak akan "
+                        update.effective_message,
+                        "Backup berasal dari bot lain, dokumen, foto, video, audio, suara tidak akan "
                         "bekerja, jika file anda tidak ingin hilang, import dari bot yang dicadangkan."
                         "jika masih tidak bekerja, laporkan pada pembuat bot tersebut untuk "
                         "membuat saya lebih baik! Terima kasih! 🙂"))
@@ -957,7 +959,8 @@ def import_data(update, context):
         except Exception:
             send_message(
                 update.effective_message, tl(
-                    update.effective_message, "Kesalahan terjadi saat memulihkan data Anda. Prosesnya mungkin tidak lengkap. Jika "
+                    update.effective_message,
+                    "Kesalahan terjadi saat memulihkan data Anda. Prosesnya mungkin tidak lengkap. Jika "
                     "Anda mengalami masalah dengan ini, pesan @AyraHikari dengan file cadangan Anda, jadi "
                     "masalah bisa di-debug. Pemilik saya akan dengan senang hati membantu, dan setiap bug "
                     "dilaporkan membuat saya lebih baik! Terima kasih! 🙂"))
@@ -1273,9 +1276,9 @@ def export_data(update, context):
         caption=tl(
             update.effective_message,
             "*Successfully backed up to:*\nChat name: `{}`\nChat ID: `{}`\nAt: `{}`\n\nNote: this backup is specific to this bot, if it is imported to another bot then the document, video, audio, voice, etc. will be lost").format(
-                chat.title,
-                chat_id,
-                tgl),
+            chat.title,
+            chat_id,
+            tgl),
         timeout=360,
         reply_to_message_id=msg.message_id,
         parse_mode=ParseMode.MARKDOWN)

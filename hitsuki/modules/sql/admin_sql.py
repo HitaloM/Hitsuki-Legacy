@@ -17,6 +17,7 @@ class PermanentPin(BASE):
     def __repr__(self):
         return "<Permanent pin for ({})>".format(self.chat_id)
 
+
 PermanentPin.__table__.create(checkfirst=True)
 
 PERMPIN_LOCK = threading.RLock()
@@ -31,6 +32,7 @@ def set_permapin(chat_id, message_id):
         permpin.message_id = int(message_id)
         SESSION.add(permpin)
         SESSION.commit()
+
 
 def get_permapin(chat_id):
     try:

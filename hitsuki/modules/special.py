@@ -21,7 +21,6 @@ from hitsuki.modules.sql import languages_sql as langsql
 from hitsuki.modules.languages import tl
 from hitsuki.modules.helper_funcs.alternate import send_message
 
-
 reactions = [
     "( ͡° ͜ʖ ͡°)",
     "¯_(ツ)_/¯",
@@ -261,9 +260,12 @@ def getlink(update, context):
     if bot_member.can_invite_users:
         titlechat = context.bot.get_chat(chat_id).title
         invitelink = context.bot.get_chat(chat_id).invite_link
-        send_message(update.effective_message, tl(update.effective_message, "Successfully retrieve the invite link in the group {}. \nInvite link : {}").format(titlechat, invitelink))
+        send_message(update.effective_message, tl(update.effective_message,
+                                                  "Successfully retrieve the invite link in the group {}. \nInvite link : {}").format(
+            titlechat, invitelink))
     else:
-        send_message(update.effective_message, tl(update.effective_message, "I don't have access to the invitation link!"))
+        send_message(update.effective_message,
+                     tl(update.effective_message, "I don't have access to the invitation link!"))
 
 
 @run_async
@@ -272,16 +274,19 @@ def leavechat(update, context):
     if args:
         chat_id = int(args[0])
     else:
-        send_message(update.effective_message, tl(update.effective_message, "Anda sepertinya tidak mengacu pada obrolan"))
+        send_message(update.effective_message,
+                     tl(update.effective_message, "Anda sepertinya tidak mengacu pada obrolan"))
     try:
         titlechat = context.bot.get_chat(chat_id).title
         context.bot.sendMessage(chat_id, tl(update.effective_message, "Selamat tinggal semua 😁"))
         context.bot.leaveChat(chat_id)
-        send_message(update.effective_message, tl(update.effective_message, "Saya telah keluar dari grup {}").format(titlechat))
+        send_message(update.effective_message,
+                     tl(update.effective_message, "Saya telah keluar dari grup {}").format(titlechat))
 
     except BadRequest as excp:
         if excp.message == "Chat not found":
-            send_message(update.effective_message, tl(update.effective_message, "Sepertinya saya sudah keluar atau di tendang di grup tersebut"))
+            send_message(update.effective_message,
+                         tl(update.effective_message, "Sepertinya saya sudah keluar atau di tendang di grup tersebut"))
         else:
             return
 
@@ -294,7 +299,8 @@ def ping(update, context):
     end_time = time.time()
     ping_time = float(end_time - start_time)
     context.bot.editMessageText(chat_id=update.effective_chat.id, message_id=test.message_id,
-                        text=tl(update.effective_message, "Pong!\nSpeed was: {0:.2f}s").format(round(ping_time, 2) % 60))
+                                text=tl(update.effective_message, "Pong!\nSpeed was: {0:.2f}s").format(
+                                    round(ping_time, 2) % 60))
 
 
 @run_async
@@ -337,10 +343,16 @@ def translate(update, context):
             if target2 is None:
                 deteksibahasa = trl.detect(teks)
                 tekstr = trl.translate(teks, dest=target)
-                send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
+                send_message(update.effective_message,
+                             tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(
+                                 deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
             else:
                 tekstr = trl.translate(teks, dest=target2, src=target)
-                send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(target, target2, tekstr.text), parse_mode=ParseMode.MARKDOWN)
+                send_message(update.effective_message,
+                             tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(target,
+                                                                                                           target2,
+                                                                                                           tekstr.text),
+                             parse_mode=ParseMode.MARKDOWN)
 
         else:
             args = update.effective_message.text.split(None, 2)
@@ -362,15 +374,23 @@ def translate(update, context):
             if target2 is None:
                 deteksibahasa = trl.detect(teks)
                 tekstr = trl.translate(teks, dest=target)
-                return send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
+                return send_message(update.effective_message,
+                                    tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(
+                                        deteksibahasa.lang, target, tekstr.text), parse_mode=ParseMode.MARKDOWN)
             else:
                 tekstr = trl.translate(teks, dest=target2, src=target)
-                send_message(update.effective_message, tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(target, target2, tekstr.text), parse_mode=ParseMode.MARKDOWN)
+                send_message(update.effective_message,
+                             tl(update.effective_message, "Diterjemahkan dari `{}` ke `{}`:\n`{}`").format(target,
+                                                                                                           target2,
+                                                                                                           tekstr.text),
+                             parse_mode=ParseMode.MARKDOWN)
     except IndexError:
-        send_message(update.effective_message, tl(update.effective_message, "Balas pesan atau tulis pesan dari bahasa lain untuk "
-                                            "diterjemahkan kedalam bahasa yang di dituju\n\n"
-                                            "Contoh: `/tr en-id` untuk menerjemahkan dari Bahasa inggris ke Bahasa Indonesia\n"
-                                            "Atau gunakan: `/tr id` untuk deteksi otomatis dan menerjemahkannya kedalam bahasa indonesia"), parse_mode="markdown")
+        send_message(update.effective_message,
+                     tl(update.effective_message, "Balas pesan atau tulis pesan dari bahasa lain untuk "
+                                                  "diterjemahkan kedalam bahasa yang di dituju\n\n"
+                                                  "Contoh: `/tr en-id` untuk menerjemahkan dari Bahasa inggris ke Bahasa Indonesia\n"
+                                                  "Atau gunakan: `/tr id` untuk deteksi otomatis dan menerjemahkannya kedalam bahasa indonesia"),
+                     parse_mode="markdown")
     except ValueError:
         send_message(update.effective_message, tl(update.effective_message, "Bahasa yang di tuju tidak ditemukan!"))
     else:
@@ -403,36 +423,43 @@ def wiki(update, context):
         for x in range(batas):
             if x == 0:
                 if getlang == "pt":
-                    teks += rujuk[x].replace('may refer to', 'pode se referir a')+"\n"
+                    teks += rujuk[x].replace('may refer to', 'pode se referir a') + "\n"
                 else:
-                    teks += rujuk[x]+"\n"
+                    teks += rujuk[x] + "\n"
             else:
-                teks += "- `"+rujuk[x]+"`\n"
+                teks += "- `" + rujuk[x] + "`\n"
         send_message(update.effective_message, teks, parse_mode="markdown")
         return
     except IndexError:
-        send_message(update.effective_message, tl(update.effective_message, "Write a message to search from the wikipedia source"))
+        send_message(update.effective_message,
+                     tl(update.effective_message, "Write a message to search from the wikipedia source"))
         return
     judul = pagewiki.title
     summary = pagewiki.summary
     if update.effective_message.chat.type == "private":
-        send_message(update.effective_message, tl(update.effective_message, "Results of {} is:\n\n<b>{}</b>\n{}").format(teks, judul, summary), parse_mode=ParseMode.HTML)
+        send_message(update.effective_message,
+                     tl(update.effective_message, "Results of {} is:\n\n<b>{}</b>\n{}").format(teks, judul, summary),
+                     parse_mode=ParseMode.HTML)
     else:
         if len(summary) >= 200:
             judul = pagewiki.title
-            summary = summary[:200]+"..."
-            button = InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "Read More..."), url="t.me/{}?start=wiki-{}".format(context.bot.username, teks.replace(' ', '_')))]])
+            summary = summary[:200] + "..."
+            button = InlineKeyboardMarkup([[InlineKeyboardButton(text=tl(update.effective_message, "Read More..."),
+                                                                 url="t.me/{}?start=wiki-{}".format(
+                                                                     context.bot.username, teks.replace(' ', '_')))]])
         else:
             button = None
-        send_message(update.effective_message, tl(update.effective_message, "Results of {} is:\n\n<b>{}</b>\n{}").format(teks, judul, summary), parse_mode=ParseMode.HTML, reply_markup=button)
+        send_message(update.effective_message,
+                     tl(update.effective_message, "Results of {} is:\n\n<b>{}</b>\n{}").format(teks, judul, summary),
+                     parse_mode=ParseMode.HTML, reply_markup=button)
 
 
 @run_async
 def status(update, context):
     reply = "*Hitsuki System Info:*\n\n"
-    reply += "*Hitsuki Version:* `"+str(hitsukiv.vercheck())+"`\n"
-    reply += "*Python Version:* `"+python_version()+"`\n"
-    reply += "*GitHub API Version:* `"+str(git.vercheck())+"`\n"
+    reply += "*Hitsuki Version:* `" + str(hitsukiv.vercheck()) + "`\n"
+    reply += "*Python Version:* `" + python_version() + "`\n"
+    reply += "*GitHub API Version:* `" + str(git.vercheck()) + "`\n"
     update.effective_message.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
 
 
@@ -467,7 +494,8 @@ __mod_name__ = "🚀 Hitsuki Exclusive 🚀"
 
 PING_HANDLER = CommandHandler("ping", ping, filters=Filters.user(OWNER_ID))
 GETLINK_HANDLER = CommandHandler("getlink", getlink, pass_args=True, filters=Filters.user(OWNER_ID))
-LEAVECHAT_HANDLER = CommandHandler(["leavechat", "leavegroup", "leave"], leavechat, pass_args=True, filters=Filters.user(OWNER_ID))
+LEAVECHAT_HANDLER = CommandHandler(["leavechat", "leavegroup", "leave"], leavechat, pass_args=True,
+                                   filters=Filters.user(OWNER_ID))
 FORTUNE_HANDLER = DisableAbleCommandHandler("fortune", fortune)
 TRANSLATE_HANDLER = DisableAbleCommandHandler("tr", translate)
 WIKIPEDIA_HANDLER = DisableAbleCommandHandler("wiki", wiki)

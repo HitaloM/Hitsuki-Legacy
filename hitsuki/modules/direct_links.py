@@ -119,7 +119,7 @@ def sourceforge(url: str) -> str:
     reply = f"Mirrors for <i>{file_path.split('/')[-1]}</i>\n"
     project = re.findall(r'projects?/(.*?)/files', link)[0]
     mirrors = f'https://sourceforge.net/settings/mirror_choices?' \
-        f'projectname={project}&filename={file_path}'
+              f'projectname={project}&filename={file_path}'
     page = BeautifulSoup(requests.get(mirrors).content, 'lxml')
     info = page.find('ul', {'id': 'mirrorList'}).findAll('li')
     for mirror in info[1:]:

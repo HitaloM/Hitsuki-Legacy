@@ -64,8 +64,9 @@ def broadcast(update, context):
                 failed += 1
                 LOGGER.warning("Couldn't send broadcast to %s, group name %s", str(chat.chat_id), str(chat.chat_name))
 
-        send_message(update.effective_message, "The broadcast is complete. `{}` groups failed to receive the message, maybe "
-                                            "I'm kicked or muted.".format(failed))
+        send_message(update.effective_message,
+                     "The broadcast is complete. `{}` groups failed to receive the message, maybe "
+                     "I'm kicked or muted.".format(failed))
 
 
 @run_async
@@ -82,7 +83,9 @@ def log_user(update, context):
         if user:
             fban, fbanreason, fbantime = fedsql.get_fban_user(fed_id, user.id)
             if fban:
-                send_message(update.effective_message, languages.tl(update.effective_message, "Pengguna ini dilarang di federasi saat ini!\nAlasan: `{}`").format(fbanreason), parse_mode="markdown")
+                send_message(update.effective_message, languages.tl(update.effective_message,
+                                                                    "Pengguna ini dilarang di federasi saat ini!\nAlasan: `{}`").format(
+                    fbanreason), parse_mode="markdown")
                 try:
                     context.bot.kick_chat_member(chat.id, user.id)
                 except:
@@ -134,7 +137,8 @@ def chats(update, context):
 
 def __user_info__(user_id, chat_id):
     if user_id == dispatcher.bot.id:
-        return languages.tl(chat_id, """I have seen it... Wow. Are they following me? They're in all the same places with me... oh. This is me.""")
+        return languages.tl(chat_id,
+                            """I have seen it... Wow. Are they following me? They're in all the same places with me... oh. This is me.""")
     num_chats = sql.get_user_num_chats(user_id)
     return languages.tl(chat_id, """I've seen them in <code>{}</code> chats in total.""").format(num_chats)
 

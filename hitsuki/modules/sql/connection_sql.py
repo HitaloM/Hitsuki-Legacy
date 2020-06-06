@@ -25,9 +25,10 @@ class Connection(BASE):
     __tablename__ = "connection"
     user_id = Column(Integer, primary_key=True)
     chat_id = Column(String(14))
+
     def __init__(self, user_id, chat_id):
         self.user_id = user_id
-        self.chat_id = str(chat_id) #Ensure String
+        self.chat_id = str(chat_id)  # Ensure String
 
 
 class ConnectionHistory(BASE):
@@ -36,13 +37,16 @@ class ConnectionHistory(BASE):
     chat_id = Column(String(14), primary_key=True)
     chat_name = Column(UnicodeText)
     conn_time = Column(Integer)
+
     def __init__(self, user_id, chat_id, chat_name, conn_time):
         self.user_id = user_id
         self.chat_id = str(chat_id)
         self.chat_name = str(chat_name)
         self.conn_time = int(conn_time)
+
     def __repr__(self):
         return "<connection user {} history {}>".format(self.user_id, self.chat_id)
+
 
 ChatAccessConnectionSettings.__table__.create(checkfirst=True)
 Connection.__table__.create(checkfirst=True)
@@ -64,7 +68,7 @@ def allow_connect_to_chat(chat_id: Union[str, int]) -> bool:
         return False
     finally:
         SESSION.close()
-        
+
 
 def set_allow_connect_to_chat(chat_id: Union[int, str], setting: bool):
     with CHAT_ACCESS_LOCK:
@@ -98,9 +102,8 @@ def get_connected_chat(user_id):
 def curr_connection(chat_id):
     try:
         return SESSION.query(Connection).get((str(chat_id)))
-    finally :
+    finally:
         SESSION.close()
-
 
 
 def disconnect(user_id):
@@ -120,7 +123,8 @@ def add_history_conn(user_id, chat_id, chat_name):
     with CONNECTION_HISTORY_LOCK:
         conn_time = int(time.time())
         if HISTORY_CONNECT.get(int(user_id)):
-            counting = SESSION.query(ConnectionHistory.user_id).filter(ConnectionHistory.user_id == str(user_id)).count()
+            counting = SESSION.query(ConnectionHistory.user_id).filter(
+                ConnectionHistory.user_id == str(user_id)).count()
             getchat_id = {}
             for x in HISTORY_CONNECT[int(user_id)]:
                 getchat_id[HISTORY_CONNECT[int(user_id)][x]['chat_id']] = x
@@ -150,10 +154,12 @@ def add_history_conn(user_id, chat_id, chat_name):
         SESSION.commit()
         HISTORY_CONNECT[int(user_id)][conn_time] = {'chat_name': chat_name, 'chat_id': str(chat_id)}
 
+
 def get_history_conn(user_id):
     if not HISTORY_CONNECT.get(int(user_id)):
         HISTORY_CONNECT[int(user_id)] = {}
     return HISTORY_CONNECT[int(user_id)]
+
 
 def clear_history_conn(user_id):
     global HISTORY_CONNECT
@@ -180,5 +186,6 @@ def __load_user_history():
             HISTORY_CONNECT[x.user_id][x.conn_time] = {'chat_name': x.chat_name, 'chat_id': x.chat_id}
     finally:
         SESSION.close()
+
 
 __load_user_history()

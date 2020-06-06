@@ -16,6 +16,7 @@ class Rules(BASE):
     def __repr__(self):
         return "<Chat {} rules: {}>".format(self.chat_id, self.rules)
 
+
 class PrivateRules(BASE):
     __tablename__ = "rules_private"
 
@@ -63,11 +64,12 @@ def private_rules(chat_id, is_private):
         curr = SESSION.query(PrivateRules).get(str(chat_id))
         if curr:
             SESSION.delete(curr)
-        
+
         curr = PrivateRules(str(chat_id), is_private)
 
         SESSION.add(curr)
         SESSION.commit()
+
 
 def get_private_rules(chat_id):
     curr = SESSION.query(PrivateRules).get(str(chat_id))

@@ -25,6 +25,7 @@ INSERTION_LOCK = threading.RLock()
 
 GLOBAL_USERLANG = {}
 
+
 def set_lang(chat_id, user_lang):
     global GLOBAL_USERLANG
     with INSERTION_LOCK:
@@ -36,6 +37,7 @@ def set_lang(chat_id, user_lang):
         SESSION.add(set_lang)
         SESSION.commit()
         GLOBAL_USERLANG[str(chat_id)] = str(user_lang)
+
 
 def get_lang(chat_id):
     return GLOBAL_USERLANG.get(str(chat_id))
@@ -49,5 +51,6 @@ def __load_userlang():
             GLOBAL_USERLANG[str(x.chat_id)] = x.lang
     finally:
         SESSION.close()
+
 
 __load_userlang()
