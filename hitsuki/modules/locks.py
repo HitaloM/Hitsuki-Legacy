@@ -426,7 +426,6 @@ def list_locks(update, context):
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
         chat = dispatcher.bot.getChat(conn)
-        chat_id = conn
         chat_name = chat.title
     else:
         if update.effective_message.chat.type == "private":
@@ -434,7 +433,6 @@ def list_locks(update, context):
                          tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
             return ""
         chat = update.effective_chat
-        chat_id = update.effective_chat.id
         chat_name = update.effective_message.chat.title
 
     res = build_lock_message(chat.id)
@@ -464,7 +462,6 @@ def lock_warns(update, context):
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
-        chat_name = update.effective_message.chat.title
 
     if args:
         if args[0] == "on" or args[0] == "yes":

@@ -35,7 +35,7 @@ DEVICES_DATA = 'https://raw.githubusercontent.com/androidtrackers/certified-andr
 def device(update, context):
     args = context.args
     if len(args) == 0:
-        reply = f'No codename provided, write a codename for fetching informations.'
+        reply = 'No codename provided, write a codename for fetching informations.'
         update.effective_message.reply_text("{}".format(reply),
                                             parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         return
@@ -93,16 +93,16 @@ def gsis(update, context):
 @run_async
 def edxposed(update, context):
     message = update.effective_message
-    usr = get(f'https://api.github.com/repos/elderdrivers/edxposed/releases/latest').json()
+    usr = get('https://api.github.com/repos/elderdrivers/edxposed/releases/latest').json()
     reply_text = "*Latest EdXposed release(s):*\n"
     for i in range(len(usr)):
         try:
             name = usr['assets'][i]['name']
             url = usr['assets'][i]['browser_download_url']
             reply_text += f"[{name}]({url})\n\n"
-            keyboard = [[InlineKeyboardButton(text="Repository", url=f"https://github.com/ElderDrivers/EdXposed")]]
+            keyboard = [[InlineKeyboardButton(text="Repository", url="https://github.com/ElderDrivers/EdXposed")]]
             keyboard += [
-                [InlineKeyboardButton(text="EdXposed Manager", url=f"https://github.com/ElderDrivers/EdXposedManager")]]
+                [InlineKeyboardButton(text="EdXposed Manager", url="https://github.com/ElderDrivers/EdXposedManager")]]
         except IndexError:
             continue
     message.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN)
@@ -137,12 +137,12 @@ def mitools(update, context):
 def getfw(update, context):
     args = context.args
     if not len(args) == 2:
-        reply = f'Give me something to fetch, like: <code>/getfw SM-N975F DBT</code>'
+        reply = 'Give me something to fetch, like: <code>/getfw SM-N975F DBT</code>'
         update.effective_message.reply_text("{}".format(reply),
                                             parse_mode=ParseMode.HTML)
         return
     temp, csc = args
-    model = f'sm-' + temp if not temp.upper().startswith('SM-') else temp
+    model = 'sm-' + temp if not temp.upper().startswith('SM-') else temp
     test = get(f'https://samfrew.com/model/{model.upper()}/region/{csc.upper()}/')
     if test.status_code == 404:
         reply = f"Couldn't find any firmware downloads for <code>{model.upper()} {csc.upper()}</code>, make sure you gave me the right CSC and model!"
@@ -165,13 +165,13 @@ def getfw(update, context):
             reply += f' • Phone: `{phone}`\n'
         if os:
             reply += f' • Android: `{os}`\n'
-    reply += f'\n'
+    reply += '\n'
     reply += f'*Downloads for {model.upper()} {csc.upper()}:*\n'
     reply += f' • [samfrew.com]({url1})\n'
     reply += f' • [sammobile.com]({url2})\n'
     reply += f' • [sfirmware.com]({url3})\n'
     reply += f' • [samfw.com]({url4}) ⭐\n\n'
-    reply += f'You can also receive real-time firmwares from SamFrew on the @SamFirm channel\n'
+    reply += 'You can also receive real-time firmwares from SamFrew on the @SamFirm channel\n'
     update.message.reply_text("{}".format(reply),
                               parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
@@ -181,12 +181,12 @@ def getfw(update, context):
 def checkfw(update, context):
     args = context.args
     if not len(args) == 2:
-        reply = f'Give me something to fetch, like:\n`/checkfw SM-N975F DBT`'
+        reply = 'Give me something to fetch, like:\n`/checkfw SM-N975F DBT`'
         update.effective_message.reply_text("{}".format(reply),
                                             parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         return
     temp, csc = args
-    model = f'sm-' + temp if not temp.upper().startswith('SM-') else temp
+    model = 'sm-' + temp if not temp.upper().startswith('SM-') else temp
     fota = get(f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.xml')
     test = get(f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.test.xml')
     if test.status_code != 200:
@@ -206,7 +206,7 @@ def checkfw(update, context):
             reply += f' • Phone: `{phone1}`\n'
         if os1:
             reply += f' • Android: `{os1}`\n'
-        reply += f'\n'
+        reply += '\n'
     else:
         reply = f'*No public release found for {model.upper()} {csc.upper()}.*\n\n'
     reply += f'*Latest test firmware for {model.upper()} {csc.upper()}:*\n'
@@ -217,7 +217,7 @@ def checkfw(update, context):
             reply += f' • Phone: `{phone2}`\n'
         if os2:
             reply += f' • Android: `{os2}`\n'
-        reply += f'\n'
+        reply += '\n'
     else:
         md5 = page2.find("latest").text.strip()
         reply += f' • Hash: `{md5}`\n • Android: `{os2}`\n\n'
@@ -229,7 +229,6 @@ def checkfw(update, context):
 @spamcheck
 @run_async
 def magisk(update, context):
-    args = context.args
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     releases = ""
     for type, branch in {"Stable": ["master/stable", "master"], "Beta": ["master/beta", "master"],
@@ -350,7 +349,6 @@ def aex(update, context):
 @spamcheck
 @run_async
 def bootleggers(update, context):
-    args = context.args
     message = update.effective_message
     codename = message.text[len('/bootleggers '):]
 
@@ -407,7 +405,6 @@ def bootleggers(update, context):
 @spamcheck
 @run_async
 def evo(update, context):
-    args = context.args
     cmd_name = "evo"
     message = update.effective_message
     chat = update.effective_chat
@@ -482,7 +479,6 @@ def evo(update, context):
 @spamcheck
 @run_async
 def los(update, context):
-    args = context.args
     message = update.effective_message
     device = message.text[len('/los '):]
 
@@ -518,7 +514,6 @@ def los(update, context):
 @spamcheck
 @run_async
 def miui(update, context):
-    args = context.args
     giturl = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/"
     message = update.effective_message
     device = message.text[len('/miui '):]
@@ -558,7 +553,6 @@ def miui(update, context):
 @spamcheck
 @run_async
 def pe(update, context):
-    args = context.args
     message = update.effective_message
     cmd = message.text.split()[0]
     device = message.text[len(cmd) + 1:]

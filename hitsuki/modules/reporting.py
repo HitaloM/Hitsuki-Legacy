@@ -142,13 +142,13 @@ def report(update, context) -> str:
 
                             if len(message.text.split()) > 1:  # If user is giving a reason, send his message too
                                 message.forward(admin.user.id)
-                    except:
+                    except Exception:
                         pass
                     context.bot.send_message(admin.user.id, msg, parse_mode=ParseMode.HTML, reply_markup=reply_markup)
 
                 except Unauthorized:
                     pass
-                except BadRequest as excp:  # TODO: cleanup exceptions
+                except BadRequest:  # TODO: cleanup exceptions
                     LOGGER.exception("Exception while reporting user")
         return msg
 
@@ -284,7 +284,7 @@ def buttonask(update, context):
                 context.bot.sendMessage(report_chat,
                                         text=tl(update.effective_message, "{} telah di tendang!\nOleh: {}").format( \
                                             mention_markdown(userinfo['id'], userinfo['name']),
-                                            mention_markdown(chat.id, chat.first_name)), \
+                                            mention_markdown(chat.id, chat.first_name)),
                                         parse_mode=ParseMode.MARKDOWN)
                 context.bot.edit_message_text(
                     text=msg + tl(update.effective_message, "\n\n{} telah di tendang!").format(
@@ -301,7 +301,7 @@ def buttonask(update, context):
                 context.bot.sendMessage(report_chat,
                                         text=tl(update.effective_message, "{} telah di banned!\nOleh: {}").format( \
                                             mention_markdown(userinfo['id'], userinfo['name']),
-                                            mention_markdown(chat.id, chat.first_name)), \
+                                            mention_markdown(chat.id, chat.first_name)),
                                         parse_mode=ParseMode.MARKDOWN)
                 context.bot.edit_message_text(text=msg + tl(update.effective_message, "\n\n{} telah di banned!").format(
                     mention_html(userinfo['id'], userinfo['name'])),

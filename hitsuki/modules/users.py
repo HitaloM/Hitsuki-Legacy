@@ -88,8 +88,8 @@ def log_user(update, context):
                     fbanreason), parse_mode="markdown")
                 try:
                     context.bot.kick_chat_member(chat.id, user.id)
-                except:
-                    print("Fban: cannot banned this user")
+                except Exception:
+                    print("Fban: cannot ban this user")
 
     sql.update_user(msg.from_user.id,
                     msg.from_user.username,
@@ -124,7 +124,7 @@ def chats(update, context):
             chatfile += "{}. {} | {} | {} | {}\n".format(
                 P, chat.chat_name, chat.chat_id, chat_members, invitelink)
             P = P + 1
-        except:
+        except Exception:
             pass
 
     with BytesIO(str.encode(chatfile)) as output:

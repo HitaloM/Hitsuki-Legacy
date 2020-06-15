@@ -1115,7 +1115,7 @@ Keep in mind that your message <b>MUST</b> contain some text other than just a b
 	"File/foto ini gagal diimpor karena berasal dari bot lain. Ini adalah pembatasan API telegram, dan tidak bisa dihindari. Maaf untuk ketidaknyamanannya!": "These files/photos failed to import due to originating from another bot. This is a telegram API restriction, and can't be avoided. Sorry for the inconvenience!",
 	"{} catatan, pada {} obrolan.": "{} notes, accross {} chats.",
 	"Ada catatan `{}` dalam obrolan ini.": "There are {} notes in this chat.",
-	"Private Note was *enabled*, when users get notes, the message will be sent to the PM and the hashtag message will be deleted.": "Aas notas no privado foram *ativadas*, a partir de agora as notas serão enviadas por mim em conversa privada e a mensagem com a hashtag será excluída.",
+	"Private Note was *enabled*, when users get notes, the message will be sent to the PM and the hashtag message will be deleted.": "As notas no privado foram *ativadas*, a partir de agora as notas serão enviadas por mim em conversa privada e a mensagem com a hashtag será excluída.",
 	"Private Note was *enabled*, when users get notes, the message will be sent to the PM.": "Aas notas no privado foram *ativadas*, a partir de agora as notas serão enviadas por mim em conversa privada.",
 	"Private Note was *disabled*, notes will be sent to group.": "A s notas privadas foram *desativadas*; as notas serão enviadas no grupo.",
 	"Current Private Note settings at {}: *{}*{}": "As configurações atuais de notas privadas são {}: *{}*{}",

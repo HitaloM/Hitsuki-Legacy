@@ -42,10 +42,10 @@ ENUM_FUNC_MAP = {
 @spamcheck
 def list_handlers(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    user = update.effective_user
 
     conn = connected(context.bot, update, chat, user.id, need_admin=False)
-    if not conn is False:
+    if conn is not False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
         filter_list = "*Filter di {}:*\n"
@@ -82,12 +82,12 @@ def list_handlers(update, context):
 @user_admin
 def filters(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    user = update.effective_user
     msg = update.effective_message  # type: Optional[Message]
     args = msg.text.split(None, 1)  # use python's maxsplit to separate Cmd, keyword, and reply_text
 
     conn = connected(context.bot, update, chat, user.id)
-    if not conn is False:
+    if conn is not False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
@@ -180,11 +180,11 @@ def filters(update, context):
 @user_admin
 def stop_filter(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    user = update.effective_user
     args = update.effective_message.text.split(None, 1)
 
     conn = connected(context.bot, update, chat, user.id)
-    if not conn is False:
+    if conn is not False:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
@@ -219,7 +219,6 @@ def stop_filter(update, context):
 def reply_filter(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
-    user = update.effective_user  # type: Optional[User]
 
     if update.effective_user.id == 777000:
         return

@@ -293,7 +293,6 @@ def unpin(update, context):
 def invite(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
-    args = context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
@@ -384,7 +383,6 @@ def permapin(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
-    args = context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=False)
     if conn:
@@ -398,7 +396,6 @@ def permapin(update, context):
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
-        chat_name = update.effective_message.chat.title
 
     text, data_type, content, buttons = get_message_type(message)
     tombol = build_keyboard_alternate(buttons)

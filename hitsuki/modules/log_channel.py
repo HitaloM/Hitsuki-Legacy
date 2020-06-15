@@ -19,7 +19,6 @@ if is_module_loaded(FILENAME):
     from hitsuki.modules.helper_funcs.chat_status import user_admin
     from hitsuki.modules.sql import log_channel_sql as sql
 
-
     def loggable(func):
         @wraps(func)
         def log_action(update, context, *args, **kwargs):
@@ -46,8 +45,7 @@ if is_module_loaded(FILENAME):
 
         return log_action
 
-
-    def send_log(bot: Bot, log_chat_id: str, orig_chat_id: str, result: str):
+    def send_log(bot: Bot, update, log_chat_id: str, orig_chat_id: str, result: str):
         try:
             bot.send_message(log_chat_id, result, parse_mode=ParseMode.HTML)
         except BadRequest as excp:
@@ -62,7 +60,6 @@ if is_module_loaded(FILENAME):
 
                 bot.send_message(log_chat_id, result + tl(update.effective_message,
                                                           "\n\nFormatting has been disabled due to an unexpected error."))
-
 
     @run_async
     @spamcheck
@@ -82,7 +79,6 @@ if is_module_loaded(FILENAME):
         else:
             send_message(update.effective_message,
                          tl(update.effective_message, "Tidak ada saluran log yang telah ditetapkan untuk grup ini!"))
-
 
     @run_async
     @spamcheck
@@ -127,7 +123,6 @@ if is_module_loaded(FILENAME):
                                                       " - Kirimkan /setlog ke saluran\n"
                                                       " - Teruskan /setlog ke grup\n"))
 
-
     @run_async
     @spamcheck
     @user_admin
@@ -145,14 +140,11 @@ if is_module_loaded(FILENAME):
             send_message(update.effective_message,
                          tl(update.effective_message, "Belum ada saluran log yang ditetapkan!"))
 
-
     def __stats__():
         return tl(OWNER_ID, "`{}` log channels set.").format(sql.num_logchannels())
 
-
     def __migrate__(old_chat_id, new_chat_id):
         sql.migrate_chat(old_chat_id, new_chat_id)
-
 
     def __chat_settings__(chat_id, user_id):
         log_channel = sql.get_chat_log_channel(chat_id)
@@ -162,7 +154,6 @@ if is_module_loaded(FILENAME):
                 escape_markdown(log_channel_info.title),
                 log_channel)
         return tl(user_id, "Tidak ada saluran masuk yang ditetapkan untuk grup ini!")
-
 
     __help__ = "logchannel_help"
 

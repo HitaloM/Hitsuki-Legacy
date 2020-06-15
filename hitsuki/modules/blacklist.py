@@ -174,7 +174,7 @@ def unblacklist(update, context):
 @user_admin
 def blacklist_mode(update, context):
     chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    user = update.effective_user
     msg = update.effective_message  # type: Optional[Message]
     args = context.args
 
