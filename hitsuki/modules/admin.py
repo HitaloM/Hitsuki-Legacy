@@ -1,7 +1,6 @@
 import html
-from typing import Optional
 
-from telegram import Message, Chat, User, InlineKeyboardMarkup
+from telegram import InlineKeyboardMarkup
 from telegram import ParseMode
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, Filters
@@ -41,9 +40,9 @@ ENUM_FUNC_MAP = {
 @loggable
 def promote(update, context):
     chat_id = update.effective_chat.id
-    message = update.effective_message  # type: Optional[Message]
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    message = update.effective_message
+    chat = update.effective_chat
+    user = update.effective_user
     args = context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
@@ -117,16 +116,14 @@ def promote(update, context):
 @user_admin
 @loggable
 def demote(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    message = update.effective_message  # type: Optional[Message]
-    user = update.effective_user  # type: Optional[User]
+    chat = update.effective_chat
+    message = update.effective_message
+    user = update.effective_user
     args = context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
         chat = dispatcher.bot.getChat(conn)
-        chat_id = conn
-        chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
             send_message(update.effective_message,
@@ -192,14 +189,13 @@ def demote(update, context):
 @user_admin
 @loggable
 def pin(update, context):
-    user = update.effective_user  # type: Optional[User]
-    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user
+    chat = update.effective_chat
     args = context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
         chat = dispatcher.bot.getChat(conn)
-        chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
         if len(args) <= 1:
             send_message(update.effective_message,
@@ -254,12 +250,11 @@ def pin(update, context):
 @loggable
 def unpin(update, context):
     chat = update.effective_chat
-    user = update.effective_user  # type: Optional[User]
+    user = update.effective_user
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
         chat = dispatcher.bot.getChat(conn)
-        chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
@@ -291,20 +286,18 @@ def unpin(update, context):
 @bot_admin
 @user_admin
 def invite(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    chat = update.effective_chat
+    user = update.effective_user
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
         chat = dispatcher.bot.getChat(conn)
-        chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
             send_message(update.effective_message,
                          tl(update.effective_message, "You can do this command in groups, not PM"))
             return ""
         chat = update.effective_chat
-        chat_name = update.effective_message.chat.title
 
     if chat.username:
         send_message(update.effective_message, chat.username)
@@ -324,15 +317,13 @@ def invite(update, context):
 @run_async
 @spamcheck
 def adminlist(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    args = context.args
+    chat = update.effective_chat
+    user = update.effective_user
 
     conn = connected(context.bot, update, chat, user.id, need_admin=False)
     if conn:
         chat = dispatcher.bot.getChat(conn)
         chat_id = conn
-        chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
             send_message(update.effective_message,
@@ -340,7 +331,6 @@ def adminlist(update, context):
             return ""
         chat = update.effective_chat
         chat_id = update.effective_chat.id
-        chat_name = update.effective_message.chat.title
 
     administrators = context.bot.getChatAdministrators(chat_id)
     text = tl(update.effective_message, "Admin in *{}*:").format(
@@ -380,15 +370,14 @@ def adminlist(update, context):
 @can_pin
 @user_admin
 def permapin(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    message = update.effective_message  # type: Optional[Message]
+    chat = update.effective_chat
+    user = update.effective_user
+    message = update.effective_message
 
     conn = connected(context.bot, update, chat, user.id, need_admin=False)
     if conn:
         chat = dispatcher.bot.getChat(conn)
         chat_id = conn
-        chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
             send_message(update.effective_message,
@@ -428,8 +417,8 @@ def permapin(update, context):
 @can_pin
 @user_admin
 def permanent_pin_set(update, context):
-    user = update.effective_user  # type: Optional[User]
-    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user
+    chat = update.effective_chat
     args = context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
@@ -497,8 +486,8 @@ def permanent_pin_set(update, context):
 
 @run_async
 def permanent_pin(update, context):
-    user = update.effective_user  # type: Optional[User]
-    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user
+    chat = update.effective_chat
     message = update.effective_message
 
     get_permapin = sql.get_permapin(chat.id)

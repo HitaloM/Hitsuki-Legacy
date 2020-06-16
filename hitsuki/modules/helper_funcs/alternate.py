@@ -1,9 +1,6 @@
-from telegram import Chat, ChatMember, Update, Bot
 from telegram import error
 
-from hitsuki import dispatcher, SUDO_USERS, LOGGER
-
-from hitsuki.modules import languages
+from hitsuki import dispatcher, LOGGER
 
 DUMP_CHAT = -1001332080671
 
@@ -31,7 +28,7 @@ def send_message(message, text, target_id=None, *args, **kwargs):
                 LOGGER.exception("ERROR: {}".format(err))
     else:
         try:
-            dispatcher.bot.send_message(target_id, text, *args, **kwarg)
+            dispatcher.bot.send_message(target_id, text, *args, **kwargs)
         except error.BadRequest as err:
             LOGGER.exception("ERROR: {}".format(err))
 

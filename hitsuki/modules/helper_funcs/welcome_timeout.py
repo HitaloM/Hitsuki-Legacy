@@ -1,18 +1,14 @@
-import random
-import re
 import time
 
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto, ChatPermissions
-from telegram.ext import CommandHandler, CallbackQueryHandler, Filters, run_async
-from telegram.error import BadRequest
-from telegram.utils.helpers import mention_markdown
+from telegram import ParseMode
+from telegram.ext import CommandHandler, Filters, run_async
 
-from hitsuki import dispatcher, updater, spamcheck, IS_DEBUG
+from hitsuki import dispatcher, updater, spamcheck
 import hitsuki.modules.sql.welcome_sql as sql
 from hitsuki.modules.languages import tl
 from hitsuki.modules.connection import connected
 
-from hitsuki.modules.helper_funcs.alternate import send_message, send_message_raw
+from hitsuki.modules.helper_funcs.alternate import send_message
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.helper_funcs.string_handling import make_time, extract_time_int
 
@@ -22,19 +18,19 @@ def welcome_timeout(context):
         user_id = cht.user_id
         chat_id = cht.chat_id
         if int(time.time()) >= int(cht.timeout_int):
-            getcur, extra_verify, cur_value, timeout, timeout_mode, cust_text = sql.welcome_security(chat_id)
+            getcur, extra_verify, cur_value, timeout, timeout_mode = sql.welcome_security(chat_id)
             if timeout_mode == 1:
                 try:
                     context.bot.unbanChatMember(chat_id, user_id)
                 # send_message_raw(chat_id, tl(user_id, "Verifikasi gagal!\n{} telah di tendang!").format(mention_markdown(user_id, context.bot.getChatMember(chat_id, user_id).user.first_name)), parse_mode="markdown")
-                except Exception as err:
+                except Exception:
                     pass
                 # send_message_raw(chat_id, tl(user_id, "Verifikasi gagal!\nTetapi gagal menendang {}: {}").format(mention_markdown(user_id, context.bot.getChatMember(chat_id, user_id).user.first_name), str(err)), parse_mode="markdown")
             elif timeout_mode == 2:
                 try:
                     context.bot.kickChatMember(chat_id, user_id)
                 # send_message_raw(chat_id, tl(user_id, "Verifikasi gagal!\n{} telah di banned!").format(mention_markdown(user_id, context.bot.getChatMember(chat_id, user_id).user.first_name)), parse_mode="markdown")
-                except Exception as err:
+                except Exception:
                     pass
                 # send_message_raw(chat_id, tl(user_id, "Verifikasi gagal!\nTetapi gagal membanned {}: {}").format(mention_markdown(user_id, context.bot.getChatMember(chat_id, user_id).user.first_name), str(err)), parse_mode="markdown")
             sql.rm_from_timeout(chat_id, user_id)
@@ -45,13 +41,13 @@ def welcome_timeout(context):
 @user_admin
 def set_verify_welcome(update, context):
     args = context.args
-    chat = update.effective_chat  # type: Optional[Chat]
+    chat = update.effective_chat
     getcur, extra_verify, cur_value, timeout, timeout_mode, cust_text = sql.welcome_security(chat.id)
     if len(args) >= 1:
         var = args[0].lower()
-        if (var == "yes" or var == "ya" or var == "on"):
+        if (var == "yes" or var == "on"):
             check = context.bot.getChatMember(chat.id, context.bot.id)
-            if check.status == 'member' or check['can_restrict_members'] == False:
+            if check.status == 'member' or check['can_restrict_members'] is False:
                 text = tl(update.effective_message,
                           "Saya tidak bisa membatasi orang di sini! Pastikan saya admin agar bisa membisukan seseorang!")
                 send_message(update.effective_message, text, parse_mode="markdown")
@@ -59,7 +55,7 @@ def set_verify_welcome(update, context):
             sql.set_welcome_security(chat.id, getcur, True, str(cur_value), str(timeout), int(timeout_mode), cust_text)
             send_message(update.effective_message, tl(update.effective_message,
                                                       "Keamanan untuk member baru di aktifkan! Pengguna baru di wajibkan harus menyelesaikan verifikasi untuk chat"))
-        elif (var == "no" or var == "ga" or var == "off"):
+        elif (var == "no" or var == "off"):
             sql.set_welcome_security(chat.id, getcur, False, str(cur_value), str(timeout), int(timeout_mode), cust_text)
             send_message(update.effective_message, tl(update.effective_message,
                                                       "Di nonaktifkan, pengguna dapat mengklik tombol untuk langsung chat"))
@@ -81,8 +77,8 @@ def set_verify_welcome(update, context):
 @user_admin
 def set_welctimeout(update, context):
     args = context.args
-    chat = update.effective_chat  # type: Optional[Chat]
-    message = update.effective_message  # type: Optional[Message]
+    chat = update.effective_chat
+    message = update.effective_message
     getcur, extra_verify, cur_value, timeout, timeout_mode, cust_text = sql.welcome_security(chat.id)
     if len(args) >= 1:
         var = args[0]
@@ -114,15 +110,13 @@ def set_welctimeout(update, context):
 @spamcheck
 @user_admin
 def timeout_mode(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    msg = update.effective_message  # type: Optional[Message]
+    chat = update.effective_chat
+    user = update.effective_user
     args = context.args
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
         chat = dispatcher.bot.getChat(conn)
-        chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type == "private":
@@ -130,7 +124,6 @@ def timeout_mode(update, context):
                          tl(update.effective_message, "Anda bisa lakukan command ini pada grup, bukan pada PM"))
             return ""
         chat = update.effective_chat
-        chat_id = update.effective_chat.id
         chat_name = update.effective_message.chat.title
 
     getcur, extra_verify, cur_value, timeout, timeout_mode, cust_text = sql.welcome_security(chat.id)

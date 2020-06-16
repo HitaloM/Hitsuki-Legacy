@@ -1,10 +1,8 @@
 import re
 import ast
 from io import BytesIO
-from typing import Optional
 
 from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
-from telegram import Message
 from telegram.error import BadRequest, Unauthorized
 from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
@@ -486,7 +484,7 @@ def list_notes(update, context):
             send_message(update.effective_message, msg, parse_mode=ParseMode.HTML)
 
 
-def __import_data__(chat_id, data):
+def __import_data__(chat_id, data, update):
     failures = []
     for notename, notedata in data.get('extra', {}).items():
         match = FILE_MATCHER.match(notedata)

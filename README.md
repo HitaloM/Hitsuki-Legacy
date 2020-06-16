@@ -16,21 +16,12 @@ Hitsuki is based on [Emilia Hikari](https://github.com/AyraHikari/EmiliaHikari)
 
 ----------
 
-* [@PaulSonOfLars](https://github.com/PaulSonOfLars) - marie creator, inspiration to do many things.
-* [@MrYacha](https://github.com/MrYacha) - for welcome security base and connection base and maybe others.
-* [@RealAkito](https://github.com/RealAkito) - for reworked federation, Android module and other things.
-* [@RaphielGang](https://github.com/RaphielGang) - for the base of the direct link module.
-* [@AvinashReddy3108](https://github.com/AvinashReddy3108) - for the base used in Dockerfile.
-* [@AnimeKaizoku](https://github.com/AnimeKaizoku) - for MyAnimeList module.
-* [@nunopenim](https://github.com/nunopenim) - for the code of GitHub module and GitHub API.
+*  [@PaulSonOfLars](https://github.com/PaulSonOfLars) - marie creator, inspiration to do many things.
+*  [@MrYacha](https://github.com/MrYacha) - for welcome security base and connection base and maybe others.
+*  [@RealAkito](https://github.com/RealAkito) - for reworked federation, Android module and other things.
+*  [@RaphielGang](https://github.com/RaphielGang) - for the base of the direct link module.
+*  [@AvinashReddy3108](https://github.com/AvinashReddy3108) - for the base used in Dockerfile.
+*  [@AnimeKaizoku](https://github.com/AnimeKaizoku) - for MyAnimeList module.
+*  [@nunopenim](https://github.com/nunopenim) - for the code of GitHub module and GitHub API.
 
 And much more that we couldn't list it here!
-
-----------
-
-```
-If you want to use some files of this repo, always make sure to give the proper credits to the 
-creators of each module, but please do not remove the credits to me or placed by me in the modules.
-```
-
-----------

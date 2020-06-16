@@ -1,7 +1,6 @@
 import html
-from typing import Optional
 
-from telegram import Message, Chat, ParseMode, User, MessageEntity
+from telegram import Message, Chat, ParseMode, MessageEntity
 from telegram import TelegramError, ChatPermissions
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, MessageHandler, Filters
@@ -454,7 +453,6 @@ def lock_warns(update, context):
     if conn:
         chat = dispatcher.bot.getChat(conn)
         chat_id = conn
-        chat_name = chat.title
     else:
         if update.effective_message.chat.type == "private":
             send_message(update.effective_message,
