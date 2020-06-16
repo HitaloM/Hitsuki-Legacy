@@ -1,8 +1,7 @@
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, func, distinct, Integer
+from sqlalchemy import Column, String, UnicodeText, Integer
 
-from hitsuki.modules.helper_funcs.msg_types import Types
 from hitsuki.modules.sql import SESSION, BASE
 
 

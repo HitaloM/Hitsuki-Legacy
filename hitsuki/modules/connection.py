@@ -1,19 +1,16 @@
 import time
 import re
-from typing import Optional, List
+from typing import Optional
 
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram import Message, Chat, Update, Bot, User, error
+from telegram import Chat, error
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters, CallbackQueryHandler
+from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import mention_html
 
 import hitsuki.modules.sql.connection_sql as sql
-from hitsuki import dispatcher, LOGGER, SUDO_USERS, spamcheck
-from hitsuki.modules.helper_funcs.chat_status import bot_admin, user_admin, is_user_admin, can_restrict
-from hitsuki.modules.helper_funcs.extraction import extract_user, extract_user_and_text
-from hitsuki.modules.helper_funcs.string_handling import extract_time
+from hitsuki import dispatcher, SUDO_USERS, spamcheck
+from hitsuki.modules.helper_funcs.chat_status import user_admin
 
 from hitsuki.modules import languages
 from hitsuki.modules.helper_funcs.alternate import send_message
@@ -57,19 +54,17 @@ def allow_connections(update, context) -> str:
 @run_async
 @spamcheck
 def connection_chat(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    chat = update.effective_chat
+    user = update.effective_user
 
     conn = connected(context.bot, update, chat, user.id, need_admin=True)
     if conn:
         chat = dispatcher.bot.getChat(conn)
-        chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
     else:
         if update.effective_message.chat.type != "private":
             return
         chat = update.effective_chat
-        chat_id = update.effective_chat.id
         chat_name = update.effective_message.chat.title
 
     if conn:
@@ -83,8 +78,8 @@ def connection_chat(update, context):
 @run_async
 @spamcheck
 def connect_chat(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    chat = update.effective_chat
+    user = update.effective_user
     args = context.args
 
     if update.effective_chat.type == 'private':
@@ -208,7 +203,7 @@ def disconnect_chat(update, context):
 
 
 def connected(bot, update, chat, user_id, need_admin=True):
-    user = update.effective_user  # type: Optional[User]
+    user = update.effective_user
 
     if chat.type == chat.PRIVATE and sql.get_connected_chat(user_id):
         conn_id = sql.get_connected_chat(user_id).chat_id
@@ -217,7 +212,7 @@ def connected(bot, update, chat, user_id, need_admin=True):
         ismember = getstatusadmin.status in ('member')
         isallow = sql.allow_connect_to_chat(conn_id)
         if (isadmin) or (isallow and ismember) or (user.id in SUDO_USERS):
-            if need_admin == True:
+            if need_admin is True:
                 if getstatusadmin.status in ('administrator', 'creator') or user_id in SUDO_USERS:
                     return conn_id
                 else:
@@ -236,10 +231,6 @@ def connected(bot, update, chat, user_id, need_admin=True):
 @run_async
 @spamcheck
 def help_connect_chat(update, context):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    args = context.args
-
     if update.effective_message.chat.type != "private":
         send_message(update.effective_message, languages.tl(update.effective_message,
                                                             "PM saya dengan command itu untuk mendapatkan bantuan Koneksi"))
@@ -252,8 +243,8 @@ def help_connect_chat(update, context):
 @run_async
 def connect_button(update, context) -> str:
     query = update.callback_query
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    chat = update.effective_chat
+    user = update.effective_user
 
     connect_match = re.match(r"connect\((.+?)\)", query.data)
     disconnect_match = query.data == "connect_disconnect"

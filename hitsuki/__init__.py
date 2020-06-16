@@ -21,7 +21,7 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
 # Check if system is reboot or not
 try:
     os.remove("reboot")
-except:
+except Exception:
     pass
 
 ENV = bool(os.environ.get('ENV', False))

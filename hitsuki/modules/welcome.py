@@ -321,7 +321,7 @@ def new_member(update, context):
                                         canrest = False
                                 else:
                                     canrest = bot_can_restrict(chat, context.bot.id)
-                        if is_clicked.get(new_mem.id) and is_clicked[new_mem.id] == True:
+                        if is_clicked.get(new_mem.id) and is_clicked[new_mem.id] is True:
                             sql.add_to_userlist(chat.id, new_mem.id, True)
                         else:
                             sql.add_to_userlist(chat.id, new_mem.id, False)
