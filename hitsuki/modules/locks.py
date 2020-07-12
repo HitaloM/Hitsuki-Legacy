@@ -34,6 +34,7 @@ LOCK_TYPES = {'audio': Filters.audio,
               'forward': Filters.forwarded,
               'game': Filters.game,
               'location': Filters.location,
+              'egame': Filters.dice,
               'rtl': 'rtl',
               'button': 'button'
               }
@@ -392,6 +393,7 @@ def build_lock_message(chat_id):
             locklist.append("location = `{}`".format(locks.location))
             locklist.append("rtl = `{}`".format(locks.rtl))
             locklist.append("button = `{}`".format(locks.button))
+            locklist.append("egame = `{}`".format(locks.egame))
     permissions = dispatcher.bot.get_chat(chat_id).permissions
     permslist.append("messages = `{}`".format(permissions.can_send_messages))
     permslist.append("media = `{}`".format(permissions.can_send_media_messages))
