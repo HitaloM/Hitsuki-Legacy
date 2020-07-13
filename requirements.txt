@@ -6,7 +6,7 @@ python-telegram-bot>=12.7
 jikanpy>=3.4.2
 psycopg2-binary>=2.8.5
 feedparser>=5.2.1
-pyowm==2.10.0
+pyowm==3.0.0
 googletrans>=2.4.0
 wikipedia>=1.4.0
 Pillow>=7.1.2
