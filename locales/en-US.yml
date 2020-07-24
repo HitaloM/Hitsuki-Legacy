@@ -1141,6 +1141,18 @@ warns_help: |
   - /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just kick.
   - /rmwarn <userhandle>: removes latest warn for a user. It also can be used as reply.
   - /unwarn <userhandle>: same as /rmwarn
+#OrangeFox
+fox_devices_title: "**OrangeFox Recovery is currently avaible for:**"
+fox_get_release: You can get latest release by using `/orangefox (codename)`
+fox_device_not_found: Device is not found!
+fox_release_not_found: "Release for {} is not found!"
+fox_release_device: "**Device:** {fullname} (`{codename}`)\n"
+fox_release_version: "**Version:** `{}`\n"
+fox_release_maintainer: "**Maintainer:** {name}, {status}\n"
+fox_release_maintained_1: Maintained
+fox_release_maintained_3: ⚠️ Not maintained
+fox_release_date: "**Release date:** {}\n"
+fox_release_md5: "**MD5:** `{}`\n"
 ### Helper functions
 #chat_status
 helpers_bot_cant_delete: I can't delete messages here! Make sure I'm admin and can delete other user's messages.
