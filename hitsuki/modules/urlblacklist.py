@@ -9,7 +9,6 @@ from hitsuki import LOGGER, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import user_admin, user_not_admin
 from hitsuki.modules.sql import urlblacklist_sql as sql
-from hitsuki.modules.languages import tl
 
 
 @run_async

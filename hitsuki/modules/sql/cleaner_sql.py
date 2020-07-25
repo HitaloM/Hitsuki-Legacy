@@ -1,6 +1,6 @@
 import threading
 
-from sqlalchemy import Column, UnicodeText, Boolean, Integer
+from sqlalchemy import Column, UnicodeText, Boolean
 
 from hitsuki.modules.sql import BASE, SESSION
 

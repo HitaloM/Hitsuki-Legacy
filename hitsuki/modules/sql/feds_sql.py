@@ -1,7 +1,7 @@
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, func, distinct, Integer, Boolean
-from telegram.error import BadRequest, TelegramError, Unauthorized
+from sqlalchemy import Column, String, UnicodeText, Integer, Boolean
+from telegram.error import BadRequest, Unauthorized
 
 from hitsuki import dispatcher
 from hitsuki.modules.sql import SESSION, BASE

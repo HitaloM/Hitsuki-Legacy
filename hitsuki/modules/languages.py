@@ -1,12 +1,10 @@
 import os
-import telegram
 import importlib
 import re
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, User, CallbackQuery
-from telegram import Message, Chat, Update, Bot
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, MessageHandler, Filters, CallbackQueryHandler
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, User, CallbackQuery
+from telegram import Message, Chat
+from telegram.ext import run_async, CallbackQueryHandler
 from hitsuki import dispatcher, spamcheck, LOGGER
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import user_admin_no_reply, user_admin

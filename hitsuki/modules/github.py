@@ -6,7 +6,6 @@ import hitsuki.modules.sql.github_sql as sql
 
 from hitsuki import dispatcher, spamcheck
 from hitsuki.modules.helper_funcs.chat_status import user_admin
-from hitsuki.modules.languages import tl
 
 from telegram.ext import CommandHandler, run_async, Filters, MessageHandler
 from telegram import ParseMode, MAX_MESSAGE_LENGTH

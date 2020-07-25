@@ -13,7 +13,6 @@ from bs4 import BeautifulSoup
 from telegram.ext import run_async, CommandHandler
 
 from hitsuki import dispatcher, spamcheck
-from hitsuki.modules.languages import tl
 
 
 @run_async

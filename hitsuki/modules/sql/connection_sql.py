@@ -2,9 +2,7 @@ import threading
 import time
 from typing import Union
 
-from sqlalchemy import Column, String, Boolean, UnicodeText, Integer, func, distinct
-
-from hitsuki.modules.helper_funcs.msg_types import Types
+from sqlalchemy import Column, String, Boolean, UnicodeText, Integer
 from hitsuki.modules.sql import SESSION, BASE
 
 
