@@ -5,6 +5,7 @@
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/630d285e84d143bfb39ccdf07131656c)](https://app.codacy.com/manual/HitaloSama/Hitsuki?utm_source=github.com&utm_medium=referral&utm_content=HitaloSama/Hitsuki&utm_campaign=Badge_Grade_Settings)
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/HitaloSama/Hitsuki/?ref=repository-badge)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/HitaloSama/Hitsuki/graphs/commit-activity)
 [![GitHub contributors](https://img.shields.io/github/contributors/HitaloSama/Hitsuki.svg)](https://GitHub.com/HitaloSama/Hitsuki/graphs/contributors/)
 
