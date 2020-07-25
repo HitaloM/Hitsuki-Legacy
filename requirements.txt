@@ -21,6 +21,5 @@ spongemock>=0.3.4
 zalgo-text>=0.6
 aiohttp>=3.6.2
 tldextract>=2.2.2
-
-PyYAML~=5.3.1
-beautifulsoup4~=4.9.1
+PyYAML>=5.3.1
+beautifulsoup4>=4.9.1
