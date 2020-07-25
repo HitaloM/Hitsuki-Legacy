@@ -271,7 +271,7 @@ def reply_filter(update, context):
                                 context.bot.send_message(chat.id, filtext, parse_mode="markdown",
                                                          disable_web_page_preview=True, reply_markup=keyboard)
                             except BadRequest as excp:
-                                LOGGER.exception("Gagal mengirim pesan: " + excp.message)
+                                LOGGER.exception("Gagal mengirim pesan: ", excp.message)
                                 send_message(update.effective_message,
                                              tl(update.effective_message, get_exception(excp, filt, chat)))
                                 pass
@@ -280,7 +280,7 @@ def reply_filter(update, context):
                                 send_message(update.effective_message,
                                              tl(update.effective_message, get_exception(excp, filt, chat)))
                             except BadRequest as excp:
-                                LOGGER.exception("Gagal mengirim pesan: " + excp.message)
+                                LOGGER.exception("Gagal mengirim pesan: ", excp.message)
                                 pass
                 else:
                     ENUM_FUNC_MAP[filt.file_type](chat.id, filt.file_id, caption=filtext,
@@ -317,7 +317,7 @@ def reply_filter(update, context):
                                                                           "tidak mendukung tombol untuk beberapa protokol, seperti tg://. Silakan coba "
                                                                           "lagi."))
                             except BadRequest as excp:
-                                LOGGER.exception("Gagal mengirim pesan: " + excp.message)
+                                LOGGER.exception("Gagal mengirim pesan: ", excp.message)
                                 pass
                         elif excp.message == "Reply message not found":
                             try:
@@ -325,14 +325,14 @@ def reply_filter(update, context):
                                                          disable_web_page_preview=True,
                                                          reply_markup=keyboard)
                             except BadRequest as excp:
-                                LOGGER.exception("Gagal mengirim pesan: " + excp.message)
+                                LOGGER.exception("Gagal mengirim pesan: ", excp.message)
                                 pass
                         else:
                             try:
                                 send_message(update.effective_message, tl(update.effective_message,
                                                                           "Catatan ini tidak dapat dikirim karena formatnya salah."))
                             except BadRequest as excp:
-                                LOGGER.exception("Gagal mengirim pesan: " + excp.message)
+                                LOGGER.exception("Gagal mengirim pesan: ", excp.message)
                                 pass
                             LOGGER.warning("Message %s could not be parsed", str(filt.reply))
                             LOGGER.exception("Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id))
@@ -342,7 +342,7 @@ def reply_filter(update, context):
                     try:
                         send_message(update.effective_message, filt.reply)
                     except BadRequest as excp:
-                        LOGGER.exception("Gagal mengirim pesan: " + excp.message)
+                        LOGGER.exception("Gagal mengirim pesan: ", excp.message)
                         pass
                 break
 
