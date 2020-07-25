@@ -786,28 +786,11 @@ def echo(update, context):
     if str(data_type) in ('Types.BUTTON_TEXT', 'Types.TEXT'):
         try:
             if message.reply_to_message:
-                context.bot.send_message(
-                    chat_id,
-                    text,
-                    parse_mode="markdown",
-                    reply_to_message_id=message.reply_to_message.message_id,
-                    disable_web_page_preview=True,
-                    reply_markup=InlineKeyboardMarkup(tombol))
+                context.bot.send_message(chat_id, text, parse_mode="markdown", reply_to_message_id=message.reply_to_message.message_id, disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(tombol))
             else:
-                context.bot.send_message(
-                    chat_id,
-                    text,
-                    quote=False,
-                    disable_web_page_preview=True,
-                    parse_mode=ParseMode.MARKDOWN,
-                    reply_markup=InlineKeyboardMarkup(tombol))
+                context.bot.send_message(chat_id, text, quote=False, disable_web_page_preview=True, parse_mode=ParseMode.MARKDOWN, reply_markup=InlineKeyboardMarkup(tombol))
         except BadRequest:
-            context.bot.send_message(
-                chat_id,
-                tl(
-                    update.effective_message,
-                    "Teks markdown salah!\nJika anda tidak tahu apa itu markdown, silahkan ketik `/markdownhelp` pada PM."),
-                parse_mode="markdown")
+            context.bot.send_message(chat_id, tl(update.effective_message, "Teks markdown salah!\nJika anda tidak tahu apa itu markdown, silahkan ketik `/markdownhelp` pada PM."), parse_mode="markdown")
             return
 
 
