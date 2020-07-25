@@ -42,7 +42,7 @@ def verify_welcome(update, context, chat_id):
         send_message(update.effective_message, tl(update.effective_message,
                                                   "Anda sedang tidak dalam mode verifikasi, jika anda sedang di bisukan, anda dapat meminta tolong pada admin di grup yang bersangkutan"))
         return
-    elif user_id in list(is_clicked) and is_clicked[user_id] == True:
+    elif user_id in list(is_clicked) and is_clicked[user_id] is True:
         send_message(update.effective_message, tl(update.effective_message,
                                                   "Anda sedang tidak dalam mode verifikasi, jika anda sedang di bisukan, anda dapat meminta tolong pada admin di grup yang bersangkutan"))
         return

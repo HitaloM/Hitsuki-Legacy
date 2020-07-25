@@ -1122,7 +1122,7 @@ def set_frules(update, context):
                 update.effective_message, "Obrolan ini tidak ada di federasi apa pun!"))
         return
 
-    if is_user_fed_admin(fed_id, user.id) == False:
+    if is_user_fed_admin(fed_id, user.id) is False:
         send_message(
             update.effective_message, tl(
                 update.effective_message, "Hanya admin federasi yang dapat melakukan ini!"))
@@ -1276,7 +1276,7 @@ def fed_ban_list(update, context):
                 update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
-    if is_user_fed_owner(fed_id, user.id) == False:
+    if is_user_fed_owner(fed_id, user.id) is False:
         send_message(
             update.effective_message, tl(
                 update.effective_message, "Hanya pemilik federasi yang dapat melakukan ini!"))
@@ -1508,7 +1508,7 @@ def fed_chats(update, context):
                 update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
-    if is_user_fed_admin(fed_id, user.id) == False:
+    if is_user_fed_admin(fed_id, user.id) is False:
         send_message(
             update.effective_message, tl(
                 update.effective_message, "Hanya admin federasi yang dapat melakukan ini!"))
@@ -1568,7 +1568,7 @@ def fed_import_bans(update, context):
                 update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
-    if is_user_fed_owner(fed_id, user.id) == False:
+    if is_user_fed_owner(fed_id, user.id) is False:
         send_message(
             update.effective_message, tl(
                 update.effective_message, "Hanya pemilik federasi yang dapat melakukan ini!"))
@@ -2018,7 +2018,7 @@ def subs_feds(update, context):
                 update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
-    if is_user_fed_owner(fed_id, user.id) == False:
+    if is_user_fed_owner(fed_id, user.id) is False:
         send_message(
             update.effective_message, tl(
                 update.effective_message, "Hanya pemilik federasi yang dapat melakukan ini!"))
@@ -2081,7 +2081,7 @@ def unsubs_feds(update, context):
                 update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
-    if is_user_fed_owner(fed_id, user.id) == False:
+    if is_user_fed_owner(fed_id, user.id) is False:
         send_message(
             update.effective_message, tl(
                 update.effective_message, "Hanya pemilik federasi yang dapat melakukan ini!"))
@@ -2140,7 +2140,7 @@ def get_myfedsubs(update, context):
                 update.effective_message, "Grup ini tidak dalam federasi apa pun!"))
         return
 
-    if is_user_fed_owner(fed_id, user.id) == False:
+    if is_user_fed_owner(fed_id, user.id) is False:
         send_message(
             update.effective_message, tl(
                 update.effective_message, "Hanya pemilik federasi yang dapat melakukan ini!"))
@@ -2200,7 +2200,7 @@ def is_user_fed_owner(fed_id, user_id):
     if not getsql:
         return False
     getfedowner = eval(getsql['fusers'])
-    if getfedowner is None or getfedowner == False:
+    if getfedowner is None or getfedowner is False:
         return False
     getfedowner = getfedowner['owner']
     if str(user_id) == getfedowner or int(user_id) == OWNER_ID:

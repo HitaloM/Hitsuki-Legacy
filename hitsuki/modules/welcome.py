@@ -337,7 +337,7 @@ def new_member(update, context):
                                                                           new_mem.id))])
                                 if timeout != "0":
                                     sql.add_to_timeout(chat.id, new_mem.id, int(timeout))
-                            elif new_mem.id in list(is_clicked) and is_clicked[new_mem.id] == False:
+                            elif new_mem.id in list(is_clicked) and is_clicked[new_mem.id] is False:
                                 if extra_verify:
                                     keyb.append([InlineKeyboardButton(text=str(custom_text),
                                                                       url="t.me/{}?start=verify_{}".format(
@@ -382,7 +382,7 @@ def check_bot_button(update, context):
             print("Not that user")
         query.answer(text=tl(update.effective_message, "Kamu bukan pengguna yang di tuju!"))
         return
-    if getalluser.get(user.id) and getalluser.get(user.id) == True:
+    if getalluser.get(user.id) and getalluser.get(user.id) is True:
         query.answer(text=tl(update.effective_message, "Kamu sudah pernah mengklik ini sebelumnya!"))
         return
     try:
@@ -575,7 +575,7 @@ def security(update, context):
         var = args[0].lower()
         if (var == "yes" or var == "ya" or var == "on"):
             check = context.bot.getChatMember(chat.id, context.bot.id)
-            if check.status == 'member' or check['can_restrict_members'] == False:
+            if check.status == 'member' or check['can_restrict_members'] is False:
                 text = tl(update.effective_message,
                           "Saya tidak bisa membatasi orang di sini! Pastikan saya admin agar bisa membisukan seseorang!")
                 send_message(update.effective_message, text, parse_mode="markdown")
