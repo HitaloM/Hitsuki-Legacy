@@ -194,13 +194,13 @@ if is_module_loaded(FILENAME):
 
         if len(msg.text.split()) >= 2:
             args = msg.text.split(None, 1)[1]
-            if args == "yes" or args == "on" or args == "ya":
+            if args in ("yes", "on"):
                 sql.disabledel_set(chat.id, True)
                 send_message(update.effective_message, languages.tl(update.effective_message,
                                                                     "Ketika command di nonaktifkan, maka saya *akan menghapus* pesan command tsb."),
                              parse_mode="markdown")
                 return
-            elif args == "no" or args == "off":
+            elif args in ("no", "off"):
                 sql.disabledel_set(chat.id, False)
                 send_message(update.effective_message, languages.tl(update.effective_message,
                                                                     "Saya *tidak akan menghapus* pesan dari command yang di nonaktifkan."),

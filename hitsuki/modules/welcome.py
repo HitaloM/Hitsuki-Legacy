@@ -172,7 +172,7 @@ def new_member(update, context):
 
             else:
                 # If welcome message is media, send with appropriate function
-                if welc_type != sql.Types.TEXT and welc_type != sql.Types.BUTTON_TEXT:
+                if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
                     reply = update.message.message_id
                     # Clean service welcome
                     if cleanserv:
@@ -400,7 +400,7 @@ def check_bot_button(update, context):
     sql.add_to_userlist(chat.id, user.id, True)
     should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
     # If welcome message is media, send with appropriate function
-    if welc_type != sql.Types.TEXT and welc_type != sql.Types.BUTTON_TEXT:
+    if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
         # Formatting text
         first_name = query.from_user.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
         if query.from_user.last_name:
@@ -485,7 +485,7 @@ def left_member(update, context):
                 return
 
             # if media goodbye, use appropriate function for it
-            if goodbye_type != sql.Types.TEXT and goodbye_type != sql.Types.BUTTON_TEXT:
+            if goodbye_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
                 reply = update.message.message_id
                 cleanserv = sql.clean_service(chat.id)
                 # Clean service welcome
@@ -573,7 +573,7 @@ def security(update, context):
     getcur, extra_verify, cur_value, timeout, timeout_mode, cust_text = sql.welcome_security(chat.id)
     if len(args) >= 1:
         var = args[0].lower()
-        if (var == "yes" or var == "ya" or var == "on"):
+        if (var in ("yes", "on")):
             check = context.bot.getChatMember(chat.id, context.bot.id)
             if check.status == 'member' or check['can_restrict_members'] is False:
                 text = tl(update.effective_message,
@@ -584,7 +584,7 @@ def security(update, context):
                                      cust_text)
             send_message(update.effective_message,
                          tl(update.effective_message, "Keamanan untuk member baru di aktifkan!"))
-        elif (var == "no" or var == "ga" or var == "off"):
+        elif (var in"(no", "off")):
             sql.set_welcome_security(chat.id, False, extra_verify, str(cur_value), str(timeout), int(timeout_mode),
                                      cust_text)
             send_message(update.effective_message,
@@ -678,10 +678,10 @@ def cleanservice(update, context):
     if chat.type != chat.PRIVATE:
         if len(args) >= 1:
             var = args[0].lower()
-            if (var == "no" or var == "off" or var == "tidak"):
+            if (var in ("no", "off")):
                 sql.set_clean_service(chat.id, False)
                 send_message(update.effective_message, tl(update.effective_message, "Saya meninggalkan pesan layanan"))
-            elif (var == "yes" or var == "ya" or var == "on"):
+            elif (var in ("yes", "on")):
                 sql.set_clean_service(chat.id, True)
                 send_message(update.effective_message,
                              tl(update.effective_message, "Saya akan membersihkan pesan layanan"))
@@ -743,7 +743,7 @@ def welcome(update, context):
                      parse_mode=ParseMode.MARKDOWN)
 
         buttons = sql.get_welc_buttons(chat.id)
-        if welcome_type == sql.Types.BUTTON_TEXT or welcome_type == sql.Types.TEXT:
+        if welcome_type in (sql.Types.BUTTON_TEXT, sql.Types.TEXT):
             if noformat:
                 welcome_m += revert_buttons(buttons)
                 send_message(update.effective_message, welcome_m)

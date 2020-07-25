@@ -45,7 +45,7 @@ def set_verify_welcome(update, context):
     getcur, extra_verify, cur_value, timeout, timeout_mode, cust_text = sql.welcome_security(chat.id)
     if len(args) >= 1:
         var = args[0].lower()
-        if (var == "yes" or var == "on"):
+        if (var in ("yes", "on")):
             check = context.bot.getChatMember(chat.id, context.bot.id)
             if check.status == 'member' or check['can_restrict_members'] is False:
                 text = tl(update.effective_message,
@@ -55,7 +55,7 @@ def set_verify_welcome(update, context):
             sql.set_welcome_security(chat.id, getcur, True, str(cur_value), str(timeout), int(timeout_mode), cust_text)
             send_message(update.effective_message, tl(update.effective_message,
                                                       "Keamanan untuk member baru di aktifkan! Pengguna baru di wajibkan harus menyelesaikan verifikasi untuk chat"))
-        elif (var == "no" or var == "off"):
+        elif (var in ("no", "off")):
             sql.set_welcome_security(chat.id, getcur, False, str(cur_value), str(timeout), int(timeout_mode), cust_text)
             send_message(update.effective_message, tl(update.effective_message,
                                                       "Di nonaktifkan, pengguna dapat mengklik tombol untuk langsung chat"))

@@ -362,7 +362,7 @@ def slap(update, context):
             msg.from_user.first_name, msg.from_user.id)
 
     user_id = extract_user(update.effective_message, args)
-    if user_id == context.bot.id or user_id == 777000:
+    if user_id in (context.bot.id, 777000):
         user1 = "[{}](tg://user?id={})".format(context.bot.first_name,
                                                context.bot.id)
         user2 = curr_user

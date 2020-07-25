@@ -24,11 +24,11 @@ def allow_connections(update, context) -> str:
     if chat.type != chat.PRIVATE:
         if len(args) >= 1:
             var = args[0]
-            if (var == "no" or var == "tidak"):
+            if (var in ("no", "off")):
                 sql.set_allow_connect_to_chat(chat.id, False)
                 send_message(update.effective_message,
                              languages.tl(update.effective_message, "Sambungan telah dinonaktifkan untuk obrolan ini"))
-            elif (var == "yes" or var == "ya"):
+            elif (var in ("yes", "on")):
                 sql.set_allow_connect_to_chat(chat.id, True)
                 send_message(update.effective_message,
                              languages.tl(update.effective_message, "Koneksi di aktifkan untuk obrolan ini"))
