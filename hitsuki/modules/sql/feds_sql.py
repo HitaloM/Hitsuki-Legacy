@@ -1,7 +1,7 @@
 import threading
 
 from sqlalchemy import Column, String, UnicodeText, func, distinct, Integer, Boolean
-from telegram.error import BadRequest, TelegramError, Unauthorized
+from telegram.error import BadRequest, Unauthorized
 
 from hitsuki import dispatcher
 from hitsuki.modules.sql import SESSION, BASE
@@ -483,7 +483,7 @@ def multi_fban_user(multi_fed_id, multi_user_id, multi_first_name, multi_last_na
                 print(counter)
         try:
             SESSION.commit()
-        except:
+        except Exception:
             SESSION.rollback()
             return False
         finally:
@@ -502,7 +502,7 @@ def un_fban_user(fed_id, user_id):
                     SESSION.delete(I)
         try:
             SESSION.commit()
-        except:
+        except Exception:
             SESSION.rollback()
             return False
         finally:
