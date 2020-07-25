@@ -8,6 +8,7 @@
 [![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/HitaloSama/Hitsuki/?ref=repository-badge)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/HitaloSama/Hitsuki/graphs/commit-activity)
 [![GitHub contributors](https://img.shields.io/github/contributors/HitaloSama/Hitsuki.svg)](https://GitHub.com/HitaloSama/Hitsuki/graphs/contributors/)
+![ErrorChecking](https://github.com/HitaloSama/Hitsuki/workflows/ErrorChecking/badge.svg)
 
 A modular telegram Python bot running on python3 with an sqlalchemy database.
 
