@@ -584,7 +584,7 @@ def security(update, context):
                                      cust_text)
             send_message(update.effective_message,
                          tl(update.effective_message, "Keamanan untuk member baru di aktifkan!"))
-        elif (var in"(no", "off")):
+        elif (var in("no", "off")):
             sql.set_welcome_security(chat.id, False, extra_verify, str(cur_value), str(timeout), int(timeout_mode),
                                      cust_text)
             send_message(update.effective_message,
