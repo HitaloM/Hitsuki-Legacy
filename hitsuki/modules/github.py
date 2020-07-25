@@ -185,7 +185,6 @@ def getVer(update, context):
     msg = update.effective_message
     ver = api.vercheck()
     msg.reply_text("GitHub API version: " + ver)
-    return
 
 
 @run_async
