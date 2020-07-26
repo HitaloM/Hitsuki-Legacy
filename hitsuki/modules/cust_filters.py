@@ -272,7 +272,6 @@ def reply_filter(update, context):
                                 LOGGER.exception("Gagal mengirim pesan: ", excp.message)
                                 send_message(update.effective_message,
                                              tl(update.effective_message, get_exception(excp, filt, chat)))
-                                pass
                         else:
                             try:
                                 send_message(update.effective_message,

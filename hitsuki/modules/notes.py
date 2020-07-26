@@ -154,7 +154,6 @@ def get(bot, update, notename, show_none=True, no_format=False):
                         send_message(update.effective_message,
                                      tl(update.effective_message, "Contact me at PM to get this notes."),
                                      parse_mode="markdown")
-                        pass
                 else:
                     try:
                         if is_delete:
