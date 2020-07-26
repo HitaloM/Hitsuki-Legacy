@@ -2,14 +2,13 @@ import random
 import re
 
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto, ChatPermissions
-from telegram.ext import CallbackQueryHandler
 from telegram.error import BadRequest
+from telegram.ext import CallbackQueryHandler
 
-from hitsuki import dispatcher
 import hitsuki.modules.sql.welcome_sql as sql
-from hitsuki.modules.languages import tl
-
+from hitsuki import dispatcher
 from hitsuki.modules.helper_funcs.alternate import send_message
+from hitsuki.modules.languages import tl
 
 verify_code = ["🙏", "👈", "👉", "👇", "👆", "❤️", "🅰️", "🅱️", "0️⃣", "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣",
                "8️⃣", "9️⃣", "🔟"]

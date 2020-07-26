@@ -6,12 +6,11 @@ from telegram.ext import CommandHandler, MessageHandler
 from telegram.utils.helpers import escape_markdown
 
 from hitsuki import dispatcher, spamcheck, OWNER_ID
+from hitsuki.modules import languages
+from hitsuki.modules.connection import connected
+from hitsuki.modules.helper_funcs.alternate import send_message
 from hitsuki.modules.helper_funcs.handlers import CMD_STARTERS
 from hitsuki.modules.helper_funcs.misc import is_module_loaded
-from hitsuki.modules.connection import connected
-
-from hitsuki.modules import languages
-from hitsuki.modules.helper_funcs.alternate import send_message
 
 FILENAME = __name__.rsplit(".", 1)[-1]
 

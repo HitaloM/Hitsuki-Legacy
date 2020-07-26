@@ -3,14 +3,13 @@ import time
 from telegram import ParseMode
 from telegram.ext import CommandHandler, Filters, run_async
 
-from hitsuki import dispatcher, updater, spamcheck
 import hitsuki.modules.sql.welcome_sql as sql
-from hitsuki.modules.languages import tl
+from hitsuki import dispatcher, updater, spamcheck
 from hitsuki.modules.connection import connected
-
 from hitsuki.modules.helper_funcs.alternate import send_message
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.helper_funcs.string_handling import make_time, extract_time_int
+from hitsuki.modules.languages import tl
 
 
 def welcome_timeout(context):

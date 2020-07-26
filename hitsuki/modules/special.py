@@ -1,25 +1,23 @@
 import json
 import random
 import time
-import wikipedia
-
-from googletrans import Translator
-from emoji import UNICODE_EMOJI
-from requests import get
 from platform import python_version
 
-from telegram.error import BadRequest
+import wikipedia
+from emoji import UNICODE_EMOJI
+from googletrans import Translator
+from requests import get
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async, Filters
 
-import hitsuki.modules.helper_funcs.git_api as git
 import hitsuki.__main__ as hitsukiv
+import hitsuki.modules.helper_funcs.git_api as git
 from hitsuki import dispatcher, OWNER_ID, spamcheck
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.sql import languages_sql as langsql
-
-from hitsuki.modules.languages import tl
 from hitsuki.modules.helper_funcs.alternate import send_message
+from hitsuki.modules.languages import tl
+from hitsuki.modules.sql import languages_sql as langsql
 
 reactions = [
     "( ͡° ͜ʖ ͡°)",

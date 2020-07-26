@@ -1,5 +1,5 @@
-import re
 import ast
+import re
 from io import BytesIO
 
 from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
@@ -10,15 +10,14 @@ from telegram.utils.helpers import escape_markdown, mention_markdown
 
 import hitsuki.modules.sql.notes_sql as sql
 from hitsuki import dispatcher, MESSAGE_DUMP, LOGGER, spamcheck, OWNER_ID
+from hitsuki.modules.connection import connected
 from hitsuki.modules.disable import DisableAbleCommandHandler
+from hitsuki.modules.helper_funcs.alternate import send_message
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.helper_funcs.misc import build_keyboard_parser, revert_buttons
 from hitsuki.modules.helper_funcs.msg_types import get_note_type
 from hitsuki.modules.helper_funcs.string_handling import escape_invalid_curly_brackets
-
-from hitsuki.modules.connection import connected
 from hitsuki.modules.languages import tl
-from hitsuki.modules.helper_funcs.alternate import send_message
 
 FILE_MATCHER = re.compile(r"^###file_id(!photo)?###:(.*?)(?:\s|$)")
 STICKER_MATCHER = re.compile(r"^###sticker(!photo)?###:")

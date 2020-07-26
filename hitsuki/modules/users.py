@@ -7,13 +7,12 @@ from telegram.error import BadRequest
 from telegram.ext import MessageHandler, Filters, CommandHandler
 from telegram.ext.dispatcher import run_async
 
+import hitsuki.modules.sql.feds_sql as fedsql
 import hitsuki.modules.sql.users_sql as sql
 from hitsuki import dispatcher, OWNER_ID, LOGGER
-from hitsuki.modules.helper_funcs.filters import CustomFilters
-
-import hitsuki.modules.sql.feds_sql as fedsql
 from hitsuki.modules import languages
 from hitsuki.modules.helper_funcs.alternate import send_message
+from hitsuki.modules.helper_funcs.filters import CustomFilters
 
 USERS_GROUP = 4
 

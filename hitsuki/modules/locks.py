@@ -1,5 +1,6 @@
 import html
 
+from alphabet_detector import AlphabetDetector
 from telegram import Message, Chat, ParseMode, MessageEntity
 from telegram import TelegramError, ChatPermissions
 from telegram.error import BadRequest
@@ -7,19 +8,16 @@ from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import mention_html
 
-from alphabet_detector import AlphabetDetector
-
 import hitsuki.modules.sql.locks_sql as sql
 from hitsuki import dispatcher, spamcheck, SUDO_USERS, LOGGER
+from hitsuki.modules.connection import connected
 from hitsuki.modules.disable import DisableAbleCommandHandler
+from hitsuki.modules.helper_funcs.alternate import send_message
 from hitsuki.modules.helper_funcs.chat_status import can_delete, \
     is_user_admin, user_not_admin, user_admin, is_bot_admin
+from hitsuki.modules.languages import tl
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.warns import warn
-from hitsuki.modules.connection import connected
-
-from hitsuki.modules.languages import tl
-from hitsuki.modules.helper_funcs.alternate import send_message
 
 ad = AlphabetDetector()
 

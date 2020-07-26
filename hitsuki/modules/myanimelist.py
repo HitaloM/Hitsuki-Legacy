@@ -1,7 +1,7 @@
 import textwrap
+
 import jikanpy
 import requests
-
 from telegram import InlineKeyboardMarkup, InlineKeyboardButton, ParseMode
 from telegram.ext import CallbackQueryHandler, run_async
 

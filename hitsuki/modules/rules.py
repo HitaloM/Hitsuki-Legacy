@@ -8,14 +8,13 @@ from telegram.utils.helpers import escape_markdown
 
 import hitsuki.modules.sql.rules_sql as sql
 from hitsuki import dispatcher, spamcheck, OWNER_ID
+from hitsuki.modules.connection import connected
+from hitsuki.modules.helper_funcs.alternate import send_message
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.helper_funcs.misc import build_keyboard_alternate
 from hitsuki.modules.helper_funcs.string_handling import markdown_parser, \
     button_markdown_parser
-from hitsuki.modules.connection import connected
-
 from hitsuki.modules.languages import tl
-from hitsuki.modules.helper_funcs.alternate import send_message
 
 
 @run_async

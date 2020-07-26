@@ -1,7 +1,6 @@
 import threading
-from typing import Union
 
-from sqlalchemy import Column, Integer, String, UnicodeText
+from sqlalchemy import Column, String, UnicodeText
 
 from hitsuki.modules.sql import SESSION, BASE
 

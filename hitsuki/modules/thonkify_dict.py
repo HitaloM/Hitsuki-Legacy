@@ -1,5 +1,6 @@
 import base64
 from io import BytesIO
+
 from PIL import Image
 
 thonkifydict = {}

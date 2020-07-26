@@ -3,8 +3,10 @@
 
 import base64
 from io import BytesIO
+
 from PIL import Image
 from telegram.ext import run_async, CommandHandler
+
 from hitsuki import dispatcher, spamcheck
 from hitsuki.modules.languages import tl
 

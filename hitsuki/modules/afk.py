@@ -8,11 +8,10 @@ from telegram.ext import Filters, MessageHandler, run_async
 from hitsuki import dispatcher, spamcheck
 from hitsuki.modules.disable import DisableAbleCommandHandler, \
     DisableAbleMessageHandler
+from hitsuki.modules.helper_funcs.alternate import send_message
+from hitsuki.modules.languages import tl
 from hitsuki.modules.sql import afk_sql as sql
 from hitsuki.modules.users import get_user_id
-
-from hitsuki.modules.languages import tl
-from hitsuki.modules.helper_funcs.alternate import send_message
 
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8

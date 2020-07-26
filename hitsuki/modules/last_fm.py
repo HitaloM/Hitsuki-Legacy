@@ -1,14 +1,12 @@
 # Last.fm module by @TheRealPhoenix - https://github.com/rsktg
 
 import requests
-
 from telegram import ParseMode
 from telegram.ext import run_async, CommandHandler
 
+import hitsuki.modules.sql.last_fm_sql as sql
 from hitsuki import dispatcher, LASTFM_API_KEY
 from hitsuki.modules.disable import DisableAbleCommandHandler
-
-import hitsuki.modules.sql.last_fm_sql as sql
 
 
 @run_async
