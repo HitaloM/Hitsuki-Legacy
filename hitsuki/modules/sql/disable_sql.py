@@ -134,7 +134,7 @@ def migrate_chat(old_chat_id, new_chat_id):
 
 def disableable_cache(cmd):
     global DISABLEABLE
-    if type(cmd) == list:
+    if isinstance(cmd, list):
         for x in cmd:
             DISABLEABLE.append(x)
     else:

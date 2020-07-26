@@ -29,7 +29,7 @@ LOGGER.info("{} languages loaded: {}".format(len(LOADED_LANGS_ID), LOADED_LANGS_
 
 
 def tl(message, text):
-    if type(message) == int or type(message) == str and message[1:].isdigit():
+    if isinstance(message, (int, str)) and message[1:].isdigit():
         getlang = sql.get_lang(message)
         if getlang == 'None' or not getlang:
             getlang = 'en'
