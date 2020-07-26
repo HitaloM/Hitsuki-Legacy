@@ -18,12 +18,12 @@ from hitsuki import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, CERT_PATH, PO
 # needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from hitsuki.modules import ALL_MODULES
+from hitsuki.modules.languages import set_language
+from hitsuki.modules.languages import tl
 from hitsuki.modules.connection import connect_button
 from hitsuki.modules.helper_funcs.chat_status import is_user_admin
 from hitsuki.modules.helper_funcs.misc import paginate_modules
 from hitsuki.modules.helper_funcs.verifier import verify_welcome
-from hitsuki.modules.languages import set_language
-from hitsuki.modules.languages import tl
 from hitsuki.modules.sql import languages_sql as langsql
 
 PM_START_TEXT = "start_text"
