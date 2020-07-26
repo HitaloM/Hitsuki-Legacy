@@ -895,7 +895,7 @@ Gbans, also known as global bans, are used by the bot owners to ban spammers acr
 you and your groups by removing spam flooders as quickly as possible. They can be disabled for you group by calling \
 /gbanstat
 """,
-	
+
 # locks
 	"*Jenis kunci yang tersedia adalah:* ": "Locks: ",
 	"*Jenis izin kunci yang tersedia adalah:* ": "Permissions: ",
