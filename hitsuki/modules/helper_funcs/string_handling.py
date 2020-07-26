@@ -146,7 +146,7 @@ def button_markdown_parser(txt: str, entities: Dict[MessageEntity, str] = None, 
         else:
             note_data += markdown_note[prev:to_check]
             prev = match.start(1) - 1
-        
+
         note_data += markdown_note[prev:]
 
     return note_data, buttons

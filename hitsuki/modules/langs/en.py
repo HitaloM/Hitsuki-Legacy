@@ -230,7 +230,7 @@ An example of how to save a repo shortcut would be via:
 Now, anyone using "`/fetch ptb`", or "`&ptb`" will be answered with the releases of the given repository.
 
 *Note:* Note names are case-insensitive, and they are automatically converted to lowercase before getting saved.
- 
+
 This module was only possible thanks to the [pyGitHyb_API](https://github.com/nunopenim/pyGitHyb_API)
 """,
 
@@ -276,7 +276,7 @@ Well, here you go.
 	"Kesalahan terjadi saat memulihkan data Anda. Prosesnya mungkin tidak lengkap. Jika "
 						   "Anda mengalami masalah dengan ini, pesan @AyraHikari dengan file cadangan Anda, jadi "
 						   "masalah bisa di-debug. Pemilik saya akan dengan senang hati membantu, dan setiap bug "
-						   "dilaporkan membuat saya lebih baik! Terima kasih! 🙂": 
+						   "dilaporkan membuat saya lebih baik! Terima kasih! 🙂":
 	"An exception occured while restoring your data. The process may not be complete. If "
 						   "you have a problem with this, contact @AyraHikari with your backup file, so "
 						   "issue can be debugged. My owner will be happy to help, and every bug "
@@ -649,7 +649,7 @@ Organize your group via PM easily.
  - /filters: list all active filters in this chat.
 
 *Admin only:*
- - /filter <keyword> <reply message>: add a filter to this chat. The bot will now reply that message whenever 'keyword' is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. 
+ - /filter <keyword> <reply message>: add a filter to this chat. The bot will now reply that message whenever 'keyword' is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker.
 NOTE: all filter keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter "hey there" How you doin?
  - /stop <filter keyword>: stop that filter.
  - /stopall: Stop all filters, must be chat owner to do so. Only use this when you know what you're doing.
@@ -1309,7 +1309,7 @@ NOTE: In groups, only admins can add/remove RSS links to the group's subscriptio
  - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
  - /resetwarn <userhandle>: reset the warnings for a user. Can also be used as a reply.
  - /addwarn <keyword> <reply message>: set a warning filter on a certain keyword. If you want your keyword to \
-be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`. 
+be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`.
  - /nowarn <keyword>: stop a warning filter
  - /warnlimit <num>: set the warning limit
  - /warnmode <kick/ban/mute>: Set warn mode, when user exceeding the warn limit will result in that mode.
