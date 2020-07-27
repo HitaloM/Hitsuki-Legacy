@@ -1,22 +1,10 @@
-# Haruka Aya
+# Hitsuki
 
 To anyone coming here to **clone this bot**, no support will be given for it. If you dare to join the support group and asks for how to run this bot, you'll be banned with no warning and you can blame no one but yourself for that.
 
 A modular Telegram Python bot running on python3 with an sqlalchemy database.
 
-Can be found on telegram as [Haruka Aya](https://t.me/HarukaAyaBot).
-
-Alternatively, [find me on telegram](https://t.me/RealAkito)! (Keep all support questions in the support chat, where more people can help you.)
-
-You can also join our support group [here!](https://t.me/HarukaAyaBot)
-(Keep in the mind that we does not support any fork of Haruka Aya.)
-
-Help us bring more languages to the bot by contributing to the project in [Crowdin](https://crowdin.com/project/haruka)!
-
-## Contributing to the project
-* You must sign off on your commit.
-* You must sign the commit via GPG Key.
-* Make sure your PR passes all CI.
+Can be found on telegram as [Hitsuki](https://t.me/LordHitsuki_BOT).
 
 ## Thanks to
 * RealAkito - Current Haruka Aya Owner
