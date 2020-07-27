@@ -16,15 +16,13 @@ btn_help: '❔ Help'
 btn_go_back: Back
 main_start_group: Hey there! I'm alive :3
 main_start_pm: |
-  Hey there! My name is Haruka Aya - I'm here to help you manage your groups!
+  Hey there! My name is Hitsuki - I'm here to help you manage your groups!
   Click Help button to find out more about how to use me to my full potential.
 
-  Join [the bot support group](https://t.me/HarukaAyaGroup) ( @HarukaAyaGroup ) if you need any bot support or help.
+  Follow [Hitsuki](https://t.me/Hitsuki News) ( @HitsukiNews ) if you want to keep up with the bot news, bot updates and bot downtime!
 
-  Follow [Haruka Aya](https://t.me/HarukaAya) ( @HarukaAya ) if you want to keep up with the bot news, bot updates and bot downtime!
-
-  Made with love by @RealAkito\n\nWant to add me to your group? [Click here!](t.me/HarukaAyaBot?startgroup=true)
-main_start_btn_support: '📢 Support Group'
+  Want to add me to your group? [Click here!](t.me/LordHitsuki_BOT?startgroup=true)
+main_start_btn_support: '📦 Source code'
 main_start_btn_ctrlpnl: '🛠 Control panel'
 main_start_btn_lang: '🇺🇸 Language'
 #Common
@@ -165,7 +163,7 @@ antispam_err_wrong_arg: "Give me some arguments to choose a setting! on/off, yes
 antispam_userinfo_gbanned: "Globally banned: <b>{}</b>"
 antispam_userinfo_gban_reason: "\nReason: {}"
 antispam_chatsettings_gban: "This chat is enforcing *gbans*: `{}`."
-anitspam_appeal: \n<b>Appeal at:</b> @HarukaAyaGroup
+anitspam_appeal: \n<b>Appeal at:</b> @Hitalo
 antispam_spamwatch_banned: "<b>This user is detected as a spambot by SpamWatch and has been removed!</b>\n\n<b>Reason</b>: {}"
 antispam_help: |
   Antispam is used by the bot owners to ban spammers across all groups. This helps protect you and your groups by removing spam flooders as quickly as possible. This is enabled by default, but you can change this by using the command.\n
@@ -281,8 +279,8 @@ cust_filters_add_success: Handler '{}' added in *{}*!
 cust_filters_list_empty: There aren't any active filters in {}!
 cust_filters_stop_success: Yep, I'll stop replying to that in *{}*.
 cust_filters_err_wrong_filter: That's not an active filter - run /filters for all active filters.
-cust_filters_err_protocol: You seem to be trying to use an unsupported url protocol. Telegram doesn't support buttons for some protocols, such as tg://. Please try again, or ask in @HarukaAyaGroup for help.
-cust_filters_err_badformat: This filter could not be sent, as it is incorrectly formatted. Ask in @HarukaAyaGroup if you can't figure out why!
+cust_filters_err_protocol: You seem to be trying to use an unsupported url protocol. Telegram doesn't support buttons for some protocols, such as tg://. Please try again.
+cust_filters_err_badformat: This filter could not be sent, as it is incorrectly formatted.
 cust_filters_chatsettings_stats: There are `{}` custom filters here.
 cust_filters_cleanup_success: "{} filters from this chat have been removed."
 cust_filters_help: |
@@ -321,7 +319,7 @@ disable_help: |
   - /disable <cmd name>: Disable a command
 #Feds
 modname_feds: Federations
-feds_create_fail: Federation creation failed! Ask in @HarukaAyaGroup for help.
+feds_create_fail: Federation creation failed!
 feds_create_success: "*You have successfully created a new federation!*\nName: `{}`\nID: `{}`\n\nRun the command below in groups to add them to the federation:\n`/joinfed {}`"
 feds_create_success_logger: "Federation <b>{}</b> has been created with ID: <pre>{}</pre>"
 feds_err_no_args: Please write down the name of the federation.
@@ -333,7 +331,7 @@ feds_group_not_in_fed: This group is not in any federation!
 feds_group_part_of_fed: "This chat is part of the following federation:"
 feds_group_joined_fed: Uh, Are you gonna join two federations at one chat?
 feds_fedid_invalid: Please enter a valid Federation ID.
-feds_join_unknown_err: Failed to join to federation due to an unknown error, ask in @HarukaAyaGroup for help.
+feds_join_unknown_err: Failed to join to federation due to an unknown error.
 feds_join_success: Chat joined to federation!
 feds_leave_success: "This chat has left the federation: {}!"
 feds_leave_not_joined: How can you leave a federation that you never joined?!
@@ -395,7 +393,7 @@ language_not_supported: "{} is not supported yet!"
 language_code_not_valid: That's not a valid lanuage code. Use an internationally accepted ISO code!
 language_current_locale: "Current locale for this chat is: *{}*"
 language_select_language: "*Select language* \n"
-language_user_language: "User language: `{}`\n\nHelp us bring more languages to the bot by contributing to the project in [Crowdin](https://translate.harukaaya.me/HarukaAya)!"
+language_user_language: "User language: `{}`"
 language_chat_language: "\nConnected chat language: `{}`"
 language_sel_user_lang: "*\n\nSelect a new user language:*"
 #Locks
@@ -664,7 +662,7 @@ misc_info_is_support: "\nThis person is one of my support users!"
 misc_info_is_whitelisted: "\nThis person is one of my whitelisted user, one rarely gets this role, you can't ban or kick him."
 misc_gdpr: Deleting identifiable data...
 misc_md_list: |
-  Markdown is a very powerful formatting tool supported by telegram. Haruka Aya has some enhancements, to make sure that \
+  Markdown is a very powerful formatting tool supported by telegram. Hitsuki has some enhancements, to make sure that \
   saved messages are correctly parsed, and to allow you to create buttons.
   - <code>_italic_</code>: wrapping text with '_' will produce italic text
   - <code>*bold*</code>: wrapping text with '*' will produce bold text
@@ -770,7 +768,7 @@ note_msg_del: "Looks like the original sender of this note has deleted their mes
 note_url_invalid: "The URL of the button is invalid! Please update this note!"
 note_mention_invalid: "Looks like you tried to mention someone I've never seen before. Forward one of their messages to me and I'll be able to tag them!"
 note_incorrect_import: "This note was an incorrectly imported file from another bot - I can't use it. Save it manually if needed. I'll remove it from your notes list."
-note_cannot_send: "This note could not be sent, as it is incorrectly formatted, Please ask in @HarukaAyaGroup if you can't figure out why!"
+note_cannot_send: "This note could not be sent, as it is incorrectly formatted."
 get_invalid: "Note name missing! Write the name of the note you want to get."
 note_is_local: "local notes"
 save_invalid: "There's nothing to save!"

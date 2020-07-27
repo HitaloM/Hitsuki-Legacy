@@ -16,15 +16,13 @@ btn_help: '❔ Ayuda'
 btn_go_back: Atrás
 main_start_group: '¡Hola! Estoy vivo :3'
 main_start_pm: |
-  ¡Hola! Mi nombre es Haruka Aya - ¡Estoy aquí para ayudarte a gestionar tus grupos!
+  ¡Hola! Mi nombre es Hitsuki - ¡Estoy aquí para ayudarte a gestionar tus grupos!
   Haz clic en el botón Ayuda para saber más sobre cómo utilizarme con todo mi potencial.
 
-  Únete al [grupo de soporte para bot](https://t.me/HarukaAyaGroup) ( @HarukaAyaGroup ) si necesitas algún soporte para bots o ayuda.
+  Sigue a [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) si quieres mantenerte al día con las noticias del bot, las actualizaciones del bot y el tiempo de baja del bot!
 
-  Sigue a [Haruka Aya](https://t. e/HarukaAya) ( @HarukaAya ) si quieres mantenerte al día con las noticias del bot, las actualizaciones del bot y el tiempo de baja del bot!
-
-  Hecho con amor por @RealAkito\n\n¿Quieres añadirme a tu grupo? [¡Haz clic aquí!](t. e/HarukaAyaBot?startgroup=true)
-main_start_btn_support: '📢 Grupo de Soporte'
+  ¿Quieres añadirme a tu grupo? [¡Haz clic aquí!](t.me/LordHitsuki_BOT?startgroup=true)
+main_start_btn_support: '📦 codigo fuente'
 main_start_btn_ctrlpnl: '🛠 Panel de control'
 main_start_btn_lang: '🇺🇸 Idioma'
 #Common
@@ -166,7 +164,7 @@ antispam_err_wrong_arg: "¡Dame algunos argumentos para elegir un ajuste! encend
 antispam_userinfo_gbanned: "Globalmente baneado: <b>{}</b>"
 antispam_userinfo_gban_reason: "\nMotivo: {}"
 antispam_chatsettings_gban: "Este chat está cumpliendo *gbans*: `{}`."
-anitspam_appeal: \n<b>Apelar en:</b> @HarukaAyaGroup
+anitspam_appeal: \n<b>Apelar en:</b> @Hitalo
 antispam_spamwatch_banned: "<b>Este usuario ha sido detectado como spambot por SpamWatch y ha sido removido!</b>\n\n<b>Razón</b>: {}"
 antispam_help: |
   Los propietarios de los robots utilizan el antispam para prohibir los spammers en todos los grupos. Esto ayuda a protegerte a ti y a tus grupos eliminando los flujos de spam tan pronto como sea posible. Esto está activado por defecto, pero puedes cambiar esto usando el comando.\n
@@ -282,8 +280,8 @@ cust_filters_add_success: '¡Handler ''{}'' añadido en *{}*!'
 cust_filters_list_empty: '¡No hay ningún filtro activo en {}!'
 cust_filters_stop_success: Sí, dejaré de responder a eso en *{}*.
 cust_filters_err_wrong_filter: Eso no es un filtro activo - ejecuta /filter para todos los filtros activos.
-cust_filters_err_protocol: Parece que está intentando utilizar un protocolo url no soportado. Telegram no soporta botones para algunos protocolos, como tg://. Inténtalo de nuevo o pide ayuda en @HarukaAyaGroup.
-cust_filters_err_badformat: Este filtro no pudo ser enviado, ya que está mal formateado. Pregunte en @HarukaAyaGroup si no puede averiguar por qué!
+cust_filters_err_protocol: Parece que está intentando utilizar un protocolo url no soportado. Telegram no soporta botones para algunos protocolos, como tg://. Inténtalo de nuevo.
+cust_filters_err_badformat: Este filtro no pudo ser enviado, ya que está mal formateado.
 cust_filters_chatsettings_stats: Hay filtros personalizados `{}` aquí.
 cust_filters_cleanup_success: "{} filtros de este chat han sido eliminados."
 cust_filters_help: |
@@ -322,7 +320,7 @@ disable_help: |
   - /disable <cmd name>: Desactivar un comando
 #Feds
 modname_feds: Federaciones
-feds_create_fail: '¡Creación de la Federación fallida! Pídele ayuda en @HarukaAyaGroup.'
+feds_create_fail: '¡Creación de la Federación fallida!'
 feds_create_success: "*¡Has creado con éxito una nueva federación!\nNombre: `{}`\nID: `{}`\n\nEjecuta el comando de abajo en grupos para añadirlos a la federación:\n`/joinfed {}`"
 feds_create_success_logger: "La Federación <b>{}</b> ha sido creada con ID: <pre>{}</pre>"
 feds_err_no_args: Por favor, escriba el nombre de la federación.
@@ -334,7 +332,7 @@ feds_group_not_in_fed: '¡Este grupo no está en ninguna federación!'
 feds_group_part_of_fed: "Este chat es parte de la siguiente federación:"
 feds_group_joined_fed: Uh, ¿Te vas a unir a dos federaciones en un chat?
 feds_fedid_invalid: Por favor, introduzca un ID de la Federación válido.
-feds_join_unknown_err: No se pudo unirse a la federación debido a un error desconocido, pide ayuda en @HarukaAyaGroup.
+feds_join_unknown_err: No se pudo unirse a la federación debido a un error desconocido.
 feds_join_success: '¡Chat unido a federación!'
 feds_leave_success: "¡Este chat ha dejado la federación: {}!"
 feds_leave_not_joined: '¿Cómo puedes dejar una federación que nunca te has unido?!'
@@ -396,7 +394,7 @@ language_not_supported: "¡{} aún no está soportado!"
 language_code_not_valid: Eso no es un código de idioma válido. ¡Usa un código ISO internacionalmente aceptado!
 language_current_locale: "El idioma actual para este chat es: *{}*"
 language_select_language: "*Seleccionar idioma* \n"
-language_user_language: "Lenguage de usuario: `{}`\n\nAyúdanos a incorporar más lenguajes al bot contribuyendo con el proyecto en [Crowdin](https://translate.harukaaya.me/HarukaAya)!\n"
+language_user_language: "Lenguage de usuario: `{}`"
 language_chat_language: "\nIdioma de chat conectado: `{}`"
 language_sel_user_lang: "*\n\nSeleccione un nuevo idioma de usuario:*"
 #Locks
@@ -669,7 +667,7 @@ misc_info_is_support: "\n¡Esta persona es uno de mis usuarios de soporte!"
 misc_info_is_whitelisted: "\nEsta persona es uno de mis usuarios en la lista blanca, uno raramente obtiene este rol, no puedes banearlo ni expulsarlo."
 misc_gdpr: Eliminando datos identificables...
 misc_md_list: |
-  Markdown es una herramienta de formato muy potente soportada por telegram. Haruka Aya tiene algunas mejoras, para asegurarse de que \
+  Markdown es una herramienta de formato muy potente soportada por telegram. Hitsuki tiene algunas mejoras, para asegurarse de que \
   los mensajes guardados sean analizados correctamente y para permitirle crear botones.
   - <code>_italic_</code>: envolver texto con '_' producirá texto en cursiva
   - <code>*negrita*</code>: envoltura de texto con '*' producirá texto en negrita
@@ -775,7 +773,7 @@ note_msg_del: "Parece que el remitente original de esta nota ha eliminado su men
 note_url_invalid: "¡La URL del botón no es válida! ¡Por favor, actualiza esta nota!"
 note_mention_invalid: "Parece que intentaste mencionar a alguien que nunca he visto antes. ¡Reenvía uno de sus mensajes para mí y seré capaz de etiquetarlos!"
 note_incorrect_import: "Esta nota era un archivo importado incorrectamente de otro bot - No puedo usarlo. Guárdelo manualmente si es necesario. Lo eliminaré de tu lista de notas."
-note_cannot_send: "Esta nota no pudo ser enviada, ya que está formateada incorrectamente. Por favor, pregunte en @HarukaAyaGroup si no puede averiguar por qué!"
+note_cannot_send: "Esta nota no pudo ser enviada, ya que está formateada incorrectamente. Por favor."
 get_invalid: "¡Falta el nombre de la nota! Escribe el nombre de la nota que quieres obtener."
 note_is_local: "notas locales"
 save_invalid: "¡No hay nada que guardar!"

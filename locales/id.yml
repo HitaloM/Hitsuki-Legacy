@@ -19,15 +19,13 @@ btn_help: '❔ Bantuan'
 btn_go_back: '⬅️ Kembali'
 main_start_group: Hai yang disana! Saya masih hidup :3
 main_start_pm: |
-  Hai! Nama saya Haruka Aya - Saya di sini untuk membantu Anda mengelola grup Anda!
+  Hai! Nama saya Hitsuki - Saya di sini untuk membantu Anda mengelola grup Anda!
   Klik tombol Bantuan untuk mencari tahu lebih lanjut tentang cara menggunakan saya dengan menggunakan potensi penuh saya.
 
-  Bergabunglah dengan [Haruka Aya Group](https://t.me/HarukaAyaGroup) (@HarukaAyaGroup) jika Anda memerlukan dukungan atau bantuan.
+  Ikuti [Hitsuki](https://t.me/HitsukiNews) (@HitsukiNews) jika Anda ingin mengikuti berita, pembaruan, dan waktu bot berhenti!
 
-  Ikuti [Haruka Aya](https://t.me/HarukaAya) (@HarukaAya) jika Anda ingin mengikuti berita, pembaruan, dan waktu bot berhenti!
-
-  Dibuat dengan cinta oleh @RealAkito\n\nIngin menambahkan saya ke grup Anda? [Klik di sini!](https://t.me/HarukaAyaBot?startgroup=true)
-main_start_btn_support: '📢 Grup Dukungan'
+  Ingin menambahkan saya ke grup Anda? [Klik di sini!](https://t.me/LordHitsuki_BOT?startgroup=true)
+main_start_btn_support: '📦 Kode sumber'
 main_start_btn_ctrlpnl: '🛠 Panel kontrol'
 main_start_btn_lang: '🇮🇩 Bahasa'
 #Common
@@ -162,7 +160,7 @@ antispam_err_wrong_arg: "Berikan saya beberapa argumen untuk memilih pengaturan!
 antispam_userinfo_gbanned: "Dilarang secara global: <b>{}</b>"
 antispam_userinfo_gban_reason: "\nAlasan: {}"
 antispam_chatsettings_gban: "Obrolan ini memberlakukan *gbans*: `{}`."
-anitspam_appeal: \n<b>Banding di:</b> @HarukaAyaGroup
+anitspam_appeal: \n<b>Banding di:</b> @Hitalo
 antispam_help: |
   Antispam digunakan oleh pemilik bot untuk melarang spammer di semua grup. Ini membantu melindungi Anda dan grup Anda dengan menghapus pembanjir spam secepat mungkin. Ini diaktifkan secara default, tetapi Anda dapat mengubahnya dengan menggunakan perintah.\n
   *Hanya admin:*
@@ -279,8 +277,8 @@ cust_filters_add_success: Pemegang '{}' ditambahkan di *{}*!
 cust_filters_list_empty: Tidak ada filter aktif di {}!
 cust_filters_stop_success: Yap, saya akan berhenti membalas itu di *{}*.
 cust_filters_err_wrong_filter: Itu bukan filter aktif - jalankan /filters untuk mengetahui semua filter yang aktif.
-cust_filters_err_protocol: Anda tampaknya mencoba menggunakan protokol url yang tidak didukung. Telegram tidak mendukung tombol untuk beberapa protokol, seperti tg://. Silakan coba lagi atau minta bantuan di @HarukaAyaGroup.
-cust_filters_err_badformat: Filter ini tidak dapat dikirim, karena tidak memakai format dengan benar. Tanyakan di @HarukaAyaGroup jika Anda tidak tahu mengapa!
+cust_filters_err_protocol: Anda tampaknya mencoba menggunakan protokol url yang tidak didukung. Telegram tidak mendukung tombol untuk beberapa protokol, seperti tg://. Silakan coba.
+cust_filters_err_badformat: Filter ini tidak dapat dikirim, karena tidak memakai format dengan benar.
 cust_filters_chatsettings_stats: Ada `{}` filter khusus di sini.
 cust_filters_help: |
   Jadikan obrolan Anda lebih hidup dengan filter; Bot akan membalas kata-kata tertentu!
@@ -317,7 +315,7 @@ disable_help: |
   - /disable <cmd name>: Nonaktifkan perintah
 #Feds
 modname_feds: Federasi
-feds_create_fail: Pembuatan federasi gagal! Tanyakan pada @HarukaAyaGroup untuk bantuan.
+feds_create_fail: Pembuatan federasi gagal!
 feds_create_success: "*Anda telah berhasil membuat federasi baru!*\nNama: `{}`\nID: `{}`\n\nJalankan perintah di bawah dalam grup untuk menambahkannya ke federasi:\n`/joinfed {}`"
 feds_create_success_logger: "Federasi <b>{}</b> telah dibuat dengan ID: <pre>{}</pre>"
 feds_err_no_args: Silakan tulis nama federasi.
@@ -329,7 +327,7 @@ feds_group_not_in_fed: Grup ini tidak ada dalam federasi apa pun!
 feds_group_part_of_fed: "Obrolan ini adalah bagian dari federasi berikut:"
 feds_group_joined_fed: Eh, apakah Anda akan bergabung dengan dua federasi dalam satu obrolan?
 feds_fedid_invalid: Silakan masukkan ID Federasi yang valid.
-feds_join_unknown_err: Gagal bergabung ke federasi karena kesalahan yang tidak diketahui, minta bantuan di @HarukaAyaGroup.
+feds_join_unknown_err: Gagal bergabung ke federasi karena kesalahan yang tidak diketahui.
 feds_join_success: Obrolan bergabung dengan federasi!
 feds_leave_success: "Obrolan ini telah meninggalkan federasi: {}!"
 feds_leave_not_joined: Bagaimana Anda bisa meninggalkan federasi yang tidak pernah Anda ikuti?!
@@ -391,7 +389,7 @@ language_not_supported: "{} belum didukung!"
 language_code_not_valid: Itu bukan kode bahasa yang valid. Gunakan kode ISO yang diterima secara internasional!
 language_current_locale: "Lokal saat ini untuk obrolan ini adalah: *{}*"
 language_select_language: "*Pilih bahasa*\n"
-language_user_language: "Bahasa pengguna: `{}`\n\nBantu kami membawa lebih banyak bahasa ke bot dengan berkontribusi pada proyek di [Crowdin](https://crowdin.com/project/haruka)!"
+language_user_language: "Bahasa pengguna: `{}`"
 language_chat_language: "\nBahasa obrolan yang terhubung: `{}`"
 language_sel_user_lang: "*\n\nPilih bahasa pengguna baru: *"
 #Locks
@@ -661,7 +659,7 @@ misc_info_is_support: "\nOrang ini adalah salah satu pengguna dukungan saya! Dia
 misc_info_is_whitelisted: "\nOrang ini adalah pengguna yang masuk daftar putih, seseorang jarang mendapatkan peran ini, Anda tidak dapat mencekal atau menendangnya."
 misc_gdpr: Menghapus data yang dapat diidentifikasi...
 misc_md_list: |
-  Markdown adalah alat pemformatan yang sangat kuat yang didukung oleh telegram. Haruka Aya memiliki beberapa peningkatan, untuk memastikan bahwa \
+  Markdown adalah alat pemformatan yang sangat kuat yang didukung oleh telegram. Hitsuki memiliki beberapa peningkatan, untuk memastikan bahwa \
   pesan yang disimpan diuraikan dengan benar, dan untuk memungkinkan Anda membuat tombol.
   - <code>_miring_</code>: membungkus teks dengan '_' akan menghasilkan teks yang miring
   - <code>*tebal*</code>: membungkus teks dengan '*' akan menghasilkan teks tebal
@@ -754,7 +752,7 @@ note_msg_del: "Sepertinya pengirim asli catatan ini telah menghapus pesan mereka
 note_url_invalid: "URL tombol tidak valid! Harap perbarui catatan ini!"
 note_mention_invalid: "Sepertinya Anda mencoba menyebutkan seseorang yang belum pernah saya lihat. Teruskan salah satu pesan mereka kepada saya dan saya akan menandai mereka!"
 note_incorrect_import: "Catatan ini adalah file yang salah diimpor dari bot lain - Saya tidak bisa menggunakannya. Simpan secara manual jika perlu. Saya akan menghapusnya dari daftar catatan Anda."
-note_cannot_send: "Catatan ini tidak dapat dikirim, karena diformat secara salah, Silakan tanyakan di @HarukaAyaGroup jika Anda tidak tahu mengapa!"
+note_cannot_send: "Catatan ini tidak dapat dikirim, karena diformat secara salah."
 get_invalid: "Catat nama yang hilang! Tulis nama catatan yang ingin Anda dapatkan."
 note_is_local: "catatan lokal"
 save_invalid: "Tidak ada yang bisa disimpan!"
