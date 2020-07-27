@@ -1,6 +1,6 @@
 #    Hitsuki Aya (A telegram bot project)
 #    Copyright (C) 2017-2019 Paul Larsen
-#    Copyright (C) 2019-2020 Akito Mizukito (Hitsuki Network Development)
+#    Copyright (C) 2019-2020 Akito Mizukito (Haruka Network Development)
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
