@@ -1,4 +1,4 @@
-#    Hitsuki Aya (A telegram bot project)
+#    Hitsuki (A telegram bot project)
 #    Copyright (C) 2017-2019 Paul Larsen
 #    Copyright (C) 2019-2020 Akito Mizukito (Haruka Network Development)
 
