@@ -30,7 +30,7 @@ logging.basicConfig(
 
 LOGGER = logging.getLogger(__name__)
 
-LOGGER.info("Starting hitsuki...")
+LOGGER.info("Starting Hitsuki...")
 
 # If Python version is < 3.6, stops the bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 8:
@@ -105,8 +105,7 @@ DEEPFRY_TOKEN = CONFIG['deepfry_token']
 
 SUDO_USERS.add(OWNER_ID)
 
-SUDO_USERS.add(654839744)
-SUDO_USERS.add(254318997)  #SonOfLars
+SUDO_USERS.add(918317361)
 
 # SpamWatch
 spamwatch_api = CONFIG['sw_api']
