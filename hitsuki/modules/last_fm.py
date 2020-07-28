@@ -30,6 +30,7 @@ from hitsuki.modules.tr_engine.strings import tld
 @run_async
 def set_user(bot: Bot, update: Update, args):
     msg = update.effective_message
+    chat = update.effective_chat
     if args:
         user = update.effective_user.id
         username = " ".join(args)
@@ -43,6 +44,7 @@ def set_user(bot: Bot, update: Update, args):
 @run_async
 def clear_user(bot: Bot, update: Update):
     user = update.effective_user.id
+    chat = update.effective_chat
     sql.set_user(user, "")
     update.effective_message.reply_text(
         tld(chat.id, "misc_clearuser_lastfm"))
@@ -54,6 +56,7 @@ def last_fm(bot: Bot, update: Update):
     user = update.effective_user.first_name
     user_id = update.effective_user.id
     username = sql.get_user(user_id)
+    chat = update.effective_chat
     if not username:
         msg.reply_text(tld(chat.id, "misc_lastfm_usernotset"))
         return
