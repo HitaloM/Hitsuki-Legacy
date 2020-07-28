@@ -27,3 +27,4 @@ tldextract
 wikipedia
 zalgo-text
 covid
+bs4

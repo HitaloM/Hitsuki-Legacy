@@ -23,6 +23,7 @@ from hitsuki.events import register
 from hitsuki import LOGGER
 from hitsuki.modules.tr_engine.strings import tld
 
+from bs4 import BeautifulSoup
 from requests import get
 import rapidjson as json
 
@@ -253,7 +254,7 @@ async def twrp(event):
     url = get(f'https://dl.twrp.me/{device}/')
     if url.status_code == 404:
         reply = f"Couldn't find twrp downloads for {device}!\n"
-        await request.reply(reply)
+        await event.reply(reply)
         return
     page = BeautifulSoup(url.content, 'lxml')
     download = page.find('table').find('tr').find('a')
@@ -264,7 +265,7 @@ async def twrp(event):
     reply = f'**Latest TWRP for {device}:**\n' \
             f'[{dl_file}]({dl_link}) - __{size}__\n' \
             f'**Updated:** __{date}__\n'
-    await request.reply(reply)
+    await event.reply(reply)
 
 
 @register(pattern=r"^/magisk$")
