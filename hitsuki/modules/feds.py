@@ -23,7 +23,7 @@ import re
 from telegram.error import BadRequest, TelegramError, Unauthorized
 from telegram import ParseMode, Update, Bot, MessageEntity, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import run_async, CommandHandler, CallbackQueryHandler
-from telegram.utils.helpers import mention_html, mention_markdown
+from telegram.utils.helpers import mention_html
 
 from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS, MESSAGE_DUMP, LOGGER
 from hitsuki.modules.helper_funcs.misc import send_to_list

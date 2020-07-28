@@ -18,7 +18,7 @@
 from telegram import Update, Bot
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, Filters
+from telegram.ext import CommandHandler, run_async
 from telegram.utils.helpers import escape_markdown
 
 import hitsuki.modules.sql.rules_sql as sql
