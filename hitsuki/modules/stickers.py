@@ -68,7 +68,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
     msg = update.effective_message
     user = update.effective_user
     packnum = 0
-    packname = "c" + str(user.id) + "_by_" + bot.username
+    packname = "f" + str(user.id) + "_by_" + bot.username
     packname_found = 0
     max_stickers = 120
     while packname_found == 0:
@@ -76,7 +76,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
             stickerset = bot.get_sticker_set(packname)
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
-                packname = "c" + str(packnum) + "_" + str(
+                packname = "f" + str(packnum) + "_" + str(
                     user.id) + "_by_" + bot.username
             else:
                 packname_found = 1
@@ -228,7 +228,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
     else:
         packs = tld(chat.id, 'stickers_kang_no_reply')
         if packnum > 0:
-            firstpackname = "c" + str(user.id) + "_by_" + bot.username
+            firstpackname = "f" + str(user.id) + "_by_" + bot.username
             for i in range(0, packnum + 1):
                 if i == 0:
                     packs += f"[pack](t.me/addstickers/{firstpackname})\n"
@@ -251,7 +251,7 @@ def makepack_internal(msg, user, png_sticker, emoji, bot, packname, packnum,
             extra_version = " " + str(packnum)
         success = bot.create_new_sticker_set(user.id,
                                              packname,
-                                             f"{name}s hitsuki pack" +
+                                             f"{name}'s Hitsuki Pack" +
                                              extra_version,
                                              png_sticker=png_sticker,
                                              emojis=emoji)
