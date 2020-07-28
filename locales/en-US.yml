@@ -715,10 +715,11 @@ misc_help: |
   - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
   - /exec <language> <code> [/stdin <stdin>]: Execute a code in a specified language. Send an empty command to get the supported languages.
   - /wiki <keywords>: Get wikipedia articles just using this bot!\n
+  - /direct <sf link>: paste a sourceforge.net link to generate a direct download link.
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
   - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.
-  *Special | last.fm*
+  *Special | LAST.FM\n*
   - /setuser <username>: sets your last.fm username.
   - /clearuser: removes your last.fm username from the bot's database.
   - /lastfm: returns wh at you're scrobbling on last.fm

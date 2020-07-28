@@ -249,11 +249,11 @@ async def twrp(event):
     elif textx:
         device = textx.text.split(' ')[0]
     else:
-        await event.reply("`Usage: `/twrp <codename>`")
+        await event.reply("Usage: `/twrp <codename>`")
         return
     url = get(f'https://dl.twrp.me/{device}/')
     if url.status_code == 404:
-        reply = f"Couldn't find twrp downloads for {device}!\n"
+        reply = f"Couldn't find twrp downloads for `{device}`!\n"
         await event.reply(reply)
         return
     page = BeautifulSoup(url.content, 'lxml')
