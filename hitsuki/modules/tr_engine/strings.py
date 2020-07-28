@@ -91,7 +91,7 @@ def tld_list(chat_id, t):
         return strings['en-US'][t]
 
     LOGGER.warning(f"#NOSTR No string found for {t}.")
-    return f"No string found for {t}.\nReport it in @HitsukiAyaGroup."
+    return f"No string found for {t}.\nReport it to @Hitalo."
 
 
 # def tld_help(chat_id, t):

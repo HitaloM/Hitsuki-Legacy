@@ -704,10 +704,10 @@ misc_setuser_lastfm: Username set as {}!
 misc_lastfm_usernotset: You haven't set your username yet!
 misc_lastfm_userwrong: Hmm... something went wrong.\nPlease ensure that you've set the correct username!
 misc_lastfm_nonetracks: You don't seem to have scrobbled any songs...
-misc_lastfm_pn: 🎧  <code>{} - {}</code>
-misc_lastfm_pn_loved: 🎧  <code>{} - {}</code> (♥️, loved)
+misc_lastfm_pn: <code>{} - {}</code>
+misc_lastfm_pn_loved: <code>{} - {}</code> (loved)
 misc_lastfm_scr: \n(<code>{}</code> scrobbles so far)
-misc_lastfm_scrr: 🎧  <code>{} - {}</code>\n
+misc_lastfm_scrr: <code>{} - {}</code>\n
 misc_help: |
   - /id: get the current group id. If used by replying to a message, gets that user's id.
   - /info: get information about a user.
