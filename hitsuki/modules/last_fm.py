@@ -18,7 +18,7 @@
 #    Last.fm module ported from https://github.com/rsktg
 
 import requests
-from telegram import ParseMode
+from telegram import Bot, Update, Message, Chat, ParseMode
 from telegram.ext import run_async, CommandHandler
 
 import hitsuki.modules.sql.last_fm_sql as sql
@@ -28,9 +28,8 @@ from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.tr_engine.strings import tld
 
 @run_async
-def set_user(update, context):
+def set_user(bot: Bot, update: Update, args):
     msg = update.effective_message
-    args = context.args
     if args:
         user = update.effective_user.id
         username = " ".join(args)
@@ -42,7 +41,7 @@ def set_user(update, context):
 
 
 @run_async
-def clear_user(update, context):
+def clear_user(bot: Bot, update: Update):
     user = update.effective_user.id
     sql.set_user(user, "")
     update.effective_message.reply_text(
@@ -50,7 +49,7 @@ def clear_user(update, context):
 
 
 @run_async
-def last_fm(update, context):
+def last_fm(bot: Bot, update: Update):
     msg = update.effective_message
     user = update.effective_user.first_name
     user_id = update.effective_user.id
