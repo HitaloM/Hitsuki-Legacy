@@ -231,7 +231,7 @@ def slist(bot: Bot, update: Update):
 @run_async
 def chat_checker(bot: Bot, update: Update):
     if update.effective_message.chat.get_member(
-            bot.id).can_send_messages == False:
+            bot.id).can_send_messages is False:
         bot.leaveChat(update.effective_message.chat.id)
 
 
