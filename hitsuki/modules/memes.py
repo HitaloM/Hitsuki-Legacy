@@ -18,18 +18,16 @@
 import random, re, io, asyncio
 from PIL import Image
 from io import BytesIO
-from spongemock import spongemock
 from zalgo_text import zalgo
 from deeppyer import deepfry
 import os
 from pathlib import Path
-import glob
 
 from typing import List
 from telegram import Update, Bot, ParseMode, Message
 from telegram.ext import run_async
 
-from hitsuki import dispatcher, DEEPFRY_TOKEN, LOGGER
+from hitsuki import dispatcher, DEEPFRY_TOKEN
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from telegram.utils.helpers import escape_markdown
 from hitsuki.modules.helper_funcs.extraction import extract_user

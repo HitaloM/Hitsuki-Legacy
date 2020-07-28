@@ -18,7 +18,7 @@
 #    Last.fm module ported from https://github.com/rsktg
 
 import requests
-from telegram import Bot, Update, Message, Chat, ParseMode
+from telegram import Bot, Update, ParseMode
 from telegram.ext import run_async, CommandHandler
 
 import hitsuki.modules.sql.last_fm_sql as sql
