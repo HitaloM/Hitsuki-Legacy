@@ -17,6 +17,7 @@
 
 import urllib
 
+from bs4 import BeautifulSoup
 from hurry.filesize import size as sizee
 from telethon import custom
 from hitsuki.events import register
