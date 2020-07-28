@@ -698,6 +698,16 @@ misc_covid: |
   *Deaths*: {} _(+{})_
   *Recovered*: {}
   *Total tests*: {}
+misc_setuser_lastfm_error: That's not how this works...\nRun /setuser followed by your username!
+misc_clearuser_lastfm: Last.fm username successfully cleared from my database!
+misc_setuser_lastfm: Username set as {}!
+misc_lastfm_usernotset: You haven't set your username yet!
+misc_lastfm_userwrong: Hmm... something went wrong.\nPlease ensure that you've set the correct username!
+misc_lastfm_nonetracks: You don't seem to have scrobbled any songs...
+misc_lastfm_pn: 🎧  <code>{} - {}</code>
+misc_lastfm_pn_loved: 🎧  <code>{} - {}</code> (♥️, loved)
+misc_lastfm_scr: \n(<code>{}</code> scrobbles so far)
+misc_lastfm_scrr: 🎧  <code>{} - {}</code>\n
 misc_help: |
   - /id: get the current group id. If used by replying to a message, gets that user's id.
   - /info: get information about a user.
@@ -717,6 +727,10 @@ misc_help: |
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
   - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.
+  *Special | last.fm*
+  - /setuser <username>: sets your last.fm username.
+  - /clearuser: removes your last.fm username from the bot's database.
+  - /lastfm: returns wh at you're scrobbling on last.fm
 #Purge
 modname_msg_deleting: Purges
 purge_msg_cant_del_too_old: Cannot delete all messages. The messages may be too old, I might not have delete rights, or this might not be a supergroup.

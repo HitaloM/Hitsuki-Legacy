@@ -714,6 +714,10 @@ misc_help: |
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
   - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.
+  *Special | last.fm*
+  - /setuser <username>: sets your last.fm username.
+  - /clearuser: removes your last.fm username from the bot's database.
+  - /lastfm: returns wh at you're scrobbling on last.fm
 #Purge
 modname_msg_deleting: Purges
 purge_msg_cant_del_too_old: Cannot delete all messages. The messages may be too old, I might not have delete rights, or this might not be a supergroup.
