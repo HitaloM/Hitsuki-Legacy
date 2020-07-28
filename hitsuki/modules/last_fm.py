@@ -81,9 +81,9 @@ def last_fm(bot: Bot, update: Update):
         loved = int(first_track.get("loved"))
         rep = f"{user} is currently listening to:\n"
         if not loved:
-            rep += tld(chat.id, "misc_lastfm_pn ").format(artist, song)
+            rep += tld(chat.id, "misc_lastfm_pn").format(artist, song)
         else:
-            rep += tld(chat.id, "misc_lastfm_pn_loved ").format(artist, song)
+            rep += tld(chat.id, "misc_lastfm_pn_loved").format(artist, song)
         if image:
             rep += f"<a href='{image}'>\u200c</a>"
     else:

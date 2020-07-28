@@ -66,7 +66,7 @@ def tld(chat_id, t, show_none=True):
             'unicode-escape')
         return result
 
-    err = f"No string found for {t}.\nReport it in @HitsukiAyaGroup."
+    err = f"No string found for {t}.\nReport it to @Hitalo."
     LOGGER.warning(err)
     return err
 
