@@ -806,7 +806,7 @@ def is_user_fed_owner(fed_id, user_id):
     if getsql is False:
         return False
     getfedowner = eval(getsql['fusers'])
-    if getfedowner is None or getfedowner == False:
+    if getfedowner is None or getfedowner is False:
         return False
     getfedowner = getfedowner['owner']
     if str(user_id) == getfedowner or user_id == 654839744:
