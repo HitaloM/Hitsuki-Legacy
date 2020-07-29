@@ -714,8 +714,8 @@ misc_help: |
   - /ud: Type the word or expression you want to search. For example /ud Gay
   - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
   - /exec <language> <code> [/stdin <stdin>]: Execute a code in a specified language. Send an empty command to get the supported languages.
-  - /wiki <keywords>: Get wikipedia articles just using this bot!\n
-  - /direct <sf link>: paste a sourceforge.net link to generate a direct download link.
+  - /wiki <keywords>: Get wikipedia articles just using this bot!
+  - /direct <sf link>: paste a sourceforge.net link to generate a direct download link.\n
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
   - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.\n
