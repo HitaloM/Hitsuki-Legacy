@@ -88,8 +88,6 @@ def useragent():
     return user_agent.text
 
 
-__help__ = True
-
 DIRECT_HANDLER = CommandHandler("direct", direct_link_generator)
 
 dispatcher.add_handler(DIRECT_HANDLER)
