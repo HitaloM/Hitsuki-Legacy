@@ -98,10 +98,12 @@ android_help: |
   - /los <device>: Get the latest LineageOS ROM for a device
   - /bootleggers <device>: Get the latest Bootleggers ROM for a device\n
   *GSI*
-  - /phh: Get the latest Phh AOSP GSI!
+  - /phh: Get the latest PHH AOSP GSIs!\n
   *Misc*
-  - /magisk: Get latest Magisk releases
-  - /twrp <codename>: Gets latest twrp for the android device using the codename
+  - /magisk: Get latest Magisk releases.
+  - /twrp <codename>: Gets latest twrp for the android device using the codename.
+  - /ofox: Gets the list of officially supported devices by the Orange Fox Recovery Project.
+  - /ofox <device>: Gets the download link and basic OFRP information to the specified device.
 #Antiflood
 modname_antiflood: Antiflood
 flood_mute: I would like to leave the flooding to natural disasters. But you, you were just a disappointment. *Muted*!
