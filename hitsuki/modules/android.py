@@ -40,7 +40,7 @@ LOGGER.info("android: Original Android Modules by @RealAkito on Telegram")
 
 @register(pattern=r"^/los(?: |$)(\S*)")
 async def los(event):
-    if event.from_id == None:
+    if event.from_id is None:
         return
 
     chat_id = event.chat_id
@@ -80,7 +80,7 @@ async def los(event):
 
 @register(pattern=r"^/evo(?: |$)(\S*)")
 async def evo(event):
-    if event.from_id == None:
+    if event.from_id is None:
         return
 
     chat_id = event.chat_id
@@ -150,7 +150,7 @@ async def evo(event):
 
 @register(pattern=r"^/phh$")
 async def phh(event):
-    if event.from_id == None:
+    if event.from_id is None:
         return
 
     chat_id = event.chat_id
@@ -172,7 +172,7 @@ async def phh(event):
 
 @register(pattern=r"^/bootleggers(?: |$)(\S*)")
 async def bootleggers(event):
-    if event.from_id == None:
+    if event.from_id is None:
         return
 
     chat_id = event.chat_id
@@ -270,7 +270,7 @@ async def twrp(event):
 
 @register(pattern=r"^/magisk$")
 async def magisk(event):
-    if event.from_id == None:
+    if event.from_id is None:
         return
 
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'

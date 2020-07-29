@@ -21,7 +21,7 @@ from hitsuki.modules.tr_engine.strings import tld
 
 @register(pattern="^/purge")
 async def purge(event):
-    if event.from_id == None:
+    if event.from_id is None:
         return
 
     chat = event.chat_id
@@ -57,7 +57,7 @@ async def purge(event):
 
 @register(pattern="^/del$")
 async def delet(event):
-    if event.from_id == None:
+    if event.from_id is None:
         return
 
     chat = event.chat_id

@@ -270,7 +270,7 @@ def check_and_ban(update, user_id, should_message=True):
     chat = update.effective_chat
     message = update.effective_message
     try:
-        if sw != None:
+        if sw is not None:
             sw_ban = sw.get_ban(user_id)
             if sw_ban:
                 spamwatch_reason = sw_ban.reason

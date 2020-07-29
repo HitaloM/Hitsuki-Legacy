@@ -145,7 +145,7 @@ def new_member(bot: Bot, update: Update):
             if is_user_gbanned(new_mem.id):
                 return
 
-            if sw != None:
+            if sw is not None:
                 sw_ban = sw.get_ban(new_mem.id)
                 if sw_ban:
                     return
@@ -391,7 +391,7 @@ def left_member(bot: Bot, update: Update):
             if is_user_gbanned(left_mem.id):
                 return
 
-            if sw != None:
+            if sw is not None:
                 sw_ban = sw.get_ban(left_mem.id)
                 if sw_ban:
                     return
@@ -710,7 +710,7 @@ def goodbye(bot: Bot, update: Update, args: List[str]):
         noformat = args and args[0] == "noformat"
         pref, goodbye_m, cust_content, goodbye_type = sql.get_gdbye_pref(
             chat.id)
-        if cust_content == None:
+        if cust_content is None:
             cust_content = goodbye_m
 
         update.effective_message.reply_text(tld(
