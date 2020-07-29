@@ -1153,7 +1153,6 @@ fox_release_version: "**🔺 Version:** `{}`\n"
 fox_release_maintainer: "**👨‍🔬 Maintainer:** {name}, {status}\n"
 fox_release_maintained_1: Maintained
 fox_release_maintained_3: Not maintained
-fox_release_fnsz: "📄 `{}:` {}\n"
 fox_release_date: "**📅 Release date:** {}\n"
 fox_release_md5: "**✅ File MD5:** `{}`\n"
 ### Helper functions
