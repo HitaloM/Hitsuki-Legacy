@@ -1,17 +1,17 @@
 ---
 #Main
 send-help: |
-  ¡Oye! Mi nombre es *{}*. Soy un bot de gestión de grupos, estoy aquí para ayudar a moverte y mantener el orden en tus grupos!
-  Tengo muchas características útiles, como el sistema de advertencia, un sistema de mantenimiento de notas, e incluso respuestas predeterminadas a ciertas palabras clave.\n
-  *Comandos útiles:*
-  - /start: ¡Empieza ya! Probablemente ya hayas usado esto.
-  - /help: Envía este mensaje; ¡Te voy a contar más sobre mí!
-  - /help <module name>: PM información sobre el módulo específico.
-  - /lang: Cambiar el idioma del bot{}
-cmd_multitrigger: "\n\nTodos los comandos pueden ser usados con lo siguiente: `/` `!`"
-here_is_help: Aquí hay alguna ayuda para el módulo *{}*:\n\n{}
-help_not_found: '¡La cadena de ayuda para <code>{}</code> no se ha encontrado!'
-help_pm_only: Contacte conmigo en PM para obtener la lista de posibles comandos.
+   Ei! Meu nome é *{}*. Eu sou um bot de gerenciamento de grupos, aqui para ajudá-lo a se locomover e manter a ordem em seus grupos!
+   Eu tenho muitos recursos úteis, como sistema de aviso, um sistema de anotações e até respostas predeterminadas para determinadas palavras-chave.\n
+   *Comandos úteis*
+   - /start: Me inicia! Você provavelmente já usou isso.
+   - /help: envia esta mensagem; Vou lhe contar mais sobre mim!
+   - /help <nome do módulo>: informações de PM sobre o módulo específico.
+   - /lang: altera o idioma do bot{}
+cmd_multitrigger: "\n\nTodos os comandos podem ser usados ​​com o seguinte: `/` `!`"
+here_is_help: Aqui está a ajuda para o módulo *{}*:\n\n{}
+help_not_found: 'Linha de ajuda para <code>{}</code> não encontrada!'
+help_pm_only: Entre em contato comigo no PV para obter a lista de possíveis comandos.
 btn_help: '❔ Ajuda'
 btn_go_back: Voltar
 main_start_group: Olá! Estou vivo :3
@@ -28,82 +28,85 @@ main_start_btn_support: '📦 Código fonte'
 main_start_btn_ctrlpnl: '🛠 Painel de controle'
 main_start_btn_lang: '🇧🇷 Idioma'
 #Common
-common_err_no_admin: '¡No eres un administrador!'
-common_err_no_user: Parece que usted no se refiere a un usuario.
-common_err_invalid_chatid: '¡ID de chat inválido!'
-common_yes: "Sí"
-common_no: "No"
-common_cmd_group_only: Este comando sólo se puede usar en un grupo, no en PM.
-common_cmd_pm_only: Este comando sólo se puede usar en un PM, no en un grupo.
-common_group_creator_only: '¡Solo el creador de grupo puede usar este comando!'
+common_err_no_admin: 'Você não é um administrador!'
+common_err_no_user: Parece que você não está se referindo a um usuário.
+common_err_invalid_chatid: 'ID de bate-papo inválido!'
+common_yes: "Sim"
+common_no: "Não"
+common_cmd_group_only: Este comando pode ser usado apenas em um grupo, não no PV.
+common_cmd_pm_only: Este comando pode ser usado apenas no PV, não em um grupo.
+common_group_creator_only: 'Somente o criador do grupo pode usar este comando!'
 common_this_chat: Este chat
-common_invalid_arg: '¡Argumento no válido! Por favor escribe `on`/`yes` o `off`/`no`!'
+common_invalid_arg: 'Argumento inválido! Por favor use `on`/`yes` ou `off`/`no`!'
 #Admins
 modname_admin: Admin
-admin_err_no_perm: '¡No puedo promocionar/degradar gente aquí! Asegúrate de que soy un administrador y puedo nombrar nuevos administradores.'
-admin_err_user_admin: '¿Cómo puedo promover a alguien que ya es administrador?'
-admin_err_self_promote: '¡No puedo promocionarme a mí mismo! Obtén un administrador para hacerlo por mí.'
-admin_promote_success: Admin {} ha promovido con éxito {} en <b>{}</b>!
-admin_err_demote_creator: Esta persona es el CREATOR del chat, ¿cómo los degradaría?
-admin_err_demote_noadmin: '¡No se puede degradar a los que no fueron promovidos!'
-admin_err_self_demote: '¡No puedo degradarme a mí mismo!'
-admin_demote_success: Admin {} ha degradado correctamente a {} en <b>{}</b>!
-admin_err_cant_demote: No se pudo degradar. Podría no ser administrador, o el estado de administrador fue designado por otro usuario, ¡así que no puedo actuar sobre ellos!
-admin_list: "Administradores en *{}*:"
-admin_err_no_perm_invitelink: No tengo acceso al enlace de invitación, ¡intenta cambiar mis permisos!
-admin_err_chat_no_invitelink: Lo siento, pero sólo puedo dar enlaces de invitación para supergrupos y canales!
-admin_disable_reaction: Deshabilitado la respuesta a los comandos de administración activados por el usuario.
-admin_enable_reaction: Respuesta activada para comandos de administración activada por el usuario.
-admin_err_wrong_arg: Por favor ingrese Verdadero o Falso!
-admin_reaction_status: '¡Respuesta para comandos de administración activados por el usuario es actualmente *{}*!'
+admin_err_no_perm: 'Não posso promover/rebaixar pessoas aqui! Verifique se eu sou um administrador e posso nomear novos administradores.'
+admin_err_user_admin: 'Como posso promover alguém que já é administrador?'
+admin_err_self_promote: 'Eu não posso me promover! Peça a um administrador que faça isso por mim.'
+admin_promote_success: O administrador {} promoveu {} com sucesso em <b>{}</b>!
+admin_err_demote_creator: Essa pessoa é o CRIADOR do grupo, como você pode rebaixá-la?
+admin_err_demote_noadmin: 'Você não pode rebaixar aqueles que não foram promovidos!'
+admin_err_self_demote: 'Eu não posso me rebaixar!'
+admin_demote_success: O administrador {} rebaixou {} com sucesso em <b>{}</b>!
+admin_err_cant_demote: Não foi possível fazer o rebaixamento. Pode não ser um administrador ou o status de administrador foi designado por outro usuário, portanto, não posso agir sobre ele!
+admin_list: "Administradores em *{}*:"
+admin_err_no_perm_invitelink: Não tenho acesso ao link do convite, tente alterar minhas permissões!
+admin_err_chat_no_invitelink: Desculpe, mas só posso dar links de convite para supergrupos e canais!
+admin_disable_reaction: Resposta desativada para comandos de administração usados por membros.
+admin_enable_reaction: Resposta ativada para comandos de administração usados por membros.
+admin_err_wrong_arg: Digite True ou False!
+admin_reaction_status: 'A resposta para comandos de administração usados por membros é atualmente *{}*!'
 admin_help: |
-  /adminlist | /admins: Muestra los administradores en el chat\n
-  *Solo Administrador:*
-  - /pin: Silenciosamente ancla el mensaje respondido. Añadir 'loud', 'notificar' o 'violenta' para enviar una notificación a los usuarios.
-  - /unpin: Desanota el mensaje actualmente anclado
-  - /invitelink: Obtiene el enlace de invitación del grupo
-  - /promote: Promociona que un usuario responda al usuario o use su nombre de usuario.
-  - /demote: Destruye un usuario. Responde al usuario o use su nombre de usuario.
+  /adminlist | /admins: Mostrar os administradores do grupo\n
+  *Apenas Administrador:*
+  - /pin: Fixa silenciosamente a mensagem respondida. Adicione 'loud', 'notify' ou 'violent' para enviar uma notificação aos usuários.
+  - /unpin: Desafixar a mensagem atualmente fixada
+  - /invitelink: Obter link de convite do grupo
+  - /promote: Promova um usuário ao responder esse usuário ou use seu nome de usuário.
+  - /demote: Rebaixe um usuário ao responder esse usuário ou use seu nome de usuário.
 #AFK
 modname_afk: AFK
-user_now_afk: "¡{} está ahora AFK!"
-user_no_longer_afk: "¡{} ya no está AFK!"
-status_afk_noreason: "¡{} está AFK!"
-status_afk_reason: "¡{} está AFK! Dice que se debe a:\n{}"
+user_now_afk: "{} está agora AFK!"
+user_no_longer_afk: "{} não está mais AFK!"
+status_afk_noreason: "{} está AFK!"
+status_afk_reason: "{} está AFK! Motivo:\n{}"
 afk_help: |
-  - /afk <reason>: Marque usted mismo como AFK.
-  - brb <reason>: Igual que el comando afk, pero no un comando.\n
-  Cuando se marque como AFK, cualquier mención será respondida con un mensaje indicando que no está disponible!
+  - /afk <reason>: Marque a si mesmo como AFK.
+  - brb <reason>: O mesmo que o comando afk, mas não um comando.\n
+  Quando marcado como AFK, qualquer menção será respondida com uma mensagem informando que você não está disponível!
 #Android
 modname_android: Android
-download: "**Descargar:** [{}]({})\n"
-build_size: "**Tamaño de confección:**`{}`"
-build_date: "**Fecha de confección:**`{}`"
-version: "**Versión:**`{}`"
-android_version: "**Versión de Android:**`{}`"
+download: "**Download:** [{}]({})\n"
+build_size: "**Tamanho do arquivo:**`{}`"
+build_date: "**Data da compilação:**`{}`"
+version: "**Versão:**`{}`"
+android_version: "**Versão do Android:**`{}`"
 rom_type: "**Tipo de ROM:**`{}`"
-maintainer: "**Encargado de mantenimiento:**`{}`"
-xda_thread: "**Hilo de XDA:** [HERE]({})"
-changelog: "**Cambio de dispositivo:**`{}`"
+maintainer: "**Mantedor:**`{}`"
+xda_thread: "**Tópico no XDA:** [AQUI]({})"
+changelog: "**Changelog:**`{}`"
 weekly: "**Semanalmente**"
-phh_releases: "**Phh's última versión GSI(s)**\n"
-err_not_found: No se pudo encontrar ningún resultado que coincida con su consulta.
-err_api: No se pudo llegar a la API.
-err_example_device: '¿Por qué está intentando obtener el dispositivo de ejemplo?'
-err_json: Dile al mantenedor de rom que arregle su OTA json. Estoy seguro de que esto no funcionará con OTA y no funcionará con este bot también :P
-btn_dl: Haga clic aquí para descargar
-cmd_example: '¡Por favor escribe tu consola **nombre en código**!\nPor ejemplo, `/{} tissot`'
+phh_releases: "**Últimos lançamentos de GSI do PHH:**\n"
+err_not_found: Não foi possível encontrar nenhum resultado correspondente à sua consulta.
+err_api: Não foi possível acessar a API.
+err_example_device: 'Por que você está tentando obter o dispositivo de exemplo?'
+err_json: Diga ao mantenedor da ROM para consertar seu json OTA. Estou certo de que isso não funcionará com o OTA e também não funcionará com este bot :P
+btn_dl: Clique aqui para baixar
+cmd_example: 'Digite o **codinome** do dispositivo!\nPor exemplo, `/{} tissot`'
 android_help: |
-  *ROM Específica de Dispositivo para un dispositivo*
-  - /evo <device>: Adquirir la última Evolución X ROM para un dispositivo
-  - /los <device>: Adquirir la última LineageOS ROM para un dispositivo
-  - /<device>: Adquirir el último Bootleggers ROM para un dispositivo\n
+  *ROMs*
+  - /evo <device>: Obtenha a versão mais recente da ROM Evolution X para um dispositivo
+  - /los <device>: Receba a versão mais recente da ROM LineageOS para um dispositivo
+  - /bootleggers <device>: Receba a versão mais recente da ROM Bootleggers para um dispositivo\n
   *GSI*
-  - /phh: Adquirir la última Phh AOSP GSI!
-  *Misc*
-  - /magisk: Adquirir la última versión de Magisk
+  - /phh: Receba as últimas GSIs AOSP do PHH!\n
+  *Outros*
+  - /magisk: Receba as últimas versões do Magisk
+  - /twrp <codinome>: Obtém o twrp mais recente para um dispositivo Android através do codinome.
+  - /ofox: Obtém a lista de dispositivos oficialmente suportados pelo Orange Fox Recovery Project.
+  - /ofox <codinome>: Obtém o link de download e as informações básicas do OFRP para o dispositivo especificado.
 #Antiflood
-modname_antiflood: Antimlounda
+modname_antiflood: Antiflood
 flood_mute: Me gustaría dejar la inundación en manos de desastres naturales, pero usted no fue más que una decepción. *¡Mucho*!
 flood_err_no_perm: '¡No puedo silenciar a la gente, dame permisos primero! Hasta entonces, desactivaré la antiflood.'
 flood_logger_success: "<b>{}:</b>\n#MUTED\n<b>Usuario:</b> {}\nInundó el grupo."
@@ -123,7 +126,7 @@ antiflood_help: |
   - /flood: obtiene la configuración actual de antiflood.
   - /setflood <number/off>: establece el número de mensajes en los que un usuario debe actuar.
 #Antispam
-modname_antispam: Antispam
+modname_antispam: AntiSpam
 antispam_err_usr_sudo: '¡Espio con mis pequeños ojos... una guerra de usuario sudo! ¿Por qué se están encendiendo unos a otros?'
 antispam_err_usr_support: '¡OOOOH, alguien está intentando banear a un usuario de soporte! *agarra popcorn*'
 antispam_err_usr_bot: '-_- Tan divertido, déjame gban a mí mismo, ¿por qué no lo hago? Buen intento.'
@@ -216,7 +219,7 @@ bans_help: |
   Un ejemplo de silenciar temporalmente a alguien:
   /tmute @username 2h; esto silencia a un usuario durante 2 horas.
 #Blacklist
-modname_blacklist: Listas negras
+modname_blacklist: Lista negra
 blacklist_active_list: Filtros de lista negra activos en {}:\n
 blacklist_no_list: '¡No hay filtros de lista negra en <b>{}</b>!'
 blacklist_add: Añadido <code>{}</code> a la lista negra en <b>{}</b>!
@@ -243,7 +246,7 @@ blacklist_help: |
   /addurl bit.ly
   Esto eliminaría cualquier mensaje que contenga la url "bit.ly".
 #Connections
-modname_connection: Conexiones
+modname_connection: Conexões
 connection_enable: Conexiones habilitadas a este chat para usuarios.
 connection_disable: Conexiones deshabilitadas a este chat para usuarios.
 connection_err_wrong_arg: Por favor ingrese en/yes/off/no como argumento!
@@ -302,7 +305,7 @@ cust_filters_help: |
   `/filter word`, mientras respondes a una etiqueta o a los datos que quieras. Ahora, cada vez que alguien mencione "palabra", esa etiqueta será enviada como respuesta.
   Ahora, cualquiera que diga "Hola" será respondido con "¡Hola allí! ¿Cómo estás?".
 #Disable
-modname_disable: Deshabilitando
+modname_disable: Desativar
 disable_success: Deshabilitado el uso de `{}`
 disable_err_undisableable: Ese comando no puede ser desactivado
 disable_err_no_cmd: Pase un comando como argumento.
@@ -321,7 +324,7 @@ disable_help: |
   - /enable <cmd name>: Activar un comando
   - /disable <cmd name>: Desactivar un comando
 #Feds
-modname_feds: Federaciones
+modname_feds: Federações
 feds_create_fail: '¡Creación de la Federación fallida!'
 feds_create_success: "*¡Has creado con éxito una nueva federación!\nNombre: `{}`\nID: `{}`\n\nEjecuta el comando de abajo en grupos para añadirlos a la federación:\n`/joinfed {}`"
 feds_create_success_logger: "La Federación <b>{}</b> ha sido creada con ID: <pre>{}</pre>"
@@ -400,7 +403,7 @@ language_user_language: "Lenguage de usuario: `{}`"
 language_chat_language: "\nIdioma de chat conectado: `{}`"
 language_sel_user_lang: "*\n\nSeleccione un nuevo idioma de usuario:*"
 #Locks
-modname_locks: Bloqueos
+modname_locks: Bloqueios
 locks_list_title: "Bloqueos: "
 locks_lock_success: '¡Mensajes `{}` bloqueados para todos los no administradores!'
 locks_unlock_success: '¡Mensaje `{}` desbloqueado para todos!'
@@ -442,7 +445,7 @@ locks_help: |
   por ejemplo: bloquea stickers con:
   /lock sticker
 #Log channel
-modname_log_channel: Canal Log
+modname_log_channel: Canal de logs
 log_channel_link: \n<b>Enlace:</b> <a href=\"http://telegram.me/{}/{}\">haga clic aquí</a>
 log_channel_deleted: Este canal de registro ha sido eliminado - desajuste.
 log_channel_err_format: \n\nEl formato ha sido desactivado debido a un error inesperado.
@@ -636,22 +639,17 @@ memes_hit_list:
   - "huele a"
   - "basureros"
 memes_help: |
-  ¡Algunos comandos de meme, encuentra todo por ti mismo!
+  Some meme commands, find it all out yourself!
 
   - /owo: OWO de text
   - /stretch: STRETCH de text
   - /vapor: owo vapor dis
-  - /hitler: Cita un mensaje y escribe este comando para hacer una leyenda de hitler
-  - /mock: Hace lo mismo que /hitler pero espongemock
-  - /kim: Hace lo mismo que /hitler pero con Kim Jong Un en su lugar (O no plox dont bomb mi casa)
-  - /pidor: 4pda memes
-  - /shout: Escribe cualquier cosa que u quiera que sea
-  - /zalgofy: responde a un mensaje para salirlo!
-  - /runs: responde una cadena aleatoria de un array de respuestas.
-  - /insults: responde una cadena aleatoria de una matriz de respuestas.
-  - /slap: raspar a un usuario, o ser rastreado si no es una respuesta.
+  - /shout: Write anything that u want it to should
+  - /runs: reply a random string from an array of replies.
+  - /insults: reply a random string from an array of replies.
+  - /slap: slap a user, or get slapped if not a reply.
 #Misc
-modname_misc: Misc
+modname_misc: Outros
 misc_get_id_1: El remitente original, {}, tiene un ID de `{}`.\nEl forwarder, {}, tiene un ID de `{}`.
 misc_get_id_2: "La id de {} es `{}`."
 misc_id_1: Tu id es `{}`.
@@ -703,26 +701,42 @@ misc_covid: |
   *Recuperados*: {}
   *Total de Pruebas*: {}
 misc_help: |
-  - /id: adquiere la id actual del grupo. Si es usada para responder a un mensaje, adquiere el id de ese usuario.
-  - /info: adquiere información sobre un usuario.
-  - /gdpr: elimina tu información de la base de datos del bot. Solamente chats privados.
-  - /stickerid: respóndeme con un sticker para decirte la ID de su archivo.
-  - /getsticker: respóndeme con un sticker para actualizar su archivo raw PNG.
-  - /markdownhelp: sumario rápido sobre como el markdown funciona en telegram - puede ser llamado solamente en chats privados.
-  - /git: Regresa información sobre un usuario de GitHug u organización.
-  - /repo: Regresa la lista de depósito del usuario de GitHub u organización (Limitado a 40) 
-  - /paste: Crea una copia o una url recortada usando [dogbin](https://del.dog) 
-  - /getpaste: Adquiere el contenido de un pegado o la url recortada desde [dogbin](https://del.dog)
-  - /pastestats: Adquiere las estadísticas del pegado o la url recortada desde [dogbin](https://del.dog)
-  - /ud: Escribe la palabra o expresión que quieras buscar. Por ejemplo/uf Gay
-  - /removebotkeyboard: Tiene un teclado sucio atascado en su grupo?
-  - /exec <language> <code> [/stdin <stdin>]: Ejecute un código en un lenguaje en específico. Envíe un comando en blanco para adquirir los lenguajes soportados.
-  - /wiki <keywords>: Adquiere artículos de wikipedia solamente utilizando este bot!\n
-  *Especial | COVID-19*
-  - /covid: Desarrollado por Worldometers, Entrega las estadísticas sobre todas las estadísticas de COVID-19.
-  - /covid <country name>: Desarrollado por Worldometers, Entrega estadísticas sobre COVID-19.
+  - /id: get the current group id. If used by replying to a message, gets that user's id.
+  - /info: get information about a user.
+  - /gdpr: deletes your information from the bot's database. Private chats only.
+  - /stickerid: reply to a sticker to me to tell you its file ID.
+  - /getsticker: reply to a sticker to me to upload its raw PNG file.
+  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
+  - /git: Returns info about a GitHub user or organization.
+  - /repo: Return the GitHub user or organization repository list (Limited at 40)
+  - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
+  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
+  - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
+  - /ud: Type the word or expression you want to search. For example /ud Gay
+  - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
+  - /exec <language> <code> [/stdin <stdin>]: Execute a code in a specified language. Send an empty command to get the supported languages.
+  - /wiki <keywords>: Get wikipedia articles just using this bot!
+  - /direct <sf link>: paste a sourceforge.net link to generate a direct download link.\n
+  *Special | COVID-19*
+  - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
+  - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.\n
+  *Special | LAST.FM*
+  - /setuser <username>: sets your last.fm username.
+  - /clearuser: removes your last.fm username from the bot's database.
+  - /lastfm: returns wh at you're scrobbling on last.fm
+#lastfm
+misc_setuser_lastfm_error: That's not how this works...\nRun /setuser followed by your username!
+misc_clearuser_lastfm: Last.fm username successfully cleared from my database!
+misc_setuser_lastfm: Username set as {}!
+misc_lastfm_usernotset: You haven't set your username yet!
+misc_lastfm_userwrong: Hmm... something went wrong.\nPlease ensure that you've set the correct username!
+misc_lastfm_nonetracks: You don't seem to have scrobbled any songs...
+misc_lastfm_pn: <code>{} - {}</code>
+misc_lastfm_pn_loved: <code>{} - {}</code> (loved)
+misc_lastfm_scr: \n(<code>{}</code> scrobbles so far)
+misc_lastfm_scrr: <code>{} - {}</code>\n
 #Purge
-modname_msg_deleting: Purgos
+modname_msg_deleting: Purgar
 purge_msg_cant_del_too_old: No se pueden eliminar todos los mensajes. Los mensajes pueden ser demasiado antiguos, podría no tener derechos de eliminación, o esto podría no ser un supergrupo.
 purge_msg_success: Purgación completada.
 purge_invalid: Responder a un mensaje para seleccionar de dónde empezar la purga.
@@ -813,7 +827,7 @@ notes_help: |
 
   Nota: Los nombres de notas son insensibles en mayúsculas y minúsculas, y se convierten automáticamente a minúsculas antes de ser guardadas.
 #Reporting
-modname_reporting: Informando
+modname_reporting: Denúncias
 reports_pm_on: "¡Informes activados! Serás notificado cada vez que alguien reporte algo."
 reports_pm_off: "¡Desactivada la información! No obtendrás ningún informe."
 reports_chat_on: "¡Informes activados! Los administradores que han activado los informes serán notificados cuando se llame /report o @admin."
@@ -833,7 +847,7 @@ reporting_help: |
     - Si se hace en mp, cambia tu estado.
     - Si se hace en chat, cambia el estado de ese chat.
 #Rules
-modname_rules: Reglas
+modname_rules: Regras
 rules_shortcut_not_setup_properly: "¡El acceso directo a las reglas de este chat no se ha configurado correctamente! Pida a los administradores que arreglaran esto."
 rules_display: "Las reglas para *{}* son:\n\n{}"
 rules_not_found: "Los administradores de grupo aún no han establecido ninguna regla para este chat. ¡Esto probablemente no significa que sea ilegal...!"
@@ -847,7 +861,7 @@ rules_help: |
    - /clearrules: limpia las reglas para este chat.
    - /setrules <your rules here>: establece las reglas para este chat.
 #Translator
-modname_translator: Traductor
+modname_translator: Tradutor
 translator_translated: |
   Fuente (`{}`):\n{}
   Destino (`{}`):\n{}
@@ -891,7 +905,7 @@ translator_animal_lang:
   - '¡Estoy a punto de pasarme!'
   - yoU TinK.
 #URL Blacklist
-modname_urlblacklist: Listas negras del dominio
+modname_urlblacklist: Listas negra de domínios
 url_blacklist_success: "Añadido el dominio <code>{}</code> a la lista negra!"
 url_blacklist_invalid: "Estás intentando hacer una lista negra de una url no válida"
 url_blacklist_success_2: Se añadieron <code>{}</code> dominios a la lista negra.
@@ -905,7 +919,7 @@ url_blacklist_remove_invalid_3: "Dígame qué dominios desea eliminar de la list
 url_blacklist_current: "Actuales <b>blacklisted</b> dominios:"
 url_blacklist_no_existed: "¡No hay dominios en la lista negra aquí!"
 #Greetings
-modname_welcome: Saludos
+modname_welcome: Boas vindas
 welcome_added_to_grp: '¡Gracias por añadirme a tu grupo! ¡No te olvides de revisar nuestro canal de noticias!'
 welcome_mute_btn_unmuted: '¡Dessilenciado! ¡Ahora puedes escribir!'
 welcome_mute_btn_old_user: '¡No eres un usuario nuevo!'
@@ -998,7 +1012,7 @@ welcome_help: |
 users_seen: "Los he visto en <code>{}</code> chats en total."
 users_seen_is_bot: "Los he visto en... Wow. ¿Están acechándome? Están en todos los mismos lugares que so... oh. Soy yo."
 #Userinfo
-modname_userinfo: Bios/Abouts
+modname_userinfo: Bio/Sobre
 userinfo_about_not_set_they: "{} aún no ha establecido un mensaje informativo sobre sí mismo!"
 userinfo_about_not_set_you: '¡Aún no has configurado un mensaje informativo sobre ti mismo!'
 userinfo_about_set_success: '¡Actualizada tu información!'
@@ -1023,7 +1037,7 @@ userinfo_help: |
   - /setme <text>: establecerá su información
   - /me: obtendrá la información de otro usuario
 #Stickers
-modname_stickers: Pegatinas
+modname_stickers: Stickers
 stickers_stickerid: ID del Sticker:\n```{}```
 stickers_stickerid_no_reply: Por favor responda a una etiqueta para obtener su ID.
 stickers_getsticker_no_reply: Por favor, responda a una etiqueta para que suba su PNG.
@@ -1086,7 +1100,7 @@ warns_strength_off_log_channel: |
   <b>Administrador:</b> {}\n
   Ha desactivado fuertes advertencias. Los usuarios solo serán expulsados.
 warns_btn_remove_warn: Quitar advertencia
-warns_btn_rules: Reglas
+warns_btn_rules: Regras
 warns_user_warned: "{} <b>ha sido advertido!</b>\nTienen {}/{} advertencias."
 warns_latest_warn_reason: \nLa última advertencia fue porque:\n<code>{}</code>
 warns_remove_admin_only: '¡No está autorizado a eliminar esta advertencia! Sólo los administradores pueden eliminar advertencias.'
