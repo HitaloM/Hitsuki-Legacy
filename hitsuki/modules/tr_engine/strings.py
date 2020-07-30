@@ -21,7 +21,7 @@ from codecs import encode, decode
 from hitsuki import LOGGER
 from hitsuki.modules.sql.locales_sql import prev_locale
 
-LANGUAGES = ['en-US', 'en-GB', 'id', 'ru', 'es']
+LANGUAGES = ['en-US', 'en-GB', 'id', 'ru', 'pt']
 
 strings = {}
 
@@ -54,9 +54,9 @@ def tld(chat_id, t, show_none=True):
                 encode(strings['ru'][t], 'latin-1', 'backslashreplace'),
                 'unicode-escape')
             return result
-        elif LOCALE in ('es') and t in strings['es']:
+        elif LOCALE in ('pt') and t in strings['pt']:
             result = decode(
-                encode(strings['es'][t], 'latin-1', 'backslashreplace'),
+                encode(strings['pt'][t], 'latin-1', 'backslashreplace'),
                 'unicode-escape')
             return result
 
@@ -84,8 +84,8 @@ def tld_list(chat_id, t):
             return strings['id'][t]
         elif LOCALE in ('ru') and t in strings['ru']:
             return strings['ru'][t]
-        elif LOCALE in ('es') and t in strings['es']:
-            return strings['es'][t]
+        elif LOCALE in ('pt') and t in strings['pt']:
+            return strings['pt'][t]
 
     if t in strings['en-US']:
         return strings['en-US'][t]

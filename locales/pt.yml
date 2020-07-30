@@ -12,19 +12,21 @@ cmd_multitrigger: "\n\nTodos los comandos pueden ser usados con lo siguiente: `/
 here_is_help: Aquí hay alguna ayuda para el módulo *{}*:\n\n{}
 help_not_found: '¡La cadena de ayuda para <code>{}</code> no se ha encontrado!'
 help_pm_only: Contacte conmigo en PM para obtener la lista de posibles comandos.
-btn_help: '❔ Ayuda'
-btn_go_back: Atrás
-main_start_group: '¡Hola! Estoy vivo :3'
+btn_help: '❔ Ajuda'
+btn_go_back: Voltar
+main_start_group: Olá! Estou vivo :3
+
 main_start_pm: |
-  ¡Hola! Mi nombre es Hitsuki - ¡Estoy aquí para ayudarte a gestionar tus grupos!
-  Haz clic en el botón Ayuda para saber más sobre cómo utilizarme con todo mi potencial.
+  Olá! Meu nome é Hitsuki - Estou aqui para ajudá-lo a gerenciar seus grupos!
+  Clique no botão Ajuda para descobrir mais sobre como me usar em todo o meu potencial.
 
-  Sigue a [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) si quieres mantenerte al día con las noticias del bot, las actualizaciones del bot y el tiempo de baja del bot!
+  Siga [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) se você quiser acompanhar as novidades, atualizações e tempo de inatividade do bot!
 
-  ¿Quieres añadirme a tu grupo? [¡Haz clic aquí!](t.me/LordHitsuki_BOT?startgroup=true)
-main_start_btn_support: '📦 codigo fuente'
-main_start_btn_ctrlpnl: '🛠 Panel de control'
-main_start_btn_lang: '🇺🇸 Idioma'
+  Deseja me adicionar ao seu grupo? [Clique aqui!](t.me/LordHitsuki_BOT?startgroup=true)
+
+main_start_btn_support: '📦 Código fonte'
+main_start_btn_ctrlpnl: '🛠 Painel de controle'
+main_start_btn_lang: '🇧🇷 Idioma'
 #Common
 common_err_no_admin: '¡No eres un administrador!'
 common_err_no_user: Parece que usted no se refiere a un usuario.
