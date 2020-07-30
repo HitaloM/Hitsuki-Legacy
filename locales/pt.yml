@@ -77,14 +77,14 @@ afk_help: |
 #Android
 modname_android: Android
 download: "**Download:** [{}]({})\n"
-build_size: "**Tamanho do arquivo:**`{}`"
-build_date: "**Data da compilação:**`{}`"
-version: "**Versão:**`{}`"
-android_version: "**Versão do Android:**`{}`"
-rom_type: "**Tipo de ROM:**`{}`"
-maintainer: "**Mantedor:**`{}`"
-xda_thread: "**Tópico no XDA:** [AQUI]({})"
-changelog: "**Changelog:**`{}`"
+build_size: "**Tamanho do arquivo:** `{}`\n"
+build_date: "**Data da compilação:** `{}`\n"
+version: "**Versão:** `{}`\n"
+android_version: "**Versão do Android:** `{}`\n"
+rom_type: "**Tipo de ROM:** `{}`\n"
+maintainer: "**Mantedor:** `{}`\n"
+xda_thread: "**Tópico no XDA:** [AQUI]({})\n"
+changelog: "**Changelog:** `{}`\n"
 weekly: "**Semanalmente**"
 phh_releases: "**Últimos lançamentos de GSI do PHH:**\n"
 err_not_found: Não foi possível encontrar nenhum resultado correspondente à sua consulta.

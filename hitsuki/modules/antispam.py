@@ -101,7 +101,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
         return
 
     full_reason = html.escape(
-        f"{reason} // GBanned by {banner.first_name} id {banner.id}")
+        f"{reason}")
 
     if sql.is_user_gbanned(user_id):
         old_reason = sql.update_gban_reason(
