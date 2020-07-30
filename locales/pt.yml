@@ -1057,7 +1057,7 @@ stickers_help: |
   - /getsticker: responde a un sticker para subir su archivo PNG crudo.
   - /kang: responde a una etiqueta para añadirla a tu paquete.
 #Warnings
-modname_warns: Advertencias
+modname_warns: Advertências
 warns_warn_admin_no_warn: '¡No voy a advertir a un administrador!'
 warns_warn_admin_autofilter: Filtro de advertencia automatizado
 warns_max_warn_kick: "¡{} avisos, {} ha sido expulsado!"
@@ -1139,6 +1139,18 @@ warns_help: |
   - /strongwarn <on/yes/off/no>: si está activado sobrepasar el límite de advertencia resultará en una prohibición. De lo contrario, simplemente kick.
   - /rmwarn <userhandle>: elimina la última advertencia para un usuario. También se puede usar como respuesta.
   - /unwarn <userhandle>: igual que /rmwarn
+#OrangeFox
+fox_devices_title: "**OrangeFox Recovery is currently avaible for:**"
+fox_get_release: You can get latest release by using `/orangefox (codename)`
+fox_device_not_found: Device is not found!
+fox_release_not_found: "Release is not found!"
+fox_release_device: "**📱 Device:** {fullname} (`{codename}`)\n"
+fox_release_version: "**🔺 Version:** `{}`\n"
+fox_release_maintainer: "**👨‍🔬 Maintainer:** {name}, {status}\n"
+fox_release_maintained_1: Maintained
+fox_release_maintained_3: Not maintained
+fox_release_date: "**📅 Release date:** {}\n"
+fox_release_md5: "**✅ File MD5:** `{}`\n"
 ### Helper functions
 #chat_status
 helpers_bot_cant_delete: '¡No puedo eliminar mensajes aquí! Asegúrate de que soy administrador y puedo borrar los mensajes de otros usuarios.'
