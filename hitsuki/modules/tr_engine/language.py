@@ -123,13 +123,8 @@ def locale_button(bot, update):
         reply_markup=InlineKeyboardMarkup([[
             InlineKeyboardButton("English (US) 🇺🇸",
                                  callback_data="set_lang_en-US"),
-            InlineKeyboardButton("English (UK) 🇬🇧",
-                                 callback_data="set_lang_en-GB")
-        ]] + [[
-            InlineKeyboardButton("Indonesian 🇮🇩", callback_data="set_lang_id"),
-            InlineKeyboardButton("Russian 🇷🇺", callback_data="set_lang_ru")
-        ]] + [[
-            InlineKeyboardButton("Portuguese 🇧🇷", callback_data="set_lang_pt")
+            InlineKeyboardButton("Portuguese 🇧🇷",
+                                 callback_data="set_lang_pt")
         ]] + [[
             InlineKeyboardButton(f"{tld(chat.id, 'btn_go_back')}",
                                  callback_data="bot_start")

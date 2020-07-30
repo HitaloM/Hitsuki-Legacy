@@ -21,7 +21,7 @@ from codecs import encode, decode
 from hitsuki import LOGGER
 from hitsuki.modules.sql.locales_sql import prev_locale
 
-LANGUAGES = ['en-US', 'en-GB', 'id', 'ru', 'pt']
+LANGUAGES = ['en-US', 'pt']
 
 strings = {}
 
@@ -37,21 +37,6 @@ def tld(chat_id, t, show_none=True):
         if LOCALE in ('en-US') and t in strings['en-US']:
             result = decode(
                 encode(strings['en-US'][t], 'latin-1', 'backslashreplace'),
-                'unicode-escape')
-            return result
-        elif LOCALE in ('en-GB') and t in strings['en-GB']:
-            result = decode(
-                encode(strings['en-GB'][t], 'latin-1', 'backslashreplace'),
-                'unicode-escape')
-            return result
-        elif LOCALE in ('id') and t in strings['id']:
-            result = decode(
-                encode(strings['id'][t], 'latin-1', 'backslashreplace'),
-                'unicode-escape')
-            return result
-        elif LOCALE in ('ru') and t in strings['ru']:
-            result = decode(
-                encode(strings['ru'][t], 'latin-1', 'backslashreplace'),
                 'unicode-escape')
             return result
         elif LOCALE in ('pt') and t in strings['pt']:
@@ -78,12 +63,6 @@ def tld_list(chat_id, t):
         LOCALE = LANGUAGE.locale_name
         if LOCALE in ('en-US') and t in strings['en-US']:
             return strings['en-US'][t]
-        elif LOCALE in ('en-GB') and t in strings['en-GB']:
-            return strings['en-GB'][t]
-        elif LOCALE in ('id') and t in strings['id']:
-            return strings['id'][t]
-        elif LOCALE in ('ru') and t in strings['ru']:
-            return strings['ru'][t]
         elif LOCALE in ('pt') and t in strings['pt']:
             return strings['pt'][t]
 
@@ -92,29 +71,3 @@ def tld_list(chat_id, t):
 
     LOGGER.warning(f"#NOSTR No string found for {t}.")
     return f"No string found for {t}.\nReport it to @Hitalo."
-
-
-# def tld_help(chat_id, t):
-#     LANGUAGE = prev_locale(chat_id)
-#     print("tld_help ", chat_id, t)
-#     if LANGUAGE:
-#         LOCALE = LANGUAGE.locale_name
-
-#         t = t + "_help"
-
-#         print("Test2", t)
-
-#         if LOCALE in ('ru') and t in RussianStrings:
-#             return RussianStrings[t]
-#         elif LOCALE in ('ua') and t in UkrainianStrings:
-#             return UkrainianStrings[t]
-#         elif LOCALE in ('es') and t in SpanishStrings:
-#             return SpanishStrings[t]
-#         elif LOCALE in ('tr') and t in TurkishStrings:
-#             return TurkishStrings[t]
-#         elif LOCALE in ('id') and t in IndonesianStrings:
-#             return IndonesianStrings[t]
-#         else:
-#             return False
-#     else:
-#         return False
