@@ -32,7 +32,7 @@ LOGGER.info("orangefox: By @MrYacha, powered by OrangeFox API v2")
 
 @register(pattern=r"^/(orangefox|of|fox|ofox)(?: |$)(\S*)")
 async def orangefox(event):
-    if event.from_id == None:
+    if event.from_id is None:
         return
 
     chat_id = event.chat_id
