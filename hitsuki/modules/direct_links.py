@@ -1,6 +1,6 @@
 #    Hitsuki (A telegram bot project)
-#    Hitalo (C) 2019-2020
-#    RaphielGang (C) 2019-2020
+# This module is ported from Telegram-UserBot (Paperplane) all rights
+# reserved.
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,66 +15,58 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#    Thanks to github.com/alissonlauffer
-#    Last.fm module ported from github.com/RaphielGang/Telegram-Paperplane
-
 import re
 import requests
 
 from random import choice
 from bs4 import BeautifulSoup
-from telegram.ext import run_async, CommandHandler
 
-from hitsuki import dispatcher
+from hitsuki.events import register
 
 
-@run_async
-def direct_link_generator(bot, update):
-    message = update.effective_message
-    text = message.text[len('/direct '):]
-
-    if text:
-        links = re.findall(r'\bhttps?://.*\.\S+', text)
+@register(pattern=r"^/direct(?: |$)([\s\S]*)")
+async def direct_link_generator(request):
+    await request.reply("`Processing...`")
+    textx = await request.get_reply_message()
+    message = request.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
     else:
-        message.reply_text("Usage: /direct <url>")
+        await request.reply("Usage: `/direct <url>`")
         return
-    reply = []
+    reply = ''
+    links = re.findall(r'\bhttps?://.*\.\S+', message)
     if not links:
-        message.reply_text("No links found!")
-        return
+        reply = "No links found!"
+        await request.reply(reply)
     for link in links:
         if 'sourceforge.net' in link:
-            reply.append(sourceforge(link))
+            reply += sourceforge(link)
         else:
-            reply.append(
-                re.findall(
-                    r"\bhttps?://(.*?[^/]+)",
-                    link)[0] +
-                ' is not supported')
-
-    message.reply_html("\n".join(reply))
+            reply += '`' + re.findall(r"\bhttps?://(.*?[^/]+)",
+                                      link)[0] + 'is not supported`\n'
+    await request.reply(reply)
 
 
 def sourceforge(url: str) -> str:
     try:
         link = re.findall(r'\bhttps?://.*sourceforge\.net\S+', url)[0]
     except IndexError:
-        reply = "<code>No SourceForge links found</code>\n"
+        reply = "No SourceForge links found\n"
         return reply
-    file_path = re.findall(r'/files(.*)/download', link)
-    if not file_path:
-        file_path = re.findall(r'/files(.*)', link)
-    file_path = file_path[0]
-    reply = f"Mirrors for <i>{file_path.split('/')[-1]}</i>\n"
+    file_path = re.findall(r'files(.*)/download', link)[0]
+    reply = f"Mirrors for __{file_path.split('/')[-1]}__\n"
     project = re.findall(r'projects?/(.*?)/files', link)[0]
     mirrors = f'https://sourceforge.net/settings/mirror_choices?' \
               f'projectname={project}&filename={file_path}'
-    page = BeautifulSoup(requests.get(mirrors).content, 'lxml')
+    page = BeautifulSoup(requests.get(mirrors).content, 'html.parser')
     info = page.find('ul', {'id': 'mirrorList'}).findAll('li')
     for mirror in info[1:]:
         name = re.findall(r'\((.*)\)', mirror.text.strip())[0]
         dl_url = f'https://{mirror["id"]}.dl.sourceforge.net/project/{project}/{file_path}'
-        reply += f'<a href="{dl_url}">{name}</a> '
+        reply += f'[{name}]({dl_url}) '
     return reply
 
 
@@ -88,6 +80,4 @@ def useragent():
     return user_agent.text
 
 
-DIRECT_HANDLER = CommandHandler("direct", direct_link_generator)
-
-dispatcher.add_handler(DIRECT_HANDLER)
+__help__ = True

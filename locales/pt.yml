@@ -105,6 +105,15 @@ android_help: |
   - /twrp <codinome>: Obtém o twrp mais recente para um dispositivo Android através do codinome.
   - /ofox: Obtém a lista de dispositivos oficialmente suportados pelo Orange Fox Recovery Project.
   - /ofox <codinome>: Obtém o link de download e as informações básicas do OFRP para o dispositivo especificado.
+#DirectLinks
+modname_direct_links: Links Diretos
+direct_links_help: |
+  Este módulo permite gerar links diretos de sites.
+
+  - /direct <link>: cole um link (URL) para gerar um link de download direto.
+
+  Lista de sites suportados (URLs):
+  SourceForge
 #Antiflood
 modname_antiflood: AntiFlood
 flood_mute: Gostaria de deixar o flood nas mãos dos desastres naturais, mas você foi apenas uma decepção. *adeus*!

@@ -104,6 +104,15 @@ android_help: |
   - /twrp <codename>: Gets latest twrp for the android device using the codename.
   - /ofox: Gets the list of officially supported devices by the Orange Fox Recovery Project.
   - /ofox <device>: Gets the download link and basic OFRP information to the specified device.
+#DirectLinks
+modname_direct_links: Direct Links
+direct_links_help: |
+  This module allows you to generate direct links from websites.
+
+  - /direct <link>: paste a link(URL) to generate a direct download link.
+
+  List of supported sites (URLs):
+  SourceForge
 #Antiflood
 modname_antiflood: Antiflood
 flood_mute: I would like to leave the flooding to natural disasters. But you, you were just a disappointment. *Muted*!
@@ -715,8 +724,7 @@ misc_help: |
   - /ud: Type the word or expression you want to search. For example /ud Gay
   - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
   - /exec <language> <code> [/stdin <stdin>]: Execute a code in a specified language. Send an empty command to get the supported languages.
-  - /wiki <keywords>: Get wikipedia articles just using this bot!
-  - /direct <sf link>: paste a sourceforge.net link to generate a direct download link.\n
+  - /wiki <keywords>: Get wikipedia articles just using this bot!\n
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
   - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.\n
