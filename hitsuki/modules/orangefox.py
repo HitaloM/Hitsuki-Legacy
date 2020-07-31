@@ -27,7 +27,7 @@ import rapidjson as json
 API_HOST = 'https://api.orangefox.download/v2'
 
 
-LOGGER.info("orangefox: By @MrYacha, powered by OrangeFox API v2")
+LOGGER.info("orangefox: By @MrYacha, powered by OrangeFox API v2 (modified by @Hitalo on Telegram)")
 
 
 @register(pattern=r"^/(orangefox|of|fox|ofox)(?: |$)(\S*)")
