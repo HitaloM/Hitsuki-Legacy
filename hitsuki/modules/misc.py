@@ -222,10 +222,7 @@ def github(bot: Bot, update: Update):
 
         for x, y in usr.items():
             if x in whitelist:
-                if x in difnames:
-                    x = difnames[x]
-                else:
-                    x = x.title()
+                x = difnames.get(x, x.title())
 
                 if x == 'Account created at' or x == 'Last updated':
                     y = datetime.strptime(y, "%Y-%m-%dT%H:%M:%SZ")
