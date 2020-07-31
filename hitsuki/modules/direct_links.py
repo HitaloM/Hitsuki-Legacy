@@ -1,6 +1,5 @@
 #    Hitsuki (A telegram bot project)
-# This module is ported from Telegram-UserBot (Paperplane) all rights
-# reserved.
+#    This module is ported from Telegram-UserBot (Paperplane)
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -26,7 +25,6 @@ from hitsuki.events import register
 
 @register(pattern=r"^/direct(?: |$)([\s\S]*)")
 async def direct_link_generator(request):
-    await request.reply("`Processing...`")
     textx = await request.get_reply_message()
     message = request.pattern_match.group(1)
     if message:
