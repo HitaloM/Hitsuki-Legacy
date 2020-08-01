@@ -80,7 +80,7 @@ def report(bot: Bot, update: Update) -> str:
         admin_list = chat.get_administrators()
 
         if int(reported_user.id) == int(user.id):
-            return
+            return ""
 
         if chat.username and chat.type == Chat.SUPERGROUP:
             msg = "<b>{}:</b>" \

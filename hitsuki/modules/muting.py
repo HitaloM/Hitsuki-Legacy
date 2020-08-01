@@ -50,7 +50,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
         chatD = dispatcher.bot.getChat(conn)
     else:
         if chat.type == "private":
-            return
+            return ""
         else:
             chatD = chat
 
@@ -115,7 +115,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
         chatD = dispatcher.bot.getChat(conn)
     else:
         if chat.type == "private":
-            return
+            return ""
         else:
             chatD = chat
 
@@ -184,7 +184,7 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
         chatD = dispatcher.bot.getChat(conn)
     else:
         if chat.type == "private":
-            return
+            return ""
         else:
             chatD = chat
 
@@ -280,7 +280,7 @@ def nomedia(bot: Bot, update: Update, args: List[str]) -> str:
         chatD = dispatcher.bot.getChat(conn)
     else:
         if chat.type == "private":
-            return
+            return ""
         else:
             chatD = chat
 
@@ -344,7 +344,7 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
         chatD = dispatcher.bot.getChat(conn)
     else:
         if chat.type == "private":
-            return
+            return ""
         else:
             chatD = chat
 
@@ -402,7 +402,7 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
         chatD = dispatcher.bot.getChat(conn)
     else:
         if chat.type == "private":
-            return
+            return ""
         else:
             chatD = chat
 

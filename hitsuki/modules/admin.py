@@ -50,25 +50,25 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
     else:
         chatD = update.effective_chat
         if chat.type == "private":
-            return
+            return ""
 
     if not chatD.get_member(bot.id).can_promote_members:
         update.effective_message.reply_text(tld(chat.id, "admin_err_no_perm"))
-        return
+        return ""
 
     user_id = extract_user(message, args)
     if not user_id:
         message.reply_text(tld(chat.id, "common_err_no_user"))
-        return
+        return ""
 
     user_member = chatD.get_member(user_id)
     if user_member.status == 'administrator' or user_member.status == 'creator':
         message.reply_text(tld(chat.id, "admin_err_user_admin"))
-        return
+        return ""
 
     if user_id == bot.id:
         message.reply_text(tld(chat.id, "admin_err_self_promote"))
-        return
+        return ""
 
     # set same perms as bot - bot can't assign higher perms than itself!
     bot_member = chatD.get_member(bot.id)
@@ -109,11 +109,11 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
     else:
         chatD = update.effective_chat
         if chat.type == "private":
-            return
+            return ""
 
     if not chatD.get_member(bot.id).can_promote_members:
         update.effective_message.reply_text(tld(chat.id, "admin_err_no_perm"))
-        return
+        return ""
 
     user_id = extract_user(message, args)
     if not user_id:
