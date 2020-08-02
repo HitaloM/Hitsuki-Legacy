@@ -726,7 +726,7 @@ misc_help: |
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
   - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.
 #Anime
-modname_misc: Anime
+modname_anime: Anime
 anime_help: |
    Get information about anime, manga or characters from AniList.
 
