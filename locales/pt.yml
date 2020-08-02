@@ -737,7 +737,7 @@ misc_lastfm_pn: <code>{} - {}</code>
 misc_lastfm_pn_loved: <code>{} - {}</code> (loved)
 misc_lastfm_scr: \n(<code>{}</code> scrobbles so far)
 misc_lastfm_scrr: <code>{} - {}</code>\n
-lats_fm_help: |
+last_fm_help: |
    Compartilhe o que você está ouvindo com a ajuda deste módulo.
 
    *Comandos disponíveis:*
