@@ -561,12 +561,12 @@ def site_search(bot: Bot, update: Update):
 
 @run_async
 def kaizoku(bot: Bot, update: Update):
-    site_search(update, bot, "kaizoku")
+    site_search(update, "kaizoku")
 
 
 @run_async
 def kayo(bot: Bot, update: Update):
-    site_search(update, bot, "kayo")
+    site_search(update, "kayo")
 
 
 __help__ = True
