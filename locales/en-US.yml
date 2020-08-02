@@ -724,13 +724,9 @@ misc_help: |
   - /wiki <keywords>: Get wikipedia articles just using this bot!\n
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
-  - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.\n
-  *Special | LAST.FM*
-  - /setuser <username>: sets your last.fm username.
-  - /clearuser: removes your last.fm username from the bot's database.
-  - /lastfm: returns wh at you're scrobbling on last.fm
+  - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.
 #lastfm  
-modname_msg_deleting: lastfm
+modname_last_fm: LastFM
 misc_setuser_lastfm_error: That's not how this works...\nRun /setuser followed by your username!
 misc_clearuser_lastfm: Last.fm username successfully cleared from my database!
 misc_setuser_lastfm: Username set as {}!
@@ -741,6 +737,13 @@ misc_lastfm_pn: <code>{} - {}</code>
 misc_lastfm_pn_loved: <code>{} - {}</code> (loved)
 misc_lastfm_scr: \n(<code>{}</code> scrobbles so far)
 misc_lastfm_scrr: <code>{} - {}</code>\n
+lats_fm_help: |
+   Share what you're listening to with the help of this module!
+
+   *Available commands:*
+   - /setuser <username>: sets your last.fm username.
+   - /clearuser: removes your last.fm username from the bot's database.
+   - /lastfm: returns what you're scrobbling on last.fm.
 #Purge
 modname_msg_deleting: Purges
 purge_msg_cant_del_too_old: Cannot delete all messages. The messages may be too old, I might not have delete rights, or this might not be a supergroup.

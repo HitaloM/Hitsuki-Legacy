@@ -103,6 +103,8 @@ def last_fm(bot: Bot, update: Update):
     msg.reply_text(rep, parse_mode=ParseMode.HTML)
 
 
+__help__ = True
+
 SET_USER_HANDLER = CommandHandler("setuser", set_user, pass_args=True)
 CLEAR_USER_HANDLER = CommandHandler("clearuser", clear_user)
 LASTFM_HANDLER = DisableAbleCommandHandler("lastfm", last_fm)
