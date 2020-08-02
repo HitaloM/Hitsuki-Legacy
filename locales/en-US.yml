@@ -725,6 +725,20 @@ misc_help: |
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
   - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.
+#Anime
+modname_misc: Anime
+anime_help: |
+   Get information about anime, manga or characters from AniList.
+
+   *Available commands:*
+   - /anime <anime>: returns information about the anime.
+   - /character <character>: returns information about the character.
+   - /manga <manga>: returns information about the manga.
+   - /user <user>: returns information about a MyAnimeList user.
+   - /upcoming: returns a list of new anime in the upcoming seasons.
+   - /kaizoku <anime>: search an anime on animekaizoku.com
+   - /kayo <anime>: search an anime on animekayo.com
+   - /airing <anime>: returns anime airing info.
 #lastfm  
 modname_last_fm: LastFM
 misc_setuser_lastfm_error: That's not how this works...\nRun /setuser followed by your username!
