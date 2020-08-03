@@ -20,6 +20,7 @@ import textwrap
 import bs4
 import jikanpy
 import requests
+from typing import List
 
 from hitsuki import OWNER_ID, SUDO_USERS, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
@@ -501,7 +502,7 @@ def button(bot: Bot, update: Update):
             query.answer("You are not allowed to use this.")
 
 
-def site_search(bot: Bot, update: Update):
+def site_search(bot: Bot, update: Update) -> str:
     message = update.effective_message
     args = message.text.strip().split(" ", 1)
     more_results = True
