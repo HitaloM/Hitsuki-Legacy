@@ -514,7 +514,7 @@ memes_runs_list:
   - "Ao contrário de Harry Potter, seus pais não podem protegê-lo de mim."
   - "O medo leva à raiva. A raiva leva ao ódio. O ódio leva ao sofrimento. Se você continuar correndo com medo, pode"
   - "seja o próximo Vader."
-  - "Vários cálculos depois, decidi que meu interesse em suas travessuras é exatamente 0".
+  - "Vários cálculos depois, decidi que meu interesse em suas travessuras é exatamente 0."
   - "Diz a lenda, eles continuam correndo."
   - "Mantenha, você não tem certeza de que queremos aqui de qualquer maneira."
   - "Você é um mágico- Oh. Espere. Você não é Harry, continue andando."
@@ -534,14 +534,14 @@ memes_runs_list:
 memes_insults_list:
   - "Owww ... um idiota tão estúpido."
   - "Não bebam pessoal."
-  - "Acho que devo ir para casa ou melhor, um assíncrono mental".
+  - "Acho que devo ir para casa ou melhor, um assíncrono mental."
   - "Comando não encontrado. Como seu pai."
   - "Você percebe que está fazendo algo bobo? Aparentemente não."
   - "Você pode escrever melhor que isso."
   - "A regra bot 544 da seção 9 me impede de responder a seres humanos estúpidos como você."
   - "Desculpe, nós não vendemos fechaduras."
   - "Acredite, você não é normal."
-  - "Aposto que seu cérebro parece tão bom quanto novo, visto que você nunca o usa".
+  - "Aposto que seu cérebro parece tão bom quanto novo, visto que você nunca o usa."
   - "Se eu quisesse me matar, vou elevar seu ego e pular para o seu QI."
   - "Zumbis comem cérebros ... você está seguro."
   - "Você não evoluiu dos macacos, eles evoluíram de você."
@@ -566,20 +566,20 @@ memes_insults_list:
   - "Suas enzimas são projetadas para digerir veneno de rato."
   - "Você deveria tentar dormir para sempre."
   - "Pegue uma arma e atire em si mesmo."
-  - "Você poderia fazer um recorde mundial pulando de um avião sem pára-quedas".
+  - "Você poderia fazer um recorde mundial pulando de um avião sem pára-quedas."
   - "Pare de falar besteiras e pule na frente de um trem-bala."
-  - "Tente tomar banho com ácido clorídrico em vez de água".
+  - "Tente tomar banho com ácido clorídrico em vez de água."
   - "Tente o seguinte: se você ficar sem fôlego por uma hora, poderá salvá-lo para sempre."
   - "Fica verde! Pare de inalar oxigênio."
   - "Deus estava procurando por você. Você deveria sair para encontrá-lo."
   - "Dê 100%. Agora, doe sangue."
   - "Tente pular de cem andares, mas você só pode fazê-lo uma vez."
   - "Você deve doar seu cérebro, visto que nunca o usou."
-  - "Ofereça-se para mirar em um campo de tiro".
+  - "Ofereça-se para mirar em um campo de tiro."
   - "Fotos na cabeça são divertidas. Pegue uma."
   - "Você deve tentar nadar com grandes tubarões brancos."
   - "Você deve se pintar de vermelho e correr em uma maratona de bolas."
-  - "Você pode ficar embaixo da água pelo resto da vida sem voltar a subir".
+  - "Você pode ficar embaixo da água pelo resto da vida sem voltar a subir."
   - "Que tal você parar de respirar como um dia? Isso será ótimo."
   - "Tente provocar um tigre enquanto ambos estão em uma gaiola."
   - "Você já tentou atirar em si mesmo a 100 metros de distância usando um canon."
@@ -588,7 +588,7 @@ memes_insults_list:
   - "Ouvi dizer que a fotografia é venenosa, mas suponho que você não se importe em inalá-la por diversão."
   - "Deixe-se ir para o espaço esquecendo o oxigênio na Terra."
   - "Você deve tentar jogar cobra e escadas, com cobras reais e sem escadas."
-  - "Dance nua em um par de cabos HT".
+  - "Dance nua em um par de cabos HT."
   - "O verdadeiro vulcão é a melhor piscina para você."
   - "Você deve tentar o banho quente em um vulcão."
   - "Tente passar um dia em uma lanchonete e será sua para sempre."
@@ -847,7 +847,7 @@ notes_help: |
   Dica: para recuperar uma anotação sem a formatação, use /get <notename> noformat
   Isso recuperará a nota e a enviará sem formatá-la; obtendo a markdown bruta, permitindo que você faça edições fáceis.
 
- Nota: Os nomes das notas não diferenciam letras maiúsculas de minúsculas e são automaticamente convertidos em letras minúsculas antes de serem salvos.
+  Nota: Os nomes das notas não diferenciam letras maiúsculas de minúsculas e são automaticamente convertidos em letras minúsculas antes de serem salvos.
 #Reporting
 modname_reporting: Denúncias
 reports_pm_on: "Denúncias ativadas! Você será notificado sempre que alguém denunciar algo."
@@ -903,10 +903,10 @@ translator_animal_lang:
    - Ziz ...
    - 'O que é esse retângulo preto?'
    - 'Quero sair!'
-   - 'Madeira ótima! Espere ... você está gravando ?!
+   - 'Madeira ótima! Espere ... você está gravando ?!'
    - 'Eu não vou falar!'
    - 'Onde estão meus amigos?'
-   Eu preciso de um banheiro.
+   - Eu preciso de um banheiro.
    - 'Deixa-me só!'
    - 'Onde estão minhas testemunhas?'
    - 'Minha perna está perdendo!'
@@ -914,8 +914,8 @@ translator_animal_lang:
    - 'Por que você está me assediando ?!'
    - Foda-se.
    - 'Estou me comendo!'
-   - 'Ligue para o pacote! Existe um problema em potencial! Alguém está entrando em nosso território!
-   - 'Há alguém ali? Estou sozinho e preciso de companhia.
+   - 'Ligue para o pacote! Existe um problema em potencial! Alguém está entrando em nosso território!'
+   - 'Há alguém ali? Estou sozinho e preciso de companhia.'
    - 'Pare com isso!'
    - 'Olá!'
    - 'O que é isso?'
@@ -923,9 +923,9 @@ translator_animal_lang:
    - 'Manhã!'
    - 'Vamos jogar!'
    - 'Isto é divertido!'
-   - Estou com muito medo de você.
+   - 'Estou com muito medo de você.'
    - 'Estou prestes a seguir em frente!'
-   - você gosta.
+   - 'você gosta.'
 #URL Blacklist
 modname_urlblacklist: Lista negra de domínios
 url_blacklist_success: "Adicionado o domínio <code>{}</code> a lista negra!"
@@ -1120,7 +1120,7 @@ warns_strength_on_log_channel: |
 warns_strength_off_log_channel: |
   <b>{}:</b>\n
   <b>Administrador:</b> {}\n
- Você desativou warns fortes. Os usuários serão kickados apenas.
+  Você desativou warns fortes. Os usuários serão kickados apenas.
 warns_btn_remove_warn: Remover warn
 warns_btn_rules: Regras
 warns_user_warned: "{} <b>foi advertido!</b>\nPossui {}/{} warns."
