@@ -1,14 +1,14 @@
 ---
 #Main
 send-help: |
-   Ei! Meu nome é *{}*. Eu sou um bot de gerenciamento de grupos, aqui para ajudá-lo a se locomover e manter a ordem em seus grupos!
-   Eu tenho muitos recursos úteis, como sistema de aviso, um sistema de anotações e até respostas predeterminadas para determinadas palavras-chave.\n
+   Ei! Meu nome é *{}*. Eu sou um bot de gerenciamento de grupos, estou aqui para ajudá-lo a se locomover e manter a ordem em seus grupos!
+   Eu tenho muitos recursos úteis, como um sistema de avisos, um sistema de anotações e até respostas predeterminadas para determinadas palavras-chave.\n
    *Comandos úteis*
    - /start: Me inicia! Você provavelmente já usou isso.
    - /help: envia esta mensagem; Vou lhe contar mais sobre mim!
    - /help <nome do módulo>: informações de PM sobre o módulo específico.
    - /lang: altera o idioma do bot{}
-cmd_multitrigger: "\n\nTodos os comandos podem ser usados ​​com o seguinte: `/` `!`"
+cmd_multitrigger: "\n\nTodos os comandos podem ser usados ​​com os seguintes caracteres: `/` `!`"
 here_is_help: Aqui está a ajuda para o módulo *{}*:\n\n{}
 help_not_found: 'Linha de ajuda para <code>{}</code> não encontrada!'
 help_pm_only: Entre em contato comigo no PV para obter a lista de possíveis comandos.
@@ -30,7 +30,7 @@ main_start_btn_lang: '🇧🇷 Idioma'
 #Common
 common_err_no_admin: 'Você não é um administrador!'
 common_err_no_user: Parece que você não está se referindo a um usuário.
-common_err_invalid_chatid: 'ID de bate-papo inválido!'
+common_err_invalid_chatid: 'ID de grupo inválido!'
 common_yes: "Sim"
 common_no: "Não"
 common_cmd_group_only: Este comando pode ser usado apenas em um grupo, não no PV.
@@ -40,7 +40,7 @@ common_this_chat: Este chat
 common_invalid_arg: 'Argumento inválido! Por favor use `on`/`yes` ou `off`/`no`!'
 #Admins
 modname_admin: Admin
-admin_err_no_perm: 'Não posso promover/rebaixar pessoas aqui! Verifique se eu sou um administrador e posso nomear novos administradores.'
+admin_err_no_perm: 'Não posso promover/rebaixar pessoas aqui! Verifique se eu sou um administrador e posso adicionar novos administradores.'
 admin_err_user_admin: 'Como posso promover alguém que já é administrador?'
 admin_err_self_promote: 'Eu não posso me promover! Peça a um administrador que faça isso por mim.'
 admin_promote_success: O administrador {} promoveu {} com sucesso em <b>{}</b>!
@@ -69,7 +69,7 @@ modname_afk: AFK
 user_now_afk: "{} está agora AFK!"
 user_no_longer_afk: "{} não está mais AFK!"
 status_afk_noreason: "{} está AFK!"
-status_afk_reason: "{} está AFK! Motivo:\n{}"
+status_afk_reason: "{} está AFK! Segundo ele/ela o motivo é:\n{}"
 afk_help: |
   - /afk <reason>: Marque a si mesmo como AFK.
   - brb <reason>: O mesmo que o comando afk, mas não um comando.\n
@@ -129,7 +129,7 @@ flood_status_on: No momento, estou silenciando usuários que enviam mais de {} m
 flood_err_num: 'O AntiFlood deve ser 0 (desativado) ou um número maior que 3 (ativado)!'
 flood_err_args: Argumento não reconhecido - use um número, 'off' ou 'no'.
 antiflood_help: |
-   Você sabe como às vezes as pessoas entram, enviam 100 mensagens e arruinam seu bate-papo? Com antiflood, isso não acontece mais!\n
+   Você sabe como às vezes as pessoas entram, enviam 100 mensagens e arruinam seu grupo? Com antiflood, isso não acontece mais!\n
    O antiflood permite que você execute ações em usuários que enviam mais de **x** mensagens seguidas.\n
    Os comandos disponíveis são:
    - /flood: obtém as configurações antiflood atuais.
@@ -177,7 +177,7 @@ antispam_off: Desativei a segurança antispam neste grupo. Global Bans não afet
 antispam_err_wrong_arg: "Dê-me alguns argumentos para escolher um ajuste! true/false, yes/no!\n\nSua configuração atual é: {}\nSe for true, quaisquer gbans que ocorrerem também acontecerão no seu grupo. Quando false, você ficará a mercê de spammers."
 antispam_userinfo_gbanned: "Banido globalmente: <b>{}</b>"
 antispam_userinfo_gban_reason: "\nMotivo: {}"
-antispam_chatsettings_gban: "Este bate-papo está cumprindo *gbans*: `{}`."
+antispam_chatsettings_gban: "Este grupo está cumprindo *gbans*: `{}`."
 anitspam_appeal: \n<b>Fale com</b> @Hitalo
 antispam_spamwatch_banned: "<b>Este usuário foi detectado como um spambot pela SpamWatch e foi removido!</b>\n\n<b>Motivo</b>: {}"
 antispam_help: |
@@ -194,998 +194,997 @@ bans_logger: |
   #BAN
   <b>Administrador:</b> {}
   <b>Usuário:</b> {} (<code>{}</code>)
-bans_banned_success: Admin {} ha baneado correctamente a {} en <b>{}</b>!
+bans_banned_success: Admin {} baniu corretamento o usuario {} no <b>{}</b>!
 bans_logger_reason: \n<b>Motivo:</b>{}
-bans_err_unknown: "Error desconocido: {} falló."
-bans_err_tban_no_arg: '¡No has especificado un tiempo para banear a este usuario!'
+bans_err_unknown: "Erro desconhecido: {} falhou."
+bans_err_tban_no_arg: 'Você não especificou o tempo para banir este usuário!'
 bans_tban_logger: "<b>{}:</b>\n#TEMP_BANNED\n<b>Admin:</b> {}\n<b>Usuario:</b> {} (<code>{}</code>)\n<b>Hora:</b>{}"
 bans_tbanned_success: Admin {} ha baneado correctamente a {} en <b>{}</b> por {}!
-bans_kick_is_bot: '¡No me estoy expulsando a mí mismo!'
-bans_kick_is_admin: '¿Por qué patearía a un administrador? Eso suena como una idea tonta.'
-bans_kick_success: Admin {} ha expulsado correctamente a {} en <b>{}</b>!
+bans_kick_is_bot: 'Não posso expulsar a mim mesmo!'
+bans_kick_is_admin: 'Porque eu kickaria um administrador? Não me parece uma boa ideia.'
+bans_kick_success: Admin {} expulsou corretamente o usuário {} no <b>{}</b>!
 bans_kick_logger: "<b>{}:</b>\n#KICKED\n<b>Administrador:</b> {}\n<b>Usuario:</b> {} (<code>{}</code>)"
-bans_kickme_success: No hay problema.
-bans_kickme_failed: '¡No puedo expulsarte! Hoy tienes suerte.'
-bans_unban_user_in_chat: '¿Por qué estás intentando desbanear a alguien que ya está en el chat?'
-bans_unban_success: '¡Sí, este usuario puede entrar!'
+bans_kickme_success: Se você quer sair, tudo bem.
+bans_kickme_failed: 'Não posso te kickar, você tem sorte.'
+bans_unban_user_in_chat: 'Porque está tentando desbanir alguém que já está na conversa?'
+bans_unban_success: 'Este usuário pode entrar novamente no grupo.'
 bans_unban_logger: "<b>{}:</b>\n#UNBAN\n<b>Administrador:</b> {}\n<b>Usuario:</b> {} (<code>{}</code>)"
 bans_sban_logger: "<b>{}:</b>\n#UNBAN\n<b>Administrador:</b> {}\n<b>Usuario:</b> {} (<code>{}</code>)"
 bans_help: |
-  Algunas personas necesitan ser prohibidas públicamente; spammers, molestias, o simplemente trols.\n
-  Este módulo te permite hacerlo fácilmente, exponiendo algunas acciones comunes, ¡todo el mundo lo verá!\n
-  Los comandos disponibles son:
-  - /ban: Banea a un usuario en el chat.
-  - /banme: Banearte a ti mismo.
-  - /tban: Banea temporalmente a un usuario en el chat, establece la hora usando int<d/h/m> (días, horas o minutos)
-  - /unban: Desbanea a un usuario en el chat.
-  - /sban: Bloquea silenciosamente a un usuario en el chat.
-  - /mute: Silencia a un usuario en el chat.
-  - /tmute: Silencia temporalmente a un usuario en el chat. establecer tiempo usando int<d/h/m> (días, horas o minutos)
-  - /unmute: Dessilencia un usuario en el chat.
-  - /kick: Expulsa a un usuario del chat.
-  - /kickme: Expulsándose.\n
-  Todos los comandos funcionan a través del manejador o la respuesta, excepto banme y kickme(los cuales no requieren argumentos).\n
-  Un ejemplo de silenciar temporalmente a alguien:
-  /tmute @username 2h; esto silencia a un usuario durante 2 horas.
+  Algumas pessoas precisam ser banidas publicamente, como spammers, aborrecimentos ou simplesmente trolls.\n
+  Este módulo permite que você faça isso facilmente, expondo as ações deles ao público!\n
+  Os comandos disponíveis são:
+  - /ban: Bane um usuário do chat.
+  - /banme: Bane a si mesmo do chat.
+  - /tban: Bane temporariamente um usuário do chat, você estabelece o tempo com int<d/h/m> (dias, horas ou minutos)
+  - /unban: Desbane um usuário do chat.
+  - /sban: Bane silenciosamente um usuário do chat.
+  - /mute: Silencia um usuário do chat.
+  - /tmute: Silencia temporariamente um usuario do chat. você estabelece o tempo usando int<d/h/m> (dias, horas ou minutos)
+  - /unmute: Dessilencia um usuário do chat.
+  - /kick: Expulsa um usuário do chat.
+  - /kickme: Se expulsa do chat.\n
+  Todos os comandos precisam que seja marcado um usuário ou que uma mensagem dele seja respondida, exceto banme e kickme(os quais não requerem argumentos).\n
+  Um exemplo de como silenciar temporariamente um usuário:
+  /tmute @nomedousuario 2h; este comando silencia um usuário por 2 horas.
 #Blacklist
 modname_blacklist: Lista negra
-blacklist_active_list: Filtros de lista negra activos en {}:\n
-blacklist_no_list: '¡No hay filtros de lista negra en <b>{}</b>!'
-blacklist_add: Añadido <code>{}</code> a la lista negra en <b>{}</b>!
-blacklist_del: Eliminado <code>{}</code> de la lista negra en <b>{}</b>!
-blacklist_multi_del: Eliminados <code>{}</code> disparadores de la lista negra en <b>{}</b>!
-blacklist_err_add_no_args: Dime qué palabras te gustaría {} de la lista negra.
-blacklist_err_del_no_args: Dime qué palabras quieres eliminar de la lista negra.
-blacklist_err_not_trigger: '¡No es un disparador en la lista negra!'
-blacklist_err_multidel_no_trigger: Ninguno de esos activadores existían, por lo que no se eliminó nada de la lista negra.
-blacklist_err_multidel_some_no_trigger: Eliminados <code>{}</code> disparadores de la lista negra en <b>{}</b>! {} no existía, así que no se eliminaron.
-blacklist_chatsettings_word_count: Hay {} palabras en la lista negra.
+blacklist_active_list: Filtros de lista negra ativos em, {}:\n
+blacklist_no_list: 'Não há filtros de lista negra ativos em <b>{}</b>!'
+blacklist_add: Adicionado o filtro <code>{}</code> na lista negra em <b>{}</b>!
+blacklist_del: Removido o filtro <code>{}</code> da lista negra em <b>{}</b>!
+blacklist_multi_del: Removidos os filtros <code>{}</code> da lista negra em <b>{}</b>!
+blacklist_err_add_no_args: Por favor, diga-me palavras que quer adicionar a lista negra.
+blacklist_err_del_no_args: Por favor, diga-me palavrar que quer eliminar da lista negra.
+blacklist_err_not_trigger: 'Isso não é um dos filtros da lista negra!'
+blacklist_err_multidel_no_trigger: Nenhum desses filtros existia, logo nada foi eliminado da lista negra.
+blacklist_err_multidel_some_no_trigger: Removidos os filtros <code>{}</code> da lista negra em <b>{}</b>! {} não era um filtro, então ele não foi removido.
+blacklist_chatsettings_word_count: Existem atualmente {} palavras na lista negra.
 blacklist_help: |
-  Puedes configurar los filtros de la lista negra para que actúen automáticamente sobre las personas cuando dicen ciertas cosas. Esto se hace usando:\n
-  - /addblacklist <blacklist trigger> <blacklist reason>: lista negra el disparador. Puede establecer frases poniendo citas alrededor de la razón.
-  - /unblacklist <blacklist trigger>: detener la lista negra de un desencadenador determinado de la lista negra.
-  - /rmblacklist <blacklist trigger>: igual que /unblacklist
-  - /blacklist: listar todos los filtros activos de la lista negra
-  - /geturl: Ver las urls actuales de la lista negra
-  - /addurl <urls>: Añadir un dominio a la lista negra. El bot analizará automáticamente la url.
-  - /delurl <urls>: Elimina las urls de la lista negra.\n
-  Ejemplo:
-  /addblacklist "los administradores suck" Respete a sus administradores!
-  Esto eliminaría cualquier mensaje que contenga 'los administradores suck'.\n
+  Os filtros de lista negra podem ser configurados para agirem automaticamente quando as pessoas digitam certas palavras. Isso é feito utilizando os comandos:\n
+  - /addblacklist <filtro de lista negra> <motivo do filtro>: Adiciona um filtro a lista negra. Você pode definir frases colocando aspas em torno do motivo.
+  - /unblacklist <filtro da lista negra>: Parar um determinado filtro da lista negra.
+  - /rmblacklist <filtro da lista negra>: Faz a mesma coisa que /unblacklist.
+  - /blacklist: Lista todos os filtros da lista negra.
+  - /geturl: Lista as urls que estão atualmente na lista negra.
+  - /addurl <urls>: Adiciona um site a lista negra.O bot irá analizar automaticamente a url.
+  - /delurl <urls>: Elimina um site da lista negra.\n
+  Exemplos:
+  /addblacklist "Sopa de macaco" UMA DELICIA
+  Isto removeria qualquer mensagem com 'Sopa de macaco'.\n
   /addurl bit.ly
-  Esto eliminaría cualquier mensaje que contenga la url "bit.ly".
+  Isso removeria qualquer mensagem com a url "bit.ly".
 #Connections
 modname_connection: Conexões
-connection_enable: Conexiones habilitadas a este chat para usuarios.
-connection_disable: Conexiones deshabilitadas a este chat para usuarios.
-connection_err_wrong_arg: Por favor ingrese en/yes/off/no como argumento!
-connection_success: Conectado correctamente a *{}*
-connection_fail: '¡Conexión fallida!'
-connection_err_not_allowed: '¡Las conexiones a este chat no están permitidas!'
-connection_err_no_chatid: '¡Ingrese el ID del chat para conectarse!'
-connection_dis_success: '¡Desconectado del chat con éxito!'
-connection_dis_fail: '¡Fallo al desconectar!'
-connection_err_unknown: El grupo ha cambiado los derechos de conexión o ya no eres administrador.\nTe desconectaré.
+connection_enable: Conexões estão habilitadas para os usuários neste chat.
+connection_disable: Conexões estão desabilitadas para os usuários deste chat.
+connection_err_wrong_arg: Por favor use on/yes/off/no como argumento!
+connection_success: Conectado com sucesso a *{}*
+connection_fail: 'Conexão Falhou'
+connection_err_not_allowed: 'As conexões não estão permitidas nesse chat'
+connection_err_no_chatid: 'Entre com o ID do chat para se conectar'
+connection_dis_success: 'Desconectado do chat com sucesso.'
+connection_dis_fail: 'Falha ao se desconectar do chat'
+connection_err_unknown: O grupo mudou os direitos de conexão ou você não é um administrador.\n
 connection_help: |
-  A veces, sólo quieres añadir algunas notas y filtros a un chat de grupo, pero no quieres que todo el mundo lo vea; Aquí es donde entran las conexiones...
-  Esto le permite conectarse a la base de datos de un chat, y agregar cosas a él sin que los comandos aparezcan en el chat! Por razones obvias, usted necesita ser un administrador para agregar cosas; pero cualquier miembro del grupo puede ver sus datos.\n
-  Las acciones están disponibles con grupos conectados:
-  • Ver y editar notas
-  • Ver y editar filtros
-  • Ver y editar listas negras
-  • Promocionar/degradar usuarios
-  • Ver lista de administradores, see invitelink
-  • Desactivar/habilitar comandos en el chat
-  • Silenciar/dessilenciar usuarios en el chat
-  • Restringir/desrestringir usuarios en el chat
-  • ¡Más en el futuro!\n
-  - Escribe /connect o /connection en el grupo al que quieres conectarte.
-  - /connection or /connect <chatid>: Connect to remote chat
-  - /disconnect: Disconnect from chat
-  - /allowconnect on/yes/off/no: Allow connect users to group\n
-  You can retrieve the chat id by using the /id command in your chat. No te sorprendas si el id es negativo; todos los supergrupos tienen identificadores negativos.
+  As vezes, você quer adicionar notas e filtros a um grupo, mas não quer que as pessoas no grupo vejam; é aqui que as conexões entram...
+  Elas permitem que você acesse o banco de dados de um chat e adicione itens a ele sem que os comandos aparecem na conversa! Por razões óbvias, é nescessário ser um administrador para adicionar coisas; mas qualquer um no chat pode ver os seus dados.\n
+  Ações disponíveis para grupos conectados:
+  • Ver e editar notas
+  • Ver e editar filtros
+  • Ver e editar listas negras
+  • Promover/rebaixar usuarios
+  • Ver lista de administradores, ver o link de convite
+  • Desativar/ativar comandos no chat
+  • Silenciar/dessilenciar usuários no chat
+  • Restringir/desrestringir usuários en el chat
+  • Mais funções no futuro!\n
+  - Escreva /connect ou /connection no grupo em que quer se conectar.
+  - /connection or /connect <chatid>: Conecta ao chat remoto
+  - /disconnect: Disconecta do chat remoto
+  - /allowconnect on/yes/off/no: Permite conectar usuários ao grupo\n
+  Você pode pegar o ID com o comando /id no seu chat. Não fique surpreso se o ID for negativo, todos os supergrupos tem ID's negativos.
 #Filters
 modname_cust_filters: Filtros
-cust_filters_list: "*Lista de filtros en {}:*\n"
-cust_filters_local: filtros locales
-cust_filters_err_btn_only: Falta el texto de respuesta del filtro. ¡Sólo puede tener botones, necesita un mensaje para seguir!
-cust_filters_err_empty: '¡No especificaste con qué responder!'
-cust_filters_add_success: '¡Handler ''{}'' añadido en *{}*!'
-cust_filters_list_empty: '¡No hay ningún filtro activo en {}!'
-cust_filters_stop_success: Sí, dejaré de responder a eso en *{}*.
-cust_filters_err_wrong_filter: Eso no es un filtro activo - ejecuta /filter para todos los filtros activos.
-cust_filters_err_protocol: Parece que está intentando utilizar un protocolo url no soportado. Telegram no soporta botones para algunos protocolos, como tg://. Inténtalo de nuevo.
-cust_filters_err_badformat: Este filtro no pudo ser enviado, ya que está mal formateado.
-cust_filters_chatsettings_stats: Hay filtros personalizados `{}` aquí.
-cust_filters_cleanup_success: "{} filtros de este chat han sido eliminados."
+cust_filters_list: "*Lista de filtros em {}:*\n"
+cust_filters_local: filtros locais
+cust_filters_err_btn_only: O texto de resposta do filtro está faltando; só pode ter botões, então você precisa de uma resposta para prosseguir.
+cust_filters_err_empty: 'Você não especificou com o que responder.'
+cust_filters_add_success: 'Filtro ''{}'' adicionado com sucesso em *{}*!'
+cust_filters_list_empty: 'Não há nenhum filtro ativo em {}!'
+cust_filters_stop_success: A partir de agora não responderei mais a esse filtro em *{}*.
+cust_filters_err_wrong_filter: Este não é um filtro ativo - execute /filter para ver todos os filtros ativos.
+cust_filters_err_protocol: Parece que você está tentando usar um protocolo de url não suportado. O Telegram não suporta botões para alguns protocolos, como tg://. Por favor, tente novamente.
+cust_filters_err_badformat: Este filtro não pode ser enviado, já que está mal formatado.
+cust_filters_chatsettings_stats: Atualmente existem `{}` filtros neste chat.
+cust_filters_cleanup_success: "Os filtros {} foram eliminados com sucesso deste chat."
 cust_filters_help: |
-  Haz tu chat más animado con los filtros; ¡El bot responderá a ciertas palabras!
-  Los filtros son insensibles en mayúsculas y minúsculas; ¡cada vez que alguien diga tus palabras activadoras, {} contestará otra cosa! puede usarse para crear sus propios comandos, si así lo desea.
-  - /filters: listar todos los filtros activos en este chat.
-  *Solo Administrador:*
-  - /filter <keyword> <reply message>: Cada vez que alguien diga "palabra", el bot responderá con "oración". Para varios filtros de palabras, cita la primera palabra.
-  - /stopall: Detener todos los filtros, debe ser propietario del chat para hacerlo. Sólo use esto cuando sepa lo que está haciendo.
-  - /stop <filter keyword>: detener ese filtro.\n
-  Un ejemplo de cómo establecer un filtro sería por ejemplo:
-  `/filter hola Hola! ¿Cómo estás?`
-  Un filtro multipalabra podría establecerse a través de:
-  `/filter "hola amigo" ¡Hola de vuelta! ¡Largo tiempo no ver!`
-  Si desea guardar una imagen, gif, o sticker, o cualquier otro dato, haz lo siguiente:
-  `/filter word`, mientras respondes a una etiqueta o a los datos que quieras. Ahora, cada vez que alguien mencione "palabra", esa etiqueta será enviada como respuesta.
-  Ahora, cualquiera que diga "Hola" será respondido con "¡Hola allí! ¿Cómo estás?".
+  Torne o seu chat mais animado com os filtros! Você pode configurar o bot para responder certas palavras de maneira personalizada!
+  Os filtros não diferenciam letras maiúsculas de minúsculas; toda vez que alguém dizer um dos filtros, {} irá responder com uma ação personalizada! Ele pode ser usado para criar seus proṕrios comandos, se você desejar
+  - /filters: Lista todos os filtros ativos no chat.
+  *Somente Administrador*
+  - /filter <palavra-chave> <resposta>: Toda vez que alguém dizer a "palavra-chave", o bot lhe dira a "resposta". Caso haja várias palavras-chave em uma mensagem, ele dará a resposta somente da primeira.
+  - /stopall: Para todos os filtros; deve ser o dono do grupo para fazer isso, use somente quando você sabe o que está fazendo.
+  - /stop <filtro>: Faz o bot parar de responder o filtro. .\n
+  Um exemplo de como setar um filtro:
+  `/filter olá Olá,tudo bem?`
+  Um filtro com 2 palavras ou mais poderia ser setado assim:
+  `/filter "bom dia" Bom dia, como você está?`
+  Se você quer que o bot responda a um filtro com uma imagem, video, audio, gif ou sticker, faça o seguinte:
+  Responda a uma midia com `/filter palavra` e esta palavra será respondida com essa midia.
+  Agora, qualquer um que diga "olá", será respondido con "Olá, Tudo bem?".
 #Disable
 modname_disable: Desativar
-disable_success: Deshabilitado el uso de `{}`
-disable_err_undisableable: Ese comando no puede ser desactivado
-disable_err_no_cmd: Pase un comando como argumento.
-disable_enable_success: Activado el uso de `{}`
-disable_already_enabled: Ese comando ya está habilitado.
-disable_able_commands: Los siguientes comandos son activables:\n{}
-disable_able_commands_none: Ningún comando puede ser deshabilitado.
-disable_chatsettings_none_disabled: '¡No hay comandos desactivados!'
-disable_chatsettings_list_disabled: Los siguientes comandos están actualmente deshabilitados para no-administradores:\n{}
+disable_success: O uso do comando `{}` foi desativado.
+disable_err_undisableable: O uso deste comando não pode ser desativado.
+disable_err_no_cmd: Por favor, diga o comando a ser desativado.
+disable_enable_success: O uso do comando `{}` foi ativado.
+disable_already_enabled: Esse comando já está ativado.
+disable_able_commands: Os seguintes comandos são ativáveis:\n{}
+disable_able_commands_none: Nenhum comando pode ser desativado.
+disable_chatsettings_none_disabled: 'Não há nenhum comando desativado!'
+disable_chatsettings_list_disabled: Os seguintes comandos estão desativados para não-administradores:\n{}
 disable_help: |
-  No todo el mundo quiere todas las características que ofrece el bot. Algunos comandos son mejores cuando no se usan para evitar spam y abuso.\n
-  Esto te permite desactivar algunos comandos comúnmente usados, por lo que los no admins no pueden usarlos.
-  También te permitirá autodeletearlos, evitando que la gente se extinga.\n
-  - /cmds: comprueba el estado actual de los comandos deshabilitados\n
-  *Solo administrador:*
-  - /enable <cmd name>: Activar un comando
-  - /disable <cmd name>: Desactivar un comando
+  Nem todo mundo quer todos os recursos que o bot oferece. Alguns comandos podem ser melhores quando não usados, para evitar spam e abuso\n
+  Isso permite que você desative alguns comandos usados com frequência, para que não-administradores não possam usá-los.
+  Também te permite autodeletá-los, impedindo que as pessoas sejam extintas (hehe).\n
+  - /cmds: verifica o estado atual dos comandos desativados.\n
+  *Somente administrador:*
+  - /enable <comando>: Ativa um comando.
+  - /disable <comando>: Desativa um comando.
 #Feds
 modname_feds: Federações
-feds_create_fail: '¡Creación de la Federación fallida!'
-feds_create_success: "*¡Has creado con éxito una nueva federación!\nNombre: `{}`\nID: `{}`\n\nEjecuta el comando de abajo en grupos para añadirlos a la federación:\n`/joinfed {}`"
-feds_create_success_logger: "La Federación <b>{}</b> ha sido creada con ID: <pre>{}</pre>"
-feds_err_no_args: Por favor, escriba el nombre de la federación.
-feds_delete_not_found: '¡Esta federación no se encuentra!'
-feds_owner_only: '¡Sólo los propietarios de la federación pueden hacer esto!'
-feds_fedadmin_only: '¡Sólo los administradores de la federación pueden hacer esto!'
-feds_delete_confirm: '¿Está seguro que desea eliminar su federación? Esta acción no se puede cancelar, perderás toda tu lista de baneos, ¡y <code>{}</code> federación se perderá permanentemente!'
-feds_group_not_in_fed: '¡Este grupo no está en ninguna federación!'
-feds_group_part_of_fed: "Este chat es parte de la siguiente federación:"
-feds_group_joined_fed: Uh, ¿Te vas a unir a dos federaciones en un chat?
-feds_fedid_invalid: Por favor, introduzca un ID de la Federación válido.
-feds_join_unknown_err: No se pudo unirse a la federación debido a un error desconocido.
-feds_join_success: '¡Chat unido a federación!'
-feds_leave_success: "¡Este chat ha dejado la federación: {}!"
-feds_leave_not_joined: '¿Cómo puedes dejar una federación que nunca te has unido?!'
-feds_promote_owner: '¿Por qué está intentando promocionar al propietario de la federación?'
-feds_promote_bot: '¡Ya soy un administrador de la federación en todas las federaciones!'
-feds_promote_success: '¡Promocionado con éxito!'
-feds_promote_failed: '¡Error al promover!'
-feds_demote_bot: '¡No puedo degradarme de una federación!'
-feds_demote_target_not_admin: '¡No puedo degradar a las personas que no son administradores de la federación!'
-feds_demote_success: '¡Sal de aquí!'
-feds_demote_failed: '¡Fallo en la degradación!'
+feds_create_fail: 'A criação da federação falhou'
+feds_create_success: "*Uma nova federação foi criada!\nNome: `{}`\nID: `{}`\n\nExecute o comando abaixo em outros grupos para adicioná-los a federação:\n`/joinfed {}`"
+feds_create_success_logger: "A federação <b>{}</b> foi criada com o ID: <pre>{}</pre>"
+feds_err_no_args: Por favor, escreva o nome da federação.
+feds_delete_not_found: 'Esta federação não foi encontrada.'
+feds_owner_only: 'Somente os proprietários da federação podem fazer isso.'
+feds_fedadmin_only: 'Somente os administradores da federação podem fazer isso.'
+feds_delete_confirm: 'Você tem certeza que quer eliminar a sua federação? Esta ação não pode ser cancelada, você irá perder sua lista de banimentos, e a federação <code>{}</code> será perdida permanentemente!'
+feds_group_not_in_fed: 'Este grupo não está em nenhuma federação'
+feds_group_part_of_fed: "Este grupo faz parte da seguinte federação:"
+feds_group_joined_fed: Você vai mesmo se juntar a duas federações em um grupo? mas que traira.
+feds_fedid_invalid: Por favor, insira um ID de federação válido
+feds_join_unknown_err: Devido a um erro desconhecido, não pode se unir a uma federação.
+feds_join_success: 'Grupo adicionado a federação!'
+feds_leave_success: "Este grupo deixou a federação: {}."
+feds_leave_not_joined: 'Como pode deixar uma federação a qual você nunca se uniu?'
+feds_promote_owner: 'Porque você está tentando promover o dono da federação?'
+feds_promote_bot: 'Eu já sou administrador de todas as federações!'
+feds_promote_success: 'Promovido com sucesso.'
+feds_promote_failed: 'Falha ao promover.'
+feds_demote_bot: 'Não posso ser rebaixado de uma federação.'
+feds_demote_target_not_admin: 'Não posso rebaixar as pessoas que não são administradores da federação.'
+feds_demote_success: 'Rebaixado com sucesso'
+feds_demote_failed: 'Falha ao rebaixar.'
 feds_info: |
-  <b>i Información de la Federación:</b>
+  <b>i Info da federação:</b>
   UnionID: <code>{}</code>
-  Nombre: {}
-  Creador: {}
-  Todos los administradores: <code>{}</code>
-  Total de usuarios baneados: <code>{}</code>
-  Número de grupos en esta federación: <code>{}</code>
+  Nome: {}
+  Criador: {}
+  Administradores: <code>{}</code>
+  Total de usuários banidos: <code>{}</code>
+  Número de grupos nesta federação: <code>{}</code>
 feds_admins: |
-  <b>Administradores en federación '{}':<b>
+  <b>Administradores de federação '{}':<b>
 feds_help: |
-  Ah, gestión de grupos. Todo es divertido, hasta que el spammer empiece a entrar en tu grupo, y tienes que bloquearlo. Entonces hay que empezar a prohibir más y más, y esto duele.
-  Pero entonces tienes muchos grupos. y no quieres que este spammer esté en uno de tus grupos, ¿cómo puedes lidiar con ello? ¿Tienes que bloquearlo manualmente en todos tus grupos?
+  Oh, gerenciamento de grupos. Tudo é divertido, até que um spammer entre no seu grupo e você precise bloqueá-lo. Então você tem que começar a banir mais e mais, e isso dói.
+  Mas então você tem muitos grupos, e você não quer que esse remetente de spam esteja nos seus grupos, como você pode lidar com isso? Você precisa bloqueá-lo manualmente em todos os seus grupos?
 
-  ¡Ya no! Con la Federación, puedes prohibir un chat solapado con todos los demás chats.
-  Incluso puedes designar las federaciones de administración, por lo que tu administrador de confianza puede banear todos los chats que quieras proteger.
+  Com certeza não! Com a federação, você pode banir um usuário de um chat e banir automaticamente dos outros chats na federação.
+  Você pode até definir administradores da federação, para que um admin de sua confiança possa banir usuários todos os chats que você deseja proteger.
 
-  Todavía la etapa experimental, crear una Federación sólo puede ser hecho por mi creador
+  Ainda na fase experimental, a criação de uma federação só pode ser feita pelo meu criador @Hitalo.
 
-  Comando:
-  - /newfed <fedname>: crear una nueva Federación con el nombre dado. Los usuarios sólo pueden tener una Federación. Este método también puede utilizarse para renombrar a la Federación. (máx. 64 caracteres)
-  - /delfed: elimina tu Federación y cualquier información relacionada con ella. No cancelará los usuarios bloqueados.
-  - /fedinfo <FedID>: información sobre la Federación especificada.
-  - /joinfed <FedID>: únete al chat actual con la Federación. Sólo los dueños del chat pueden hacer esto. Cada chat sólo puede estar en una Federación.
-  - /leavefed <FedID>: dejar la Federación dada. Solo los dueños del chat pueden hacer esto.
-  - /fpromote <user>: promover usuarios para dar a los administradores de la Reserva Federal solamente.
-  - /fdemote <user>: suelta el Usuario de la Federación de administración a un Usuario normal. Solo dueño de la Fed.
-  - /fban <user>: banean a los usuarios de todas las federaciones donde tiene lugar este chat, y los ejecutores tienen el control.
-  - /unfban <user>: cancelar el usuario de todas las federaciones donde tiene lugar este chat, y que el ejecutor tiene el control.
-  - /setfrules: Organizar las reglas de la Federación.
-  - /frules: Ver las regulaciones de la Federación.
-  - /chatfed: Ver la Federación en el chat actual.
-  - /fedadmins: Mostrar administrador de la Federación.
-  - /fbanlist: Muestra todos los usuarios que son víctimas en la Federación en este momento.
-  - /fedchats: Consigue todos los chats conectados en la Federación.
-  - /importfbans: Responder al archivo de mensaje de copia de seguridad de la Federación para importar la lista prohibida a la Federación ahora.
+  Comandos:
+  - /newfed <fedname>: Cria uma nova Federação com o nome dado. Os usuários podem ter apenas uma federação. Este método também pode ser usado para renomear a Federação. (máximo de 64 caracteres)
+  - /delfed: Exclui sua Federação e qualquer informação relacionada a ela. Não cancelará usuários bloqueados.
+  - /fedinfo <FedID>: Traz informações sobre a Federação especificada.
+  - /joinfed <FedID>: Une o grupo atual com uma Federação. Somente os donos do grupo podem fazer isso. Cada grupo pode estar apenas em uma federação.
+  - /leavefed <FedID>: Deixa a federação atual. Somente os donos do grupo podem fazer isso.
+  - /fpromote <user>: Promove usuários a administradores da federação, somente o dono da federação pode fazer isso.
+  - /fdemote <user>: Rebaixa um administrador da federação a um usuario normal, somente o dono da federação pode fazer isso.
+  - /fban <user>: Bane o usuário de todos os chats que fazem parte da federação a qual este grupo faz parte.
+  - /unfban <user>: Desbane o usuário de todos os chats que fazem parte da federação a qual esse grupo faz parte.
+  - /setfrules: Seta as regras da federação.
+  - /frules: Mostra as regras da federação.
+  - /chatfed: Ver em que federação está o chat atual.
+  - /fedadmins: Lista os administradores da Federação.
+  - /fbanlist: Listaa todos os usuários que foram banidos da federação até o momento.
+  - /fedchats: Lista todos os chats que estão na federação atual.
+  - /importfbans: Importa a lista de fbans da federação a partir de um arquivo de backup.
 #TODO: To be continued
 #Keyboard
-keyboard_disconnect: Desconectar de un chat
+keyboard_disconnect: Desconectar de um chat
 keyboard_connect: Conectar a un chat
-keyboard_updated: Teclado actualizado
+keyboard_updated: Teclado atualizado
 keyboard_bothelp: Bot Help
 keyboard_notes: Notas
 #Language
-language_switch_success: La preferencia de idioma para {} ha sido actualizada a {}
-language_switch_success_pm: Tu preferencia de idioma se ha actualizado a {}
-language_not_supported: "¡{} aún no está soportado!"
-language_code_not_valid: Eso no es un código de idioma válido. ¡Usa un código ISO internacionalmente aceptado!
-language_current_locale: "El idioma actual para este chat es: *{}*"
-language_select_language: "*Seleccionar idioma* \n"
-language_user_language: "Lenguage de usuario: `{}`"
-language_chat_language: "\nIdioma de chat conectado: `{}`"
-language_sel_user_lang: "*\n\nSeleccione un nuevo idioma de usuario:*"
+language_switch_success: O idioma de {} foi atualizado para {}.
+language_switch_success_pm: Seu idioma foi alterado com sucesso para {}.
+language_not_supported: "{} ainda não é suportado."
+language_code_not_valid: Este não é um código de idioma válido. Por favor use um código ISO que seja internacionalmente aceito.
+language_current_locale: "O idioma atual para esse chat é: *{}*"
+language_select_language: "*Selecionar idioma* \n"
+language_user_language: "Linguagem de usuário: `{}`"
+language_chat_language: "\nIdioma do chat conectado: `{}`"
+language_sel_user_lang: "*\n\nSeleccione um novo idioma de usuário:*"
 #Locks
 modname_locks: Bloqueios
-locks_list_title: "Bloqueos: "
-locks_lock_success: '¡Mensajes `{}` bloqueados para todos los no administradores!'
-locks_unlock_success: '¡Mensaje `{}` desbloqueado para todos!'
-locks_type_invalid: '¿Qué estás intentando bloquear...? Prueba /locktypes para la lista de bloqueos.'
-locks_bot_not_admin: Asegúrate de que soy un administrador de grupo y tengo permiso para borrar mensajes, luego vuelve a intentarlo.
-locks_lock_no_type: No ha especificado un tipo para bloquear.
-lokcs_unlock_no_type: No ha especificado un tipo para desbloquear.
-locks_lock_bots_no_admin: Veo un bot, y me han dicho que dejen de unirse... ¡pero no soy un administrador!
-locks_lock_bots_kick: '¡Solo los administradores pueden añadir bots a este chat! ¡Expulsado!'
-locks_list_empty: No hay bloqueos actuales en *{}*.
+locks_list_title: "Bloqueios: "
+locks_lock_success: 'Mensagem `{}` bloqueada para todos os não-administradores.'
+locks_unlock_success: 'Mensagem `{}` desbloqueada para todos!'
+locks_type_invalid: 'O que você está tentando bloquear? Digite /locktypes ver para a lista de bloqueios. '
+locks_bot_not_admin: Verifique se eu sou um administrador do grupo e tenho permissão para excluir mensagens e tente novamente.
+locks_lock_no_type: Você não especificou um tipo de mensagem para bloquear.
+lokcs_unlock_no_type: Você não especificou um tipo de mensagem para desbloquear.
+locks_lock_bots_no_admin: Eu vejo um bot e eles me disseram para não deixar ele entrar... mas eu não sou um administrador!
+locks_lock_bots_kick: 'Somente administradores podem adicionar bots a este chat, você está expulso!'
+locks_list_empty: Atualmente não há bloqueios em *{}*.
 locks_list: |
-  Estos son los bloques en *{}*:
+  Estos são os bloqueios em *{}*:
    - sticker = `{}`
    - audio = `{}`
    - voz = `{}`
-   - documento = `{}`
-   - video = `{}`
-   - nota de video = `{}`
-   - contacto = `{}`
-   - foto = `{}`
-   - gif = `{}`
-   - url = `{}`
+   - documentos = `{}`
+   - videos = `{}`
+   - nota de videos = `{}`
+   - contatos = `{}`
+   - fotos = `{}`
+   - gifs = `{}`
+   - urls = `{}`
    - bots = `{}`
    - reenviar = `{}`
-   - juego = `{}`
-   - localización = `{}`
-   - mensajes = `{}`
+   - jogos = `{}`
+   - localização = `{}`
+   - mensagens = `{}`
    - media = `{}`
-   - otro = `{}`
-   - todo = `{}`
+   - outros = `{}`
+   - todos = `{}`
 locks_help: |
-  ¿Te molestan las pegatinas? ¿O quieres evitar que la gente comparta enlaces? ¿O fotos? ¡Estás en el lugar correcto!\n
-  El módulo de bloqueo te permite bloquear algunos elementos comunes en el mundo del telegrama; ¡el bot los eliminará automáticamente!\n
-  Los comandos disponibles son:
-  - /lock <item(s)>: bloquear el uso de "item". ¡Ahora, sólo los administradores podrán usar este tipo!
-  - /unlock <item(s)>: desbloquear "item". Todos pueden usarlos de nuevo.
-  - /locks: listar el estado del bloqueo en el chat.
-  - /locktypes: obtiene una lista de todas las cosas que se pueden bloquear. (¡echa un vistazo a esto!)\n
-  por ejemplo: bloquea stickers con:
+  Os stickers o incomodam? Ou você deseja impedir que as pessoas compartilhem links? Ou fotos? Você está no lugar certo!\n
+  O módulo de bloqueio permite bloquear alguns elementos comuns no mundo do telegram; O bot irá removê-los automaticamente!\n
+  Os comandos disponíveis são:
+  - /lock <item(s)>: bloqueia o uso de um "tipo de item". Agora, somente administradores podem usar esse item!
+  - /unlock <item(s)>: desbloqueia o uso de um "tipo de item". Todos os usuários podem usá-lo novamente.
+  - /locks: lista os itens bloqueados no chat.
+  - /locktypes: lista todas os tipos de coisas que podem ser bloqueadas (dê uma olhada nisso)\n
+  Por exemplo, você pode bloquear stickers com:
   /lock sticker
 #Log channel
 modname_log_channel: Canal de logs
 log_channel_link: \n<b>Enlace:</b> <a href=\"http://telegram.me/{}/{}\">haga clic aquí</a>
-log_channel_deleted: Este canal de registro ha sido eliminado - desajuste.
-log_channel_err_format: \n\nEl formato ha sido desactivado debido a un error inesperado.
-log_channel_grp_curr_conf: "Este grupo tiene todos sus registros enviados a: {} (`{}`)"
-log_channel_none: '¡No se ha establecido ningún canal de registro para este grupo!'
-log_channel_fwd_cmd: Ahora, ¡reenvía el comando /setlog al grupo al que quieres conectar este canal!
-log_channel_chn_curr_conf: Este canal se ha establecido como el canal de registro para {}.
-log_channel_link_success: '¡Establecer el canal de registro con éxito!'
-log_channel_invalid_message: '¡Este no es un mensaje reenviado! Por favor lee ayuda (escribe /help en un PM con el bot) para más información sobre este comando.'
-log_channel_unlink_success: '¡El canal ha sido desvinculado de {}!'
-log_channel_unlink_none: '¡No se ha establecido ningún canal de registro!'
+log_channel_deleted: Este canal de logs foi removido - incompatibilidade.
+log_channel_err_format: \n\nO formato foi desativado devido a um erro inesperado.
+log_channel_grp_curr_conf: "Este grupo tem todos os seus registros enviados para: {} (`{}`)"
+log_channel_none: 'Nenhum canal de registro foi estabelecido para este grupo!'
+log_channel_fwd_cmd: Agora execute o comando /setlog no grupo o qual você deseja conectar este canal!
+log_channel_chn_curr_conf: Este canal foi estabelecido como o canal de registro para {}.
+log_channel_link_success: 'O canal de registro foi estabelecido com sucesso!'
+log_channel_invalid_message: 'Esta não é uma mensagem encaminhada! Leia a ajuda (digite /help em uma PM com o bot) para obter mais informações sobre este comando.'
+log_channel_unlink_success: 'O canal foi desvinculado de {}!'
+log_channel_unlink_none: 'Nenhum canal de registro foi estabelecido!'
 log_channel_help: |
-  *Solo administrador:*
-  - /logchannel: obtener información del canal de registro
-  - /setlog: establecer el canal de registro.
-  - /unsetlog: desestablecer el canal de registro.\n
-  Establecer el canal de registro es hecho por:
-  - agregar el bot al canal deseado (como un administrador!
-  - enviando /setlog en el canal
-  - reenviando el /setlog al grupo
+  *Somente administrador:*
+  - /logchannel: obter informação do canal de registro.
+  - /setlog: estabelecer o canal de registor.
+  - /unsetlog: desestabelecer o canal de registro.\n
+  A configuração do canal de registro é feita por:
+  - adicione o bot ao canal desejado (como administrador)
+  - enviando /setlog no canal
+  - reenviando /setlog ao grupo
 #Memes and etc.
 modname_memes: Memes
-memes_no_message: Necesito un mensaje para meme.
-memes_deepfry_nothing: '¿Qué se supone que tengo que hacer con esto?'
-memes_shout_notext: '¿Dónde está el texto?'
-memes_not_doing_that: '¡No estoy haciendo eso!'
+memes_no_message: Preciso de uma mensagem para o meme.
+memes_deepfry_nothing: 'O que eu devo fazer com isso?'
+memes_shout_notext: 'Cadê o texto?'
+memes_not_doing_that: 'Eu não estou fazendo isso!'
 memes_runs_list:
-  - "¿A dónde crees que vas?"
-  - "¿Huh? ¿Qué? ¿se marcharon?"
-  - "ZZZZzz... ¿Huh? ¿Qué? ¡Oh, sólo ellos otra vez!"
-  - "¡Vuelve aquí!"
-  - "No tan rápido..."
-  - "¡Mira la pared!"
-  - "No me dejes solo con ellos!!"
-  - "Corre, mueres."
-  - "Chistes sobre ti, estoy en todas partes"
-  - "Estás a punto de lamentarlo..."
-  - "También puedes probar /kickme, oigo que es divertido."
-  - "Ve a molestarte a alguien más, aquí nadie se preocupa."
-  - "Puedes correr, pero no puedes ocultar."
-  - "¿Es todo lo que tienes?"
-  - "Estoy detrás de ti..."
-  - "¡Tienes compañía!"
-  - "Podemos hacerlo de la manera más fácil, o más difícil."
-  - "No lo entiendes, ¿verdad?"
-  - "¡Sí, es mejor correr!"
-  - "Por favor, recordarme cuánto me importa?"
-  - "Yo correría más rápido si yo fuera tú."
-  - "Ese es definitivamente el droide que estamos buscando."
-  - "Que las probabilidades estén siempre a su favor."
-  - "Últimas palabras conocidas."
-  - "Y desaparecieron para siempre, para nunca volver a verlos."
-  - "'¡Oh, mira a mí! Soy tan guay y puedo correr desde un bot!' - esta persona"
-  - "Sí, sí, sólo toque /kickme ya."
-  - "Aquí, tome este anillo y vaya a Mordor mientras está en él."
-  - "La leyenda lo tiene, siguen corriendo..."
-  - "A diferencia de Harry Potter, tus padres no te pueden proteger de mí."
-  - "El miedo conduce a la ira. La ira lleva al odio. El odio conduce al sufrimiento. Si sigues corriendo con miedo, puedes "
-  - "ser el siguiente Vader."
-  - "Múltiples cálculos más tarde, he decidido que mi interés en sus shenanigans es exactamente 0."
-  - "La leyenda lo tiene, siguen corriendo."
-  - "Manténgalo, no está seguro de que lo queremos aquí de todos modos."
-  - "Eres un mago- Oh. Espera. No eres Harry, sigue moviéndose."
-  - "¡SIN RUNNAR EN LOS HALLWAYS!"
-  - "Hasta la vista, bebé."
-  - "¿Quién dejó a los perros?"
-  - "Es divertido, porque a nadie le importa."
-  - "Ah, qué desperdicio. Me gustó eso."
-  - "Francamente, mi querida, no le doy un maldito."
-  - "Mi batido trae a todos los chicos al patio... ¡Así que corre más rápido!"
-  - "¡No puedes ABRIR la verdad!"
-  - "Hace mucho tiempo, en una galaxia muy lejos... A alguien le habría importado eso. Ya no más."
-  - "¡Eh, mira a ellos! Están corriendo del inevitable martillo de bannillo... lindo."
-  - "Han disparado primero. Así que yo."
-  - "¿A qué estás corriendo, un conejo blanco?"
-  - "Como diría el Doctor... ¡RUN!"
+  - "Aonde você pensa que está indo?"
+  - "Hein? O quê? Eles foram embora?"
+  - "ZZZZzz ... Hein? O quê? Ah, só eles de novo!"
+  - "Volte aqui!"
+  - "Não tão rápido..."
+  - "Olhe para a parede!"
+  - "Não me deixe sozinho com eles !!"
+  - "Corra, ou você morre."
+  - "Piadas sobre você, eu estou em todo lugar"
+  - "Você está prestes a se arrepender ..."
+  - "Você também pode tentar /kickme, eu ouvi dizer que é divertido."
+  - "Vá incomodar alguém, ninguém se importa aqui."
+  - "Você pode correr, mas não pode se esconder."
+  - "É tudo o que você tem?"
+  - "Estou atrás de você..."
+  - "Você tem companhia!"
+  - "Podemos fazer isso da maneira mais fácil ou mais difícil".
+  - "Você não entende, não é?"
+  - "Sim, é melhor correr!"
+  - "Por favor, lembre-me o quanto eu me importo?"
+  - "Eu correria mais rápido se fosse você."
+  - "Esse é definitivamente o bot que estamos procurando."
+  - "Que as probabilidades estejam sempre a seu favor."
+  - "Últimas palavras conhecidas."
+  - "E eles desapareceram para sempre, para nunca mais vê-los."
+  - "'Oh, olhe para mim! Eu sou tão legal e posso fugir de um bot!' - esta pessoa"
+  - "Sim, sim, basta tocar /kick já."
+  - "Aqui, pegue este anel e vá até Mordor enquanto estiver nele."
+  - "Diz a lenda, eles continuam correndo ..."
+  - "Ao contrário de Harry Potter, seus pais não podem protegê-lo de mim."
+  - "O medo leva à raiva. A raiva leva ao ódio. O ódio leva ao sofrimento. Se você continuar correndo com medo, pode"
+  - "seja o próximo Vader."
+  - "Vários cálculos depois, decidi que meu interesse em suas travessuras é exatamente 0".
+  - "Diz a lenda, eles continuam correndo."
+  - "Mantenha, você não tem certeza de que queremos aqui de qualquer maneira."
+  - "Você é um mágico- Oh. Espere. Você não é Harry, continue andando."
+  - "Não há corredores nos corredores!"
+  - "Até a vista, bebe."
+  - "Quem deixou os cachorros?"
+  - "É divertido, porque ninguém se importa."
+  - "Ah, que desperdício. Gostei disso."
+  - "Francamente, minha querida, eu não dou a mínima."
+  - "Meu smoothie traz todos os caras para o parquinho ... Então corra mais rápido!"
+  - "Você não pode ABRIR a verdade!"
+  - "Há muito tempo, em uma galáxia distante ... Alguém teria se importado com isso. Não mais."
+  - "Ei, olhe para eles! Eles estão fugindo do inevitável martelo de bannillo ... fofo."
+  - "Eles atiraram primeiro. Então eu fiz."
+  - "O que você está concorrendo, um coelho branco?"
+  - "Como o médico diria ... CORRA!"
 memes_insults_list:
-  - "Owww ... Tal idiota estúpido."
-  - "No bebas ni tipos."
-  - "Creo que debería volver a casa o mejor un asínculo mental."
-  - "Comando no encontrado. Al igual que tu cerca."
-  - "¿Te das cuenta de que estás haciendo una tontería? Aparentemente no."
-  - "Puede escribir mejor que eso."
-  - "La regla de bots 544 sección 9 me impide responder a seres humanos estúpidos como usted."
-  - "Lo sentimos, no vendemos cerraduras."
-  - "Créanme que usted no es normal."
-  - "Apuesto a que tu cerebro se siente tan bien como nuevo, viendo que nunca lo usas."
-  - "Si quería matarme a mí mismo, subiré tu ego y saltaré a tu IQ."
-  - "Los zombies comen cervezas... estás a salvo."
-  - "No evolucionaste de los simios, evolucionaron de ti."
-  - "Vuelva y hable conmigo cuando su I.Q. excede su edad."
-  - "No estoy diciendo que eres estúpido, solo digo que has tenido mala suerte cuando se trata de pensar."
-  - "¿Qué idioma estás hablando? Porque suena como una mierda."
-  - "La estupidez no es un delito, por lo que es libre de irse."
-  - "Eres la prueba de que la evolución CAN va inversa."
-  - "Te pregunto cuán viejo eres pero sé que no puedes contar tan alto."
-  - "Como persona ajena, ¿qué opinas de la raza humana?"
-  - "Las lluvias no lo son todo, en tu caso no son nada."
-  - "La gente normal vive y aprende. Usted sólo vive."
-  - "No sé lo que te hace tan estúpido, pero realmente funciona."
-  - "¡Sigue hablando, algún día dirás algo inteligente! (Lo dudo, sin embargo)"
-  - "Me sorprende, diga algo inteligente."
-  - "Tu IC es inferior al tamaño de tu calzado."
-  - "¡Vaya! Tus neurotransmisores ya no funcionan."
-  - "¿Estás loco que estés tonto."
-  - "Todo el mundo tiene derecho a ser estúpido, pero se está abusando del privilegio."
-  - "Lo siento cuando te llamé estúpido. Pensé que ya sabías eso."
-  - "Deberías probar a degustar cianuro."
-  - "Tus enzimas están pensadas para digerir veneno de rata."
-  - "Deberías intentar dormir para siempre."
-  - "Recoge una pistola y disparate a ti mismo."
-  - "Podrías hacer un récord mundial saltando de un avión sin paracaídas."
-  - "Deja de hablar BS y salta delante de un tren de bala corriente."
-  - "Pruebe a bañarse con Ácido Hydroclórico en lugar de agua."
-  - "Prueba esto: si mantienes el aliento bajo el agua durante una hora, puedes guardarlo para siempre."
-  - "¡Ve verde! Deja de inhalar oxígeno."
-  - "Dios te estaba buscando. Deberías salir para conocerlo."
-  - "da tu 100%. Ahora, ve a donar sangre."
-  - "Intenta saltar de un centenar de pisos pero sólo puedes hacerlo una vez."
-  - "Deberías donar tu cerebro viendo que nunca lo usaste."
-  - "Voluntario para objetivo en un rango de disparo."
-  - "Los shots de cabeza son divertidos. Consigue uno."
-  - "Deberías probar a nadar con grandes tiburones blancos."
-  - "Deberías pintarte rojo y correr en una maratón de balón."
-  - "Puedes quedarte bajo el agua durante el resto de tu vida sin volver a subir."
-  - "¿Qué tal si dejas de respirar como 1 día? Eso será genial."
-  - "Trate de provocar un tiger mientras ambos están en una jaula."
-  - "¿Has probado a dispararte a ti mismo tan alto como 100m usando un canon."
-  - "Deberías tratar de mantener la TNT en tu boca y encenderla."
-  - "Trate de jugar atrapar y lanzar con RDX su diversión."
-  - "He oído que la fotografia es venenosa, pero supongo que no te importa inhalarla por diversión."
-  - "Déjate llevar al espacio exterior olvidando el oxígeno en la Tierra."
-  - "Deberías tratar de jugar snake y ladders, con verdaderas serpientes y sin escaleras."
-  - "Baile desnudo en un par de cables HT."
-  - "El Volcán Verdadero es la mejor piscina para usted."
-  - "Deberías probar el baño caliente en un volcán."
-  - "Trate de pasar un día en una cafetería y será suyo para siempre."
-  - "Golpea Uranio con un trineo lento en tu presencia. Será una experiencia que merecerá la pena."
-  - "Puedes ser la primera persona en pisar el sol. Pruébalo."
+  - "Owww ... um idiota tão estúpido."
+  - "Não bebam pessoal."
+  - "Acho que devo ir para casa ou melhor, um assíncrono mental".
+  - "Comando não encontrado. Como seu pai."
+  - "Você percebe que está fazendo algo bobo? Aparentemente não."
+  - "Você pode escrever melhor que isso."
+  - "A regra bot 544 da seção 9 me impede de responder a seres humanos estúpidos como você."
+  - "Desculpe, nós não vendemos fechaduras."
+  - "Acredite, você não é normal."
+  - "Aposto que seu cérebro parece tão bom quanto novo, visto que você nunca o usa".
+  - "Se eu quisesse me matar, vou elevar seu ego e pular para o seu QI."
+  - "Zumbis comem cérebros ... você está seguro."
+  - "Você não evoluiu dos macacos, eles evoluíram de você."
+  - "Volte e fale comigo quando o seu QI exceder a sua idade."
+  - "Não estou dizendo que você é estúpido, só estou dizendo que você teve azar quando se trata de pensar."
+  - "Em que língua você está falando? Porque parece uma merda."
+  - "A estupidez não é um crime, então você é livre para sair."
+  - "Você é a prova de que a evolução CAN pode ser revertida."
+  - "Eu pergunto quantos anos você tem, mas eu sei que você não pode contar tão alto."
+  - "Como alguém de fora, o que você acha da raça humana?"
+  - "As chuvas não são tudo, no seu caso não são nada."
+  - "Pessoas normais vivem e aprendem. Você apenas vive."
+  - "Eu não sei o que faz você ser tão estúpido, mas realmente funciona."
+  - "Continue falando, um dia você dirá algo inteligente! (Duvido, no entanto)"
+  - "Estou surpreso, diga algo inteligente."
+  - "Seu QI é menor que o tamanho dos seus sapatos."
+  - "Uau! Seus neurotransmissores não funcionam mais."
+  - "Você é louco por ser burro?"
+  - "Todo mundo tem o direito de ser estúpido, mas o privilégio está sendo abusado."
+  - "Desculpe quando te chamei de idiota. Pensei que você já sabia disso."
+  - "Você deve tentar provar cianeto."
+  - "Suas enzimas são projetadas para digerir veneno de rato."
+  - "Você deveria tentar dormir para sempre."
+  - "Pegue uma arma e atire em si mesmo."
+  - "Você poderia fazer um recorde mundial pulando de um avião sem pára-quedas".
+  - "Pare de falar besteiras e pule na frente de um trem-bala."
+  - "Tente tomar banho com ácido clorídrico em vez de água".
+  - "Tente o seguinte: se você ficar sem fôlego por uma hora, poderá salvá-lo para sempre."
+  - "Fica verde! Pare de inalar oxigênio."
+  - "Deus estava procurando por você. Você deveria sair para encontrá-lo."
+  - "Dê 100%. Agora, doe sangue."
+  - "Tente pular de cem andares, mas você só pode fazê-lo uma vez."
+  - "Você deve doar seu cérebro, visto que nunca o usou."
+  - "Ofereça-se para mirar em um campo de tiro".
+  - "Fotos na cabeça são divertidas. Pegue uma."
+  - "Você deve tentar nadar com grandes tubarões brancos."
+  - "Você deve se pintar de vermelho e correr em uma maratona de bolas."
+  - "Você pode ficar embaixo da água pelo resto da vida sem voltar a subir".
+  - "Que tal você parar de respirar como um dia? Isso será ótimo."
+  - "Tente provocar um tigre enquanto ambos estão em uma gaiola."
+  - "Você já tentou atirar em si mesmo a 100 metros de distância usando um canon."
+  - "Você deve tentar manter o TNT na boca e ligá-lo."
+  - "Tente jogar catch and launch com RDX, sua diversão."
+  - "Ouvi dizer que a fotografia é venenosa, mas suponho que você não se importe em inalá-la por diversão."
+  - "Deixe-se ir para o espaço esquecendo o oxigênio na Terra."
+  - "Você deve tentar jogar cobra e escadas, com cobras reais e sem escadas."
+  - "Dance nua em um par de cabos HT".
+  - "O verdadeiro vulcão é a melhor piscina para você."
+  - "Você deve tentar o banho quente em um vulcão."
+  - "Tente passar um dia em uma lanchonete e será sua para sempre."
+  - "Acerte o urânio com um trenó lento em sua presença. Será uma experiência que vale a pena."
+  - "Você pode ser a primeira pessoa a pisar no sol. Experimente."
 memes_slaps_templates_list:
-  - "{user1} {hits} {user2} con un {item}."
-  - "{user1} {hits} {user2} en la cara con un {item}."
-  - "{user1} {hits} {user2} alrededor de un poco con un {item}."
-  - "{user1} {throws} a {item} en {user2}."
-  - "{user1} agarra un {item} y lo {throws} en la cara de {user2}."
-  - "{user1} lanza un {item} en la dirección general de {user2}."
-  - "{user1} empieza a golpear a {user2} tonto con un {item}."
+  - "{user1} {hits} {user2} com um {item}."
+  - "{user1} {hits} {user2} na cara com {item}."
+  - "{user1} {hits} {user2} um pouco com {item}."
+  - "{user1} {throws} um {item} em {user2}."
+  - "{user1} pega um {item} e o {throws} na cara de {user2}."
+  - "{user1} joga um {item} na direção de {user2}."
+  - "{user1} começa a bater em {user2} com um {item}."
   - "{user1} apunta {user2} hacia abajo y repetidamente {hits} con un {item}."
   - "{user1} agarra un {item} y {hits} {user2} con él."
   - "{user1} vincula {user2} a una silla y {throws} a {item} a ella."
   - "{user1} dio un mensaje amigable para ayudar a {user2} a aprender a nadar en lava."
 memes_items_list:
-  - "fundir Skillet de hierro"
-  - "trucha grande"
-  - "bate de béisbol"
-  - "murciélago de cricket"
-  - "caña de madera"
-  - "uña"
-  - "impresora"
-  - "pala"
-  - "Monitor CRT"
-  - "textobook de física"
-  - "tostadora"
-  - "retrato de Richard Stallman"
-  - "televisión"
-  - "camión de cinco toneladas"
-  - "rollo de cinta de conducto"
-  - "libro"
-  - "portátil"
-  - "televisor antiguo"
-  - "saco de rocas"
-  - "trucha arcoiris"
-  - "pollo de goma"
-  - "murciélago"
-  - "extintor de fuego"
-  - "roca pesada"
-  - "pedazo de mierda"
-  - "colmena"
-  - "pedazo de carne podrida"
-  - "oso"
-  - "tonelada de ladrillos"
+   - "Frigideira de ferro derretido"
+   - "truta grande"
+   - "taco de beisebol"
+   - "bastão de cricket"
+   - "feminista"
+   - "piroca"
+   - "impressora"
+   - "pá"
+   - "Monitor CRT"
+   - "Livro de Física"
+   - "torradeira"
+   - "retrato de Richard Stallman"
+   - "TELEVISÃO"
+   - "caminhão de cinco toneladas"
+   - "rolo de fita adesiva"
+   - "livro"
+   - "computador portátil"
+   - "televisão antiga"
+   - "saco de pedras"
+   - "Truta arco-íris"
+   - "galinha de borracha"
+   - "morcego"
+   - "extintor de incêndio"
+   - "pedra pesada"
+   - "pedaço de merda"
+   - "colméia"
+   - "pedaço de carne podre"
+   - "Urso"
+   - "tonelada de tijolos"
 memes_throw_list:
-  - "lanza"
-  - "huesos"
-  - "chucks"
-  - "urls"
+  - "joga"
+  - "lança"
+  - "envia"
+  - "compartilha"
 memes_hit_list:
-  - "golpes"
-  - "latigazos"
-  - "bofetadas"
-  - "huele a"
-  - "basureros"
+  - "golpeia"
+  - "bate"
+  - "enfia"
 memes_help: |
-  Some meme commands, find it all out yourself!
+  Alguns comandos de meme, descubra todos sozinho!
 
-  - /owo: OWO de text
-  - /stretch: STRETCH de text
-  - /vapor: owo vapor dis
-  - /shout: Write anything that u want it to should
-  - /runs: reply a random string from an array of replies.
-  - /insults: reply a random string from an array of replies.
-  - /slap: slap a user, or get slapped if not a reply.
+  - /owo: transforma um texto em texto de furry OwO.
+  - /stretch: estica um texto.
+  - /vapor: texto v a p o r w a v e.
+  - /shout: Escreva o que você quiser que vire uma seta.
+  - /runs: obtenha uma resposta aleatoria entre algumas strings.
+  - /insults: obtenha um insulto aleatório entre algumas strings
+  - /slap: bate em um usuário, ou apanha do bot se não responder ninguém.
 #Misc
 modname_misc: Outros
-misc_get_id_1: El remitente original, {}, tiene un ID de `{}`.\nEl forwarder, {}, tiene un ID de `{}`.
-misc_get_id_2: "La id de {} es `{}`."
-misc_id_1: Tu id es `{}`.
-misc_id_2: El id de este grupo es `{}`.
-misc_info_1: "<b>Información del usuario</b>:"
+misc_get_id_1: O rementente original {}, possui o ID `{}`.\n{}, que encaminhou a mensagem, tem o ID `{}`.
+misc_get_id_2: "A ID de {} é `{}`."
+misc_id_1: Sua ID é `{}`.
+misc_id_2: A ID do grupo é {}`.
+misc_info_1: "<b>Informação do usuário</b>:"
 misc_info_id: "\nID: <code>{}</code>"
-misc_info_first: "\nPrimer nombre: {}"
-misc_info_name: "\nApellido: {}"
-misc_info_username: "\nNombre de usuario: @{}"
-misc_info_user_link: "\nEnlace de usuario: {}\n"
-misc_info_is_owner: "\n¡Esta persona es mi propietario! Tienen poder total sobre mí."
-misc_info_is_original_owner: "\nEsta persona es mi creador, comienzo de mí, aunque abandonó mi hermana original, Marie, ya :("
-misc_info_is_sudo: "\n¡Esta persona es uno de mis usuarios sudo!"
-misc_info_is_support: "\n¡Esta persona es uno de mis usuarios de soporte!"
-misc_info_is_whitelisted: "\nEsta persona es uno de mis usuarios en la lista blanca, uno raramente obtiene este rol, no puedes banearlo ni expulsarlo."
-misc_gdpr: Eliminando datos identificables...
+misc_info_first: "\nPrimeiro nome: {}"
+misc_info_name: "\nApelido: {}"
+misc_info_username: "\nUsername: @{}"
+misc_info_user_link: "\nLink do Usuário: {}\n"
+misc_info_is_owner: "\nEssa pessoa é minha dona! Eles têm poder total sobre mim."
+misc_info_is_original_owner: "\nEssa pessoa é minha criadora, a princípio, apesar de já ter ter abandonado 2 filhos no lixo e 5 com a pensão atrasada."
+misc_info_is_sudo: "\nEssa pessoa é um dos meus usuários sudo!"
+misc_info_is_support: "\nEssa pessoa é um dos meus usuários de suporte!"
+misc_info_is_whitelisted: "\nEssa pessoa é um dos meus usuários da lista branca, raramente alguém recebe esse papel, você não pode bani-lo ou expulsá-lo."
+misc_gdpr: Excluindo dados identificáveis...
 misc_md_list: |
-  Markdown es una herramienta de formato muy potente soportada por telegram. Hitsuki tiene algunas mejoras, para asegurarse de que \
-  los mensajes guardados sean analizados correctamente y para permitirle crear botones.
-  - <code>_italic_</code>: envolver texto con '_' producirá texto en cursiva
-  - <code>*negrita*</code>: envoltura de texto con '*' producirá texto en negrita
-  - <code>`code`</code>: envolver texto con '`' producirá texto monospaced, también conocido como 'código'
-  - <code>[sometext](someURL)</code>: esto creará un enlace - el mensaje sólo mostrará <code>sometext</code>, \
-  y tocarlo abrirá la página en <code>someURL</code>.
-  EG: <code>[test](ejemplo. om)</code>
-  - <code>[buttontext](buttonurl:someURL)</code>: esta es una mejora especial para permitir a los usuarios tener telegram \
-  botones en su markdown. <code>botón</code> serán lo que se mostrará en el botón, y <code>someurl</code> \
-  será la url que se abra.
-  EG: <code>[Este es un botón](buttonurl:example. om)</code>
-  Si quieres múltiples botones en la misma línea, usa :same, como tal:
-  <code>[one](buttonurl://ejemplo. om)
+  O Markdown é uma ferramenta de formatação muito poderosa suportada pelo Telegram. O Hitsuki tem algumas melhorias, para garantir que \
+  as mensagens salvas serão analisadas corretamente e permitem criar botões.
+  - <code>_italic_</code>: quebra automática de texto com '_' produzirá texto em itálico
+  - <code>*negrita*</code>: quebra automática de texto com '*' produzirá texto em negrito
+  - <code>`code`</code>: quebra automática de texto com '`' produzirá texto monoespaçado, também conhecido como 'código'
+  - <code>[algumtexto](algumaURL)</code>: isso criará um link - a mensagem exibirá apenas <code>algumtexto</code>, \
+  e tocá-lo abrirá a página em <code>algumaURL</code>.
+  EX: <code>[test](exemplo. om)</code>
+  - <code>[buttontext](buttonurl:someURL)</code>: este é um aprimoramento especial para permitir que os usuários tenham botões \
+  do Telegram no seu Markdown. <code>botão</code> será o que será mostrado no botão, e <code>someurl</code> \
+  será o URL que o botão vai abrir.
+  EX: <code>[Este é um botão](buttonurl:exemplo. om)</code>
+  Se você quiser vários botões na mesma linha, use :same, como por exemplo:
+  <code>[one](buttonurl://exemplo. om)
   [two](buttonurl://google.com:same)</code>
-  Esto creará dos botones en una sola línea, en lugar de un botón por línea.
-misc_md_try: Intenta reenviarme el siguiente mensaje, ¡y verás!
-misc_md_help: "/save test Esta es una prueba de markdown. _italics_, *bold*, `code`, [URL](example.com) [button](buttonurl://github.com) [button2](buttonurl://google.com:same)"
-misc_paste_invalid: '¿Qué se supone que tengo que hacer con esto?'
-misc_paste_404: Error al llegar al dogbin
-misc_paste_success: "URL acortada: {}/{}\nPuedes ver las estadísticas, etc. [here]({}/v/{})"
-misc_get_pasted_invalid: '¡Por favor, introduce una url de perro!'
-misc_get_pasted_unknown: Ocurrió un error desconocido
-misc_covid_error: Ha ocurrido un error!, Está seguro de que el nombre del país es correcto?
-misc_covid_total_tests: "*Pruebas Totales*: {}"
+  Isso criará dois botões em uma única linha, em vez de um botão por linha.
+misc_md_try: Tente encaminhar a seguinte mensagem para mim e você verá!
+misc_md_help: "/save test Este é um teste de Markdown. _italics_, *bold*, `code`, [URL](example.com) [button](buttonurl://github.com) [button2](buttonurl://google.com:same)"
+misc_paste_invalid: 'O que eu devo fazer com isso?'
+misc_paste_404: Erro ao chegar ao dogbin
+misc_paste_success: "URL encurtada: {}/{}\nVocê pode ver as estatísticas, etc. [Aqui]({}/v/{})"
+misc_get_pasted_invalid: 'Por favor, digite uma URL do dogbin'
+misc_get_pasted_unknown: Ocorreu um erro desconhecido
+misc_covid_error: Ocorreu um erro! Tem certeza de que o nome do país está correto?
+misc_covid_total_tests: "Total de testes: {}"
 misc_covid: |
-  * Estadísticas para COVID-19 {}*\n
+  *Estatísticas para COVID-19 {}*\n
   *Casos Confirmados*: {} _(+{})_
-  *Casos Activos*: {}
+  *Casos Ativos*: {}
   *Casos Críticos*: {}
-  *Fallecidos*: {} _(+{})_
+  *Mortos*: {} _(+{})_
   *Recuperados*: {}
-  *Total de Pruebas*: {}
+  *Total de testes*: {}
 misc_help: |
-  - /id: get the current group id. If used by replying to a message, gets that user's id.
-  - /info: get information about a user.
-  - /gdpr: deletes your information from the bot's database. Private chats only.
-  - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
-  - /git: Returns info about a GitHub user or organization.
-  - /repo: Return the GitHub user or organization repository list (Limited at 40)
-  - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
-  - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
-  - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
-  - /ud: Type the word or expression you want to search. For example /ud Gay
-  - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
-  - /wiki <keywords>: Get wikipedia articles just using this bot!\n
-  *Special | COVID-19*
-  - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
-  - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.
+  - /id: Obtém o ID do grupo atual. Se usado respondendo a uma mensagem, ele obtém o ID do usuário.
+  - /info: Obtém informações sobre um usuário.
+  - /gdpr: Deleta suas informações da base de dados do bot (Somente no PV)
+  - /markdownhelp: Resume rápido de como o Markdown funciona no Telegram (Somente no PV).
+  - /git: Retorna informações sobre um usuário ou organização do GitHub.
+  - /repo: Retornar a lista de repositórios de usuários ou organizações do GitHub (Limitado em 40)
+  - /paste: Crie uma URL colada ou encurtada usando [dogbin](https://del.dog)
+  - /getpaste: Obtenha o conteúdo de uma URL colada ou encurtada do [dogbin](https://del.dog)
+  - /pastestats: Obtenha estatísticas de uma URL colada ou encurtada do [dogbin](https://del.dog)
+  - /ud: Digite a palavra ou expressão que deseja pesquisar. Por exemplo /ud Corno
+  - /removebotkeyboard: Tem um bot de teclado desagradável preso no seu grupo?
+  - /wiki <keywords>: Obtenha artigos da Wikipedia apenas usando este bot!\n
+  *Especial | COVID-19*
+  - /covid: Gerado por Worldometers, receba as estatísticas gerais de COVID-19.
+  - /covid <nome do país>: Gerado por Worldometers, receba as estatísticas gerais de COVID-19 em um determinado país.
 #Anime
 modname_anime: Anime
 anime_help: |
-   Get information about anime, manga or characters from AniList.
+   Obtenha informações sobre animes, mangás ou personagens a partir do AniList.
 
-   *Available commands:*
-   - /anime <anime>: returns information about the anime.
-   - /character <character>: returns information about the character.
-   - /manga <manga>: returns information about the manga.
-   - /user <user>: returns information about a MyAnimeList user.
-   - /upcoming: returns a list of new anime in the upcoming seasons.
-   - /kaizoku <anime>: search an anime on animekaizoku.com
-   - /kayo <anime>: search an anime on animekayo.com
-   - /airing <anime>: returns anime airing info.
+   *Comandos disponíveis:*
+   - /anime <anime>: retorna informações sobre o anime.
+   - /character <personagem>: retorna informações sobre o personagem.
+   - /manga <manga>: retorna informações sobre o mangá.
+   - /user <user>: retorna informações sobre um usuário do MyAnimeList.
+   - /upcoming: retorna uma lista de novos animes nas próximas temporadas.
+   - /kaizoku <anime>: busca um anime no animekaizoku.com
+   - /kayo <anime>: busca um anime no animekayo.com
+   - /airing <anime>: retorna informações de exibição de anime.
 #lastfm
 modname_last_fm: LastFM
-misc_setuser_lastfm_error: That's not how this works...\nRun /setuser followed by your username!
-misc_clearuser_lastfm: Last.fm username successfully cleared from my database!
-misc_setuser_lastfm: Username set as {}!
-misc_lastfm_usernotset: You haven't set your username yet!
-misc_lastfm_userwrong: Hmm... something went wrong.\nPlease ensure that you've set the correct username!
-misc_lastfm_nonetracks: You don't seem to have scrobbled any songs...
+misc_setuser_lastfm_error: Não é assim que funciona... \nExecute /setuser seguido do seu nome de usuário!
+misc_clearuser_lastfm: Nome de usuário do Last.fm limpo com sucesso do meu banco de dados!
+misc_setuser_lastfm: Nome de usuário configurado como {}!
+misc_lastfm_usernotset: Você não configurou seu nome de usuário ainda!
+misc_lastfm_userwrong: Hmm... algo está errado.\nPor favor verifique se você setou o nome de usuário corretamente!
+misc_lastfm_nonetracks: Você não parece ter scrobblado nenhuma música ...
 misc_lastfm_pn: <code>{} - {}</code>
-misc_lastfm_pn_loved: <code>{} - {}</code> (loved)
-misc_lastfm_scr: \n(<code>{}</code> scrobbles so far)
+misc_lastfm_pn_loved: <code>{} - {}</code> (curtida)
+misc_lastfm_scr: \n(<code>{}</code> scrobbles até agora)
 misc_lastfm_scrr: <code>{} - {}</code>\n
 last_fm_help: |
    Compartilhe o que você está ouvindo com a ajuda deste módulo.
 
    *Comandos disponíveis:*
-   - /setuser <nome de usuário>: defini seu nome de usuário do last.fm
+   - /setuser <nome de usuário>: define seu nome de usuário do last.fm
    - /clearuser: remove seu nome de usuário do last.fm do banco de dados do bot.
    - /lastfm: retorna o que você está ouvindo no last.fm.
 #Purge
 modname_msg_deleting: Purgar
-purge_msg_cant_del_too_old: No se pueden eliminar todos los mensajes. Los mensajes pueden ser demasiado antiguos, podría no tener derechos de eliminación, o esto podría no ser un supergrupo.
-purge_msg_success: Purgación completada.
-purge_invalid: Responder a un mensaje para seleccionar de dónde empezar la purga.
-purge_invalid2: '¿Qué quieres eliminar?'
+purge_msg_cant_del_too_old: Todas as mensagens não podem ser excluídas. As mensagens podem ser muito antigas, talvez você não tenha direitos de exclusão ou isso pode não ser um supergrupo.
+purge_msg_success: Limpeza concluída.
+purge_invalid: Responda a uma mensagem para selecionar por onde iniciar a limpeza.
+purge_invalid2: 'O que você deseja remover?'
 msg_deleting_help: |
-  Borrando mensajes facilitados con este comando. Bot purga mensajes juntos o individualmente.
+  Exclua mensagens facilmente com esse comando. O bot apaga mensagens em conjunto ou individualmente.
 
-  *Solo administrador:*
-   - /del: elimina el mensaje que respondiste a
-   - /purge: elimina todos los mensajes entre este y el mensaje respondido.
-   - /purge <integer X>: elimina el mensaje contestado y los mensajes X que lo siguen.
+  *Somente administrador:*
+   - /del: apaga a mensagem que você respondeu.
+   - /purge: elimina todas as mensagens entre esta e a mensagem respondida.
+   - /purge <integer X>: exclua a mensagem respondida e as mensagens X que a seguem.
 #Muting
-mute_invalid: "Tendrás que darme un nombre de usuario para silenciar, o responder a alguien para ser silenciado."
-mute_not_myself: "¡No me mudo a mí mismo!"
-mute_not_sudo: "¡No! ¡No estoy silenciando a los bots! Eso sería una idea tonta."
-mute_not_m_admin: "¡No! ¡No estoy silenciando al administrador del chat! Sería una idea tonta."
-mute_success: "¡{} está silenciado en {}!"
-mute_already_mute: "¡Este usuario ya está silenciado en {}!"
-mute_not_in_chat: "¡Este usuario no está en el {}!"
-unmute_invalid: "Tendrás que darme un nombre de usuario para no silenciar, o responder a alguien para no ser silenciado."
-unmute_not_muted: "Este usuario ya tiene derecho a hablar en {}."
-unmute_success: "¡Sí, {} puede empezar a hablar de nuevo en {}!"
-unmute_not_in_chat: "Este usuario ni siquiera está en el chat, dessilenciarlos no hará que hablen más de lo que ya hacen."
-unmute_is_an_admin: "¿Desmutear a un admin es ahora una tendencia? No, eso es bastante tonto."
-mute_not_refer: "Parece que usted no se refiere a un usuario."
-mute_not_existed: "Parece que no puedo encontrar este usuario"
-mute_is_admin: "Realmente me gustaría poder silenciar a los administradores..."
-mute_is_bot: "No soy gonna MUTE yo mismo, ¿es usted loco?"
-tmute_no_time: "¡No has especificado un tiempo para silenciar a este usuario!"
-tmute_success: "¡Silenciado por {} en {}!"
-mute_cant_mute: "Bueno, maldito, no puedo silenciar a ese usuario."
-restrict_invalid: "Tendrás que darme un nombre de usuario para restringir, o responder a alguien para ser restringido."
-restrict_is_bot: "¡No me estoy restringiendo!"
-restrict_is_admin: "¡Ayuda que no puedo restringir a administradores!"
-restrict_success: "¡{} está restringido para enviar medios en {}!"
-restrict_already_restricted: "¡Este usuario ya está restringido en {}!"
-unrestrict_invalid: "Tendrás que darme un nombre de usuario para no restringir, o responder a alguien para que no esté restringido."
-unrestrict_not_restricted: "Este usuario ya tiene permisos para enviar cualquier cosa en {}."
-unrestrict_success: "¡Sí, {} puede enviar los medios otra vez en {}!"
-unrestrict_not_in_chat: "Este usuario ni siquiera está en el chat, ¡sin restricciones, no hará que envíen nada más de lo que ya hace!"
-nomedia_need_time: "¡No has especificado un tiempo para restringir a este usuario!"
-nomedia_success: "¡Restringido para enviar medios por {} en {}!"
-restrict_cant_restrict: "No puedo restringir ese usuario."
-muteme_muted: "Ningún problema, ¡Silenciado!"
+mute_invalid: "Você terá que me dar um nome de usuário para silenciar ou responder a alguém para ser silenciado."
+mute_not_myself: "Não posso mutar a mim mesmo!"
+mute_not_sudo: "Não! Não estou silenciando bots! Isso seria uma ideia boba."
+mute_not_m_admin: "Não! Eu não posso mutar o administrador do chat, isso seria uma ideia idiota."
+mute_success: "{} foi silenciado em {}!"
+mute_already_mute: "Esse usuário já foi silenciado {}!"
+mute_not_in_chat: "Este usuário não está presente em {}!"
+unmute_invalid: "Você terá que me dar um nome de usuário para dessilenciar ou responder a alguém para ser dessilenciado."
+unmute_not_muted: "Este usuário já pode falar em {}."
+unmute_success: "Sim, {} pode começar a falar novamente em {}!"
+unmute_not_in_chat: "Esse usuário nem está no grupo, tirar o mute não fará com que ele fale mais do que já falava antes."
+unmute_is_an_admin: "Não dá pra desmutar um admin sendo que não pode nem se quer ser mutado, isso é idiotice"
+mute_not_refer: "Parece que você não está se referindo a um usuário."
+mute_not_existed: "Não consigo encontrar esse usuário."
+mute_is_admin: "Eu realmente gostaria de poder silenciar administradores ..."
+mute_is_bot: "Eu não vou me silenciar, você está louco?"
+tmute_no_time: "Você não especificou um tempo para silenciar este usuário!"
+tmute_success: "¡Silenciado por {} em {}!"
+mute_cant_mute: "Bem... droga, eu não posso silenciar esse usuário."
+restrict_invalid: "Você terá que me dar um nome de usuário para restringir ou responder a alguém para ser restringido."
+restrict_is_bot: "Eu não vou me restringir!"
+restrict_is_admin: "Ajuda que não posso restringir administradores!"
+restrict_success: "¡{} está restrito para enviar midias em {}!"
+restrict_already_restricted: "Este usuário já está restrito em {}!"
+unrestrict_invalid: "Você terá que me dar um nome de usuário para não mais restringir ou responder a alguém para não ser mais restringido."
+unrestrict_not_restricted: "Este usuário já tem permissão para enviar qualquer coisa em {}."
+unrestrict_success: "Ok, {} pode enviar midia outra vez em {}!"
+unrestrict_not_in_chat: "Este usuário nem está no grupo, remover as restrições não fará com que ele envie nada mais do que ele já envia!"
+nomedia_need_time: "Você não especificou um tempo para restringir este usuário!"
+nomedia_success: "Restrito de enviar midias por {} em {}!"
+restrict_cant_restrict: "Não posso restringir esse usuário."
+muteme_muted: "Sem problema, mutado!"
 #Notes
 modname_notes: Notas
-note_not_existed: "¡Esta nota no existe!"
-note_lost: "Parece que este mensaje se ha perdido - lo eliminaré de tus notas guardadas."
-note_msg_del: "Parece que el remitente original de esta nota ha eliminado su mensaje - ¡lo sentimos! Utilice un volcado de mensajes para evitar esto. Quitaré esta nota de tus notas guardadas."
-note_url_invalid: "¡La URL del botón no es válida! ¡Por favor, actualiza esta nota!"
-note_mention_invalid: "Parece que intentaste mencionar a alguien que nunca he visto antes. ¡Reenvía uno de sus mensajes para mí y seré capaz de etiquetarlos!"
-note_incorrect_import: "Esta nota era un archivo importado incorrectamente de otro bot - No puedo usarlo. Guárdelo manualmente si es necesario. Lo eliminaré de tu lista de notas."
-note_cannot_send: "Esta nota no pudo ser enviada, ya que está formateada incorrectamente. Por favor."
-get_invalid: "¡Falta el nombre de la nota! Escribe el nombre de la nota que quieres obtener."
-note_is_local: "notas locales"
-save_invalid: "¡No hay nada que guardar!"
-save_success: "Ok, agregó nota `{}` en *{}*.\nConsíguela con `/get {}`, o `#{}`"
-save_updated: "Ok, Nota `{}` en *{}* han sido actualizados!.\nConsíguelo con `/get {}`, o `#{}`"
-clear_success: "Nota eliminada exitosamente de *{}*."
-note_in_chat: "*Notas en {}:*\n"
-note_in_local: "*Notas locales:*\n"
-note_none_in_chat: "¡No hay notas en *{}*!"
-note_get: "\nPuedes recuperar estas notas usando `/get notename`, o `#notename`.\nEl `#` con notename arriba no está incluido en el propio notename, sólo ponemos `#` en él para una copia de pasta más fácil."
-note_fail_to_import: "Estos archivos/fotos no se han podido importar debido a que se originan desde otro bot. Esto es una restricción de la API de telegrama y no se puede evitar. ¡Disculpe las molestias!"
-notes_must_be_creator: "Debes ser este creador de chat."
-notes_cleanup_success: "{} notas de este chat han sido eliminadas."
+note_not_existed: "Essa nota não existe."
+note_lost: "Esta mensagem parece ter sido perdida - eu a removerei das suas anotações salvas."
+note_msg_del: "O remetente original desta nota parece ter excluído sua mensagem - desculpe! Use um dump de mensagens para evitar isso. Eu removerei esta nota das suas notas salvas."
+note_url_invalid: "O URL do botão é inválida! Atualize esta nota!"
+note_mention_invalid: "Parece que você tentou mencionar alguém que nunca vi antes. Encaminhe uma de suas mensagens para mim e eu poderei marcá-las!"
+note_incorrect_import: "Esta nota foi um arquivo importado incorretamente de outro bot - não posso usá-lo. Salve-o manualmente, se necessário. Vou removê-lo da sua lista de notas."
+note_cannot_send: "Esta nota não pôde ser enviada, pois está formatada incorretamente."
+get_invalid: "Falta o nome da nota! Escreva o nome da nota que deseja obter.."
+note_is_local: "Notas locais"
+save_invalid: "Não há nada para guardar!"
+save_success: "Ok, nota adicionada `{}` em *{}*.\n Veja o seu conteúdo `/get {}`, ou `#{}`"
+save_updated: "Ok, Nota `{}` em *{}* foi atualizada!.\nVeja seu conteúdo com `/get {}`, ou `#{}`"
+clear_success: "Nota removida com sucesso em *{}*."
+note_in_chat: "*Notas em {}:*\n"
+note_in_local: "*Notas locaos:*\n"
+note_none_in_chat: "Não há notas em *{}*!"
+note_get: "\nVocê pode ver o comteúdo dessas notas com `/get notename`, o `#notename`.\nO `#` com o notename acima, ele não está incluído no próprio notename, apenas colocamos `#` nele para uma cópia mais fácil de colar. "
+note_fail_to_import: "Não foi possível importar esses arquivos/fotos porque são originários de outro bot. Esta é uma restrição da API do Telegram e não pode ser evitada. Desculpe pela inconveniência!"
+notes_must_be_creator: "Você deve ser o criador desse chat."
+notes_cleanup_success: "as notas {} foram limpas com sucesso."
 notes_help: |
-  ¡Guardar datos para futuros usuarios con notas!
-  Las notas son geniales para guardar información aleatoria; un número de teléfono, un buen gif, una imagen divertida - ¡cualquier cosa!
+  Salve dados para futuros usuários com notas!
+  As notas são ótimas para armazenar informações aleatórias; um número de telefone, um belo gif, uma imagem engraçada - qualquer coisa!
 
-  Los comandos disponibles son:
-   - /save <name> <content>: Guardar contenido en una nota con el nombre "name". Responder a un mensaje guardará ese mensaje. ¡Incluso funciona en los medios!
-   - /get <name>: Obtenga la nota con el nombre "name".
-   - #<name>: igual que `/get name`
-   - /clear <name>: elimina la nota llamada "nombre"
-   - /notes: Lista todas las notas en el chat actual
-   - /saved: igual que /notes
-   - /clearall: Limpia todas las notas en tu grupo, sólo use esto si sabe lo que está haciendo
+  Os comandos disponíveis são:
+   - /save <nome> <conteúdo>: Salve o conteúdo em uma nota chamada "nome". Responder a uma mensagem salvará essa mensagem. Até funciona na mídia!
+   - /get <nome>: Obtenha a nota chamada "nome".
+   - #<name>: Mesma coisa que `/get nome`.
+   - /clear <nome>: Remove a nota chamada "nome".
+   - /notes: Lista todas as notas no chat atual.
+   - /saved: Mesma coisa que /notes.
+   - /clearall: Limpa todas as notas do seu grupo, use somente se você souber o que está fazendo.
 
-  Un ejemplo de cómo guardar una nota sería vía:
-  /save data ¡Estos son algunos datos!
-  Ahora, cualquiera que utilice "/get data", o "#data" será respondido con "¡Esto es algunos datos!".
-  Si desea guardar una imagen, gif, o sticker, o cualquier otro dato, hacer lo siguiente:
-  /save word al responder a una etiqueta o a los datos que quieras. Ahora, la nota en "#word" contiene una etiqueta que se enviará como respuesta.
+  Um exemplo de como salvar uma nota seria:
+  /save dados Aqui estão alguns dados
+  Agora, qualquer um que use "/get dados", ou "#dados" será respondido com "Aqui estão alguns dados".
+  Se você deseja salvar uma imagem, gif, sticker ou qualquer outro dado, faça o seguinte:
+  Responda a uma midia com `/save palavra` e esta palavra será respondida com essa midia.
+ 
 
-  Consejo: recuperar una nota sin el formato, use /get <notename> noformat
-  Esto recuperará la nota y la enviará sin formatearla; obteniendo el markdown crudo, permitiéndole hacer ediciones fáciles
+  Dica: para recuperar uma anotação sem a formatação, use /get <notename> noformat
+  Isso recuperará a nota e a enviará sem formatá-la; obtendo a markdown bruta, permitindo que você faça edições fáceis.
 
-  Nota: Los nombres de notas son insensibles en mayúsculas y minúsculas, y se convierten automáticamente a minúsculas antes de ser guardadas.
+ Nota: Os nomes das notas não diferenciam letras maiúsculas de minúsculas e são automaticamente convertidos em letras minúsculas antes de serem salvos.
 #Reporting
 modname_reporting: Denúncias
-reports_pm_on: "¡Informes activados! Serás notificado cada vez que alguien reporte algo."
-reports_pm_off: "¡Desactivada la información! No obtendrás ningún informe."
-reports_chat_on: "¡Informes activados! Los administradores que han activado los informes serán notificados cuando se llame /report o @admin."
-reports_chat_off: "¡Desactivada la información! Ningún administrador será notificado en /report o @admin."
-reports_pm_pref: "Tu preferencia actual de informe es: `{}`"
-reports_chat_pref: "La configuración actual de este chat es: `{}`"
-reports_success: "{} reportó el mensaje a los administradores."
-reports_pm_enable: "¡Informes habilitados en tu pm!"
-reports_pm_disable: "¡Informes desactivados en tu pm!"
+reports_pm_on: "Denúncias ativadas! Você será notificado sempre que alguém denunciar algo."
+reports_pm_off: "Denúncias desativadas! Você não receberá nenhuma denúncia."
+reports_chat_on: "Denúncias ativadas! Os administradores que ativaram as denúncias serão notificados quando /report ou @admin for usado."
+reports_chat_off: "Denúncias desativadas! Nenhum administrador será notificado se alguém usar /report ou @admin."
+reports_pm_pref: "Sua preferência atual de denúncias é: `{}`"
+reports_chat_pref: "A configuração atual deste grupo é: `{}`"
+reports_success: "{} denunciou a mensagem aos administradores."
+reports_pm_enable: "Denúncias ativadas no seu PV."
+reports_pm_disable: "Denúncias desativadas no seu PV."
 reporting_help: |
-  - /report <reason>: responde a un mensaje para reportarlo a los administradores.
-  - @admin: responde a un mensaje para repostarlo a los admins.
-  NOTA: ninguno de esos se activará si es usado por los admins
+  - /report <motivo>: Responda a uma mensagem para denunciá-la aos administradores.
+  - @admin: Responda a uma mensagem para denunciá-la aos administradores.
+  NOTA: Nenhum deles será ativado se usado pelos administradores.
 
-  *Solamente Admin:*
-  - /reports <on/off>: cambia el reporte de los ajustes, o muestra el estado actual.
-    - Si se hace en mp, cambia tu estado.
-    - Si se hace en chat, cambia el estado de ese chat.
+  *Somente Administradores:*
+  - /reports <on/off>: Lltere as configurações de denúncia ou mostre o status atual.
+    - Se feito em PV, altere seu status.
+    - Se feito no chat, altere o status desse grupo.
 #Rules
 modname_rules: Regras
-rules_shortcut_not_setup_properly: "¡El acceso directo a las reglas de este chat no se ha configurado correctamente! Pida a los administradores que arreglaran esto."
-rules_display: "Las reglas para *{}* son:\n\n{}"
-rules_not_found: "Los administradores de grupo aún no han establecido ninguna regla para este chat. ¡Esto probablemente no significa que sea ilegal...!"
-rules_button_click: "Haga clic en el botón de abajo para obtener las reglas de este grupo."
-rules: "Reglas"
-rules_success: "Se han establecido correctamente las reglas para este grupo."
+rules_shortcut_not_setup_properly: "O acesso direto às regras deste chat não foi configurado corretamente! Peça aos administradores para corrigir isso."
+rules_display: "As regras para *{}* são:\n\n{}"
+rules_not_found: "Os administradores do grupo ainda não definiram nenhuma regra para este grupo. Provavelmente isso não significa que é ilegal..."
+rules_button_click: "Clique no botão abaixo para obter as regras para este grupo."
+rules: "Regras"
+rules_success: "As regras para este grupo foram definidas com sucesso."
 rules_help: |
-  - /rules: obtener las reglas para este chat.
+  - /rules: obtenha as regras para este grupo.
 
-  *Solo administrador:*
-   - /clearrules: limpia las reglas para este chat.
-   - /setrules <your rules here>: establece las reglas para este chat.
+  *Somente administrador:*
+   - /clearrules: limpe as regras deste chat.
+   - /setrules <your rules here>: defina as regras para este grupo..
 #Translator
 modname_translator: Tradutor
 translator_translated: |
-  Fuente (`{}`):\n{}
-  Destino (`{}`):\n{}
-translator_err: Error al traducir:\n{}
-translator_help: "- /tr (código de idioma): Obtener la traducción del mensaje respondido."
-translator_no_str: Responder a un mensaje para traducir!
-translator_no_args: '¡Especifique el idioma al que desea traducir el mensaje contestado!'
+  Original (`{}`):\n{}
+  Tradução (`{}`):\n{}
+translator_err: Erro ao traduzir:\n{}
+translator_help: "- /tr (código do idioma): Obtenha a tradução da mensagem respondida."
+translator_no_str: Responda a uma mensagem para traduzir!
+translator_no_args: 'Especifique o idioma para o qual deseja traduzir a mensagem respondida!'
 translator_animal_translated: |
-  ¡Animal traducido {} con éxito!
-  Tu animal dice:\n`{}`
+  Animal traduzido {} com sucesso!
+  Seu animal diz:\n`{}`
 translator_animal_lang:
-  - Te amo
-  - Hi!
-  - '¡Saludos!'
-  - '¡No me toques!'
-  - '¡Oye! ¡Tengo hambre!'
-  - Ziz...
-  - '¿Qué es este rectángulo negro?'
-  - '¡Quiero salir!'
-  - '¡Madera genial! Espera... ¿estás grabando?!'
-  - '¡No hablaré!'
-  - '¿Dónde están mis amigos?'
-  - Necesito baño.
-  - '¡Déjame solo!'
-  - '¿Dónde están mis testigos?'
-  - '¡Mi pierna está perdiendo!'
-  - '¡Hazme llegar AHORA!'
-  - '¿Por qué me estás acosando?!'
-  - Fuck apagado.
-  - '¡Estoy comiendo yo!'
-  - '¡Llama al paquete! ¡Hay un problema potencial! ¡Alguien está entrando en nuestro territorio!'
-  - '¿Hay alguien allí? Soy solitario y necesito compañerismo.'
-  - '¡Detengalo!'
-  - '¡Hola!'
-  - '¿Qué es esto?'
-  - '¿Huh?'
-  - '¡Mañana!'
-  - '¡Juguemos!'
-  - '¡Esto es divertido!'
-  - Estoy realmente asustado de ustedes.
-  - '¡Estoy a punto de pasarme!'
-  - yoU TinK.
+   - Eu te amo
+   - Oi!
+   - 'Felicidades!'
+   - 'Não me toque!'
+   - 'Ouve! Tenho fome!'
+   - Ziz ...
+   - 'O que é esse retângulo preto?'
+   - 'Quero sair!'
+   - 'Madeira ótima! Espere ... você está gravando ?!
+   - 'Eu não vou falar!'
+   - 'Onde estão meus amigos?'
+   Eu preciso de um banheiro.
+   - 'Deixa-me só!'
+   - 'Onde estão minhas testemunhas?'
+   - 'Minha perna está perdendo!'
+   - 'Me envie agora!'
+   - 'Por que você está me assediando ?!'
+   - Foda-se.
+   - 'Estou me comendo!'
+   - 'Ligue para o pacote! Existe um problema em potencial! Alguém está entrando em nosso território!
+   - 'Há alguém ali? Estou sozinho e preciso de companhia.
+   - 'Pare com isso!'
+   - 'Olá!'
+   - 'O que é isso?'
+   - 'Hã?'
+   - 'Manhã!'
+   - 'Vamos jogar!'
+   - 'Isto é divertido!'
+   - Estou com muito medo de você.
+   - 'Estou prestes a seguir em frente!'
+   - você gosta.
 #URL Blacklist
-modname_urlblacklist: Listas negra de domínios
-url_blacklist_success: "Añadido el dominio <code>{}</code> a la lista negra!"
-url_blacklist_invalid: "Estás intentando hacer una lista negra de una url no válida"
-url_blacklist_success_2: Se añadieron <code>{}</code> dominios a la lista negra.
-url_blacklist_invalid_2: "Dime qué urls te gustaría añadir a la lista negra."
-url_blacklist_remove_success: "Eliminado <code>{}</code> de la lista negra!"
-url_blacklist_remove_success_2: "Eliminado <code>{}</code> dominios de la lista negra."
-url_blacklist_remove_invalid: "Este no es un dominio en la lista negra...!"
-url_blacklist_remove_invalid_2: "Ninguno de estos dominios existen, por lo que no fueron removidos."
-url_blacklist_remove_success_3: "Eliminado <code>{}</code> dominios de la lista negra. {} no existía, así que no se eliminaron."
-url_blacklist_remove_invalid_3: "Dígame qué dominios desea eliminar de la lista negra."
-url_blacklist_current: "Actuales <b>blacklisted</b> dominios:"
-url_blacklist_no_existed: "¡No hay dominios en la lista negra aquí!"
+modname_urlblacklist: Lista negra de domínios
+url_blacklist_success: "Adicionado o domínio <code>{}</code> a lista negra!"
+url_blacklist_invalid: "Você está tentando colocar um URL inválido na lista negra."
+url_blacklist_success_2: Foram adicionados <code>{}</code> dominios a lista negra.
+url_blacklist_invalid_2: "Diga-me quais URLs você gostaria de colocar na lista negra."
+url_blacklist_remove_success: "Domínio <code>{}</code> removido da lista negra!"
+url_blacklist_remove_success_2: "Dominíos <code>{}</code> removidos da lista negra."
+url_blacklist_remove_invalid: "Este não é um domínio da lista negra ...!"
+url_blacklist_remove_invalid_2: "Nenhum desses domínios existe e, portanto, não foram removidos."
+url_blacklist_remove_success_3: "Os dominíos <code>{}</code> foram removidos da lista negra. {} não existia, portanto não foi eliminado."
+url_blacklist_remove_invalid_3: "Diga-me quais domínios você deseja colocar na lista negra."
+url_blacklist_current: "Domínios atualmente <b>blacklisted</b>:"
+url_blacklist_no_existed: "Não há domínios na lista negra aqui!"
 #Greetings
 modname_welcome: Boas vindas
-welcome_added_to_grp: '¡Gracias por añadirme a tu grupo! ¡No te olvides de revisar nuestro canal de noticias!'
-welcome_mute_btn_unmuted: '¡Dessilenciado! ¡Ahora puedes escribir!'
-welcome_mute_btn_old_user: '¡No eres un usuario nuevo!'
-welcome_bot_owner_left: Bueno, mi maestro se ha ido, La fiesta ha terminado!
-welcome_mute_bot_cant_mute: '¡No puedo limitar a la gente aquí! ¡Asegúrate de que soy un administrador para poder silenciar a alguien!'
-welcome_mute_enabled: '¡Welcomemute ha sido activado! ¡Nuevos miembros serán silenciados hasta que hayan pulsado el botón!'
-welcome_mute_disabled: '¡Bienvenidos han sido desactivados! ¡Los nuevos miembros no serán silenciados más!'
-welcome_mute_curr_settings: "Los ajustes actuales son:\n\nSeguridad de bienvenida: `{}`\nEl miembro será silenciado por: `{}`\nTexto personalizado para botón de dessilenciar: `{}`"
-welcome_mute_time_none: '¡Cada nuevo miembro será silenciado hasta que pulse el botón de bienvenida!'
-welcome_mute_time: '¡Cada nuevo miembro será silenciado por {} o hasta que pulse el botón de bienvenida!'
-welcome_mute_time_settings_none: Actualmente cada nuevo miembro será silenciado hasta que pulse el botón de bienvenida.
-welcome_mute_time_settings: Actualmente cada nuevo miembro será silenciado por {} o hasta que pulse el botón de bienvenida.
-welcome_mute_btn_text_changed: "El texto del botón de seguridad ha sido cambiado a: `{}`"
-welcome_mute_btn_curr_text: "El texto actual del botón de seguridad es: `{}`"
-welcome_mute_btn_default_text: '¡Haz clic aquí para demostrar que eres humano!'
-welcome_mute_btn_text_reset: "El botón de texto de seguridad se ha restablecido a: `{}`"
-welcome_clean_service_off: Dejaré los mensajes del servicio.
-welcome_clean_service_on: Limpiaré los mensajes del servicio.
-welcome_mute_time_short_none: (Silenciado para siempre hasta que el usuario haga clic en el botón)
-welcome_mute_time_short: (Silenciando usuario por {})
-welcome_greet_set_on: '¡Los nuevos miembros serán recibidos con un mensaje de bienvenida!'
-welcome_greet_set_off: '¡Los nuevos miembros ya no serán recibidos con un mensaje de bienvenida!'
-welcome_goodbye_set_on: '¡Dejar a los miembros se les dará un mensaje de adiós!'
-welcome_goodbye_set_off: '¡Dejar a los miembros ya no se les dará un mensaje bueno!'
-welcome_set_welcome_no_text: '¡Debes proporcionar el mensaje de bienvenida! ¡Escribe `/help greetings` en mi PM para obtener ayuda para el módulo Saludos!'
-welcome_set_welcome_no_datatype: No se pudo encontrar el tipo de datos del mensaje de bienvenida.
-welcome_set_welcome_success: '¡Mensaje de bienvenida personalizado con éxito!'
-welcome_reset_welcome_success: '¡Restablecer el mensaje de bienvenida por defecto con éxito!'
-welcome_set_goodbye_success: '¡Establecer mensaje de adiós personalizado con éxito!'
-welcome_reset_goodbye_success: '¡Restablecer mensaje de goodbye por defecto con éxito!'
-welcome_clean_curr_on: '¡Actualmente elimino los mensajes de bienvenida que tienen hasta 2 días!'
-welcome_clean_curr_off: '¡Actualmente no elimino los mensajes de bienvenida antiguos!'
-welcome_clean_set_on: '¡A partir de ahora borraré los mensajes de bienvenida de antemano (hasta 2 días!'
-welcome_clean_set_off: '¡Ya no borraré mensajes de bienvenida antiguos!'
+welcome_added_to_grp: 'Obrigado por me adicionar ao seu grupo! Não se esqueça de conferir o nosso canal de notícias!'
+welcome_mute_btn_unmuted: 'Desmutado! Agora você pode escrever!'
+welcome_mute_btn_old_user: '¡Você não é um novo usuário!'
+welcome_bot_owner_left: Bem, meu mestre se foi, a festa acabou!
+welcome_mute_bot_cant_mute: 'Não posso limitar as pessoas aqui! Certifique-se de que sou um administrador para que eu possa silenciar alguém!'
+welcome_mute_enabled: 'Welcomemute foi ativado! Os novos membros serão silenciados até pressionar o botão.'
+welcome_mute_disabled: 'Welcomemute foi desativado! Novos membros não serão mais silenciados!'
+welcome_mute_curr_settings: "As configurações atuais são:\n\nSegurança do Bem-vindo: `{}`\nO usuário será silenciado por: `{}`\nTexto personalizado para o botão de desmutar: `{}`"
+welcome_mute_time_none: 'Cada novo membro será silenciado até pressionar o botão de boas-vindas!'
+welcome_mute_time: 'Cada novo membro será silenciado por {} ou até pressionar o botão de boas-vindas!'
+welcome_mute_time_settings_none: Atualmente, cada novo membro será silenciado até pressionar o botão de boas-vindas.
+welcome_mute_time_settings: Atualmente, cada novo membro será silenciado por {} ou até pressionar o botão de boas-vindas.
+welcome_mute_btn_text_changed: "O texto do botão de segurança foi alterado para: `{}`"
+welcome_mute_btn_curr_text: "O texto atual do botão de segurança é: `{}`"
+welcome_mute_btn_default_text: 'Clique aqui para provar que você é humano!'
+welcome_mute_btn_text_reset: "O botão de texto de segurança foi redefinido para: `{}`"
+welcome_clean_service_off: Vou deixar mensagens do serviço.
+welcome_clean_service_on: Vou limpar as mensagens do serviço.
+welcome_mute_time_short_none: (Silenciado para sempre até o usuário clicar no botão)
+welcome_mute_time_short: (Silenciando usuário por {})
+welcome_greet_set_on: 'Os novos membros serão recebidos com uma mensagem de boas-vindas!'
+welcome_greet_set_off: 'Os novos membros não serão mais recebidos com uma mensagem de boas-vindas!'
+welcome_goodbye_set_on: 'A partir de agora darei uma mensagem de adeus!'
+welcome_goodbye_set_off: 'A partir de agora não darei mais uma mensagem de adeus.'
+welcome_set_welcome_no_text: 'Você deve fornecer a mensagem de boas-vindas! Digite `/help greetings` no meu PM para obter ajuda para o módulo Boas Vindas!'
+welcome_set_welcome_no_datatype: Não foi possível encontrar o tipo de dados da mensagem de boas-vindas.
+welcome_set_welcome_success: 'Mensagem de boas-vindas personalizada com sucesso!'
+welcome_reset_welcome_success: 'Redefinida a mensagem de boas-vindas padrão com sucesso!'
+welcome_set_goodbye_success: 'Mensagem de despedida definida com sucesso.'
+welcome_reset_goodbye_success: 'Redefinida a mensagem de adeus para o padrão com sucesso!'
+welcome_clean_curr_on: 'No momento, excluo mensagens de boas-vindas com até 2 dias de idade!'
+welcome_clean_curr_off: 'No momento, não estou excluindo antigas mensagens de boas-vindas!'
+welcome_clean_set_on: 'A partir de agora, excluirei as mensagens de boas-vindas com antecedência (até 2 dias)!'
+welcome_clean_set_off: 'Não vou mais excluir antigas mensagens de boas-vindas!'
 welcome_chat_settings_pref: |
-  Este chat tiene sus ajustes de bienvenida establecidos a `{}`.
-  Los ajustes de adiós están configurados a `{}`.
+  Este bate-papo tem suas configurações de boas-vindas definidas como `{}`.
+  As configurações de adeus estão definidas para `{}`.
 welcome_goodbye_settings: |
-  Este chat tiene su configuración de adiós establecida a: `{}`.
-  *El mensaje de adiós (no rellenar el {{}}) es:*
+  Este bate-papo tem suas configurações de adeus definidas para: `{}`.
+  *A mensagem de adeus (não preencha o {{}}) é:*
 welcome_settings: |
-  Este chat tiene su configuración de bienvenida establecida como: `{}`
-  Eliminando el viejo mensaje de bienvenida: `{}`
-  Eliminando el mensaje de servicio: `{}`
-  Silenciando a los usuarios cuando se unen: `{}`
-  Texto del botón de silencio: `{}`
-  \n*El mensaje de bienvenida (no llenar el {{}}) es:*
+  Este bate-papo tem suas configurações de boas-vindas definidas como: `{}`
+  Removendo a antiga mensagem de boas-vindas: `{}`
+  Excluindo a mensagem de serviço: `{}`
+  Silenciando usuários quando eles ingressam: `{}`
+  Texto do botão de mute : `{}`
+  \n*A mensagem de boas-vindas (não preencha {{}}) é:*
 welcome_help: |
-  ¡Dé una cálida bienvenida a sus miembros con el módulo de saludos! O un triste adiós ... ¡Depende!
+  Dê boas-vindas calorosamente a seus membros com o módulo de Boas vindas! Ou um triste adeus ... Depende!
 
-  Los comandos disponibles son:
-  - /welcome <on/off/yes/no>: activa / desactiva los mensajes de bienvenida. Si no se ofrece ninguna opción, devuelve el mensaje de bienvenida actual y la configuración.
-  - /goodbye <on/off/yes/no>: habilita / deshabilita los mensajes de despedida. Si no se da ninguna opción, devuelve el mensaje de despedida actual y la configuración.
-  - /setwelcome <message>: establece su nuevo mensaje de bienvenida! Markdown y botones son compatibles, así como rellenos.
-  - /resetwelcome: restablece su mensaje de bienvenida al predeterminado; eliminando cualquier cambio que haya realizado.
-  - /setgoodbye <message>: ¡establece tu nuevo mensaje de despedida! Markdown y botones son compatibles, así como rellenos.
-  - /resetgoodbye: restablece su mensaje de despedida al predeterminado; eliminando cualquier cambio que haya realizado.
-  - /cleanservice <on/off/yes/no>: elimina todos los mensajes de servicio; la "x se unió al grupo" que ves cuando las personas se unen.
-  - /cleanwelcome <on/off/yes/no>: elimina viejos mensajes de bienvenida; cuando una nueva persona se une, el mensaje anterior se elimina.
-  - /welcomemute <on/off/yes/no>: todos los usuarios que se unen se silencian; se agrega un botón al mensaje de bienvenida para que se desactiven el silencio. ¡Esto prueba que no son un bot!
-  - /welcomemutetime <Xw/d/h/m>: si un usuario no ha presionado el botón "unmute" en el mensaje de bienvenida después de cierto tiempo, se silenciarán automáticamente después de este período de tiempo.
-  Nota: si no desea un tiempo de silencio (silencia al usuario hasta que presione el botón), usa /welcomemutetime 0m.
-  - /setmutetext <new text>: Personalice el botón "haga clic aquí para demostrar que es humano" que se obtiene al habilitar los modos de bienvenida.
-  - /resetmutetext: restablece el botón de silencio al texto predeterminado.
+  os comandos de boas vindas são:
+  - /welcome <on/off/yes/no>: ativa/desativa mensagens de boas-vindas. Se nenhuma opção for oferecida, ela retornará a mensagem de boas-vindas e as configurações atuais.
+  - /goodbye <on/off/yes/no>: ativa/desativa mensagens de despedida. Se nenhuma opção for dada, ela retornará a mensagem de despedida atual e as configurações.
+  - /setwelcome <message>: define sua nova mensagem de boas-vindas! Markdown e botões são suportados, bem como preenchimentos.
+  - /resetwelcome: redefine sua mensagem de boas-vindas para o padrão; excluindo as alterações feitas.
+  - /setgoodbye <message>: Define sua nova mensagem de adeus! Markdown e botões são suportados, bem como preenchimentos.
+  - /resetgoodbye: redefine sua mensagem de despedida para o padrão; excluindo as alterações feitas.
+  - /cleanservice <on/off/yes/no>: exclui todas as mensagens de serviço; o "x ingressou no grupo" que você vê quando as pessoas entram.
+  - /cleanwelcome <on/off/yes/no>: exclui antigas mensagens de boas-vindas; quando uma nova pessoa ingressa, a mensagem antiga é excluída.
+  - /welcomemute <on/off/yes/no>: todos os usuários que ingressam são silenciados; um botão é adicionado à mensagem de boas-vindas para desativar o mute. Isso prova que eles não são um bot!
+  - /welcomemutetime <Xw/d/h/m>: Se um usuário não pressionar o botão "silenciar" na mensagem de boas-vindas após um certo tempo, ele será silenciado automaticamente após esse período.
+  Nota: se você não quiser um tempo de silêncio (silencie o usuário até que ele pressione o botão), use /welcomemutetime 0m.
+  - /setmutetext <new text>: Personalize o botão "clique aqui para provar que é humano", obtido através da ativação dos modos de boas-vindas.
+  - /resetmutetext: redefina o botão mute para o texto padrão.
 
-  ¡Lea /markdownhelp para aprender a formatear su texto y mencionar a los nuevos usuarios cuando se una!
+  Leia /markdownhelp para aprender a formatar seu texto e mencionar novos usuários quando você ingressar!
 
-  Rellenos: 
-  Como se mencionó, puede usar ciertas etiquetas para completar su mensaje de bienvenida con información de usuario o chat; hay: 
-  {first}: El nombre del usuario. 
-  {last}: El apellido del usuario. 
-  {fullname}: El nombre completo del usuario. 
-  {username}: El nombre de usuario del usuario; si no hay ninguno disponible, menciona al usuario. 
-  {mention}: Menciona al usuario, usando su nombre. 
-  {id}: La identificación del usuario. 
-  {chatname}: El nombre del chat.
+  Preenchimentos: 
+  Como mencionado, você pode usar determinadas tags para concluir sua mensagem de boas-vindas com informações de usuário ou bate-papo; como: 
+  {first}: O nome do usuário.
+  {last}: O sobrenome do usuário. 
+  {fullname}: O nome completo do usuário.
+  {username}:O username do usuário; se não houver nenhum disponível, mencione o usuário.
+  {mention}: Mencione o usuário, usando seu nome. 
+  {id}: O ID do usuário. 
+  {chatname}: O nome do chat.
 
-  Un ejemplo de cómo usar los rellenos sería establecer su bienvenida, a través de: /setwelcome ¡Hola! {First}! Bienvenido a {chatname}.
+  Um exemplo de como usar os preenchimentos seria definir suas boas-vindas em: /setwelcome Hello! {first}! Bem-vindo ao {chatname}.
 
-  Puede habilitar / deshabilitar los mensajes de bienvenida como tales:
+  Você pode ativar / desativar as mensagens de boas-vindas da seguinte forma:
   /welcome off
 
-  Si desea guardar una imagen, un gif, un sticker o cualquier otro dato, haga lo siguiente:
-  /setwelcome mientras responde a un sticker o cualquier dato que quieras. Estos datos ahora se enviarán para dar la bienvenida a nuevos usuarios.
+  Se você deseja salvar uma imagem, um gif, um stickear ou qualquer outro dado, faça o seguinte:
+  Responda a uma midia com `/setwelcome palavra` e a mensagem de boas vindas será essa midia.
 
-  Consejo: use /welcome noformat para recuperar el mensaje de bienvenida sin formato.
-  Esto recuperará el mensaje de bienvenida y lo enviará sin formato; obteniendo el markdown en bruto, lo que le permite realizar ediciones fáciles. 
-  Esto también funciona con /goodbye.
+  Dica: use /welcome noformat para recuperar a mensagem sem formatação de boas-vindas.
+  Isso recuperará a mensagem de boas-vindas e a enviará bruta; obtendo o Markdown sem formatação, permitindo que você faça edições fáceis.
+  Isso também funciona com /goodbye.
 #Users
-users_seen: "Los he visto en <code>{}</code> chats en total."
-users_seen_is_bot: "Los he visto en... Wow. ¿Están acechándome? Están en todos los mismos lugares que so... oh. Soy yo."
+users_seen: "Eu os vi em <code>{}</code> chats no total."
+users_seen_is_bot: "Eu os vi em ... Uau. Eles estão me perseguindo? Eles estão nos mesmos lugares que eu estou ... oh. Sou eu."
 #Userinfo
 modname_userinfo: Bio/Sobre
-userinfo_about_not_set_they: "{} aún no ha establecido un mensaje informativo sobre sí mismo!"
-userinfo_about_not_set_you: '¡Aún no has configurado un mensaje informativo sobre ti mismo!'
-userinfo_about_set_success: '¡Actualizada tu información!'
-userinfo_about_too_long: '¡Tu información debe tener menos de {} caracteres! Tienes {}.'
-userinfo_bio_none_they: "{} no tiene ningún bio conjunto."
-userinfo_bio_none_you: Nadie ha establecido una biografía para usted!
-userinfo_bio_you_cant_set: '¡Hola, no puedes establecer tu propia biografía! Estás a merced de los demás aquí...'
-userinfo_bio_bot_sudo_only: Erm... sí, sólo confío en los usuarios de sudo para establecer mi bio.
-userinfo_bio_sudo_sudo_only: Erm... sí, sólo confío en los usuarios sudo para establecer bio.
-userinfo_bio_owner_nobio: '¡No estás configurando el prejuicio de mi maestro!'
-userinfo_bio_too_long: '¡Un bio necesita tener menos de {} caracteres! Intentaste establecer {}.'
-userinfo_bio_set_no_reply: '¡Responde al mensaje de alguien para establecer su biografía!'
-userinfo_message_about_bio: <b>Sobre el usuario:</b>\n{}\n<b>Lo que otros dicen:</b>\n{}
-userinfo_message_bio: <b>Lo que otros dicen:</b>\n{bio}\n
-userinfo_message_about: <b>Acerca del usuario:</b>\n{}
-userinfo_what_i_and_other_say: <b>Sobre el usuario:</b>\n{}\n<b>Lo que otros dicen:</b>\n{}
-userinfo_what_other_say: <b>Lo que otros dicen:</b>\n{}\n
-userinfo_what_i_say: <b>Acerca del usuario:</b>\n{}
+userinfo_about_not_set_they: "{} ainda não estabeleceu uma mensagem informativa sobre si mesmo!"
+userinfo_about_not_set_you: 'Você ainda não configurou uma mensagem informativa sobre si mesmo!'
+userinfo_about_set_success: 'Atualizou suas informações!'
+userinfo_about_too_long: 'Suas informações devem ser menores que {} caracteres! Tem atualmente {}.'
+userinfo_bio_none_they: "{} Não possui nenhuma Bio."
+userinfo_bio_none_you: Ninguém criou uma biografia para você!
+userinfo_bio_you_cant_set: 'Olá, você não pode definir sua própria biografia! Você está à mercê de outras pessoas aqui ...'
+userinfo_bio_bot_sudo_only: Erm ... sim, eu confio apenas nos usuários do sudo para definir minha biografia.
+userinfo_bio_sudo_sudo_only: Erm ... sim, eu confio apenas nos usuários do sudo para definir biografia.
+userinfo_bio_owner_nobio: 'O preconceito do meu mestre não está configurado!'
+userinfo_bio_too_long: 'Uma biografia precisa ter menos de {} caracteres! Você tentou estabelecer {}.'
+userinfo_bio_set_no_reply: 'Responda à mensagem de alguém para definir sua biografia!'
+userinfo_message_about_bio: <b>Sobre o usuário:</b>\n{}\n<b>O que os outros dizem:</b>\n{}
+userinfo_message_bio: <b>O que os outros dizem:</b>\n{bio}\n
+userinfo_message_about: <b>Sobre o usuário:</b>\n{}
+userinfo_what_i_and_other_say: <b>Sobre o usuário:</b>\n{}\n<b>O que os outros dizem:</b>\n{}
+userinfo_what_other_say: <b>O que os outros dizem:</b>\n{}\n
+userinfo_what_i_say: <b>Sobre o usuário:</b>\n{}
 userinfo_help: |
-  - /setbio <text>: mientras responda, guardará la biografía de otro usuario
-  - /bio: obtendrá la biografía de tu usuario u otro. Esto no puede ser establecido por ti mismo.
-  - /setme <text>: establecerá su información
-  - /me: obtendrá la información de otro usuario
+  - /setbio <text>: ao responder, ele salva a biografia de outro usuário
+  - /bio: Ele obterá a biografia do seu usuário ou de outro. Isso não pode ser estabelecido por você mesmo.
+  - /setme <text>: estabelecerá suas informações
+  - /me: obterá as informações de outro usuário
 #Stickers
 modname_stickers: Stickers
 stickers_stickerid: ID del Sticker:\n```{}```
-stickers_stickerid_no_reply: Por favor responda a una etiqueta para obtener su ID.
-stickers_getsticker_no_reply: Por favor, responda a una etiqueta para que suba su PNG.
-stickers_kang_error: Sí, no puedo saberlo.
+stickers_stickerid_no_reply: Por favor responda a um sticker para obter seu ID.
+stickers_getsticker_no_reply: Por favor, responda a um sticker para obter seu PNG.
+stickers_kang_error: Sim, eu não sei.
 stickers_kang_success: |
-  Sticker añadido correctamente a [pack](t.me/addstickers/{}).
+  Sticker kangado com sucesso ao [pack](t.me/addstickers/{}).
   Emoji: {}
-stickers_kang_only_img: '¡Sólo puedo kang imágenes!'
-stickers_kang_invalid_emoji: "Error: emoji(s) no válidos."
-stickers_kang_too_much: "Error: Tamaño máximo de paquete alcanzado. Presione F para pagar respecto."
-stickers_kang_no_reply: '¡Por favor, responde a una pegatina o a una imagen para colgarla!\nOh, por cierto, aquí están tus paquetes:\n'
-stickers_pack_name_exists: Tu paquete se puede encontrar [here](t.me/addstickers/%s)
-stickers_pack_contact_pm: Contácteme en PM primero.
-stickers_pack_create_error: No se pudo crear el paquete de etiquetas. Posiblemente debido a mejik bloqueado.
+stickers_kang_only_img: 'Eu só posso kangar imagens!'
+stickers_kang_invalid_emoji: "Erro: emoji(s) inválidos."
+stickers_kang_too_much: "Erro: tamanho máximo do pacote atingido. Press F to pay respects."
+stickers_kang_no_reply: 'Por favor, responda a um sticker ou imagem para kangar!\nAh, a propósito, aqui estão seus pacotes:\n'
+stickers_pack_name_exists: Seu pacote de stickers pode ser encontrado [aqui](t.me/addstickers/%s)
+stickers_pack_contact_pm: Entre em contato comigo no PV primeiro.
+stickers_pack_create_error: O pacote de stickers não pôde ser criado. Possivelmente devido ao mejik bloqueado.
 stickers_help: |
-  - /stickerid: responde a un sticker para decirte su ID de archivo.
-  - /getsticker: responde a un sticker para subir su archivo PNG crudo.
-  - /kang: responde a una etiqueta para añadirla a tu paquete.
+  - /stickerid: Responda a um sticker para informar seu ID.
+  - /getsticker: responda a um adesivo para fazer upload do seu arquivo PNG bruto.
+  - /kang: responda a uma tag para adicioná-la ao seu pacote.
 #Warnings
 modname_warns: Advertências
-warns_warn_admin_no_warn: '¡No voy a advertir a un administrador!'
-warns_warn_admin_autofilter: Filtro de advertencia automatizado
-warns_max_warn_kick: "¡{} avisos, {} ha sido expulsado!"
-warns_max_warn_ban: "¡{} avisos, {} ha sido bloqueado!"
+warns_warn_admin_no_warn: '¡Não vou warnar um administrador!'
+warns_warn_admin_autofilter: Filtro de warm automatizado
+warns_max_warn_kick: "¡{} warns, {} foi kickado!"
+warns_max_warn_ban: "¡{} warns, {} foi banido!"
 warns_warn_ban_log_channel: |
   <b>{}:</b>
   #WARN_BAN
   <b>Administrador:</b> {}
-  <b>Usuario:</b> {} (<code>{}</code>)
-  <b>Razón:</b> {}
+  <b>Usuário:</b> {} (<code>{}</code>)
+  <b>Razão:</b> {}
   <b>Aviso:</b> <code>{}/{}</code>
 warns_warn_log_channel: |
   <b>{}:</b>
   #WARN
-  <b>Admin:</b> {}
-  <b>User:</b> {} (<code>{}</code>)
-  <b>Reason:</b> {}
-  <b>Counts:</b> <code>{}/{}</code>
+  <b>Administrador:</b> {}
+  <b>Usuário:</b> {} (<code>{}</code>)
+  <b>Razão:</b> {}
+  <b>Aviso::</b> <code>{}/{}</code>
 warns_remove_log_channel: |
   <b>{}:</b>
   #UNWARN
   <b>Administrador:</b> {}
-  <b>Usuario:</b> {} (<code>{}</code>)
+  <b>Usuário:</b> {} (<code>{}</code>)
 warns_reset_log_channel: |
   <b>{}:</b>
   #RESETWARNS
-  <b>Admin:</b> {}
-  <b>Usuario:</b> {} (<code>{}</code>)
+  <b>Administrador:</b> {}
+  <b>Usuário:</b> {} (<code>{}</code>)
 warns_set_warn_limit_log_channel: |
   <b>{}:</b>
   #SET_WARN_LIMIT
-  <b>Admin:</b> {}
-  Establecer el límite de advertencia a <code>{}</code>
+  <b>Administrador:</b> {}
+  Definido o limite de warn como <code>{}</code>
 warns_strength_on_log_channel: |
   <b>{}:</b>\n
   <b>Administrador:</b> {}\n
-  Ha activado advertencias. Los usuarios serán baneados.
+  Você acionou warns. Os usuários serão banidos.
 warns_strength_off_log_channel: |
   <b>{}:</b>\n
   <b>Administrador:</b> {}\n
-  Ha desactivado fuertes advertencias. Los usuarios solo serán expulsados.
-warns_btn_remove_warn: Quitar advertencia
+ Você desativou warns fortes. Os usuários serão kickados apenas.
+warns_btn_remove_warn: Remover warn
 warns_btn_rules: Regras
-warns_user_warned: "{} <b>ha sido advertido!</b>\nTienen {}/{} advertencias."
-warns_latest_warn_reason: \nLa última advertencia fue porque:\n<code>{}</code>
-warns_remove_admin_only: '¡No está autorizado a eliminar esta advertencia! Sólo los administradores pueden eliminar advertencias.'
-warns_remove_success: Advertencia eliminada por {}.
-warns_user_has_no_warns: '¡El usuario no tiene advertencias!'
-warns_latest_remove_success: '¡La última advertencia ha sido eliminada!'
-warns_reset_success: '¡Advertencias se han restablecido!'
-warns_list_warns: "Este usuario tiene {}/{} avisos, por las siguientes razones:"
-warns_list_warns_no_reason: Este usuario tiene advertencias {}/{}, pero no hay razones para ninguna.
-warns_list_warns_none: '¡Este usuario no tiene avisos!'
-warns_handler_add_success: Advertencia añadida para '{}'!
-warns_filters_list_empty: '¡No hay filtros de advertencia activos aquí!'
-warns_filters_remove_success: Sí, dejaré de advertir a la gente por eso.
-warns_filter_doesnt_exist: No es un filtro de advertencia actual - ejecute /warnlist para todos los filtros de advertencia activos.
-warns_filters_list: <b>Filtros de advertencia actuales en este chat:</b>\n
-warns_warnlimit_min_1: '¡El límite mínimo de advertencia es 1!'
-warns_warnlimit_updated_success: Actualizado el límite de advertencia a {}.
-warns_warnlimit_invalid_arg: '¡Argumento no válido! El argumento debe ser un número, no menos de 1.'
-warns_warnlimit_current: El límite de advertencia actual es {}.
-warns_strength_on_success: '¡Exceder el límite de advertencias ahora baneará al usuario!'
-warns_strength_off_success: '¡Exceder el límite de advertencias ahora expulsará al usuario! Los usuarios podrán unirse después de haber sido expulsados.'
-warns_strength_invalid_arg: '¡Argumento no válido! ¡Sólo se aceptan on/yes/no/off!'
-warns_strength_off: Las advertencias están configuradas a usuarios *kick* cuando exceden los límites.
-warns_strength_on: Las advertencias están configuradas a *ban* usuarios cuando exceden los límites.
+warns_user_warned: "{} <b>foi advertido!</b>\nPossui {}/{} warns."
+warns_latest_warn_reason: \nO ultimo warn foi pelo motivo:\n<code>{}</code>
+warns_remove_admin_only: 'Você não está autorizado a remover este warn! Somente administradores podem remover warns.'
+warns_remove_success: Warn removido por {}.
+warns_user_has_no_warns: 'O usuário não possui warns'
+warns_latest_remove_success: 'O ultimo warn foi removido.'
+warns_reset_success: 'Warns foram resetados com sucesso.'
+warns_list_warns: "Este usuário possui {}/{} warns, pelas seguintes razões:"
+warns_list_warns_no_reason: Este usuário possui {}/{} warns, mas não possui nenhuma razão para elas.
+warns_list_warns_none: 'Este usuário não possui warns!'
+warns_handler_add_success: Warn adicionado para '{}'!
+warns_filters_list_empty: 'Não há filtros de warn ativos aqui.'
+warns_filters_remove_success: Sim, eu vou parar de advertir as pessoas sobre isso.
+warns_filter_doesnt_exist: Não é um filtro de warn atual - execute /warnlist para todos os filtros de warn ativos.
+warns_filters_list: <b>Filtros de warn nesse chat:</b>\n
+warns_warnlimit_min_1: 'O limite mínimo de warns é 1.'
+warns_warnlimit_updated_success: Limite de warns atualizado para {}.
+warns_warnlimit_invalid_arg: 'Argumento não válido, o argumento deve ser um número maior ou igual a 1.'
+warns_warnlimit_current: O limite de warns atual é {}.
+warns_strength_on_success: 'Ultrapassar o limite de warns agora irá banir o usuário'
+warns_strength_off_success: 'Ultrapassar o limite de warns agora irá kickar o usuário. Usuários kickados podem entrar novamente no chat.'
+warns_strength_invalid_arg: 'Argumento inválido. os argumentos aceitos são on/yes/no/off!'
+warns_strength_off: Os warns estão configurados para *kickar* os usuários quando eles ultrapassam os limites.
+warns_strength_on: Os warns estão configurados para *banir* os usuários quando eles ultrapassam os limites.
 warns_help: |
-  - /warns <userhandle>: compruebe cuántas advertencias tiene un usuario (y vea las razones si está presente).
-  - /warnlist: lista de todos los filtros de advertencia actuales
+  - /warns <userhandle>: verifique quantos warns um usuário possui (e veja os motivos, se houver).
+  - /warnlist: lista de todos os filtros de warn atuais
 
-  *Sólo Administrador:*
-  - /warn <userhandle>: avisar a un usuario. Después de 3 avisos, el usuario será baneado del grupo. También se puede utilizar como respuesta.
-  - /resetwarn <userhandle>: restablecer las advertencias para un usuario. También se puede usar como respuesta.
-  - /addwarn <keyword> <reply message>: establecer un filtro de advertencia en una palabra clave. Si quieres que tu palabra clave \
-  sea una oración, compártela con comillas, como tal: `/addwarn "muy enojado" Este es un usuario enojado`.
-  - /nowarn <keyword>: detener un filtro de advertencia
-  - /warnlimit <num>: establecer el límite de advertencia
-  - /strongwarn <on/yes/off/no>: si está activado sobrepasar el límite de advertencia resultará en una prohibición. De lo contrario, simplemente kick.
-  - /rmwarn <userhandle>: elimina la última advertencia para un usuario. También se puede usar como respuesta.
-  - /unwarn <userhandle>: igual que /rmwarn
+  *Somente administrador:*
+  - /warn <username>: notifica um usuário. Após 3 warns, o usuário será banido do grupo. Também pode ser usado em resposta.
+  - /resetwarn <username>: redefine warns para um usuário. Também pode ser usado em resposta.
+  - /addwarn <keyword> <reply message>: define um filtro de warn em uma palavra-chave. Se você quiser sua palavra-chave\
+  seja uma frase, compartilhe-a com aspas, como tal: `/addwarn "sopa de macaco" UMA DELICIA`.
+  - /nowarn <keyword>: para um filtro de warn
+  - /warnlimit <num>: estabelece um limite de warn
+  - /strongwarn <on/yes/off/no>: se ativado, exceder o limite de warn resultará em um banimento. Caso contrário, ele irá apenas kickar.
+  - /rmwarn <username>: remove o último warn para um usuário. Também pode ser usado em resposta.
+  - /unwarn <username>: mesma coisa que /rmwarn
 #OrangeFox
-fox_devices_title: "**OrangeFox Recovery is currently avaible for:**"
-fox_get_release: You can get latest release by using `/orangefox (codename)`
-fox_device_not_found: Device is not found!
-fox_release_not_found: "Release is not found!"
+fox_devices_title: "**OrangeFox Recovery está atualmente disponível para:**"
+fox_get_release: Você pode obter a ultima versão do orangefox com `/orangefox (codinome)`
+fox_device_not_found: Esse device não foi encontrado!
+fox_release_not_found: "Versão do OrangeFox não encontrada!"
 fox_release_device: "**📱 Device:** {fullname} (`{codename}`)\n"
-fox_release_version: "**🔺 Version:** `{}`\n"
-fox_release_maintainer: "**👨‍🔬 Maintainer:** {name}, {status}\n"
-fox_release_maintained_1: Maintained
-fox_release_maintained_3: Not maintained
-fox_release_date: "**📅 Release date:** {}\n"
-fox_release_md5: "**✅ File MD5:** `{}`\n"
+fox_release_version: "**🔺 Versão:** `{}`\n"
+fox_release_maintainer: "**👨‍🔬 Mantedor:** {name}, {status}\n"
+fox_release_maintained_1: Mantido
+fox_release_maintained_3: Não mantido
+fox_release_date: "**📅 Data de lançamento:** {}\n"
+fox_release_md5: "**✅ MD5 do arquivo :** `{}`\n"
 ### Helper functions
 #chat_status
-helpers_bot_cant_delete: '¡No puedo eliminar mensajes aquí! Asegúrate de que soy administrador y puedo borrar los mensajes de otros usuarios.'
-helpers_bot_cant_pin: '¡No puedo anclar mensajes aquí! Asegúrate de que soy administrador y puedo anclar mensajes.'
-helpers_bot_cant_pro_demote: '¡No puedo promover/degradar gente aquí! Asegúrate de que soy administrador y puedo nombrar nuevos administradores.'
-helpers_bot_cant_restrict: '¡No puedo restringir a la gente aquí! Asegúrate de que soy administrador y pueda nombrar nuevos administradores.'
-helpers_bot_not_admin: '¡No soy un administrador!'
-helpers_user_not_admin: '¡Debes ser el administrador del chat para realizar esta acción!'
+helpers_bot_cant_delete: 'Não consigo excluir mensagens aqui! Verifique se eu sou um administrador e posso excluir mensagens de outros usuários.'
+helpers_bot_cant_pin: 'Não consigo fixar mensagens aqui! Verifique se sou administrador e posso fixar mensagens.'
+helpers_bot_cant_pro_demote: 'Não posso promover/rebaixar pessoas aqui! Verifique se eu sou um administrador e posso nomear novos administradores.'
+helpers_bot_cant_restrict: 'Não posso restringir as pessoas aqui! Certifique-se de que sou administrador e de que posso nomear novos administradores.'
+helpers_bot_not_admin: 'Eu não sou um administrador!'
+helpers_user_not_admin: 'Você deve ser o administrador do chat para executar esta ação!'
 #extraction
 helpers_user_not_in_db: |
-  No tengo ese usuario en mi base de datos de usuarios.
-  Podrás interactuar con ellos si respondes al mensaje de esa persona en su lugar? o reenvía uno de sus mensajes (esto sólo funcionará si el usuario no tiene ocultada su cuenta).
+  Eu não tenho esse usuário no meu banco de dados de usuários.
+  Você é capaz de interagir com ele se responder à mensagem dessa pessoa? ou encaminhar uma de suas mensagens (isso só funcionará se o usuário não tiver sua conta oculta).
 #string_handling
-helpers_string_handling_invalid_time_amount: Cantidad de tiempo especificada inválida.
-helpers_string_handling_invalid_time_type: "Tipo de tiempo especificado inválido. Esperado, h, d, obtenido: {}."
+helpers_string_handling_invalid_time_amount: Tempo especificado inválido.
+helpers_string_handling_invalid_time_type: "Tipo de tempo especificado inválido. Era esperado: h, d. Tempo especificado: {}."
