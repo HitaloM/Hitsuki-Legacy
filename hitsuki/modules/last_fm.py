@@ -92,7 +92,7 @@ def last_fm(bot: Bot, update: Update):
         tracks = res.json().get("recenttracks").get("track")
         track_dict = {tracks[i].get("artist").get(
             "name"): tracks[i].get("name") for i in range(3)}
-        rep = f"{user} was listening to:\n"
+        rep = tld(chat.id, "misc_lastfm_np").format(user)
         for artist, song in track_dict.items():
             rep += tld(chat.id, "misc_lastfm_scrr").format(artist, song)
         last_user = requests.get(

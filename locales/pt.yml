@@ -455,7 +455,7 @@ locks_help: |
   /lock sticker
 #Log channel
 modname_log_channel: Canal de logs
-log_channel_link: \n<b>Enlace:</b> <a href=\"http://telegram.me/{}/{}\">haga clic aquí</a>
+log_channel_link: \n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">clique aqui</a>
 log_channel_deleted: Este canal de logs foi removido - incompatibilidade.
 log_channel_err_format: \n\nO formato foi desativado devido a um erro inesperado.
 log_channel_grp_curr_conf: "Este grupo tem todos os seus registros enviados para: {} (`{}`)"
@@ -744,11 +744,12 @@ misc_clearuser_lastfm: Nome de usuário do Last.fm limpo com sucesso do meu banc
 misc_setuser_lastfm: Nome de usuário configurado como {}!
 misc_lastfm_usernotset: Você não configurou seu nome de usuário ainda!
 misc_lastfm_userwrong: Hmm... algo está errado.\nPor favor verifique se você setou o nome de usuário corretamente!
-misc_lastfm_nonetracks: Você não parece ter scrobblado nenhuma música ...
+misc_lastfm_nonetracks: Você não parece ter scrobblado nenhuma música...
 misc_lastfm_pn: <code>{} - {}</code>
 misc_lastfm_pn_loved: <code>{} - {}</code> (curtida)
 misc_lastfm_scr: \n(<code>{}</code> scrobbles até agora)
 misc_lastfm_scrr: <code>{} - {}</code>\n
+misc_lastfm_pn: {} está ouvindo:\n
 last_fm_help: |
    Compartilhe o que você está ouvindo com a ajuda deste módulo.
 
