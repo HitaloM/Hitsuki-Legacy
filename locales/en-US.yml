@@ -751,7 +751,7 @@ misc_lastfm_pn: <code>{} - {}</code>
 misc_lastfm_pn_loved: <code>{} - {}</code> (loved)
 misc_lastfm_scr: \n(<code>{}</code> scrobbles so far)
 misc_lastfm_scrr: <code>{} - {}</code>\n
-misc_lastfm_np: {} was listening to:\n
+misc_lastfm_np: "{} was listening to:\n"
 last_fm_help: |
    Share what you're listening to with the help of this module!
 
