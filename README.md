@@ -1,7 +1,7 @@
 # Hitsuki
 
 ![Banner](https://telegra.ph/file/601541db4ff2286fd1096.jpg)
- 
+
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/5636a47ec09a4c6ab4b64b9edbc9ba6c)](https://www.codacy.com/gh/HitsukiNetwork/Hitsuki?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=HitsukiNetwork/Hitsuki&amp;utm_campaign=Badge_Grade)
 [![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/HitsukiNetwork/Hitsuki/?ref=repository-badge)

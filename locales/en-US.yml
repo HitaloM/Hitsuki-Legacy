@@ -752,6 +752,7 @@ misc_lastfm_pn_loved: <code>{} - {}</code> (loved)
 misc_lastfm_scr: \n(<code>{}</code> scrobbles so far)
 misc_lastfm_scrr: <code>{} - {}</code>\n
 misc_lastfm_np: "{} was listening to:\n"
+misc_lastfm_inp: "{} is currently listening to:\n"
 last_fm_help: |
    Share what you're listening to with the help of this module!
 
@@ -888,8 +889,7 @@ rules_help: |
 #Translator
 modname_translator: Translator
 translator_translated: |
-  Source (`{}`):\n{}
-  Destination (`{}`):\n{}
+  From `{}` to `{}`):\n{}
 translator_err: Error occured while translating:\n{}
 translator_help: "- /tr (language code): Get the translation of the replied message."
 translator_no_str: Reply to a message to translate!
