@@ -749,8 +749,8 @@ misc_lastfm_pn: <code>{} - {}</code>
 misc_lastfm_pn_loved: <code>{} - {}</code> (curtida)
 misc_lastfm_scr: \n(<code>{}</code> scrobbles até agora)
 misc_lastfm_scrr: <code>{} - {}</code>\n
-misc_lastfm_np: {} estava ouvindo:\n
-misc_lastfm_inp: {} está ouvindo atualmente:\n
+misc_lastfm_np: "{} estava ouvindo:\n"
+misc_lastfm_inp: "{} está ouvindo atualmente:\n"
 last_fm_help: |
    Compartilhe o que você está ouvindo com a ajuda deste módulo.
 
