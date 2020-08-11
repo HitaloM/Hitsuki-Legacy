@@ -21,7 +21,7 @@ from io import BytesIO
 from typing import List
 
 from telegram import Update, Bot, ParseMode
-from telegram.error import BadRequest  #,  TelegramError
+from telegram.error import BadRequest
 from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import mention_html
 
@@ -30,7 +30,7 @@ from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, GBAN_DUMP, 
 from hitsuki.modules.helper_funcs.chat_status import user_admin, is_user_admin
 from hitsuki.modules.helper_funcs.extraction import extract_user_and_text
 from hitsuki.modules.helper_funcs.filters import CustomFilters
-#from hitsuki.modules.helper_funcs.misc import send_to_list
+# from hitsuki.modules.helper_funcs.misc import send_to_list
 # from hitsuki.modules.sql.users_sql import get_all_chats
 
 from hitsuki.modules.tr_engine.strings import tld

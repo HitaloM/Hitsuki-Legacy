@@ -89,10 +89,10 @@ def connect_chat(bot, update, args):
                         tld(chat.id, "connection_success").format(chat_name),
                         parse_mode=ParseMode.MARKDOWN)
 
-                    #Add chat to connection history
+                    # Add chat to connection history
                     history = sql.get_history(user.id)
                     if history:
-                        #Vars
+                        # Vars
                         if history.chat_id1:
                             history1 = int(history.chat_id1)
                         if history.chat_id2:
@@ -173,7 +173,7 @@ def disconnect_chat(bot, update):
         if disconnection_status:
             sql.disconnected_chat = update.effective_message.reply_text(
                 tld(chat.id, "connection_dis_success"))
-            #Rebuild user's keyboard
+            # Rebuild user's keyboard
             keyboard(bot, update)
         else:
             update.effective_message.reply_text(
