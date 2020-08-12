@@ -287,12 +287,8 @@ async def magisk(event):
             name = "**Beta**"
             cc = 0
             branch = "master"
-        elif variants == "canary/release":
-            name = "**Canary**"
-            cc = 1
-            branch = "canary"
         elif variants == "canary/debug":
-            name = "**Canary (Debug)**"
+            name = "**Canary**"
             cc = 1
             branch = "canary"
 
