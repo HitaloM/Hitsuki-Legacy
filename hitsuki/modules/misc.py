@@ -415,7 +415,7 @@ def wiki(bot: Bot, update: Update):
 def covid(bot: Bot, update: Update):
     message = update.effective_message
     chat = update.effective_chat
-    country = str(message.text[len(f'/covid '):])
+    country = str(message.text[len('/covid '):])
     if country == '':
         country = "world"
     if country.lower() in ["south korea", "korea"]:
