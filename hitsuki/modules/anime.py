@@ -255,7 +255,9 @@ def anime(bot: Bot, update: Update):
                     caption=msg,
                     parse_mode=ParseMode.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup(buttons))
-            except BaseException:
+            except BaseException as e:
+                print(e)
+                print(e)
                 msg += f" [〽️]({image})"
                 update.effective_message.reply_text(
                     msg,
@@ -353,7 +355,8 @@ def manga(bot: Bot, update: Update):
                     caption=msg,
                     parse_mode=ParseMode.MARKDOWN,
                     reply_markup=InlineKeyboardMarkup(buttons))
-            except BaseException:
+            except BaseException as e:
+                print(e)
                 msg += f" [〽️]({image})"
                 update.effective_message.reply_text(
                     msg,
@@ -373,7 +376,8 @@ def user(bot: Bot, update: Update):
 
     try:
         search_query = args[1]
-    except BaseException:
+    except BaseException as e:
+        print(e)
         if message.reply_to_message:
             search_query = message.reply_to_message.text
         else:
@@ -399,7 +403,8 @@ def user(bot: Bot, update: Update):
     try:
         user_birthday = datetime.datetime.fromisoformat(user['birthday'])
         user_birthday_formatted = user_birthday.strftime(date_format)
-    except BaseException:
+    except BaseException as e:
+        print(e)
         user_birthday_formatted = "Unknown"
 
     user_joined_date = datetime.datetime.fromisoformat(user['joined'])

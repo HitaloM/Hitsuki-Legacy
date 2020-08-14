@@ -235,8 +235,8 @@ def reply_filter(bot: Bot, update: Update):
             elif filt.is_document:
                 try:
                     message.reply_document(filt.reply)
-                except Exception:
-                    print("L")
+                except Exception as e:
+                    print(e)
             elif filt.is_image:
                 message.reply_photo(filt.reply)
             elif filt.is_audio:
@@ -246,8 +246,8 @@ def reply_filter(bot: Bot, update: Update):
             elif filt.is_video:
                 try:
                     message.reply_video(filt.reply)
-                except Exception:
-                    print("Nut")
+                except Exception as e:
+                    print(e)
             elif filt.has_markdown:
                 buttons = sql.get_buttons(chat.id, filt.keyword)
                 keyb = build_keyboard(buttons)
@@ -277,8 +277,8 @@ def reply_filter(bot: Bot, update: Update):
                             LOGGER.exception(
                                 "Could not parse filter %s in chat %s",
                                 str(filt.keyword), str(chat.id))
-                        except Exception:
-                            print("Nut")
+                        except Exception as e:
+                            print(e)
 
             else:
                 # LEGACY - all new filters will have has_markdown set to True.

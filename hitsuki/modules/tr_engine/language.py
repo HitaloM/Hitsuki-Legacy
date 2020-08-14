@@ -97,7 +97,8 @@ def locale_button(bot, update):
         LANGUAGE = prev_locale(chat.id)
         locale = LANGUAGE.locale_name
         curr_lang = list_locales[locale]
-    except Exception:
+    except Exception as e:
+        print(e)
         curr_lang = "English (US)"
 
     text = tld(chat.id, "language_select_language")
@@ -110,7 +111,8 @@ def locale_button(bot, update):
             chatlng = prev_locale(conn).locale_name
             chatlng = list_locales[chatlng]
             text += tld(chat.id, "language_chat_language").format(chatlng)
-        except Exception:
+        except Exception as e:
+            print(e)
             chatlng = "English (US)"
 
     text += tld(chat.id, "language_sel_user_lang")

@@ -149,7 +149,8 @@ def user_admin(func):
         if user and is_user_admin(update.effective_chat, user.id):
             try:
                 return func(bot, update, *args, **kwargs)
-            except Exception:
+            except Exception as e:
+                print(e)
                 return
 
         elif not user:

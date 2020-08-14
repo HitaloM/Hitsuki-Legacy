@@ -47,7 +47,8 @@ async def los(event):
     try:
         device_ = event.pattern_match.group(1)
         device = urllib.parse.quote_plus(device_)
-    except Exception:
+    except Exception as e:
+        print(e)
         device = ''
 
     if device == '':
@@ -87,7 +88,8 @@ async def evo(event):
     try:
         device_ = event.pattern_match.group(1)
         device = urllib.parse.quote_plus(device_)
-    except Exception:
+    except Exception as e:
+        print(e)
         device = ''
 
     if device == "example":
@@ -179,7 +181,8 @@ async def bootleggers(event):
     try:
         codename_ = event.pattern_match.group(1)
         codename = urllib.parse.quote_plus(codename_)
-    except Exception:
+    except Exception as e:
+        print(e)
         codename = ''
 
     if codename == '':

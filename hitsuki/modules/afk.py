@@ -64,13 +64,14 @@ def no_longer_afk(bot: Bot, update: Update):
 
     res = sql.rm_afk(user.id)
     if res:
-        if message.new_chat_members:  #dont say msg
+        if message.new_chat_members:  # dont say msg
             return
         firstname = update.effective_user.first_name
         try:
             message.reply_text(
                 tld(chat.id, "user_no_longer_afk").format(firstname))
-        except Exception:
+        except Exception as e:
+            print(e)
             return
 
 

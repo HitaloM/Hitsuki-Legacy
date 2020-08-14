@@ -98,7 +98,8 @@ def new_fed(bot: Bot, update: Update):
                              tld(chat.id, "feds_create_success_logger").format(
                                  fed_name, fed_id),
                              parse_mode=ParseMode.HTML)
-        except Exception:
+        except Exception as e:
+            print(e)
             LOGGER.warning("Cannot send a message to MESSAGE_DUMP")
     else:
         update.effective_message.reply_text(tld(chat.id, "feds_err_no_args"))
@@ -336,7 +337,8 @@ def fed_info(bot: Bot, update: Update, args: List[str]):
     owner = bot.get_chat(info['owner'])
     try:
         owner_name = owner.first_name + " " + owner.last_name
-    except Exception:
+    except Exception as e:
+        print(e)
         owner_name = owner.first_name
     FEDADMIN = sql.all_fed_users(fed_id)
     FEDADMIN.append(int(owner.id))
@@ -381,7 +383,8 @@ def fed_admin(bot: Bot, update: Update, args: List[str]):
     owner = bot.get_chat(info['owner'])
     try:
         owner_name = owner.first_name + " " + owner.last_name
-    except Exception:
+    except Exception as e:
+        print(e)
         owner_name = owner.first_name
     text += " • {}\n".format(mention_html(owner.id, owner_name))
 
@@ -626,7 +629,8 @@ def unfban(bot: Bot, update: Update, args: List[str]):
                 message.reply_text(
                     "Fban failure, this user may have been un-fedbanned!")
                 return
-        except Exception:
+        except Exception as e:
+            print(e)
             pass
 
     message.reply_text("This person is un-fbanned.")
@@ -755,7 +759,8 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
 
     try:
         update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
-    except Exception:
+    except Exception as e:
+        print(e)
         cleanr = re.compile('<.*?>')
         cleantext = re.sub(cleanr, '', text)
         with BytesIO(str.encode(cleantext)) as output:
