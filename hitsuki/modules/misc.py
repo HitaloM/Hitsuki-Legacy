@@ -224,7 +224,7 @@ def github(bot: Bot, update: Update):
             if x in whitelist:
                 x = difnames.get(x, x.title())
 
-                if x == 'Account created at' or x == 'Last updated':
+                if x in ('Account created at', 'Last updated'):
                     y = datetime.strptime(y, "%Y-%m-%dT%H:%M:%SZ")
 
                 if y not in goaway:

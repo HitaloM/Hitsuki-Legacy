@@ -162,7 +162,7 @@ def new_member(bot: Bot, update: Update):
                 if is_user_gbanned(new_mem.id):
                     return
                 # If welcome message is media, send with appropriate function
-                if welc_type != sql.Types.TEXT and welc_type != sql.Types.BUTTON_TEXT:
+                if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
                     reply = update.message.message_id
                     cleanserv = sql.clean_service(chat.id)
                     # Clean service welcome
@@ -407,7 +407,7 @@ def left_member(bot: Bot, update: Update):
                 return
 
             # if media goodbye, use appropriate function for it
-            if goodbye_type != sql.Types.TEXT and goodbye_type != sql.Types.BUTTON_TEXT:
+            if goodbye_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
                 reply = update.message.message_id
                 cleanserv = sql.clean_service(chat.id)
                 # Clean service welcome
@@ -498,7 +498,7 @@ def security(bot: Bot, update: Update, args: List[str]) -> str:
     getcur, cur_value, cust_text = sql.welcome_security(chat.id)
     if len(args) >= 1:
         var = args[0].lower()
-        if (var == "yes" or var == "y" or var == "on"):
+        if (var in ("yes", "on")):
             check = bot.getChatMember(chat.id, bot.id)
             if check.status == 'member' or check[
                     'can_restrict_members'] is False:
@@ -509,7 +509,7 @@ def security(bot: Bot, update: Update, args: List[str]) -> str:
             sql.set_welcome_security(chat.id, True, str(cur_value), cust_text)
             update.effective_message.reply_text(
                 tld(chat.id, 'welcome_mute_enabled'))
-        elif (var == "no" or var == "n" or var == "off"):
+        elif (var in ("no", "off")):
             sql.set_welcome_security(chat.id, False, str(cur_value), cust_text)
             update.effective_message.reply_text(
                 tld(chat.id, 'welcome_mute_disabled'))
@@ -594,11 +594,11 @@ def cleanservice(bot: Bot, update: Update, args: List[str]) -> str:
     if chat.type != chat.PRIVATE:
         if len(args) >= 1:
             var = args[0]
-            if (var == "no" or var == "off"):
+            if (var in ("no", "off")):
                 sql.set_clean_service(chat.id, False)
                 update.effective_message.reply_text(
                     tld(chat.id, 'welcome_clean_service_off'))
-            elif (var == "yes" or var == "on"):
+            elif (var in ("yes", "on")):
                 sql.set_clean_service(chat.id, True)
                 update.effective_message.reply_text(
                     tld(chat.id, 'welcome_clean_service_on'))
@@ -654,7 +654,7 @@ def welcome(bot: Bot, update: Update, args: List[str]):
         update.effective_message.reply_text(text,
                                             parse_mode=ParseMode.MARKDOWN)
 
-        if welcome_type == sql.Types.BUTTON_TEXT or welcome_type == sql.Types.TEXT:
+        if welcome_type in (sql.Types.BUTTON_TEXT, sql.Types.TEXT):
             buttons = sql.get_welc_buttons(chat.id)
             if noformat:
                 welcome_m += revert_buttons(buttons)

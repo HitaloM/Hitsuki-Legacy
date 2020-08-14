@@ -39,11 +39,11 @@ def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             var = args[0]
             print(var)
-            if var == "no" or var == "off":
+            if var in ("no", "off"):
                 sql.set_allow_connect_to_chat(chat.id, False)
                 update.effective_message.reply_text(
                     tld(chat.id, "connection_disable"))
-            elif var == "yes" or var == "on":
+            elif var in ("yes", "on"):
                 sql.set_allow_connect_to_chat(chat.id, True)
                 update.effective_message.reply_text(
                     tld(chat.id, "connection_enable"))
