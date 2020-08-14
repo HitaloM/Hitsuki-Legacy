@@ -17,15 +17,15 @@
 
 import urllib
 
-from hurry.filesize import size as sizee
-from telethon import custom
-from hitsuki.events import register
-from hitsuki import LOGGER
-from hitsuki.modules.tr_engine.strings import tld
-
-from bs4 import BeautifulSoup
-from requests import get
 import rapidjson as json
+from bs4 import BeautifulSoup
+from hurry.filesize import size as sizee
+from requests import get
+from telethon import custom
+
+from hitsuki import LOGGER
+from hitsuki.events import register
+from hitsuki.modules.tr_engine.strings import tld
 
 # Greeting all bot owners that is using this module,
 # - RealAkito (used to be peaktogoo) [Module Maker]

@@ -17,14 +17,15 @@
 import datetime
 import html
 import textwrap
+
 import bs4
 import jikanpy
 import requests
+from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
+from telegram.ext import CallbackQueryHandler, run_async
 
 from hitsuki import OWNER_ID, SUDO_USERS, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
-from telegram.ext import CallbackQueryHandler, run_async
 
 info_btn = "More Information"
 kaizoku_btn = "Kaizoku ☠️"
@@ -53,10 +54,10 @@ def t(milliseconds: int) -> str:
     hours, minutes = divmod(minutes, 60)
     days, hours = divmod(hours, 24)
     tmp = ((str(days) + " Days, ") if days else "") + \
-        ((str(hours) + " Hours, ") if hours else "") + \
-        ((str(minutes) + " Minutes, ") if minutes else "") + \
-        ((str(seconds) + " Seconds, ") if seconds else "") + \
-        ((str(milliseconds) + " ms, ") if milliseconds else "")
+          ((str(hours) + " Hours, ") if hours else "") + \
+          ((str(minutes) + " Minutes, ") if minutes else "") + \
+          ((str(seconds) + " Seconds, ") if seconds else "") + \
+          ((str(milliseconds) + " ms, ") if milliseconds else "")
     return tmp[:-2]
 
 
@@ -323,7 +324,7 @@ def manga(bot: Bot, update: Update):
         json = json['data']['Media']
         title, title_native = json['title'].get('romaji',
                                                 False), json['title'].get(
-                                                    'native', False)
+            'native', False)
         start_date, status, score = json['startDate'].get(
             'year', False), json.get('status',
                                      False), json.get('averageScore', False)
@@ -439,7 +440,7 @@ def user(bot: Bot, update: Update):
                    InlineKeyboardButton(
                        close_btn,
                        callback_data=f"anime_close, {message.from_user.id}")
-    ]]
+               ]]
 
     update.effective_message.reply_photo(
         photo=img,

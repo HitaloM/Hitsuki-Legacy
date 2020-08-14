@@ -15,24 +15,22 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import re
+import uuid
 from io import BytesIO
 from typing import List
-import uuid
-import re
 
-from telegram.error import BadRequest, TelegramError, Unauthorized
 from telegram import ParseMode, Update, Bot, MessageEntity, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram.error import BadRequest, TelegramError, Unauthorized
 from telegram.ext import run_async, CommandHandler, CallbackQueryHandler
 from telegram.utils.helpers import mention_html
 
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS, MESSAGE_DUMP, LOGGER
-from hitsuki.modules.helper_funcs.misc import send_to_list
-from hitsuki.modules.helper_funcs.extraction import extract_user, extract_user_and_text
-from hitsuki.modules.helper_funcs.string_handling import markdown_parser
-from hitsuki.modules.disable import DisableAbleCommandHandler
-
 import hitsuki.modules.sql.feds_sql as sql
-
+from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS, MESSAGE_DUMP, LOGGER
+from hitsuki.modules.disable import DisableAbleCommandHandler
+from hitsuki.modules.helper_funcs.extraction import extract_user, extract_user_and_text
+from hitsuki.modules.helper_funcs.misc import send_to_list
+from hitsuki.modules.helper_funcs.string_handling import markdown_parser
 from hitsuki.modules.tr_engine.strings import tld
 
 # Greeting all bot owners that is using this module,
@@ -93,8 +91,8 @@ def new_fed(bot: Bot, update: Update):
 
         update.effective_message.reply_text(tld(chat.id,
                                                 "feds_create_success").format(
-                                                    fed_name, fed_id, fed_id),
-                                            parse_mode=ParseMode.MARKDOWN)
+            fed_name, fed_id, fed_id),
+            parse_mode=ParseMode.MARKDOWN)
         try:
             bot.send_message(MESSAGE_DUMP,
                              tld(chat.id, "feds_create_success_logger").format(
@@ -144,7 +142,7 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-#@user_admin
+# @user_admin
 def fed_chat(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     fed_id = sql.get_fed_id(chat.id)
@@ -238,9 +236,9 @@ def user_join_fed(bot: Bot, update: Update, args: List[str]):
             user = msg.from_user
         elif not msg.reply_to_message and (
                 not args or
-            (len(args) >= 1 and not args[0].startswith("@")
-             and not args[0].isdigit()
-             and not msg.parse_entities([MessageEntity.TEXT_MENTION]))):
+                (len(args) >= 1 and not args[0].startswith("@")
+                 and not args[0].isdigit()
+                 and not msg.parse_entities([MessageEntity.TEXT_MENTION]))):
             msg.reply_text(tld(chat.id, "common_err_no_user"))
             return
         else:
@@ -289,9 +287,9 @@ def user_demote_fed(bot: Bot, update: Update, args: List[str]):
 
         elif not msg.reply_to_message and (
                 not args or
-            (len(args) >= 1 and not args[0].startswith("@")
-             and not args[0].isdigit()
-             and not msg.parse_entities([MessageEntity.TEXT_MENTION]))):
+                (len(args) >= 1 and not args[0].startswith("@")
+                 and not args[0].isdigit()
+                 and not msg.parse_entities([MessageEntity.TEXT_MENTION]))):
             msg.reply_text(tld(chat.id, "common_err_no_user"))
             return
         else:
@@ -505,15 +503,15 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
                 pass
 
         send_to_list(bot, FEDADMIN,
-           "<b>FedBan reason updated</b>" \
-              "\n<b>Federation:</b> {}" \
-              "\n<b>Federation Admin:</b> {}" \
-              "\n<b>User:</b> {}" \
-              "\n<b>User ID:</b> <code>{}</code>" \
-              "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name),
-                  mention_html(user_chat.id, user_chat.first_name),
-                   user_chat.id, reason),
-          html=True)
+                     "<b>FedBan reason updated</b>" \
+                     "\n<b>Federation:</b> {}" \
+                     "\n<b>Federation Admin:</b> {}" \
+                     "\n<b>User:</b> {}" \
+                     "\n<b>User ID:</b> <code>{}</code>" \
+                     "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name),
+                                                  mention_html(user_chat.id, user_chat.first_name),
+                                                  user_chat.id, reason),
+                     html=True)
         message.reply_text("FedBan reason has been updated.")
         return
 
@@ -547,7 +545,7 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
                     sql.chat_leave_fed(chat)
                     LOGGER.info(
                         "Chat {} has leave fed {} because bot is kicked".
-                        format(chat, info['fname']))
+                            format(chat, info['fname']))
                     continue
             else:
                 LOGGER.warning("Cannot fban on {} because: {}".format(
@@ -556,15 +554,15 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
             pass
 
     send_to_list(bot, FEDADMIN,
-       "<b>New FedBan</b>" \
-       "\n<b>Federation:</b> {}" \
-       "\n<b>Federation Admin:</b> {}" \
-       "\n<b>User:</b> {}" \
-       "\n<b>User ID:</b> <code>{}</code>" \
-       "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name),
-              mention_html(user_chat.id, user_chat.first_name),
-               user_chat.id, reason),
-      html=True)
+                 "<b>New FedBan</b>" \
+                 "\n<b>Federation:</b> {}" \
+                 "\n<b>Federation Admin:</b> {}" \
+                 "\n<b>User:</b> {}" \
+                 "\n<b>User ID:</b> <code>{}</code>" \
+                 "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name),
+                                              mention_html(user_chat.id, user_chat.first_name),
+                                              user_chat.id, reason),
+                 html=True)
     message.reply_text("This person has been fbanned")
 
 
@@ -767,7 +765,7 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
                 filename="fbanlist.txt",
                 caption=
                 "Here is a list of all the chats that joined the federation {}."
-                .format(info['fname']))
+                    .format(info['fname']))
 
 
 @run_async
@@ -785,7 +783,7 @@ def del_fed_button(bot, update):
         if delete:
             query.message.edit_text(
                 "You have removed your Federation! Now all the Groups that are connected with `{}` do not have a Federation."
-                .format(getfed['fname']),
+                    .format(getfed['fname']),
                 parse_mode='markdown')
 
 

@@ -15,9 +15,9 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
-import requests
-
 from random import choice
+
+import requests
 from bs4 import BeautifulSoup
 
 from hitsuki.events import register

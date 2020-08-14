@@ -14,18 +14,15 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import rapidjson as json
+from requests import get
 from telethon import custom
 
 from hitsuki import LOGGER
 from hitsuki.events import register
 from hitsuki.modules.tr_engine.strings import tld
 
-from requests import get
-import rapidjson as json
-
-
 API_HOST = 'https://api.orangefox.download/v2'
-
 
 LOGGER.info("orangefox: By @MrYacha, powered by OrangeFox API v2 (modified by @Hitalo on Telegram)")
 
