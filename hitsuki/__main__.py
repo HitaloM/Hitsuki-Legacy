@@ -123,8 +123,8 @@ def start(bot: Bot, update: Update, args: List[str]):
         try:
             update.effective_message.reply_text(
                 tld(chat.id, 'main_start_group'))
-        except Exception as e:
-            print(e)
+        except Exception:
+            print("Nut")
 
 
 def send_start(bot, update):
@@ -153,8 +153,7 @@ def send_start(bot, update):
                               parse_mode=ParseMode.MARKDOWN,
                               reply_markup=InlineKeyboardMarkup(keyboard),
                               disable_web_page_preview=True)
-    except Exception as e:
-        print(e)
+    except Exception:
         pass
 
     if query:
@@ -165,8 +164,7 @@ def send_start(bot, update):
                                   parse_mode=ParseMode.MARKDOWN,
                                   reply_markup=InlineKeyboardMarkup(keyboard),
                                   disable_web_page_preview=True)
-        except Exception as e:
-            print(e)
+        except Exception:
             return
     else:
         update.effective_message.reply_text(
@@ -369,8 +367,7 @@ def process_update(self, update):
     if isinstance(update, TelegramError):
         try:
             self.dispatch_error(None, update)
-        except Exception as e:
-            print(e)
+        except Exception:
             self.logger.exception(
                 'An uncaught error was raised while handling the error')
         return
@@ -419,14 +416,12 @@ def process_update(self, update):
             except DispatcherHandlerStop:
                 self.logger.debug('Error handler stopped further handlers')
                 break
-            except Exception as e:
-                print(e)
+            except Exception:
                 self.logger.exception(
                     'An uncaught error was raised while handling the error')
 
         # Errors should not stop the thread.
-        except Exception as e:
-            print(e)
+        except Exception:
             self.logger.exception(
                 'An uncaught error was raised while processing the update')
 

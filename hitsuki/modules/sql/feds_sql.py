@@ -414,8 +414,7 @@ def fban_user(fed_id, user_id, first_name, last_name, user_name, reason):
         SESSION.add(r)
         try:
             SESSION.commit()
-        except Exception as e:
-            print(e)
+        except Exception:
             SESSION.rollback()
             return False
         finally:
@@ -433,8 +432,7 @@ def un_fban_user(fed_id, user_id):
                     SESSION.delete(I)
         try:
             SESSION.commit()
-        except Exception as e:
-            print(e)
+        except Exception:
             SESSION.rollback()
             return False
         finally:

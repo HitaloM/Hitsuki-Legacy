@@ -23,7 +23,7 @@ import spamwatch
 from telethon import TelegramClient
 import telegram.ext as tg
 
-# Enable logging
+#Enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     level=logging.INFO)
@@ -117,8 +117,7 @@ if spamwatch_api == "None":
 else:
     try:
         sw = spamwatch.Client(spamwatch_api)
-    except Exception as e:
-        print(e)
+    except Exception:
         sw = None
 
 updater = tg.Updater(TOKEN, workers=WORKERS)
