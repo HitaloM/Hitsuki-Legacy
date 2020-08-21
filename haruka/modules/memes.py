@@ -323,10 +323,12 @@ SLAP_HANDLER = DisableAbleCommandHandler("slap",
                                          pass_args=True,
                                          admin_ok=True)
 
-dispatcher.add_handler(SHOUT_HANDLER)
 dispatcher.add_handler(OWO_HANDLER)
 dispatcher.add_handler(STRETCH_HANDLER)
 dispatcher.add_handler(VAPOR_HANDLER)
+dispatcher.add_handler(ZALGO_HANDLER)
+# dispatcher.add_handler(DEEPFRY_HANDLER)
+dispatcher.add_handler(SHOUT_HANDLER)
 dispatcher.add_handler(INSULTS_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
