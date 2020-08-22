@@ -342,7 +342,7 @@ cust_filters_err_wrong_filter: Este não é um filtro ativo - execute /filter pa
 cust_filters_err_protocol: Parece que você está tentando usar um protocolo de url não suportado. O Telegram não suporta botões para alguns protocolos, como tg://. Por favor, tente novamente.
 cust_filters_err_badformat: Este filtro não pode ser enviado, já que está mal formatado.
 cust_filters_chatsettings_stats: Atualmente existem `{}` filtros neste chat.
-cust_filters_cleanup_success: "Os filtros {} foram eliminados com sucesso deste chat."
+cust_filters_cleanup_success: "{} filtro(s) foram eliminados com sucesso deste chat."
 cust_filters_help: |
   Torne o seu chat mais animado com os filtros! Você pode configurar o bot para responder certas palavras de maneira personalizada!
   Os filtros não diferenciam letras maiúsculas de minúsculas; toda vez que alguém dizer um dos filtros, {} irá responder com uma ação personalizada! Ele pode ser usado para criar seus proṕrios comandos, se você desejar
@@ -899,7 +899,7 @@ note_none_in_chat: "Não há notas em *{}*!"
 note_get: "\nVocê pode ver o comteúdo dessas notas com `/get notename` ou `#notename`."
 note_fail_to_import: "Não foi possível importar esses arquivos/fotos porque são originários de outro bot. Esta é uma restrição da API do Telegram e não pode ser evitada. Desculpe pela inconveniência!"
 notes_must_be_creator: "Você deve ser o criador desse chat."
-notes_cleanup_success: "as notas {} foram limpas com sucesso."
+notes_cleanup_success: "{} nota(s) foram limpas com sucesso."
 notes_help: |
   Salve dados para futuros usuários com notas!
   As notas são ótimas para armazenar informações aleatórias; um número de telefone, um belo gif, uma imagem engraçada - qualquer coisa!

@@ -14,19 +14,13 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from functools import wraps
-from cachetools import TTLCache
-from threading import RLock
 
 from telegram import Chat, ChatMember, Update, Bot
 
 import hitsuki.modules.sql.admin_sql as admin_sql
-from hitsuki import dispatcher
+from hitsuki.mwt import MWT
 from hitsuki import DEL_CMDS, SUDO_USERS, WHITELIST_USERS
 from hitsuki.modules.tr_engine.strings import tld
-
-# stores admins in memory for 10m
-ADMIN_CACHE = TTLCache(maxsize=512, ttl=60*10)
-THREAD_LOCK = RLock()
 
 
 def can_delete(chat: Chat, bot_id: int) -> bool:
@@ -49,6 +43,7 @@ def is_user_ban_protected(chat: Chat,
     return member.status in ('administrator', 'creator')
 
 
+@MWT(timeout=60 * 10)  # Cache admin status for 10 mins to avoid extra API requests.
 def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
     if chat.type == 'private' \
             or user_id in SUDO_USERS \
@@ -58,19 +53,8 @@ def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
         return True
 
     if not member:
-        with THREAD_LOCK:
-            # try to fetch from cache first.
-            try:
-                return ADMIN_CACHE[chat.id]
-            except KeyError:
-                # keyerror happend means cache is deleted,
-                # so query bot api again and return user status
-                # while saving it in cache for future useage...
-                member = chat.get_member(user_id)
-                chat_admins = member.status in ('administrator', 'creator')
-                ADMIN_CACHE[chat.id] = chat_admins
-
-                return ADMIN_CACHE[chat.id]
+        member = chat.get_member(user_id)
+    return member.status in ('administrator', 'creator')
 
 
 def is_bot_admin(chat: Chat,
