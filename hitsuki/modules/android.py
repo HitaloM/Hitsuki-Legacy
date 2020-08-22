@@ -304,4 +304,69 @@ async def magisk(event):
     await event.reply(releases, link_preview=False)
 
 
+@register(pattern=r"^/device(?: |$)(\S*)")
+async def device_info(event):
+    textx = await event.get_reply_message()
+    codename = event.pattern_match.group(1)
+    if codename:
+        pass
+    elif textx:
+        codename = textx.text
+    else:
+        await event.reply("Usage: `/device <codename> or <model>`")
+        return
+    data = json.loads(
+        get("https://raw.githubusercontent.com/androidtrackers/"
+            "certified-android-devices/master/by_device.json").text)
+    results = data.get(codename)
+    if results:
+        reply = f"**Search results for {codename}**:\n\n"
+        for item in results:
+            reply += f"**Brand**: {item['brand']}\n" \
+                     f"**Name**: {item['name']}\n" \
+                     f"**Model**: {item['model']}\n\n"
+    else:
+        reply = f"Couldn't find info about `{codename}!`\n"
+    await event.reply(reply)
+
+
+@register(pattern=r"^/codename(?: |)([\S]*)(?: |)([\s\S]*)")
+async def codename_info(event):
+    textx = await event.get_reply_message()
+    brand = event.pattern_match.group(1).lower()
+    device = event.pattern_match.group(2).lower()
+
+    if brand and device:
+        pass
+    elif textx:
+        brand = textx.text.split(' ')[0]
+        device = ' '.join(textx.text.split(' ')[1:])
+    else:
+        await event.reply("Usage: `/codename <brand> <device>`")
+        return
+
+    data = json.loads(
+        get("https://raw.githubusercontent.com/androidtrackers/"
+            "certified-android-devices/master/by_brand.json").text)
+    devices_lower = {k.lower(): v
+                     for k, v in data.items()}  # Lower brand names in JSON
+    devices = devices_lower.get(brand)
+    results = [
+        i for i in devices if i["name"].lower() == device.lower()
+        or i["model"].lower() == device.lower()
+        or i["model"].lower() == device.lower()
+    ]
+    if results:
+        reply = f"**Search results for {brand} {device}**:\n\n"
+        if len(results) > 8:
+            results = results[:8]
+        for item in results:
+            reply += f"**Device**: {item['device']}\n" \
+                     f"**Name**: {item['name']}\n" \
+                     f"**Model**: {item['model']}\n\n"
+    else:
+        reply = f"Couldn't find `{device}` codename!\n"
+    await event.reply(reply)
+
+
 __help__ = True

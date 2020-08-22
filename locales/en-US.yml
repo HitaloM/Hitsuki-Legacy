@@ -104,6 +104,8 @@ android_help: |
   - /twrp <codename>: Gets latest twrp for the android device using the codename.
   - /ofox: Gets the list of officially supported devices by the Orange Fox Recovery Project.
   - /ofox <device>: Gets the download link and basic OFRP information to the specified device.
+  - /codename <brand> <device>: Search for Android device codename.
+  - /device <codename>: Get info about an Android device.
 #DirectLinks
 modname_direct_links: Direct Links
 direct_links_help: |
