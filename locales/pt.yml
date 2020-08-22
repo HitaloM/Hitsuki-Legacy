@@ -657,6 +657,7 @@ memes_help: |
   - /runs: obtenha uma resposta aleatoria entre algumas strings.
   - /insults: obtenha um insulto aleatório entre algumas strings
   - /slap: bate em um usuário, ou apanha do bot se não responder ninguém.
+  - /zalgofy: responda uma mensagem para tornar-la um glitch.
 #Misc
 modname_misc: Outros
 misc_get_id_1: O rementente original {}, possui o ID `{}`.\n{}, que encaminhou a mensagem, tem o ID `{}`.
