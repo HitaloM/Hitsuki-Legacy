@@ -42,11 +42,7 @@ def afk(bot: Bot, update: Update):
         return
 
     args = update.effective_message.text.split(None, 1)
-    if len(args) >= 2:
-        reason = args[1]
-    else:
-        reason = ""
-
+    reason = args[1] if len(args) >= 2 else ""
     sql.set_afk(update.effective_user.id, reason)
     fname = update.effective_user.first_name
     update.effective_message.reply_text(
@@ -56,17 +52,17 @@ def afk(bot: Bot, update: Update):
 @run_async
 def no_longer_afk(bot: Bot, update: Update):
     user = update.effective_user
-    chat = update.effective_chat
-    message = update.effective_message
-
     if not user:  # ignore channels
         return
 
     res = sql.rm_afk(user.id)
     if res:
+        message = update.effective_message
+
         if message.new_chat_members:  #dont say msg
             return
         firstname = update.effective_user.first_name
+        chat = update.effective_chat
         try:
             message.reply_text(
                 tld(chat.id, "user_no_longer_afk").format(firstname))
@@ -125,20 +121,18 @@ def reply_afk(bot: Bot, update: Update):
 
 
 def check_afk(bot, update, user_id, fst_name, userc_id):
-    chat = update.effective_chat
     if sql.is_afk(user_id):
         user = sql.check_afk_status(user_id)
+        if int(userc_id) == int(user_id):
+            return
+        chat = update.effective_chat
         if not user.reason:
-            if int(userc_id) == int(user_id):
-                return
             res = tld(chat.id, "status_afk_noreason").format(fst_name)
-            update.effective_message.reply_text(res)
         else:
-            if int(userc_id) == int(user_id):
-                return
             res = tld(chat.id,
                       "status_afk_reason").format(fst_name, user.reason)
-            update.effective_message.reply_text(res)
+
+        update.effective_message.reply_text(res)
 
 
 __help__ = True

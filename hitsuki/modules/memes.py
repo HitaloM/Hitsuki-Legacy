@@ -33,7 +33,7 @@ from telegram.utils.helpers import escape_markdown
 from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.tr_engine.strings import tld, tld_list
 
-WIDE_MAP = dict((i, i + 0xFEE0) for i in range(0x21, 0x7F))
+WIDE_MAP = {i: i + 0xFEE0 for i in range(0x21, 0x7F)}
 WIDE_MAP[0x20] = 0x3000
 
 # D A N K modules by @deletescape vvv
@@ -217,8 +217,7 @@ def shout(bot: Bot, update: Update, args: List[str]):
         data = tld(chat.id, "memes_no_message")
 
     msg = "```"
-    result = []
-    result.append(' '.join([s for s in data]))
+    result = [' '.join([s for s in data])]
     for pos, symbol in enumerate(data[1:]):
         result.append(symbol + ' ' + '  ' * pos + symbol)
     result = list("\n".join(result))

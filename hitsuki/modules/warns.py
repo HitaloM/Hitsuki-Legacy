@@ -247,18 +247,14 @@ def warns(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     user_id = extract_user(message, args) or update.effective_user.id
     result = sql.get_warns(user_id, chat.id)
-    num = 1
-
     if result and result[0] != 0:
         num_warns, reasons = result
         limit, soft_warn = sql.get_warn_setting(chat.id)
 
         if reasons:
             text = tld(chat.id, 'warns_list_warns').format(num_warns, limit)
-            for reason in reasons:
+            for num, reason in enumerate(reasons, start=1):
                 text += "\n {}. {}".format(num, reason)
-                num += 1
-
             msgs = split_message(text)
             for msg in msgs:
                 update.effective_message.reply_text(msg)
@@ -360,7 +356,7 @@ def list_warn_filters(bot: Bot, update: Update):
         else:
             filter_list += entry
 
-    if not filter_list == tld(chat.id, 'warns_filters_list'):
+    if filter_list != tld(chat.id, 'warns_filters_list'):
         update.effective_message.reply_text(filter_list,
                                             parse_mode=ParseMode.HTML)
 

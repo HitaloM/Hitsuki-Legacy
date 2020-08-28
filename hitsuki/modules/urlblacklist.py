@@ -37,8 +37,7 @@ def add_blacklist_url(bot: Bot, update: Update):
     urls = message.text.split(None, 1)
     if len(urls) > 1:
         urls = urls[1]
-        to_blacklist = list(
-            set(uri.strip() for uri in urls.split("\n") if uri.strip()))
+        to_blacklist = list({uri.strip() for uri in urls.split("\n") if uri.strip()})
         blacklisted = []
 
         for uri in to_blacklist:
@@ -76,8 +75,7 @@ def rm_blacklist_url(bot: Bot, update: Update):
 
     if len(urls) > 1:
         urls = urls[1]
-        to_unblacklist = list(
-            set(uri.strip() for uri in urls.split("\n") if uri.strip()))
+        to_unblacklist = list({uri.strip() for uri in urls.split("\n") if uri.strip()})
         unblacklisted = 0
         for uri in to_unblacklist:
             extract_url = tldextract.extract(uri)
@@ -128,9 +126,7 @@ def del_blacklist_url(bot: Bot, update: Update):
             try:
                 message.delete()
             except BadRequest as excp:
-                if excp.message == "Message to delete not found":
-                    pass
-                else:
+                if excp.message != "Message to delete not found":
                     LOGGER.exception("Error while deleting blacklist message.")
             break
 

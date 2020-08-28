@@ -35,21 +35,17 @@ from hitsuki.modules.keyboard import keyboard
 @run_async
 def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
-    if chat.type != chat.PRIVATE:
-        if len(args) >= 1:
-            var = args[0]
-            print(var)
-            if var in ("no", "off"):
-                sql.set_allow_connect_to_chat(chat.id, False)
-                update.effective_message.reply_text(
-                    tld(chat.id, "connection_disable"))
-            elif var in ("yes", "on"):
-                sql.set_allow_connect_to_chat(chat.id, True)
-                update.effective_message.reply_text(
-                    tld(chat.id, "connection_enable"))
-            else:
-                update.effective_message.reply_text(
-                    tld(chat.id, "connection_err_wrong_arg"))
+    if chat.type != chat.PRIVATE and len(args) >= 1:
+        var = args[0]
+        print(var)
+        if var in ("no", "off"):
+            sql.set_allow_connect_to_chat(chat.id, False)
+            update.effective_message.reply_text(
+                tld(chat.id, "connection_disable"))
+        elif var in ("yes", "on"):
+            sql.set_allow_connect_to_chat(chat.id, True)
+            update.effective_message.reply_text(
+                tld(chat.id, "connection_enable"))
         else:
             update.effective_message.reply_text(
                 tld(chat.id, "connection_err_wrong_arg"))
@@ -167,7 +163,7 @@ def connect_chat(bot, update, args):
 
 def disconnect_chat(bot, update):
     chat = update.effective_chat  # type: Optional[Chat]
-    if update.effective_chat.type == 'private':
+    if chat.type == 'private':
         disconnection_status = sql.disconnect(
             update.effective_message.from_user.id)
         if disconnection_status:
@@ -178,10 +174,8 @@ def disconnect_chat(bot, update):
         else:
             update.effective_message.reply_text(
                 tld(chat.id, "connection_dis_fail"))
-    elif update.effective_chat.type == 'supergroup':
-        update.effective_message.reply_text(tld(chat.id, 'common_cmd_pm_only'))
     else:
-        update.effective_message.reply_text(tld(chat.id, "common_cmd_pm_only"))
+        update.effective_message.reply_text(tld(chat.id, 'common_cmd_pm_only'))
 
 
 def connected(bot, update, chat, user_id, need_admin=True):

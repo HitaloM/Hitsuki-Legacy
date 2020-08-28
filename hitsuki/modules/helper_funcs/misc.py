@@ -156,7 +156,5 @@ def user_bot_owner(func):
         user = update.effective_user
         if user and user.id == OWNER_ID:
             return func(bot, update, *args, **kwargs)
-        else:
-            pass
 
     return is_user_bot_owner

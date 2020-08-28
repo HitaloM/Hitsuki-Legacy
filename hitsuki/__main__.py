@@ -51,7 +51,7 @@ for module_name in ALL_MODULES:
     imported_module = importlib.import_module("hitsuki.modules." + module_name)
     modname = imported_module.__name__.split('.')[2]
 
-    if not modname.lower() in IMPORTED:
+    if modname.lower() not in IMPORTED:
         IMPORTED[modname.lower()] = imported_module
     else:
         raise Exception(

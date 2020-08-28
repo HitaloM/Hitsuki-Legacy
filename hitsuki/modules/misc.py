@@ -91,11 +91,13 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not msg.reply_to_message and not args:
         user = msg.from_user
 
-    elif not msg.reply_to_message and (
-            not args or
-        (len(args) >= 1 and not args[0].startswith("@")
-         and not args[0].isdigit()
-         and not msg.parse_entities([MessageEntity.TEXT_MENTION]))):
+    elif (
+        not msg.reply_to_message
+        and len(args) >= 1
+        and not args[0].startswith("@")
+        and not args[0].isdigit()
+        and not msg.parse_entities([MessageEntity.TEXT_MENTION])
+    ):
         msg.reply_text(tld(chat.id, "I can't extract a user from this."))
         return
 
@@ -154,8 +156,7 @@ def echo(bot: Bot, update: Update):
 
 @run_async
 def reply_keyboard_remove(bot: Bot, update: Update):
-    reply_keyboard = []
-    reply_keyboard.append([ReplyKeyboardRemove(remove_keyboard=True)])
+    reply_keyboard = [[ReplyKeyboardRemove(remove_keyboard=True)]]
     reply_markup = ReplyKeyboardRemove(remove_keyboard=True)
     old_message = bot.send_message(
         chat_id=update.message.chat_id,
@@ -447,8 +448,7 @@ def covid(bot: Bot, update: Update):
 
 def format_integer(number, thousand_separator=','):
     def reverse(string):
-        string = "".join(reversed(string))
-        return string
+        return "".join(reversed(string))
 
     s = reverse(str(number))
     count = 0

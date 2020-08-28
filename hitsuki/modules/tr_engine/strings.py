@@ -23,10 +23,9 @@ from hitsuki.modules.sql.locales_sql import prev_locale
 
 LANGUAGES = ['en-US', 'pt']
 
-strings = {}
-
-for i in LANGUAGES:
-    strings[i] = yaml.full_load(open("locales/" + i + ".yml", "r"))
+strings = {
+    i: yaml.full_load(open("locales/" + i + ".yml", "r")) for i in LANGUAGES
+}
 
 
 def tld(chat_id, t, show_none=True):

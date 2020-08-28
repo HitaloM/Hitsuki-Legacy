@@ -51,14 +51,10 @@ async def get_note_type(message):
             if len(text) != 0:
                 data_type = Types.TEXT
 
-    elif reply and reply.text:
+    elif reply.text:
         text, buttons = message_parser(reply.text)
-        if buttons:
-            data_type = Types.BUTTON_TEXT
-        else:
-            data_type = Types.TEXT
-
-    elif reply and reply.media:
+        data_type = Types.BUTTON_TEXT if buttons else Types.TEXT
+    elif reply.media:
         content = utils.pack_bot_file_id(reply.media)
         text = reply.text
         data_type = Types.FILE
@@ -77,11 +73,7 @@ async def get_message_type(message, split: None):
     # determine what the contents of the filter are - text, image, sticker, etc
     if split:
         text, buttons = message_parser(split)
-        if buttons:
-            data_type = Types.BUTTON_TEXT
-        else:
-            data_type = Types.TEXT
-
+        data_type = Types.BUTTON_TEXT if buttons else Types.TEXT
     elif reply and reply.media:
         content = utils.pack_bot_file_id(reply.media)
         text = reply.text

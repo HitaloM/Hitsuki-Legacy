@@ -96,7 +96,6 @@ def report(bot: Bot, update: Update) -> str:
             link = "\n<b>Link:</b> " \
                    "<a href=\"http://telegram.me/{}/{}\">click here</a>".format(chat.username, message.message_id)
 
-            should_forward = True
             keyboard = [[
                 InlineKeyboardButton(
                     u"➡ Message",
@@ -129,15 +128,14 @@ def report(bot: Bot, update: Update) -> str:
             msg = "{} is calling for admins in \"{}\"!".format(
                 mention_html(user.id, user.first_name), html.escape(chat_name))
             link = ""
-            should_forward = True
-
+        should_forward = True
         for admin in admin_list:
             if admin.user.is_bot:  # can't message bots
                 continue
 
             if sql.user_should_report(admin.user.id):
                 try:
-                    if not chat.type == Chat.SUPERGROUP:
+                    if chat.type != Chat.SUPERGROUP:
                         bot.send_message(admin.user.id,
                                          msg + link,
                                          parse_mode=ParseMode.HTML,

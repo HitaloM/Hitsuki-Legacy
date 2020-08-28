@@ -40,11 +40,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
                                      args and args[0] == 'animal'):
         reply = random.choice(tld_list(chat.id, 'translator_animal_lang'))
 
-        if args:
-            translation_type = "text"
-        else:
-            translation_type = "audio"
-
+        translation_type = "text" if args else "audio"
         msg.reply_text(tld(chat.id, 'translator_animal_translated').format(
             translation_type, reply),
                        parse_mode=ParseMode.MARKDOWN)

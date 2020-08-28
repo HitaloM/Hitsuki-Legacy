@@ -76,7 +76,7 @@ def bot_can_delete(func):
     def delete_rights(bot: Bot, update: Update, *args, **kwargs):
         chat = update.effective_chat
 
-        if can_delete(update.effective_chat, bot.id):
+        if can_delete(chat, bot.id):
             return func(bot, update, *args, **kwargs)
         else:
             update.effective_message.reply_text(
@@ -90,7 +90,7 @@ def can_pin(func):
     def pin_rights(bot: Bot, update: Update, *args, **kwargs):
         chat = update.effective_chat
 
-        if update.effective_chat.get_member(bot.id).can_pin_messages:
+        if chat.get_member(bot.id).can_pin_messages:
             return func(bot, update, *args, **kwargs)
         else:
             update.effective_message.reply_text(
@@ -104,7 +104,7 @@ def can_promote(func):
     def promote_rights(bot: Bot, update: Update, *args, **kwargs):
         chat = update.effective_chat
 
-        if update.effective_chat.get_member(bot.id).can_promote_members:
+        if chat.get_member(bot.id).can_promote_members:
             return func(bot, update, *args, **kwargs)
         else:
             update.effective_message.reply_text(
@@ -118,7 +118,7 @@ def can_restrict(func):
     def promote_rights(bot: Bot, update: Update, *args, **kwargs):
         chat = update.effective_chat
 
-        if update.effective_chat.get_member(bot.id).can_restrict_members:
+        if chat.get_member(bot.id).can_restrict_members:
             return func(bot, update, *args, **kwargs)
         else:
             update.effective_message.reply_text(
@@ -132,7 +132,7 @@ def bot_admin(func):
     def is_admin(bot: Bot, update: Update, *args, **kwargs):
         chat = update.effective_chat
 
-        if is_bot_admin(update.effective_chat, bot.id):
+        if is_bot_admin(chat, bot.id):
             return func(bot, update, *args, **kwargs)
         else:
             update.effective_message.reply_text(
@@ -146,7 +146,7 @@ def user_admin(func):
     def is_admin(bot: Bot, update: Update, *args, **kwargs):
         user = update.effective_user
         chat = update.effective_chat
-        if user and is_user_admin(update.effective_chat, user.id):
+        if user and is_user_admin(chat, user.id):
             try:
                 return func(bot, update, *args, **kwargs)
             except Exception:

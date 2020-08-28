@@ -49,7 +49,6 @@ def list_handlers(bot: Bot, update: Update):
     if conn:
         chat_id = conn
         chat_name = dispatcher.bot.getChat(conn).title
-        filter_list = tld(chat.id, "cust_filters_list")
     else:
         chat_id = update.effective_chat.id
         if chat.type == "private":
@@ -57,8 +56,7 @@ def list_handlers(bot: Bot, update: Update):
         else:
             chat_name = chat.title
 
-        filter_list = tld(chat.id, "cust_filters_list")
-
+    filter_list = tld(chat.id, "cust_filters_list")
     all_handlers = sql.get_chat_triggers(chat_id)
 
     if not all_handlers:
@@ -259,15 +257,15 @@ def reply_filter(bot: Bot, update: Update):
                                        disable_web_page_preview=True,
                                        reply_markup=keyboard)
                 except BadRequest as excp:
-                    if excp.message == "Unsupported url protocol":
-                        message.reply_text(
-                            tld(chat.id, "cust_filters_err_protocol"))
-                    elif excp.message == "Reply message not found":
+                    if excp.message == "Reply message not found":
                         bot.send_message(chat.id,
                                          filt.reply,
                                          parse_mode=ParseMode.MARKDOWN,
                                          disable_web_page_preview=True,
                                          reply_markup=keyboard)
+                    elif excp.message == "Unsupported url protocol":
+                        message.reply_text(
+                            tld(chat.id, "cust_filters_err_protocol"))
                     else:
                         try:
                             message.reply_text(

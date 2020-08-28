@@ -137,7 +137,10 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
         message.reply_text(tld(chat.id, "unmute_is_an_admin"))
         return ""
 
-    if member.status != 'kicked' and member.status != 'left':
+    if member.status in ['kicked', 'left']:
+        message.reply_text(tld(chat.id, "unmute_not_in_chat"))
+
+    else:
         if member.can_send_messages and member.can_send_media_messages \
                 and member.can_send_other_messages and member.can_add_web_page_previews:
             message.reply_text(
@@ -163,9 +166,6 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                    "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chatD.title),
                                                            mention_html(user.id, user.first_name),
                                                            mention_html(member.user.id, member.user.first_name), user_id)
-    else:
-        message.reply_text(tld(chat.id, "unmute_not_in_chat"))
-
     return ""
 
 
@@ -218,11 +218,7 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
     split_reason = reason.split(None, 1)
 
     time_val = split_reason[0].lower()
-    if len(split_reason) > 1:
-        reason = split_reason[1]
-    else:
-        reason = ""
-
+    reason = split_reason[1] if len(split_reason) > 1 else ""
     mutetime = extract_time(message, time_val)
 
     if not mutetime:
@@ -355,7 +351,10 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
 
     member = chatD.get_member(int(user_id))
 
-    if member.status != 'kicked' and member.status != 'left':
+    if member.status in ['kicked', 'left']:
+        message.reply_text(tld(chat.id, "unrestrict_not_in_chat"))
+
+    else:
         if member.can_send_messages and member.can_send_media_messages \
                 and member.can_send_other_messages and member.can_add_web_page_previews:
             message.reply_text(
@@ -381,9 +380,6 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
                    "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chatD.title),
                                                            mention_html(user.id, user.first_name),
                                                            mention_html(member.user.id, member.user.first_name), user_id)
-    else:
-        message.reply_text(tld(chat.id, "unrestrict_not_in_chat"))
-
     return ""
 
 
@@ -436,11 +432,7 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
     split_reason = reason.split(None, 1)
 
     time_val = split_reason[0].lower()
-    if len(split_reason) > 1:
-        reason = split_reason[1]
-    else:
-        reason = ""
-
+    reason = split_reason[1] if len(split_reason) > 1 else ""
     mutetime = extract_time(message, time_val)
 
     if not mutetime:
@@ -496,19 +488,24 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
     user_id = update.effective_message.from_user.id
     chat = update.effective_chat
     user = update.effective_user
-    if is_user_admin(update.effective_chat, user_id):
+    if is_user_admin(chat, user_id):
         update.effective_message.reply_text(tld(chat.id, "mute_is_admin"))
         return
 
     res = bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
     if res:
         update.effective_message.reply_text(tld(chat.id, "muteme_muted"))
-        log = "<b>{}:</b>" \
-              "\n#MUTEME" \
-              "\n<b>User:</b> {}" \
-              "\n<b>ID:</b> <code>{}</code>".format(html.escape(chat.title),
-                                                    mention_html(user.id, user.first_name), user_id)
-        return log
+        return (
+            "<b>{}:</b>"
+            "\n#MUTEME"
+            "\n<b>User:</b> {}"
+            "\n<b>ID:</b> <code>{}</code>".format(
+                html.escape(chat.title),
+                mention_html(user.id, user.first_name),
+                user_id,
+            )
+        )
+
 
     else:
         update.effective_message.reply_text(tld(chat.id, "mute_cant_mute"))
