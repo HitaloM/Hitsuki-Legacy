@@ -105,6 +105,34 @@ def log_user(bot: Bot, update: Update):
 
 
 @run_async
+def chats(bot: Bot, update: Update):
+    all_chats = sql.get_all_chats() or []
+    chatfile = 'List of chats.\n0. Chat name | Chat ID | Members count | Invitelink\n'
+    P = 1
+    for chat in all_chats:
+        try:
+            curr_chat = bot.getChat(chat.chat_id)
+            bot_member = curr_chat.get_member(bot.id)
+            chat_members = curr_chat.get_members_count(bot.id)
+            if bot_member.can_invite_users:
+                invitelink = bot.exportChatInviteLink(chat.chat_id)
+            else:
+                invitelink = "0"
+            chatfile += "{}. {} | {} | {} | {}\n".format(
+                P, chat.chat_name, chat.chat_id, chat_members, invitelink)
+            P = P + 1
+        except Exception:
+            pass
+
+    with BytesIO(str.encode(chatfile)) as output:
+        output.name = "chatlist.txt"
+        update.effective_message.reply_document(
+            document=output,
+            filename="chatlist.txt",
+            caption="Here is the list of chats in my database.")
+
+
+@run_async
 def snipe(bot: Bot, update: Update, args: List[str]):
     try:
         chat_id = str(args[0])
@@ -267,6 +295,9 @@ GETLINK_HANDLER = CommandHandler("getlink",
                                  getlink,
                                  pass_args=True,
                                  filters=Filters.user(OWNER_ID))
+CHATLIST_HANDLER = CommandHandler("chatlist",
+                                  chats,
+                                  filters=Filters.user(OWNER_ID))
 LEAVECHAT_HANDLER = CommandHandler("leavechat",
                                    leavechat,
                                    pass_args=True,
@@ -284,4 +315,5 @@ dispatcher.add_handler(LEAVECHAT_HANDLER)
 dispatcher.add_handler(SLIST_HANDLER)
 dispatcher.add_handler(USER_HANDLER, USERS_GROUP)
 dispatcher.add_handler(BROADCAST_HANDLER)
+dispatcher.add_handler(CHATLIST_HANDLER)
 dispatcher.add_handler(CHAT_CHECKER_HANDLER, CHAT_GROUP)
