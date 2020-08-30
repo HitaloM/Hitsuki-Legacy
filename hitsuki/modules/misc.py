@@ -29,7 +29,7 @@ from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 from telegram.error import BadRequest
 
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS
+from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, sw
 from hitsuki.__main__ import GDPR
 from hitsuki.__main__ import STATS, USER_INFO
 from hitsuki.modules.disable import DisableAbleCommandHandler
@@ -96,7 +96,7 @@ def info(bot: Bot, update: Update, args: List[str]):
         (len(args) >= 1 and not args[0].startswith("@")
          and not args[0].isdigit()
          and not msg.parse_entities([MessageEntity.TEXT_MENTION]))):
-        msg.reply_text(tld(chat.id, "I can't extract a user from this."))
+        msg.reply_text(tld(chat.id, "misc_info_extract_error"))
         return
 
     else:
@@ -117,6 +117,17 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     text += tld(chat.id,
                 "misc_info_user_link").format(mention_html(user.id, "link"))
+
+    try:
+        spamwatch = sw.get_ban(int(user.id))
+        if spamwatch:
+            text += tld(chat.id, "misc_info_swban1")
+            text += tld(chat.id, "misc_info_swban2").format(spamwatch.reason)
+            text += tld(chat.id, "misc_info_swban3")
+        else:
+            pass
+    except:
+        pass # avoids crash if api is down
 
     if user.id == OWNER_ID:
         text += tld(chat.id, "misc_info_is_owner")

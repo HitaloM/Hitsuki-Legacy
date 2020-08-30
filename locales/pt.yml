@@ -660,6 +660,7 @@ memes_help: |
   - /zalgofy: responda uma mensagem para tornar-la um glitch.
 #Misc
 modname_misc: Outros
+misc_info_extract_error: "Não consigo extrair um usuário disso."
 misc_get_id_1: O rementente original {}, possui o ID `{}`.\n{}, que encaminhou a mensagem, tem o ID `{}`.
 misc_get_id_2: "A ID de {} é `{}`."
 misc_id_1: Sua ID é `{}`.
@@ -675,6 +676,9 @@ misc_info_is_original_owner: "\nEssa pessoa é minha criadora, a princípio, ape
 misc_info_is_sudo: "\nEssa pessoa é um dos meus usuários sudo!"
 misc_info_is_support: "\nEssa pessoa é um dos meus usuários de suporte!"
 misc_info_is_whitelisted: "\nEssa pessoa é um dos meus usuários da lista branca, raramente alguém recebe esse papel, você não pode bani-lo ou expulsá-lo."
+misc_info_swban1: "\n\n<b>Essa pessoa está banida na SpamWatch!</b>"
+misc_info_swban2: "\nMotivo: <pre>{}</pre>"
+misc_info_swban2: "\nReclame em @SpamWatchSupport"
 misc_gdpr: Excluindo dados identificáveis...
 misc_md_list: |
   O Markdown é uma ferramenta de formatação muito poderosa suportada pelo Telegram. O Hitsuki tem algumas melhorias, para garantir que \

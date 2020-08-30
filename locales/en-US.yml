@@ -664,6 +664,7 @@ memes_help: |
 modname_misc: Misc
 misc_get_id_1: The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.
 misc_get_id_2: "{}'s id is `{}`."
+misc_info_extract_error: "I can't extract a user from this."
 misc_id_1: Your id is `{}`.
 misc_id_2: This group's id is `{}`.
 misc_info_1: "<b>User info</b>:"
@@ -677,6 +678,9 @@ misc_info_is_original_owner: "\nThis person is my creator, beginning of me, thou
 misc_info_is_sudo: "\nThis person is one of my sudo users!"
 misc_info_is_support: "\nThis person is one of my support users!"
 misc_info_is_whitelisted: "\nThis person is one of my whitelisted user, one rarely gets this role, you can't ban or kick him."
+misc_info_swban1: "\n\n<b>This person is banned in SpamWatch!</b>"
+misc_info_swban2: "\nReason: <pre>{}</pre>"
+misc_info_swban2: "\nAppeal at @SpamWatchSupport"
 misc_gdpr: Deleting identifiable data...
 misc_md_list: |
   Markdown is a very powerful formatting tool supported by telegram. Hitsuki has some enhancements, to make sure that \
