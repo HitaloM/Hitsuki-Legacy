@@ -678,7 +678,7 @@ misc_info_is_support: "\nEssa pessoa é um dos meus usuários de suporte!"
 misc_info_is_whitelisted: "\nEssa pessoa é um dos meus usuários da lista branca, raramente alguém recebe esse papel, você não pode bani-lo ou expulsá-lo."
 misc_info_swban1: "\n\n<b>Essa pessoa está banida na SpamWatch!</b>"
 misc_info_swban2: "\nMotivo: <pre>{}</pre>"
-misc_info_swban2: "\nReclame em @SpamWatchSupport"
+misc_info_swban3: "\nReclame em @SpamWatchSupport"
 misc_gdpr: Excluindo dados identificáveis...
 misc_md_list: |
   O Markdown é uma ferramenta de formatação muito poderosa suportada pelo Telegram. O Hitsuki tem algumas melhorias, para garantir que \
