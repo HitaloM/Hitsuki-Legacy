@@ -372,6 +372,9 @@ def process_update(self, update):
                 'An uncaught error was raised while handling the error')
         return
 
+    if not update.effective_chat:
+        return
+
     if update.effective_chat:  # Checks if update contains chat object
         now = datetime.datetime.utcnow()
     try:
