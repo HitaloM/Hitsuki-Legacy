@@ -101,7 +101,6 @@ NO_LOAD = CONFIG['no_load']
 DEL_CMDS = CONFIG['del_cmds']
 STRICT_ANTISPAM = CONFIG['strict_antispam']
 WORKERS = CONFIG['workers']
-DEEPFRY_TOKEN = CONFIG['deepfry_token']
 LASTFM_API_KEY = CONFIG['lastfm_api_key']
 
 SUDO_USERS.add(OWNER_ID)

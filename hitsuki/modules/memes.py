@@ -19,7 +19,6 @@ import random, re, io, asyncio
 from PIL import Image
 from io import BytesIO
 from zalgo_text import zalgo
-from deeppyer import deepfry
 import os
 from pathlib import Path
 
@@ -27,7 +26,7 @@ from typing import List
 from telegram import Update, Bot, ParseMode, Message
 from telegram.ext import run_async
 
-from hitsuki import dispatcher, DEEPFRY_TOKEN
+from hitsuki import dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from telegram.utils.helpers import escape_markdown
 from hitsuki.modules.helper_funcs.extraction import extract_user
@@ -149,59 +148,6 @@ def zalgotext(bot: Bot, update: Update, args: List[str]):
 
 
 # Less D A N K modules by @skittles9823 # holi fugg I did some maymays ^^^
-# shitty maymay modules made by @divadsn vvv
-
-
-@run_async
-def deepfryer(bot: Bot, update: Update):
-    message = update.effective_message
-    chat = update.effective_chat
-    if message.reply_to_message:
-        data = message.reply_to_message.photo
-        data2 = message.reply_to_message.sticker
-    else:
-        data = []
-        data2 = []
-
-    # check if message does contain media and cancel when not
-    if not data and not data2:
-        message.reply_text(tld(chat.id, "memes_deepfry_nothing"))
-        return
-
-    # download last photo (highres) as byte array
-    if data:
-        photodata = data[len(data) - 1].get_file().download_as_bytearray()
-        image = Image.open(io.BytesIO(photodata))
-    elif data2:
-        sticker = bot.get_file(data2.file_id)
-        sticker.download('sticker.png')
-        image = Image.open("sticker.png")
-
-    # the following needs to be executed async (because dumb lib)
-    loop = asyncio.new_event_loop()
-    loop.run_until_complete(
-        process_deepfry(image, message.reply_to_message, bot))
-    loop.close()
-
-
-async def process_deepfry(image: Image, reply: Message, bot: Bot):
-    # DEEPFRY IT
-    image = await deepfry(img=image,
-                          token=DEEPFRY_TOKEN,
-                          url_base='westeurope')
-
-    bio = BytesIO()
-    bio.name = 'image.jpeg'
-    image.save(bio, 'JPEG')
-
-    # send it back
-    bio.seek(0)
-    reply.reply_photo(bio)
-    if Path("sticker.png").is_file():
-        os.remove("sticker.png")
-
-
-# shitty maymay modules made by @divadsn ^^^
 
 
 @run_async
@@ -310,9 +256,6 @@ VAPOR_HANDLER = DisableAbleCommandHandler("vapor",
                                           pass_args=True,
                                           admin_ok=True)
 ZALGO_HANDLER = DisableAbleCommandHandler("zalgofy", zalgotext, pass_args=True)
-DEEPFRY_HANDLER = DisableAbleCommandHandler("deepfry",
-                                            deepfryer,
-                                            admin_ok=True)
 SHOUT_HANDLER = DisableAbleCommandHandler("shout", shout, pass_args=True)
 INSULTS_HANDLER = DisableAbleCommandHandler("insults", insults, admin_ok=True)
 RUNS_HANDLER = DisableAbleCommandHandler("runs", runs, admin_ok=True)
@@ -325,7 +268,6 @@ dispatcher.add_handler(OWO_HANDLER)
 dispatcher.add_handler(STRETCH_HANDLER)
 dispatcher.add_handler(VAPOR_HANDLER)
 dispatcher.add_handler(ZALGO_HANDLER)
-# dispatcher.add_handler(DEEPFRY_HANDLER)
 dispatcher.add_handler(SHOUT_HANDLER)
 dispatcher.add_handler(INSULTS_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
