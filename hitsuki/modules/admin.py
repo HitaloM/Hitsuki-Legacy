@@ -247,7 +247,7 @@ def invite(bot: Bot, update: Update):
                 tld(chat.id, "admin_err_no_perm_invitelink"))
     else:
         update.effective_message.reply_text(
-            tld(chat.id, "admin_chat_no_invitelink"))
+            tld(chat.id, "admin_err_chat_no_invitelink"))
 
 
 @run_async
