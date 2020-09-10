@@ -174,8 +174,8 @@ def deepfryer(bot: Bot, update: Update):
         image = Image.open(io.BytesIO(photodata))
     elif data2:
         sticker = bot.get_file(data2.file_id)
-        sticker.download('sticker.png')
-        image = Image.open("sticker.png")
+        sticker.download('images/sticker.png')
+        image = Image.open("images/sticker.png")
 
     # the following needs to be executed async (because dumb lib)
     loop = asyncio.new_event_loop()
@@ -191,14 +191,14 @@ async def process_deepfry(image: Image, reply: Message, bot: Bot):
                           url_base='westeurope')
 
     bio = BytesIO()
-    bio.name = 'image.jpeg'
+    bio.name = 'images/image.jpeg'
     image.save(bio, 'JPEG')
 
     # send it back
     bio.seek(0)
     reply.reply_photo(bio)
-    if Path("sticker.png").is_file():
-        os.remove("sticker.png")
+    if Path("images/sticker.png").is_file():
+        os.remove("images/sticker.png")
 
 
 # shitty maymay modules made by @divadsn ^^^
@@ -325,7 +325,7 @@ dispatcher.add_handler(OWO_HANDLER)
 dispatcher.add_handler(STRETCH_HANDLER)
 dispatcher.add_handler(VAPOR_HANDLER)
 dispatcher.add_handler(ZALGO_HANDLER)
-# dispatcher.add_handler(DEEPFRY_HANDLER)
+dispatcher.add_handler(DEEPFRY_HANDLER)
 dispatcher.add_handler(SHOUT_HANDLER)
 dispatcher.add_handler(INSULTS_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
