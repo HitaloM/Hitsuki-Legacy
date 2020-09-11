@@ -143,6 +143,10 @@ def set_about_bio(bot: Bot, update: Update):
 def __user_info__(user_id, chat_id):
     bio = html.escape(sql.get_user_bio(user_id) or "")
     me = html.escape(sql.get_user_me_info(user_id) or "")
+    if bio and len(bio) > 500:
+        bio = bio[:500]
+    if me and len(me) > 500:
+        me = me[:500]
     if bio and me:
         return tld(chat_id, "userinfo_what_i_and_other_say").format(me, bio)
     elif bio:
