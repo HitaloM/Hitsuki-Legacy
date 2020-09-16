@@ -110,8 +110,8 @@ android_help: |
   - /twrp <codinome>: Obtém o twrp mais recente para um dispositivo Android através do codinome.
   - /ofox: Obtém a lista de dispositivos oficialmente suportados pelo Orange Fox Recovery Project.
   - /ofox <codinome>: Obtém o link de download e as informações básicas do OFRP para o dispositivo especificado.
-  - /codename <fabricante> <dispositivo>: Pesquise o codinome do dispositivo Android.
-  - /device <codinome>: Obtenha informações sobre um dispositivo Android.
+  - /whatis <codinome>: Descubra qual smartphone é usando o codinome
+  - /models <codinome>: Veja os modelos de um smartphone usando o codinome
 #DirectLinks
 modname_direct_links: Links Diretos
 direct_links_help: |
