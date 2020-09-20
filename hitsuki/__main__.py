@@ -31,7 +31,7 @@ from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
 # Needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from hitsuki.modules import ALL_MODULES
-from hitsuki import dispatcher, updater, LOGGER, TOKEN, tbot
+from hitsuki import dispatcher, updater, LOGGER, TOKEN, tbot, pbot
 from hitsuki.modules.helper_funcs.misc import paginate_modules
 from hitsuki.modules.tr_engine.strings import tld
 
@@ -430,6 +430,8 @@ def process_update(self, update):
 
 
 if __name__ == '__main__':
+	pbot.start()
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     tbot.start(bot_token=TOKEN)
     main()
+    idle()

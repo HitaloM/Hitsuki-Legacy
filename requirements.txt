@@ -1,6 +1,7 @@
 #### Bot lib ####
 git+https://github.com/HitsukiNetwork/Hitsuki-PTB.git
 telethon
+pyrogram
 #################
 aiohttp>=2.2.5
 bleach
@@ -28,3 +29,4 @@ wikipedia
 zalgo-text
 covid
 bs4
+tgcrypto
