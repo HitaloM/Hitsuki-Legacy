@@ -1,5 +1,4 @@
 #    Hitsuki (A telegram bot project)
-#    Copyright (C) 2017-2020 OrangeFox Recovery
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by

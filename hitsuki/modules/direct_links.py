@@ -1,5 +1,4 @@
 #    Hitsuki (A telegram bot project)
-#    This module is ported from Telegram-UserBot (Paperplane)
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@ from random import choice
 import requests
 from bs4 import BeautifulSoup
 
+# This module is ported from Telegram-UserBot (Paperplane)
 from hitsuki.events import register
 
 

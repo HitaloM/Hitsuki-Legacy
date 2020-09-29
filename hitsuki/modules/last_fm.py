@@ -1,6 +1,4 @@
 #    Hitsuki (A telegram bot project)
-#    Copyright (C) 2017-2019 Paul Larsen
-#    Copyright (C) 2019-2020 Akito Mizukito (Haruka Network Development)
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -15,12 +13,11 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#    Last.fm module ported from https://github.com/rsktg
-
 import requests
 from telegram import Bot, Update, ParseMode
 from telegram.ext import run_async, CommandHandler
 
+# Last.fm module ported from https://github.com/rsktg
 import hitsuki.modules.sql.last_fm_sql as sql
 from hitsuki import dispatcher, LASTFM_API_KEY
 from hitsuki.modules.disable import DisableAbleCommandHandler

@@ -1,5 +1,4 @@
 #    Hitsuki (A telegram bot project)
-#    Copyright (C) 2019-2020 Akito Mizukito (Haruka Network Development)
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by

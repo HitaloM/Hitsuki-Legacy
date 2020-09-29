@@ -718,6 +718,7 @@ misc_covid: |
 misc_help: |
   - /id: Obtém o ID do grupo atual. Se usado respondendo a uma mensagem, ele obtém o ID do usuário.
   - /info: Obtém informações sobre um usuário.
+  - /whois: Obtém informações sobre um usuário usando os métodos do @pyrogram.
   - /gdpr: Deleta suas informações da base de dados do bot (Somente no PV)
   - /markdownhelp: Resume rápido de como o Markdown funciona no Telegram (Somente no PV).
   - /git: Retorna informações sobre um usuário ou organização do GitHub.

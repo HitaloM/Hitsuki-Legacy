@@ -1,5 +1,4 @@
 #    Hitsuki (A telegram bot project)
-#    This module is adapted from: github.com/AnimeKaizoku/SaitamaRobot
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,6 +23,7 @@ import requests
 from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.ext import CallbackQueryHandler, run_async
 
+# This module is adapted from: github.com/AnimeKaizoku/SaitamaRobot
 from hitsuki import OWNER_ID, SUDO_USERS, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 
