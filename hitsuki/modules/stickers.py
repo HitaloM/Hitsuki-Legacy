@@ -18,8 +18,11 @@
 import os
 import math
 import urllib.request as urllib
+import re
+import requests
 
 from PIL import Image
+from bs4 import BeautifulSoup as bs
 
 from typing import List
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
@@ -31,6 +34,8 @@ from telegram.utils.helpers import escape_markdown
 from hitsuki import dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.tr_engine.strings import tld
+
+combot_stickers_url = "https://combot.org/telegram/stickers?q="
 
 
 @run_async
@@ -45,6 +50,27 @@ def stickerid(bot: Bot, update: Update):
     else:
         update.effective_message.reply_text(
             tld(chat.id, 'stickers_stickerid_no_reply'))
+
+
+@run_async
+def cb_sticker(bot: Bot, update: Update):
+    msg = update.effective_message
+    split = msg.text.split(' ', 1)
+    if len(split) == 1:
+        msg.reply_text('Provide some name to search for pack.')
+        return
+    text = requests.get(combot_stickers_url + split[1]).text
+    soup = bs(text, 'lxml')
+    results = soup.find_all("a", {'class': "sticker-pack__btn"})
+    titles = soup.find_all("div", "sticker-pack__title")
+    if not results:
+        msg.reply_text('No results found :(.')
+        return
+    reply = f"Stickers for *{split[1]}*:"
+    for result, title in zip(results, titles):
+        link = result['href']
+        reply += f"\n• [{title.get_text()}]({link})"
+    msg.reply_text(reply, parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
@@ -289,7 +315,9 @@ KANG_HANDLER = DisableAbleCommandHandler("kang",
                                          kang,
                                          pass_args=True,
                                          admin_ok=True)
+STICKERS_HANDLER = DisableAbleCommandHandler("stickers", cb_sticker)
 
 dispatcher.add_handler(STICKERID_HANDLER)
 dispatcher.add_handler(GETSTICKER_HANDLER)
 dispatcher.add_handler(KANG_HANDLER)
+dispatcher.add_handler(STICKERS_HANDLER)
