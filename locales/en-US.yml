@@ -720,7 +720,7 @@ misc_covid: |
 misc_help: |
   - /id: get the current group id. If used by replying to a message, gets that user's id.
   - /info: get information about a user.
-  - /whois: get information about a user using @pyrogram methods.
+  - /whois: get information about a user using @pyrogram's methods.
   - /gdpr: deletes your information from the bot's database. Private chats only.
   - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
   - /git: Returns info about a GitHub user or organization.
@@ -730,7 +730,7 @@ misc_help: |
   - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
   - /ud: Type the word or expression you want to search. For example /ud Gay
   - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
-  - /wiki <keywords>: Get wikipedia articles just using this bot!\n
+  - /wiki <keywords>: Get wikipedia articles just using this bot!
   - /spbinfo: get info about a user from @Intellivoid's SpamProtection API\n
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.

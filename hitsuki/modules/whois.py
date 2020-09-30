@@ -36,11 +36,11 @@ def ReplyCheck(message: Message):
 
 infotext = (
     "**[{full_name}](tg://user?id={user_id})**\n"
-    "   UserID: `{user_id}`\n"
+    "   User ID: `{user_id}`\n"
     "   First Name: `{first_name}`\n"
     "   Last Name: `{last_name}`\n"
     "   Username: `{username}`\n"
-    "   Last Online: `{last_online}`\n"
+    "   Online Status: `{last_online}`\n"
     "   Bio: {bio}")
 
 def LastOnline(user: User):
