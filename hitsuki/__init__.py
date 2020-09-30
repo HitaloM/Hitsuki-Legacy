@@ -126,7 +126,7 @@ dispatcher = updater.dispatcher
 
 tbot = TelegramClient("hitsuki", API_KEY, API_HASH)
 
-pbot = Client("HitsukiPyro", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
+pbot = Client("HitsukiPyro", api_id=API_KEY, api_hash=API_HASH, bot_token=TOKEN)
 
 SUDO_USERS = list(SUDO_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)

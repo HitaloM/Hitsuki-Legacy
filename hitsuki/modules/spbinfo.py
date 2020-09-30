@@ -45,7 +45,7 @@ class AioHttp:
                 return await resp.read()
 
 
-@kp.on_message(filters.command("spbinfo"))
+@pbot.on_message(filters.command("spbinfo"))
 async def lookup(client, message):
     cmd = message.command
     if not message.reply_to_message and len(cmd) == 1:
