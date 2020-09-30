@@ -730,6 +730,7 @@ misc_help: |
   - /ud: Type the word or expression you want to search. For example /ud Gay
   - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
   - /wiki <keywords>: Get wikipedia articles just using this bot!\n
+  - /spbinfo: get info about a user from @Intellivoid's SpamProtection API\n
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
   - /covid <country name>: Powered by Worldometers, Give stats about COVID-19.
@@ -1090,6 +1091,7 @@ stickers_help: |
   - /stickerid: reply to a sticker to me to tell you its file ID.
   - /getsticker: reply to a sticker to me to upload its raw PNG file.
   - /kang: reply to a sticker to add it to your pack.
+  - /stickers: search stickers in combot sticker finder.
 #Warnings
 modname_warns: Warnings
 warns_warn_admin_no_warn: I'm not going to warn an admin!

@@ -728,6 +728,7 @@ misc_help: |
   - /ud: Digite a palavra ou expressão que deseja pesquisar. Por exemplo /ud Corno
   - /removebotkeyboard: Tem um bot de teclado desagradável preso no seu grupo?
   - /wiki <keywords>: Obtenha artigos da Wikipedia apenas usando este bot!\n
+  - /spbinfo: obtém informações de um usuário através da API do SpamProtection da @Intellivoid\n
   *Especial | COVID-19*
   - /covid: Gerado por Worldometers, receba as estatísticas gerais de COVID-19.
   - /covid <nome do país>: Gerado por Worldometers, receba as estatísticas gerais de COVID-19 em um determinado país.
@@ -1087,6 +1088,7 @@ stickers_help: |
   - /stickerid: Responda a um sticker para informar seu ID.
   - /getsticker: responda a um adesivo para fazer upload do seu arquivo PNG bruto.
   - /kang: responda a uma tag para adicioná-la ao seu pacote.
+  - /stickers: procure stickers através do combot stickers finder.
 #Warnings
 modname_warns: Advertências
 warns_warn_admin_no_warn: 'Não vou dar uma advertência a um administrador!'
