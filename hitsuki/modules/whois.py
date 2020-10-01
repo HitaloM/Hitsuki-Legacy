@@ -35,17 +35,17 @@ def ReplyCheck(message: Message):
     return reply_id
 
 infotext = (
-    "**[{full_name}](tg://user?id={user_id})**\n"
-    "   User ID: `{user_id}`\n"
-    "   First Name: `{first_name}`\n"
-    "   Last Name: `{last_name}`\n"
-    "   Username: `{username}`\n"
-    "   Online Status: `{last_online}`\n"
-    "   Bio: {bio}")
+    "**About [{full_name}](tg://user?id={user_id}):**\n"
+    "  - **UserID:** `{user_id}`\n"
+    "  - **First Name:** `{first_name}`\n"
+    "  - **Last Name:** `{last_name}`\n"
+    "  - **Username:** `{username}`\n"
+    "  - **Online Status:** `{last_online}`\n"
+    "  - **Bio:** {bio}")
 
 def LastOnline(user: User):
     if user.is_bot:
-        return ""
+        return "It's a bot!"
     elif user.status == 'recently':
         return "Recently"
     elif user.status == 'within_week':
@@ -88,8 +88,8 @@ async def whois(client, message):
                 full_name=FullName(user),
                 user_id=user.id,
                 first_name=user.first_name,
-                last_name=user.last_name if user.last_name else "",
-                username=user.username if user.username else "",
+                last_name=user.last_name if user.last_name else "`No last name set up`",
+                username=user.username if user.username else "`No username set up`",
                 last_online=LastOnline(user),
                 bio=desc if desc else "`No bio set up.`"),
             disable_web_page_preview=True)
