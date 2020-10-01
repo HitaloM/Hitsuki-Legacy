@@ -19,7 +19,7 @@ from datetime import datetime
 from asyncio import sleep
 
 from pyrogram import filters
-from pyrogram.types import InlineKeyboardButton, InlineQueryResultArticle, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup
 from pyrogram.errors import PeerIdInvalid
 
 from hitsuki import pbot
