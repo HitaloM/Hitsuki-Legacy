@@ -31,7 +31,7 @@ from hitsuki import pbot
 @pbot.on_message(filters.command('dice'))
 async def dice(c: Client, m: Message):
     dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id)
-    await dicen.reply_text("The dice stopped at the number {number}").format(number=dicen.dice.value), quote=True
+    await dicen.reply_text(("The dice stopped at the number {number}").format(number=dicen.dice.value), quote=True)
     
 
 @pbot.on_message(filters.command("id") & filters.private)
