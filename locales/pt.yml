@@ -668,12 +668,12 @@ misc_id_1: Sua ID é `{}`.
 misc_id_2: A ID do grupo é `{}`.
 misc_info_1: "<b>Informação do usuário</b>:"
 misc_info_id: "\nID: <code>{}</code>"
-misc_info_first: "\nPrimeiro nome: {}"
-misc_info_name: "\nApelido: {}"
-misc_info_username: "\nUsername: @{}"
-misc_info_user_link: "\nLink do Usuário: {}\n"
-misc_info_is_owner: "\nEssa pessoa é minha dona! Eles têm poder total sobre mim."
-misc_info_is_original_owner: "\nEssa pessoa é minha criadora, a princípio, apesar de já ter ter abandonado 2 filhos no lixo e 5 com a pensão atrasada."
+misc_info_first: "\nNome: {}"
+misc_info_name: "\nSobrenome: {}"
+misc_info_username: "\nNome de usuário: @{}"
+misc_info_user_link: "\nLink de usuário: {}\n"
+misc_info_is_owner: "\nEssa pessoa é meu dono! Ele têm poder total sobre mim."
+misc_info_is_original_owner: "\nEssa pessoa é meu criador, a princípio, apesar de já ter ter abandonado 2 filhos no lixo e 5 com a pensão atrasada."
 misc_info_is_sudo: "\nEssa pessoa é um dos meus usuários sudo!"
 misc_info_is_support: "\nEssa pessoa é um dos meus usuários de suporte!"
 misc_info_is_whitelisted: "\nEssa pessoa é um dos meus usuários da lista branca, raramente alguém recebe esse papel, você não pode bani-lo ou expulsá-lo."
@@ -1042,7 +1042,7 @@ welcome_help: |
   Isso recuperará a mensagem de boas-vindas e a enviará bruta; obtendo o Markdown sem formatação, permitindo que você faça edições fáceis.
   Isso também funciona com /goodbye.
 #Users
-users_seen: "Eu os vi em <code>{}</code> chats no total."
+users_seen: "Eu vi este usuário em <code>{}</code> chat(s) no total."
 users_seen_is_bot: "Eu os vi em ... Uau. Eles estão me perseguindo? Eles estão nos mesmos lugares que eu estou ... oh. Sou eu."
 #Userinfo
 modname_userinfo: Bio/Sobre
@@ -1050,11 +1050,11 @@ userinfo_about_not_set_they: "{} ainda não estabeleceu uma mensagem informativa
 userinfo_about_not_set_you: 'Você ainda não configurou uma mensagem informativa sobre si mesmo!'
 userinfo_about_set_success: 'Atualizou suas informações!'
 userinfo_about_too_long: 'Suas informações devem ser menores que {} caracteres! Tem atualmente {}.'
-userinfo_bio_none_they: "{} Não possui nenhuma Bio."
+userinfo_bio_none_they: "{} Não possui uma bio."
 userinfo_bio_none_you: Ninguém criou uma biografia para você!
 userinfo_bio_you_cant_set: 'Olá, você não pode definir sua própria biografia! Você está à mercê de outras pessoas aqui ...'
-userinfo_bio_bot_sudo_only: Erm ... sim, eu confio apenas nos usuários do sudo para definir minha biografia.
-userinfo_bio_sudo_sudo_only: Erm ... sim, eu confio apenas nos usuários do sudo para definir biografia.
+userinfo_bio_bot_sudo_only: Erm... sim, eu confio apenas nos usuários sudo para definir minha biografia.
+userinfo_bio_sudo_sudo_only: Erm... sim, eu confio apenas nos usuários sudo para definir a biografia de usuários.
 userinfo_bio_owner_nobio: 'O preconceito do meu mestre não está configurado!'
 userinfo_bio_too_long: 'Uma biografia precisa ter menos de {} caracteres! Você tentou estabelecer {}.'
 userinfo_bio_set_no_reply: 'Responda à mensagem de alguém para definir sua biografia!'
