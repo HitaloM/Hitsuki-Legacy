@@ -729,10 +729,20 @@ misc_help: |
   - /ud: Digite a palavra ou expressão que deseja pesquisar. Por exemplo /ud Corno
   - /removebotkeyboard: Tem um bot de teclado desagradável preso no seu grupo?
   - /wiki <keywords>: Obtenha artigos da Wikipedia apenas usando este bot!\n
-  - /spbinfo: obtém informações de um usuário através da API do SpamProtection da @Intellivoid\n
+  - /spbinfo: obtém informações de um usuário através da API do SpamProtection da @Intellivoid
+  - /ping: Envia o ping do not.
+  - /dice: Envia um dado.\n
   *Especial | COVID-19*
   - /covid: Gerado por Worldometers, receba as estatísticas gerais de COVID-19.
-  - /covid <nome do país>: Gerado por Worldometers, receba as estatísticas gerais de COVID-19 em um determinado país.
+  - /covid <nome do país>: Gerado por Worldometers, receba as estatísticas gerais de COVID-19 em um determinado país.\n
+  *Especial | Sed/Regex*
+  `s/<text1>/<text2>(/<flag>)`*:* Reply to a message with this to perform a sed operation on that message, replacing all \
+   occurrences of 'text1' with 'text2'. Flags are optional, and currently include 'i' for ignore case, 'g' for global, \
+   or nothing. Delimiters include `/`, `_`, `|`, and `:`. Text grouping is supported. The resulting message cannot be \
+   larger than 4096.
+   *Reminder:* Sed uses some special characters to make matching easier, such as these: `+*.?\\`
+   If you want to use these characters, make sure you escape them!
+   *Example:* \\?.
 #Anime
 modname_anime: Anime
 anime_help: |
