@@ -29,7 +29,7 @@ WHOIS = (
     "  - Last Name: `{last_name}`\n"
     "  - Username: `{username}`\n"
     "  - Last Online: `{last_online}`\n\n"
-    "Bio:\n{bio}")
+    "Bio:\n__{bio}__")
 
 WHOIS_PIC = (
     "**About [{full_name}](tg://user?id={user_id}):**\n"
@@ -40,7 +40,7 @@ WHOIS_PIC = (
     "  - Last Online: `{last_online}`\n\n"
     "  - Profile Pics: `{profile_pics}`\n"
     "  - Last Updated: `{profile_pic_update}`\n\n"
-    "Bio:\n{bio}")
+    "Bio:\n__{bio}__")
 
 
 def ReplyCheck(message: Message):
@@ -108,10 +108,10 @@ async def whois(client, message):
                 full_name=FullName(user),
                 user_id=user.id,
                 first_name=user.first_name,
-                last_name=user.last_name if user.last_name else "",
-                username=user.username if user.username else "",
+                last_name=user.last_name if user.last_name else "None",
+                username=user.username if user.username else "None",
                 last_online=LastOnline(user),
-                bio=desc if desc else "`No bio set up.`"),
+                bio=desc if desc else "None"),
             disable_web_page_preview=True)
     else:
         await client.send_photo(
@@ -121,11 +121,11 @@ async def whois(client, message):
                 full_name=FullName(user),
                 user_id=user.id,
                 first_name=user.first_name,
-                last_name=user.last_name if user.last_name else "",
-                username=user.username if user.username else "",
+                last_name=user.last_name if user.last_name else "None",
+                username=user.username if user.username else "None",
                 last_online=LastOnline(user),
                 profile_pics=pic_count,
-                bio=desc if desc else "`No bio set up.`",
+                bio=desc if desc else "None",
                 profile_pic_update=ProfilePicUpdate(user_pic)),
             reply_to_message_id=ReplyCheck(message),
             file_ref=user_pic[0].file_ref,
