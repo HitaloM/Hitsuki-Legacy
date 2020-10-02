@@ -16,8 +16,7 @@
 from datetime import datetime
 
 from pyrogram import filters
-from pyrogram.types import User, Message, InlineKeyboardMarkup, InlineKeyboardButton
-from pyrogram.raw import functions
+from pyrogram.types import User, Message, InlineKeyboardButton
 from pyrogram.errors import PeerIdInvalid
 
 from hitsuki import pbot
@@ -46,7 +45,7 @@ WHOIS_PIC = (
 
 def ReplyCheck(message: Message):
     reply_id = None
- 
+
     if message.reply_to_message:
         reply_id = message.reply_to_message.message_id
  
