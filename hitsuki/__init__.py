@@ -19,10 +19,10 @@ import yaml
 import spamwatch
 
 from telethon import TelegramClient
-from pyrogram import Client, errors
+from pyrogram import Client
 import telegram.ext as tg
 
-#Enable logging
+# Enable logging
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     level=logging.INFO)

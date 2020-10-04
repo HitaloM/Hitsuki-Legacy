@@ -19,8 +19,9 @@ from random import choice
 import requests
 from bs4 import BeautifulSoup
 
-# This module is ported from Telegram-UserBot (Paperplane)
 from hitsuki.events import register
+
+# This module is ported from Telegram-UserBot (Paperplane)
 
 
 @register(pattern=r"^/direct(?: |$)([\s\S]*)")

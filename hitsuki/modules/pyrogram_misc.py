@@ -31,8 +31,8 @@ from hitsuki import pbot
 @pbot.on_message(filters.command('dice'))
 async def dice(c: Client, m: Message):
     dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id)
-    await dicen.reply_text(("The dice stopped at the number {number}").format(number=dicen.dice.value), quote=True)
-    
+    await dicen.reply_text(f"The dice stopped at the number {dicen.dice.value}", quote=True)
+
 
 @pbot.on_message(filters.command("pyroid") & filters.private)
 async def ids_private(c: Client, m: Message):
@@ -112,7 +112,13 @@ async def sed(c: Client, m: Message):
         return
 
     try:
-        res = regex.sub(pattern, replace_with, text, count=count, flags=rflags, timeout=1)
+        res = regex.sub(
+            pattern,
+            replace_with,
+            text,
+            count=count,
+            flags=rflags,
+            timeout=1)
     except TimeoutError:
         await m.reply_text("Oops, your regex pattern ran for too long.")
     except regex.error as e:
@@ -120,4 +126,3 @@ async def sed(c: Client, m: Message):
     else:
         await c.send_message(m.chat.id, f'<pre>{html.escape(res)}</pre>',
                              reply_to_message_id=m.reply_to_message.message_id)
-

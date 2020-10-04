@@ -16,7 +16,7 @@
 from datetime import datetime
 
 from pyrogram import filters
-from pyrogram.types import User, Message, InlineKeyboardButton
+from pyrogram.types import User, Message
 from pyrogram.errors import PeerIdInvalid
 
 from hitsuki import pbot
@@ -48,10 +48,10 @@ def ReplyCheck(message: Message):
 
     if message.reply_to_message:
         reply_id = message.reply_to_message.message_id
- 
+
     elif not message.from_user.is_self:
         reply_id = message.message_id
- 
+
     return reply_id
 
 
@@ -69,7 +69,8 @@ def LastOnline(user: User):
     elif user.status == 'online':
         return "Currently Online"
     elif user.status == 'offline':
-        return datetime.fromtimestamp(user.status.date).strftime("%a, %d %b %Y, %H:%M:%S")
+        return datetime.fromtimestamp(
+            user.status.date).strftime("%a, %d %b %Y, %H:%M:%S")
 
 
 def FullName(user: User):
@@ -77,7 +78,8 @@ def FullName(user: User):
 
 
 def ProfilePicUpdate(user_pic):
-    return datetime.fromtimestamp(user_pic[0].date).strftime("%d.%m.%Y, %H:%M:%S")
+    return datetime.fromtimestamp(
+        user_pic[0].date).strftime("%d.%m.%Y, %H:%M:%S")
 
 
 @pbot.on_message(filters.command('whois'))

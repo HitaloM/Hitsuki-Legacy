@@ -16,7 +16,6 @@
 import os
 import math
 import urllib.request as urllib
-import re
 import requests
 
 from PIL import Image
@@ -44,7 +43,7 @@ def stickerid(bot: Bot, update: Update):
         update.effective_message.reply_text(tld(
             chat.id, 'stickers_stickerid').format(
                 escape_markdown(msg.reply_to_message.sticker.file_id)),
-                                            parse_mode=ParseMode.MARKDOWN)
+            parse_mode=ParseMode.MARKDOWN)
     else:
         update.effective_message.reply_text(
             tld(chat.id, 'stickers_stickerid_no_reply'))
@@ -154,7 +153,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
                                    emojis=sticker_emoji)
             msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
                 packname, sticker_emoji),
-                           parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
         except OSError as e:
             msg.reply_text(tld(chat.id, 'stickers_kang_only_img'))
             print(e)
@@ -173,7 +172,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
                                        emojis=sticker_emoji)
                 msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
                     packname, sticker_emoji),
-                               parse_mode=ParseMode.MARKDOWN)
+                    parse_mode=ParseMode.MARKDOWN)
             elif e.message == "Invalid sticker emojis":
                 msg.reply_text(tld(chat.id, 'stickers_kang_invalid_emoji'))
             elif e.message == "Stickers_too_much":
@@ -181,7 +180,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
             elif e.message == "Internal Server Error: sticker set not found (500)":
                 msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
                     packname, sticker_emoji),
-                               parse_mode=ParseMode.MARKDOWN)
+                    parse_mode=ParseMode.MARKDOWN)
             print(e)
     elif args:
         try:
@@ -220,7 +219,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
                                    emojis=sticker_emoji)
             msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
                 packname, sticker_emoji),
-                           parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
         except OSError as e:
             msg.reply_text(tld(chat.id, 'stickers_kang_only_img'))
             print(e)
@@ -239,7 +238,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
                                        emojis=sticker_emoji)
                 msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
                     packname, sticker_emoji),
-                               parse_mode=ParseMode.MARKDOWN)
+                    parse_mode=ParseMode.MARKDOWN)
             elif e.message == "Invalid sticker emojis":
                 msg.reply_text(tld(chat.id, 'stickers_kang_invalid_emoji'))
             elif e.message == "Stickers_too_much":
@@ -247,7 +246,7 @@ def kang(bot: Bot, update: Update, args: List[str]):
             elif e.message == "Internal Server Error: sticker set not found (500)":
                 msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
                     packname, sticker_emoji),
-                               parse_mode=ParseMode.MARKDOWN)
+                    parse_mode=ParseMode.MARKDOWN)
             print(e)
     else:
         packs = tld(chat.id, 'stickers_kang_no_reply')
@@ -294,7 +293,7 @@ def makepack_internal(msg, user, png_sticker, emoji, bot, packname, packnum,
         elif e.message == "Internal Server Error: created sticker set not found (500)":
             msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
                 packname, sticker_emoji),
-                           parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
         return
 
     if success:
