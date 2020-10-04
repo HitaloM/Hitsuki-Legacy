@@ -731,7 +731,6 @@ misc_help: |
   - /ud: Type the word or expression you want to search. For example /ud Gay
   - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
   - /wiki <keywords>: Get wikipedia articles just using this bot!
-  - /spbinfo: get info about a user from @Intellivoid's SpamProtection API
   - /ping: See the ping of the bot.
   - /dice: Send a dice.\n
   *Special | COVID-19*

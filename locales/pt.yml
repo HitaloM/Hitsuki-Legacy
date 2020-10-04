@@ -728,8 +728,7 @@ misc_help: |
   - /pastestats: Obtenha estatísticas de uma URL colada ou encurtada do [dogbin](https://del.dog)
   - /ud: Digite a palavra ou expressão que deseja pesquisar. Por exemplo /ud Corno
   - /removebotkeyboard: Tem um bot de teclado desagradável preso no seu grupo?
-  - /wiki <keywords>: Obtenha artigos da Wikipedia apenas usando este bot!\n
-  - /spbinfo: obtém informações de um usuário através da API do SpamProtection da @Intellivoid
+  - /wiki <keywords>: Obtenha artigos da Wikipedia apenas usando este bot!
   - /ping: Envia o ping do not.
   - /dice: Envia um dado.\n
   *Especial | COVID-19*
