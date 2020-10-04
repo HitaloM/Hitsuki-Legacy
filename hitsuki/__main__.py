@@ -429,6 +429,6 @@ def process_update(self, update):
 
 if __name__ == '__main__':
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
-    pbot.start(bot_token=TOKEN)
     tbot.start(bot_token=TOKEN)
+    pbot.start()
     main()
