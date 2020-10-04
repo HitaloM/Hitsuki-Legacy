@@ -719,6 +719,7 @@ misc_covid: |
   *Total tests*: {}
 misc_help: |
   - /id: get the current group id. If used by replying to a message, gets that user's id.
+  - /pyroid: Similar to /id but using @pyrogram's method.
   - /info: get information about a user.
   - /whois: get information about a user using @pyrogram's methods.
   - /gdpr: deletes your information from the bot's database. Private chats only.

@@ -717,6 +717,7 @@ misc_covid: |
   *Total de testes*: {}
 misc_help: |
   - /id: Obtém o ID do grupo atual. Se usado respondendo a uma mensagem, ele obtém o ID do usuário.
+  - /pyroid: Similar ao /id mas usando métodos do @pyrogram.
   - /info: Obtém informações sobre um usuário.
   - /whois: Obtém informações sobre um usuário usando os métodos do @pyrogram.
   - /gdpr: Deleta suas informações da base de dados do bot (Somente no PV)
@@ -735,13 +736,13 @@ misc_help: |
   - /covid: Gerado por Worldometers, receba as estatísticas gerais de COVID-19.
   - /covid <nome do país>: Gerado por Worldometers, receba as estatísticas gerais de COVID-19 em um determinado país.\n
   *Especial | Sed/Regex*
-  `s/<text1>/<text2>(/<flag>)`*:* Reply to a message with this to perform a sed operation on that message, replacing all \
-   occurrences of 'text1' with 'text2'. Flags are optional, and currently include 'i' for ignore case, 'g' for global, \
-   or nothing. Delimiters include `/`, `_`, `|`, and `:`. Text grouping is supported. The resulting message cannot be \
-   larger than 4096.
-   *Reminder:* Sed uses some special characters to make matching easier, such as these: `+*.?\\`
-   If you want to use these characters, make sure you escape them!
-   *Example:* \\?.
+  `s/<texto1>/<texto2>(/<flag>)`*:* Responda a uma mensagem com isto para realizar uma operação sed nessa mensagem, substituindo todas as \
+   ocorrências de 'texto1' com 'texto2'. Flags são opincionais, e atualmente incluem 'i' para ignorar o tamanho da letra, 'g' para global, \
+   ou nada. Delimitadores incluem `/`, `_`, `|`, e `:`. O agrupamento de texto é compatível. A mensagem resultante não pode ser \
+   maior que 4096 caracteres.
+   *Lembrete:* O Sed usa alguns caracteres especiais para facilitar a correspondência, como estes: `+*.?\\`
+   Se você quiser usar esses caracteres, certifique-se de escapar deles!
+   *Exemplo:* \\?.
 #Anime
 modname_anime: Anime
 anime_help: |
