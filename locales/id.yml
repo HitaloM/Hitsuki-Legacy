@@ -764,7 +764,7 @@ clear_success: "Catatan berhasil dihapus dari *{}*."
 note_in_chat: "*Catatan di {}:*\n"
 note_in_local: "*Catatan Lokal:*\n"
 note_none_in_chat: "Tidak ada catatan di *{}*!"
-note_get: "\nAnda dapat mengambil catatan ini dengan menggunakan `/get notename`, atau `#notename`.\n`#` dengan nama note di sana tidak termasuk dalam nama note itu sendiri, kami hanya menempatkan `#` di dalamnya untuk memudahkan salintempel."
+note_get: "\nAnda dapat mengambil catatan ini dengan menggunakan `/get notename`, atau `#notename`."
 note_fail_to_import: "File/foto ini gagal diimpor karena berasal dari bot lain. Ini adalah pembatasan dari API telegram, dan tidak dapat dihindari. Maaf untuk ketidaknyamanannya!"
 notes_help: |
   Simpan data untuk pengguna di masa depan dengan catatan!
