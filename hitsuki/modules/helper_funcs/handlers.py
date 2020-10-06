@@ -50,9 +50,9 @@ class CustomCommandHandler(tg.CommandHandler):
                     else:
                         res = self.filters(message)
 
-                    return res and (
-                        command[0].lower() in self.command
-                        and command[1].lower() == message.bot.username.lower())
+                    return res and (command[0].lower() in self.command
+                                    and command[1].lower()
+                                    == message.bot.username.lower())
 
             return False
 
@@ -80,8 +80,9 @@ class GbanLockHandler(tg.CommandHandler):
                     command.append(
                         message.bot.username
                     )  # in case the command was sent without a username
-                    if not (command[0].lower() in self.command and command[1].
-                            lower() == message.bot.username.lower()):
+                    if not (command[0].lower() in self.command
+                            and command[1].lower()
+                            == message.bot.username.lower()):
                         return False
                     if self.filters is None:
                         res = True
