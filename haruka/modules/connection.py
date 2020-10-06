@@ -139,13 +139,13 @@ def connect_chat(bot, update, args):
 
     elif update.effective_chat.type == 'supergroup':
         connect_chat = chat.id
-        if (bot.get_chat_member(
-                connect_chat, update.effective_message.from_user.id).status in
-            ('administrator', 'creator') or
+        if (bot.get_chat_member(connect_chat,
+                                update.effective_message.from_user.id).status
+                in ('administrator', 'creator') or
             (sql.allow_connect_to_chat(connect_chat) == True)
-                and bot.get_chat_member(connect_chat, update.effective_message.
-                                        from_user.id).status in 'member') or (
-                                            user.id in SUDO_USERS):
+                and bot.get_chat_member(
+                    connect_chat, update.effective_message.from_user.id).status
+                in 'member') or (user.id in SUDO_USERS):
 
             connection_status = sql.connect(
                 update.effective_message.from_user.id, connect_chat)
