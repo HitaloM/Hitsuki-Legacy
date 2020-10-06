@@ -842,7 +842,7 @@ clear_success: "Nota removida com sucesso em *{}*."
 note_in_chat: "*Notas em {}:*\n"
 note_in_local: "*Notas locaos:*\n"
 note_none_in_chat: "Não há notas em *{}*!"
-note_get: "\nVocê pode ver o comteúdo dessas notas com `/get notename`, o `#notename`.\nO `#` com o notename acima, ele não está incluído no próprio notename, apenas colocamos `#` nele para uma cópia mais fácil de colar. "
+note_get: "\nVocê pode ver o comteúdo dessas notas com `/get notename` ou `#notename`."
 note_fail_to_import: "Não foi possível importar esses arquivos/fotos porque são originários de outro bot. Esta é uma restrição da API do Telegram e não pode ser evitada. Desculpe pela inconveniência!"
 notes_must_be_creator: "Você deve ser o criador desse chat."
 notes_cleanup_success: "as notas {} foram limpas com sucesso."
@@ -1074,6 +1074,8 @@ userinfo_message_about: <b>Sobre o usuário:</b>\n{}
 userinfo_what_i_and_other_say: <b>Sobre o usuário:</b>\n{}\n<b>O que os outros dizem:</b>\n{}
 userinfo_what_other_say: <b>O que os outros dizem:</b>\n{}\n
 userinfo_what_i_say: <b>Sobre o usuário:</b>\n{}
+userinfo_anonymous_bio: Você não pode definir uma bio para o usuário anônimo!
+userinfo_anonymous_about: Você não pode definir sua própria bio no modo admin anônimo!
 userinfo_help: |
   - /setbio <text>: ao responder, ele salva a biografia de outro usuário
   - /bio: Ele obterá a biografia do seu usuário ou de outro. Isso não pode ser estabelecido por você mesmo.
