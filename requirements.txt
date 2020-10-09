@@ -30,3 +30,4 @@ zalgo-text
 covid
 bs4
 tgcrypto
+jikanpy
