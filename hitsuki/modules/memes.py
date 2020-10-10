@@ -13,15 +13,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import random, re, io, asyncio
-from PIL import Image
-from io import BytesIO
+import random
+import re
 from zalgo_text import zalgo
-import os
-from pathlib import Path
 
 from typing import List
-from telegram import Update, Bot, ParseMode, Message
+from telegram import Update, Bot, ParseMode
 from telegram.ext import run_async
 
 from hitsuki import dispatcher
@@ -162,7 +159,7 @@ def shout(bot: Bot, update: Update, args: List[str]):
 
     msg = "```"
     result = []
-    result.append(' '.join([s for s in data]))
+    result.append(' '.join(list(data)))
     for pos, symbol in enumerate(data[1:]):
         result.append(symbol + ' ' + '  ' * pos + symbol)
     result = list("\n".join(result))

@@ -198,7 +198,7 @@ bans_logger: |
   <b>Administrador:</b> {}
   <b>Usuário:</b> {} (<code>{}</code>)
 bans_banned_success: Admin {} baniu corretamento o usuario {} no <b>{}</b>!
-bans_logger_reason: \n<b>Motivo:</b>{}
+bans_logger_reason: \n<b>Motivo:</b> {}
 bans_err_unknown: "Erro desconhecido: {} falhou."
 bans_err_tban_no_arg: 'Você não especificou o tempo para banir este usuário!'
 bans_tban_logger: "<b>{}:</b>\n#TEMP_BANNED\n<b>Admin:</b> {}\n<b>Usuario:</b> {} (<code>{}</code>)\n<b>Hora:</b>{}"
