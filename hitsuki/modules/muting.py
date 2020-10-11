@@ -496,7 +496,7 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
     user = update.effective_user
     if is_user_admin(update.effective_chat, user_id):
         update.effective_message.reply_text(tld(chat.id, "mute_is_admin"))
-        return
+        return ""
 
     res = bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
     if res:

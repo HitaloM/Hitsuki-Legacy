@@ -543,7 +543,7 @@ def security_mute(bot: Bot, update: Update, args: List[str]) -> str:
         else:
             mutetime = extract_time(message, var)
             if mutetime == "":
-                return
+                return ""
             sql.set_welcome_security(chat.id, getcur, str(var), cust_text)
             text = tld(chat.id, 'welcome_mute_time').format(var)
         update.effective_message.reply_text(text)
