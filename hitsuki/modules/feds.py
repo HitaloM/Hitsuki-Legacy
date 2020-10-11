@@ -791,10 +791,7 @@ def is_user_fed_admin(fed_id, user_id):
         return True
     if feds_admins is False:
         return False
-    if int(user_id) in feds_admins:
-        return True
-    else:
-        return False
+    return int(user_id) in feds_admins
 
 
 def is_user_fed_owner(fed_id, user_id):
@@ -805,10 +802,7 @@ def is_user_fed_owner(fed_id, user_id):
     if getfedowner is None or getfedowner is False:
         return False
     getfedowner = getfedowner['owner']
-    if str(user_id) == getfedowner or user_id == 654839744:
-        return True
-    else:
-        return False
+    return bool(str(user_id) == getfedowner or user_id == 654839744)
 
 
 @run_async

@@ -630,10 +630,7 @@ def welcome(bot: Bot, update: Update, args: List[str]):
         pref, welcome_m, cust_content, welcome_type = sql.get_welc_pref(
             chat.id)
         prev_welc = sql.get_clean_pref(chat.id)
-        if prev_welc:
-            prev_welc = True
-        else:
-            prev_welc = False
+        prev_welc = bool(prev_welc)
         cleanserv = sql.clean_service(chat.id)
         getcur, cur_value, cust_text = sql.welcome_security(chat.id)
         if getcur:
