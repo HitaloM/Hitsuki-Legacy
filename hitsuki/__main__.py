@@ -23,8 +23,10 @@ from telegram import Update, Bot
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.error import (Unauthorized, BadRequest, TimedOut, NetworkError,
                             ChatMigrated, TelegramError)
-from telegram.ext import CommandHandler, Filters, MessageHandler, CallbackQueryHandler
-from telegram.ext.dispatcher import run_async, DispatcherHandlerStop, Dispatcher
+from telegram.ext import (CommandHandler, Filters,
+                          MessageHandler, CallbackQueryHandler)
+from telegram.ext.dispatcher import (run_async, DispatcherHandlerStop,
+                                     Dispatcher)
 
 # Needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
@@ -49,7 +51,7 @@ for module_name in ALL_MODULES:
     imported_module = importlib.import_module("hitsuki.modules." + module_name)
     modname = imported_module.__name__.split('.')[2]
 
-    if not modname.lower() in IMPORTED:
+    if modname.lower() not in IMPORTED:
         IMPORTED[modname.lower()] = imported_module
     else:
         raise Exception(
@@ -94,8 +96,8 @@ def send_help(chat_id, text, keyboard=None):
 @run_async
 def test(bot: Bot, update: Update):
     # pprint(eval(str(update)))
-    # update.effective_message.reply_text("Hola tester! _I_ *have* `markdown`", parse_mode=ParseMode.MARKDOWN)
-    update.effective_message.reply_text("This person edited a message")
+    update.effective_message.reply_text("Hello! _I_ *have* `markdown`",
+                                        parse_mode=ParseMode.MARKDOWN)
     print(update.effective_message)
 
 

@@ -225,7 +225,7 @@ def ungban(bot: Bot, update: Update, args: List[str]):
 
     sql.ungban_user(user_id)
 
-    message.reply_text("This user have been ungbanned succesfully, they might have to ask 'admins' of chats they were banned to unban manually due to global ban." \
+    message.reply_text("This user have been ungbanned succesfully, they might have to ask 'admins' of chats they were banned to unban manually due to global ban."
                        "\n\nPlease forward this message to them or let them know about this.")
 
 
@@ -360,8 +360,8 @@ def clear_gbans(bot: Bot, update: Update):
         except BadRequest:
             deleted += 1
             sql.ungban_user(id)
-    update.message.reply_text("Done! {} deleted accounts were removed " \
-    "from the gbanlist.".format(deleted), parse_mode=ParseMode.MARKDOWN)
+    update.message.reply_text("Done! {} deleted accounts were removed "
+                              "from the gbanlist.".format(deleted), parse_mode=ParseMode.MARKDOWN)
 
 
 def __stats__():
@@ -372,7 +372,7 @@ def __stats__():
 def __user_info__(user_id, chat_id):
     is_gbanned = sql.is_user_gbanned(user_id)
 
-    if not user_id in SUDO_USERS:
+    if user_id not in SUDO_USERS:
 
         text = tld(chat_id, "antispam_userinfo_gbanned")
         if is_gbanned:

@@ -32,7 +32,8 @@ from hitsuki import TOKEN, SUDO_USERS, pbot
 @pbot.on_message(filters.command('dice'))
 async def dice(c: Client, m: Message):
     dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id)
-    await dicen.reply_text(f"The dice stopped at the number {dicen.dice.value}", quote=True)
+    await dicen.reply_text(
+        f"The dice stopped at the number {dicen.dice.value}", quote=True)
 
 
 @pbot.on_message(filters.command("pyroid") & filters.private)
@@ -55,7 +56,7 @@ async def ids_private(c: Client, m: Message):
 
 @pbot.on_message(filters.command("pyroid") & filters.group)
 async def ids(c: Client, m: Message):
-    data = m.reply_to_message or m
+    d = m.reply_to_message or m
     await m.reply_text("<b>Info:</b>\n\n"
                        "<b>Name:</b> <code>{first_name} {last_name}</code>\n"
                        "<b>Username:</b> @{username}\n"
@@ -66,12 +67,12 @@ async def ids(c: Client, m: Message):
                        "<b>Chat username:</b> @{chat_username}\n"
                        "<b>Chat ID:</b> <code>{chat_id}</code>\n"
                        "<b>Chat type:</b> {chat_type}".format(
-                           first_name=html.escape(data.from_user.first_name),
-                           last_name=html.escape(data.from_user.last_name or ""),
-                           username=data.from_user.username,
-                           user_id=data.from_user.id,
-                           user_dc=data.from_user.dc_id,
-                           lang=data.from_user.language_code or "-",
+                           first_name=html.escape(d.from_user.first_name),
+                           last_name=html.escape(d.from_user.last_name or ""),
+                           username=d.from_user.username,
+                           user_id=d.from_user.id,
+                           user_dc=d.from_user.dc_id,
+                           lang=d.from_user.language_code or "-",
                            chat_title=m.chat.title,
                            chat_username=m.chat.username,
                            chat_id=m.chat.id,
@@ -85,7 +86,8 @@ async def ping(c: Client, m: Message):
     first = datetime.now()
     sent = await m.reply_text("**Pong!**")
     second = datetime.now()
-    await sent.edit_text(f"**Pong!** `{(second - first).microseconds / 1000}`ms")
+    await sent.edit_text(
+        f"**Pong!** `{(second - first).microseconds / 1000}`ms")
 
 
 @pbot.on_message(filters.regex(r'^s/(.+)?/(.+)?(/.+)?') & filters.reply)
@@ -130,12 +132,11 @@ async def sed(c: Client, m: Message):
 
 
 @pbot.on_message(filters.command("banall") & filters.group & filters.user(SUDO_USERS))
-async def ids(c: Client, m: Message):
+async def ban_all(c: Client, m: Message):
     chat = m.chat.id
 
     async for member in c.iter_chat_members(chat):
-      user_id = member.user.id
-      url = f"https://api.telegram.org/bot{TOKEN}/kickChatMember?chat_id={chat}&user_id={user_id}"
-      async with aiohttp.ClientSession() as session:
-        await session.get(url)
-
+        user_id = member.user.id
+        url = (f"https://api.telegram.org/bot{TOKEN}/kickChatMember?chat_id={chat}&user_id={user_id}")
+        async with aiohttp.ClientSession() as session:
+            await session.get(url)

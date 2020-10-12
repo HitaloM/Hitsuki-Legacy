@@ -14,14 +14,16 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import requests
+
 from telegram import Bot, Update, ParseMode
 from telegram.ext import run_async, CommandHandler
 
-# Last.fm module ported from https://github.com/rsktg
 import hitsuki.modules.sql.last_fm_sql as sql
 from hitsuki import dispatcher, LASTFM_API_KEY
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.tr_engine.strings import tld
+
+# Last.fm module ported from https://github.com/rsktg
 
 
 @run_async
@@ -61,7 +63,7 @@ def last_fm(bot: Bot, update: Update):
     base_url = "http://ws.audioscrobbler.com/2.0"
     res = requests.get(
         f"{base_url}?method=user.getrecenttracks&limit=3&extended=1&user={username}&api_key={LASTFM_API_KEY}&format=json")
-    if not res.status_code == 200:
+    if res.status_code != 200:
         msg.reply_text(tld(chat.id, "misc_lastfm_userwrong"))
         return
 

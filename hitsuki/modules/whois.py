@@ -110,11 +110,14 @@ async def whois(client, message):
                 full_name=FullName(user),
                 user_id=user.id,
                 first_name=user.first_name,
-                last_name=user.last_name if user.last_name else "None",
-                username=user.username if user.username else "None",
+                last_name=user.last_name or "None",
+                username=user.username or "None",
                 last_online=LastOnline(user),
-                bio=desc if desc else "None"),
-            disable_web_page_preview=True)
+                bio=desc or "None",
+            ),
+            disable_web_page_preview=True,
+        )
+
     else:
         await client.send_photo(
             message.chat.id,
@@ -123,12 +126,13 @@ async def whois(client, message):
                 full_name=FullName(user),
                 user_id=user.id,
                 first_name=user.first_name,
-                last_name=user.last_name if user.last_name else "None",
-                username=user.username if user.username else "None",
+                last_name=user.last_name or "None",
+                username=user.username or "None",
                 last_online=LastOnline(user),
                 profile_pics=pic_count,
-                bio=desc if desc else "None",
-                profile_pic_update=ProfilePicUpdate(user_pic)),
+                bio=desc or "None",
+                profile_pic_update=ProfilePicUpdate(user_pic),
+            ),
             reply_to_message_id=ReplyCheck(message),
             file_ref=user_pic[0].file_ref,
         )

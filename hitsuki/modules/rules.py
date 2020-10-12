@@ -32,6 +32,7 @@ from hitsuki.modules.connection import connected
 def get_rules(bot: Bot, update: Update):
     chat = update.effective_chat
     user = update.effective_user
+    msg = update.effective_message
     from_pm = False
 
     conn = connected(bot, update, chat, user.id)
@@ -91,7 +92,8 @@ def set_rules(bot: Bot, update: Update):
     msg = update.effective_message
 
     conn = connected(bot, update, chat, user.id)
-    if conn: chat_id = conn
+    if conn:
+        chat_id = conn
     else:
         if chat.type == 'private':
             msg.reply_text(tld(chat.id, 'common_cmd_group_only'))
@@ -118,9 +120,11 @@ def set_rules(bot: Bot, update: Update):
 def clear_rules(bot: Bot, update: Update):
     chat = update.effective_chat
     user = update.effective_user
+    msg = update.effective_message
 
     conn = connected(bot, update, chat, user.id)
-    if conn: chat_id = conn
+    if conn:
+        chat_id = conn
     else:
         if chat.type == 'private':
             msg.reply_text(tld(chat.id, 'common_cmd_group_only'))
