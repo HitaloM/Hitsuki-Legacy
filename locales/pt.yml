@@ -76,6 +76,7 @@ afk_help: |
   Quando marcado como AFK, qualquer menção será respondida com uma mensagem informando que você não está disponível!
 #Android
 modname_android: Android
+miui_release: "*MIUI - Recovery ROM:*\n\n"
 download: "**Download:** [{}]({})\n"
 build_size: "**Tamanho do arquivo:** `{}`\n"
 build_date: "**Data da compilação:** `{}`\n"
@@ -101,6 +102,7 @@ android_help: |
   *GSI*
   - /phh: Receba as últimas GSIs AOSP do PHH!\n
   *Firmwares:*
+  - /miui: Envia as ultimas versões da MIUI para o dispositivo dado.
   - /samcheck <modelo> <csc>: Apenas Samsung - mostra as últimas informações de firmware do dispositivo dado, direto dos servidores da Samsung.
   - /samget <modelo> <csc>: Apenas Samsung - envia o firmware mais recente do dispositivo dado direto do samfrew, sammobile e sfirmwares.\n
   *Outros*

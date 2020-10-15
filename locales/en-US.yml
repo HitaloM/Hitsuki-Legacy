@@ -75,6 +75,7 @@ afk_help: |
   When marked as AFK, any mentions will be replied to with a message stating that you're not available!
 #Android
 modname_android: Android
+miui_release: "*MIUI - Recovery ROM:*\n\n"
 download: "**Download:** [{}]({})\n"
 build_size: "**Build Size:** `{}`\n"
 build_date: "**Build Date:** `{}`\n"
@@ -100,6 +101,7 @@ android_help: |
   *GSI*
   - /phh: Get the latest PHH AOSP GSIs!\n
   *Device firmware:*
+  - /miui: Get the latest MIUI for the given device.
   - /samcheck <model> <csc>: Samsung only - shows the latest firmware info for the given device, taken from samsung servers.
   - /samget <model> <csc>: Samsung only - gets firmware download links from samfrew, sammobile and sfirmwares for the given device.\n
   *Misc*

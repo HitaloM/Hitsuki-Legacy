@@ -13,15 +13,18 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from typing import List
+import yaml
+
+from typing import Optional, List
 from bs4 import BeautifulSoup
 from requests import get
 
-from telegram import Update, Bot, ParseMode
+from telegram import Chat, Update, Bot, ParseMode
 from telegram.ext import run_async
 
 from hitsuki import dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
+from hitsuki.modules.tr_engine.strings import tld
 
 
 @run_async
@@ -115,8 +118,47 @@ def getfw(bot: Bot, update: Update, args: List[str]) -> str:
                               disable_web_page_preview=True)
 
 
+def miui(bot: Bot, update: Update, args):
+    cmd_name = "miui"
+    message = update.effective_message
+    chat = update.effective_chat  # type: Optional[Chat]
+    device = message.text[len(f'/{cmd_name} '):]
+
+    giturl = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/"
+
+    if device == '':
+        reply_text = tld(chat.id, "cmd_example").format(cmd_name)
+        message.reply_text(reply_text,
+                           parse_mode=ParseMode.MARKDOWN,
+                           disable_web_page_preview=True)
+        return
+
+    result = tld(chat.id, "miui_release")
+    stable_all = yaml.load(get(giturl +
+                               "data/latest.yml").content,
+                           Loader=yaml.FullLoader)
+    data = [i for i in stable_all if device == i['codename']]
+    if len(data) != 0:
+        for i in data:
+            result += "*Device:* " + i['name'] + "\n"
+            result += "*Branch:* " + i['branch'] + "\n"
+            result += "*Install method:* " + i['method'] + "\n"
+            result += "*Miui version:* " "`" + i['version'] + "`\n"
+            result += "*Android version:* " "`" + i['android'] + "`\n"
+            result += "*Size:* " + "`" + i['size'] + "`\n"
+            result += "*MD5:* " + "`" + i['md5'] + "`\n"
+            result += "*Download:* [HERE]" + "(" + i['link'] + ")" "\n\n"
+
+    else:
+        result = tld(chat.id, "err_not_found")
+
+    message.reply_text(result, parse_mode=ParseMode.MARKDOWN)
+
+
 GETFW_HANDLER = DisableAbleCommandHandler("samget", getfw, pass_args=True)
 CHECKFW_HANDLER = DisableAbleCommandHandler("samcheck", checkfw, pass_args=True)
+MIUI_HANDLER = DisableAbleCommandHandler("miui", miui, pass_args=True)
 
+dispatcher.add_handler(MIUI_HANDLER)
 dispatcher.add_handler(GETFW_HANDLER)
 dispatcher.add_handler(CHECKFW_HANDLER)
