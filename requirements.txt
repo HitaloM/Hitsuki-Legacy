@@ -31,3 +31,4 @@ covid
 bs4
 tgcrypto
 jikanpy
+lxml
