@@ -112,6 +112,7 @@ android_help: |
   - /ofox <codinome>: Obtém o link de download e as informações básicas do OFRP para o dispositivo especificado.
   - /whatis <codinome>: Descubra qual smartphone é usando o codinome
   - /models <codinome>: Veja os modelos de um smartphone usando o codinome
+  - /specs <codinome>: Apenas Samsung - Find smartphone specifications trought sfirmware / gizmodo china
 #DirectLinks
 modname_direct_links: Links Diretos
 direct_links_help: |

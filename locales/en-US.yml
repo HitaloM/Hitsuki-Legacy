@@ -111,6 +111,7 @@ android_help: |
   - /ofox <device>: Gets the download link and basic OFRP information to the specified device.
   - /models <codename>: Search for Android device models using codename.
   - /whatis <codename>: Find out which smartphone is using the codename.
+  - /specs <codename>: Samsung Only - Find smartphone specifications trought sfirmware / gizmodo chine
 #DirectLinks
 modname_direct_links: Direct Links
 direct_links_help: |
