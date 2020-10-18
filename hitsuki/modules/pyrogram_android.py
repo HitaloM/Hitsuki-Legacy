@@ -20,15 +20,21 @@ from rapidjson import loads
 from bs4 import BeautifulSoup
 
 from pyrogram import Client, filters
-from pyrogram.types import Message, Update
+from pyrogram.types import Update, InlineKeyboardButton, InlineKeyboardMarkup
 
 from hitsuki import pbot
+
+fw_links = {"SAMMOBILE": "https://www.sammobile.com/samsung/firmware/{}/{}/",
+            "SAMFW": "https://samfw.com/firmware/{}/{}/",
+            "SAMFREW": "https://samfrew.com/model/{}/region/{}/",
+            }.items()
 
 
 class GetDevice:
     def __init__(self, device):
         """Get device info by codename or model!"""
         self.device = device
+
     def get(self):
         if self.device.lower().startswith('sm-'):
             data = get('https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_model.json').content
@@ -38,7 +44,11 @@ class GetDevice:
                 device = db[self.device.upper()][0]['device']
                 brand = db[self.device.upper()][0]['brand']
                 model = self.device.lower()
-                return {'name': name,'device': device,'model':model,'brand': brand}
+                return {'name': name,
+                        'device': device,
+                        'model': model,
+                        'brand': brand
+                        }
             except KeyError:
                 return False
         else:
@@ -50,15 +60,19 @@ class GetDevice:
                 model = db[newdevice][0]['model']
                 brand = db[newdevice][0]['brand']
                 device = self.device.lower()
-                return {'name': name,'device': device,'model':model,'brand': brand}
+                return {'name': name,
+                        'device': device,
+                        'model': model,
+                        'brand': brand
+                        }
             except KeyError:
                 return False
 
 
 @pbot.on_message(filters.command(["specs", "spec"]))
 async def specs(c: Client, update: Update):
-    if not len(update.command) == 2:
-        message = "Please write your codename or model into it,\ni.e <code>/specs herolte</code> or <code>/specs sm-g610f</code>"
+    if len(update.command) != 2:
+        message = ("Please write your codename or model into it,\ni.e <code>/specs herolte</code> or <code>/specs sm-g610f</code>")
         await c.send_message(
                 chat_id=update.chat.id,
                 text=message)
@@ -68,7 +82,7 @@ async def specs(c: Client, update: Update):
     if data:
         name = data['name']
         model = data['model']
-        device = name.lower().replace(' ' , '-')
+        device = name.lower().replace(' ', '-')
     else:
         message = "coudn't find your device, chack device & try!"
         await c.send_message(
@@ -85,9 +99,6 @@ async def specs(c: Client, update: Update):
             title = re.findall(r'<td>.*?</td>', str(info))[0].strip().replace('td', 'b')
             data = re.findall(r'<td>.*?</td>', str(info))[-1].strip().replace('td', 'code')
             message += "• {}: <code>{}</code>\n".format(title, data)
-        await c.send_message(
-                    chat_id=update.chat.id,
-                    text=message)
     else:
         giz = get(f'https://www.gizmochina.com/product/samsung-{device}/')
         if giz.status_code == 404:
@@ -102,14 +113,15 @@ async def specs(c: Client, update: Update):
             title = info.find('strong').text
             data = info.find('span').text
             message += "• {}: <code>{}</code>\n".format(title, data)
-        await c.send_message(
-                    chat_id=update.chat.id,
-                    text=message)
+
+    await c.send_message(
+                chat_id=update.chat.id,
+                text=message)
 
 
 @pbot.on_message(filters.command(["whatis", "device", "codename"]))
 async def models(c: Client, update: Update):
-    if not len(update.command) == 2:
+    if len(update.command) != 2:
         message = "Please write your codename into it, i.e <code>/whatis herolte</code>"
         await c.send_message(
                 chat_id=update.chat.id,
@@ -140,7 +152,7 @@ async def models(c: Client, update: Update):
 
 @pbot.on_message(filters.command(["variants", "models"]))
 async def variants(c: Client, update: Update):
-    if not len(update.command) == 2:
+    if len(update.command) != 2:
         message = "Please write your codename into it, i.e <code>/specs herolte</code>"
         await c.send_message(
                 chat_id=update.chat.id,
@@ -159,13 +171,80 @@ async def variants(c: Client, update: Update):
         return
     data = get('https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
     db = loads(data)
-    device=db[device]
+    device = db[device]
     message = f'<b>{name}</b> variants:\n\n'
     for i in device:
-        name =  i['name']
+        name = i['name']
         model = i['model']
         message += '<b>Model</b>: <code>{}</code> \n<b>Name:</b> <code>{}</code>\n\n'.format(model, name)
 
     await c.send_message(
         chat_id=update.chat.id,
         text=message)
+
+
+@pbot.on_message(filters.command(["samget", "samcheck"]))
+async def check(c: Client, update: Update):
+    if len(update.command) != 3:
+        message = "Please type your device <b>MODEL</b> and <b>CSC</b> into it!\ni.e <code>/fw SM-G975F XSG!</code>"
+        await c.send_message(
+                chat_id=update.chat.id,
+                text=message)
+        return
+    cmd, temp, csc = update.command
+    model = 'sm-'+temp if not temp.upper().startswith('SM-') else temp
+    fota = get(f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.xml')
+    test = get(f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.test.xml')
+    if test.status_code != 200:
+        message = f"Couldn't find any firmwares for {temp.upper()} - {csc.upper()}, please refine your search or try again later!"
+        await c.send_message(
+                chat_id=update.chat.id,
+                text=message)
+        return
+    page1 = BeautifulSoup(fota.content, 'lxml')
+    page2 = BeautifulSoup(test.content, 'lxml')
+    os1 = page1.find("latest").get("o")
+    os2 = page2.find("latest").get("o")
+    if page1.find("latest").text.strip():
+        pda1, csc1, phone1 = page1.find("latest").text.strip().split('/')
+        message = f'<b>\nMODEL:</b> <code>{model.upper()}</code>\n<b>CSC:</b> <code>{csc.upper()}</code>\n'
+        message += '<b>Latest Avaliable Firmware:</b>\n'
+        message += f'• PDA: <code>{pda1}</code>\n• CSC: <code>{csc1}</code>\n'
+        if phone1:
+            message += f'• Phone: <code>{phone1}</code>\n'
+        if os1:
+            message += f'• Android: <code>{os1}</code>\n'
+        message += '\n'
+    else:
+        message = f'<b>No public release found for {model.upper()} and {csc.upper()}.</b>\n\n'
+    message += '<b>Latest Test Firmware:</b>\n'
+    if len(page2.find("latest").text.strip().split('/')) == 3:
+        pda2, csc2, phone2 = page2.find("latest").text.strip().split('/')
+        message += f'• PDA: <code>{pda2}</code>\n• CSC: <code>{csc2}</code>\n'
+        if phone2:
+            message += f'• Phone: <code>{phone2}</code>\n'
+        if os2:
+            message += f'• Android: <code>{os2}</code>\n'
+    else:
+        md5 = page2.find("latest").text.strip()
+        message += f'• Hash: <code>{md5}</code>\n• Android: <code>{os2}</code>\n\n'
+    cmd.split()
+    if cmd in ("samcheck"):
+        await c.send_message(
+                chat_id=update.chat.id,
+                text=message)
+    elif cmd in ("samget"):
+        message += "\n**Download from below:**\n"
+        keyboard = [
+            [
+                InlineKeyboardButton(
+                    site_name, url=fw_link.format(model.upper(), csc.upper())
+                )
+            ]
+            for site_name, fw_link in fw_links
+        ]
+
+        await c.send_message(
+                chat_id=update.chat.id,
+                text=message,
+                reply_markup=InlineKeyboardMarkup(keyboard))

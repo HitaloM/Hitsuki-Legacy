@@ -102,7 +102,6 @@ android_help: |
   *GSI*
   - /phh: Receba as últimas GSIs AOSP do PHH!\n
   *Firmwares:*
-  - /miui: Envia as ultimas versões da MIUI para o dispositivo dado.
   - /samcheck <modelo> <csc>: Apenas Samsung - mostra as últimas informações de firmware do dispositivo dado, direto dos servidores da Samsung.
   - /samget <modelo> <csc>: Apenas Samsung - envia o firmware mais recente do dispositivo dado direto do samfrew, sammobile e sfirmwares.\n
   *Outros*
@@ -112,7 +111,7 @@ android_help: |
   - /ofox <codinome>: Obtém o link de download e as informações básicas do OFRP para o dispositivo especificado.
   - /whatis <codinome>: Descubra qual smartphone é usando o codinome
   - /models <codinome>: Veja os modelos de um smartphone usando o codinome
-  - /specs <codinome>: Apenas Samsung - Find smartphone specifications trought sfirmware / gizmodo china
+  - /specs <codinome>: Apenas Samsung - Encontra as especificações de um parelho através do sfirmware / gizmodo china
 #DirectLinks
 modname_direct_links: Links Diretos
 direct_links_help: |
