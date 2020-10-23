@@ -190,7 +190,12 @@ antispam_spamwatch_banned: "<b>Este usuário foi detectado como um spambot pela 
 antispam_help: |
    Os proprietários dos robôs usam o antispam para banir spammers de todos os grupos. Isso ajuda a proteger você e seus grupos, eliminando os fluxos de spam o mais rápido possível. Isso está ativado por padrão, mas você pode alterar isso usando o comando.\n
    *Apenas administrador:*
-   - / antispam <on/off/yes/no>: altera a configuração de segurança antispam no grupo ou retorna sua configuração atual (sem argumentos).\n\n
+   - /antispam <on/off/yes/no>: altera a configuração de segurança antispam no grupo ou retorna sua configuração atual (sem argumentos).
+   Isso também integra a API @SpamWatch para remover spammers o máximo possível de seu grupo!\n
+   *O que é SpamWatch?*
+   O SpamWatch mantém uma grande lista de banimento constantemente atualizada de spambots, trolls, spammers de bitcoin e personagens desagradáveis.
+   Ajude constantemente a banir spammers de seu grupo automaticamente assim, você não precisa se preocupar com spammers invadindo seu grupo.\n
+   *Observação:* Os usuários podem reclamar de banimento da SpamWatch em @SpamWatchSupport
    Você pode ver os logs de banimentos globais em: @HitsukiOfficialFed
 #Bans
 modname_bans: Bans
@@ -906,7 +911,7 @@ url_blacklist_current: "Domínios atualmente <b>blacklisted</b>:"
 url_blacklist_no_existed: "Não há domínios na lista negra aqui!"
 #Greetings
 modname_welcome: Boas vindas
-welcome_added_to_grp: 'Obrigado por me adicionar ao seu grupo! Não se esqueça de conferir o nosso canal de notícias!'
+welcome_added_to_grp: 'Obrigado por me adicionar ao seu grupo! Não se esqueça de conferir o meu canal de notícias! (@HitsukiNews)'
 welcome_mute_btn_unmuted: 'Desmutado! Agora você pode escrever!'
 welcome_mute_btn_old_user: 'Você não é um novo usuário!'
 welcome_bot_owner_left: Bem, meu mestre se foi, a festa acabou!
@@ -1026,7 +1031,7 @@ userinfo_help: |
   - /me: obterá as informações de outro usuário
 #Stickers
 modname_stickers: Stickers
-stickers_stickerid: ID del Sticker:\n```{}```
+stickers_stickerid: ID do sticker:\n```{}```
 stickers_stickerid_no_reply: Por favor responda a um sticker para obter seu ID.
 stickers_getsticker_no_reply: Por favor, responda a um sticker para obter seu PNG.
 stickers_kang_error: Sim, eu não sei.
