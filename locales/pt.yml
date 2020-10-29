@@ -713,12 +713,12 @@ misc_setuser_lastfm: Nome de usuário configurado como {}!
 misc_lastfm_usernotset: Você não configurou seu nome de usuário ainda!
 misc_lastfm_userwrong: Hmm... algo está errado.\nPor favor verifique se você setou o nome de usuário corretamente!
 misc_lastfm_nonetracks: Você não parece ter scrobblado nenhuma música...
-misc_lastfm_pn: <code>{} - {}</code>
-misc_lastfm_pn_loved: <code>{} - {}</code> (curtida)
+misc_lastfm_pn: <b>{}</b> - {}
+misc_lastfm_pn_loved: <b>{}</b> - {} ❤
 misc_lastfm_scr: \n(<code>{}</code> scrobbles até agora)
-misc_lastfm_scrr: <code>{} - {}</code>\n
-misc_lastfm_np: "{} estava ouvindo:\n"
-misc_lastfm_inp: "{} está ouvindo atualmente:\n"
+misc_lastfm_scrr: <b>{}</b> - {}\n
+misc_lastfm_np: "🎧 <b>{}</b> estava ouvindo:\n\n"
+misc_lastfm_inp: "🎧 <b>{}</b> está ouvindo atualmente pela <code>{}º</code>:\n\n"
 last_fm_help: |
    Compartilhe o que você está ouvindo com a ajuda deste módulo.
 

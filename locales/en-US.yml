@@ -715,12 +715,12 @@ misc_setuser_lastfm: Username set as {}!
 misc_lastfm_usernotset: You haven't set your username yet!
 misc_lastfm_userwrong: Hmm... something went wrong.\nPlease ensure that you've set the correct username!
 misc_lastfm_nonetracks: You don't seem to have scrobbled any songs...
-misc_lastfm_pn: <code>{} - {}</code>
-misc_lastfm_pn_loved: <code>{} - {}</code> (loved)
+misc_lastfm_pn: <b>{}</b> - {}
+misc_lastfm_pn_loved: <b>{}</b> - {} ❤
 misc_lastfm_scr: \n(<code>{}</code> scrobbles so far)
-misc_lastfm_scrr: <code>{} - {}</code>\n
-misc_lastfm_np: "{} was listening to:\n"
-misc_lastfm_inp: "{} is currently listening to:\n"
+misc_lastfm_scrr: <b>{}</b> - {}\n
+misc_lastfm_np: "🎧 {} was listening to:\n\n"
+misc_lastfm_inp: "🎧 <b>{}</b> is currently listening for the <code>{}th</code> to:\n\n"
 last_fm_help: |
    Share what you're listening to with the help of this module!
 
