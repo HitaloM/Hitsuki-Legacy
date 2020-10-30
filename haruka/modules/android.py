@@ -241,8 +241,10 @@ async def bootleggers(event):
 
 @register(pattern=r"^/magisk$")
 async def magisk(event):
-    if event.from_id == None:
+    if event.from_id is None:
         return
+
+    chat_id = event.chat_id
 
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     releases = '**Latest Magisk Releases:**\n'
@@ -259,13 +261,16 @@ async def magisk(event):
             cc = 0
             branch = "master"
         elif variants == "canary/canary":
-            name = "**Canary (Debug)**"
+            name = "**Canary**"
             cc = 1
             branch = "canary"
 
-        releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' \
-                    f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
-
+        if variants == "canary/canary":
+            releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({url}{branch}/{data["magisk"]["link"]}) | ' \
+                        f'[APK v{data["app"]["version"]}]({url}{branch}/{data["app"]["link"]}) | '
+        else:
+            releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' \
+                        f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
         if cc == 1:
             releases += f'[Uninstaller]({data["uninstaller"]["link"]}) | ' \
                         f'[Changelog]({url}{branch}/notes.md)\n'
