@@ -18,6 +18,7 @@ from sys import argv
 import importlib
 import re
 from typing import List
+from pyrogram import idle
 
 from telegram import Update, Bot
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
@@ -31,7 +32,8 @@ from telegram.ext.dispatcher import (run_async, DispatcherHandlerStop,
 # Needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from hitsuki.modules import ALL_MODULES
-from hitsuki import dispatcher, updater, LOGGER, TOKEN, tbot, pbot
+from hitsuki import (dispatcher, updater, LOGGER,
+                     TOKEN, MESSAGE_DUMP, tbot, pbot)
 from hitsuki.modules.helper_funcs.misc import paginate_modules
 from hitsuki.modules.tr_engine.strings import tld
 
@@ -430,7 +432,10 @@ def process_update(self, update):
 
 
 if __name__ == '__main__':
+    timenow = datetime.datetime.now()
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     tbot.start(bot_token=TOKEN)
     pbot.start()
+    pbot.send_message(MESSAGE_DUMP, f"**Hitsuki is alive!**\n**Start time:** `{timenow}`")
     main()
+    idle()
