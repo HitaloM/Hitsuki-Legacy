@@ -297,6 +297,31 @@ connection_help: |
   - /disconnect: Disconecta do chat remoto
   - /allowconnect on/yes/off/no: Permite conectar usuários ao grupo\n
   Você pode pegar o ID com o comando /id no seu chat. Não fique surpreso se o ID for negativo, todos os supergrupos tem ID's negativos.
+#GitHub
+modname_github: GitHub
+github_help: |
+  *Precisa de alguma release de um repositório do GitHub, mas não quer ir para o GitHub e ir para o repositório? Aqui estão alguns comandos que podem facilitar sua vida com o GitHub.*
+
+  *Os comandos disponíveis são:*
+   - /gitr <usuário>/<repo> [opcional: <número>: para buscar lançamentos anteriores]: buscará o lançamento mais recente desse repositório.
+   - /git: retorna informações sobre um usuário ou organização do GitHub.
+   - /repo: Retorna a lista de repositórios de usuários ou organizações do GitHub (limitado a 40).
+   - /fetch <palavra>: obtém o atalho repo registrado para essa palavra.
+   - &<palavra>: igual a /fetch <palavra>
+   - /changelog <palavra>: obtém o changelog de um atalho de repositório salvo
+   - /listrepo: Lista todos os atalhos de repos no chat atual
+
+  *Admin apenas:*
+   - /saverepo <palavra> <usuário>/<repo> [opcional: <número>]: Salve os lançamentos do repo no atalho chamado "palavra".
+   - /delrepo <palavra>: exclui o atalho do repo chamado "palavra"
+
+  Um exemplo de como salvar um atalho de repo seria via:
+  `/saverepo ptb python-telegram-bot/python-telegram-bot`
+  Agora, qualquer pessoa que use "`/fetch ptb` "ou" `&ptb`" será respondida com os lançamentos do repositório fornecido.
+
+  *Nota:* Os nomes dos atalhos não diferenciam maiúsculas de minúsculas e são automaticamente convertidos em minúsculas antes de serem salvos.
+ 
+  Este módulo só foi possível graças ao [pyGitHub_API](https://github.com/nunopenim/pyGitHub_API)
 #Filters
 modname_cust_filters: Filtros
 cust_filters_list: "*Lista de filtros em {}:*\n"
