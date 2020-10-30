@@ -15,7 +15,7 @@
 
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, Integer, func
+from sqlalchemy import Column, String, UnicodeText, Integer, func, distinct
 
 from hitsuki.modules.sql import SESSION, BASE
 
