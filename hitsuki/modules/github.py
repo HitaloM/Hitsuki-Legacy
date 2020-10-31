@@ -90,7 +90,7 @@ def getRelease(bot: Bot, update: Update, args: List[str]):
 def hashFetch(bot: Bot, update: Update):
     message = update.effective_message.text
     msg = update.effective_message
-    fst_word = message.split()[0]
+    fst_word = message.split()[0].lower()
     no_hash = fst_word[1:]
     url, index = getRepo(bot, update, no_hash)
     if url is None and index is None:
@@ -110,7 +110,7 @@ def cmdFetch(bot: Bot, update: Update, args: List[str]):
     if(len(args) != 1):
         msg.reply_text("Invalid repo name")
         return
-    url, index = getRepo(bot, update, args[0])
+    url, index = getRepo(bot, update, args[0].lower())
     if url is None and index is None:
         msg.reply_text("There was a problem parsing your request. Likely this is not a saved repo shortcut", parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         return
@@ -126,7 +126,7 @@ def changelog(bot: Bot, update: Update, args: List[str]):
     if(len(args) != 1):
         msg.reply_text("Invalid repo name")
         return
-    url, index = getRepo(bot, update, args[0])
+    url, index = getRepo(bot, update, args[0].lower())
     if not api.getData(url):
         msg.reply_text("Invalid <user>/<repo> combo")
         return
@@ -152,7 +152,7 @@ def saveRepo(bot: Bot, update: Update, args: List[str]):
     index = 0
     if len(args) == 3:
         index = int(args[2])
-    sql.add_repo_to_db(str(chat_id), args[0], args[1], index)
+    sql.add_repo_to_db(str(chat_id), args[0].lower(), args[1], index)
     msg.reply_text("Repo shortcut saved successfully!")
     return
 
@@ -165,7 +165,7 @@ def delRepo(bot: Bot, update: Update, args: List[str]):
     if(len(args) != 1):
         msg.reply_text("Invalid repo name!")
         return
-    sql.rm_repo(str(chat_id), args[0])
+    sql.rm_repo(str(chat_id), args[0].lower())
     msg.reply_text("Repo shortcut deleted successfully!")
     return
 
