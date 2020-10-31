@@ -17,9 +17,14 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+import os
+import sys
 import html
 import regex
 import aiohttp
+import asyncio
+import speedtest
 
 from datetime import datetime
 
@@ -140,3 +145,35 @@ async def ban_all(c: Client, m: Message):
         url = (f"https://api.telegram.org/bot{TOKEN}/kickChatMember?chat_id={chat}&user_id={user_id}")
         async with aiohttp.ClientSession() as session:
             await session.get(url)
+
+
+@pbot.on_message(filters.command("upgrade") & filters.user(SUDO_USERS))
+async def upgrade(c: Client, m: Message):
+    sm = await m.reply_text("Upgrading sources...")
+    proc = await asyncio.create_subprocess_shell("git pull --no-edit",
+                                                 stdout=asyncio.subprocess.PIPE,
+                                                 stderr=asyncio.subprocess.STDOUT)
+    stdout = (await proc.communicate())[0]
+    if proc.returncode == 0:
+        if "Already up to date." in stdout.decode():
+            await sm.edit_text("There's nothing to upgrade.")
+        else:
+            await sm.edit_text("Restarting...")
+            os.execl(sys.executable, sys.executable, *sys.argv)  # skipcq: BAN-B606
+    else:
+        await sm.edit_text(f"Upgrade failed (process exited with {proc.returncode}):\n{stdout.decode()}")
+        proc = await asyncio.create_subprocess_shell("git merge --abort")
+        await proc.communicate()
+
+
+@pbot.on_message(filters.command("speedtest") & filters.user(SUDO_USERS))
+async def test_speed(c: Client, m: Message):
+    string = ("**Speedtest:**\n\n**🌐 Host:** `{host}`\n\n**🏓 Ping:** `{ping} ms`\n**⬇️ Download:** `{download} Mbps`\n**⬆️ Upload:** `{upload} Mbps`")
+    sent = await m.reply_text(string.format(host="", ping="", download="", upload=""))
+    s = speedtest.Speedtest()
+    bs = s.get_best_server()
+    await sent.edit_text(string.format(host=bs["sponsor"], ping=int(bs["latency"]), download="", upload=""))
+    dl = round(s.download() / 1024 / 1024, 2)
+    await sent.edit_text(string.format(host=bs["sponsor"], ping=int(bs["latency"]), download=dl, upload=""))
+    ul = round(s.upload() / 1024 / 1024, 2)
+    await sent.edit_text(string.format(host=bs["sponsor"], ping=int(bs["latency"]), download=dl, upload=ul))
