@@ -158,7 +158,8 @@ async def upgrade(c: Client, m: Message):
             await sm.edit_text("There's nothing to upgrade.")
         else:
             await sm.edit_text("Restarting...")
-            os.execl(sys.executable, sys.executable, *sys.argv)  # skipcq: BAN-B606
+            args = [sys.executable, "-m", "hitsuki"]
+            os.execl(sys.executable, *args)
     else:
         await sm.edit_text(f"Upgrade failed (process exited with {proc.returncode}):\n{stdout.decode()}")
         proc = await asyncio.create_subprocess_shell("git merge --abort")
@@ -176,3 +177,10 @@ async def test_speed(c: Client, m: Message):
     await sent.edit_text(string.format(host=bs["sponsor"], ping=int(bs["latency"]), download=dl, upload=""))
     ul = round(s.upload() / 1024 / 1024, 2)
     await sent.edit_text(string.format(host=bs["sponsor"], ping=int(bs["latency"]), download=dl, upload=ul))
+
+
+@pbot.on_message(filters.command("restart") & filters.user(SUDO_USERS))
+async def restart(c: Client, m: Message):
+    await m.reply_text("Restarting...")
+    args = [sys.executable, "-m", "hitsuki"]
+    os.execl(sys.executable, *args)
