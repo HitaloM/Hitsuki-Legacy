@@ -1,4 +1,4 @@
-# Hitsuki
+# Hitsuki - Telegram Bot
 
 ![Banner](https://telegra.ph/file/601541db4ff2286fd1096.jpg)
 
@@ -13,15 +13,23 @@ Hitsuki is a bot developed with python3 with a sqalchemy database, Hitsuki uses 
 
 Originally being a [Haruka Aya](https://gitlab.com/HarukaNetwork/HarukaAya) fork with some improvements. Currently Hitsuki focuses on efficiency for Android groups and anime groups, being complete enough for group management.
 
-Can be found on telegram as [Hitsuki](https://t.me/LordHitsuki_BOT).
+Can be found on telegram as [Hitsuki](https://t.me/LordHitsuki_BOT), you can also join [Hitsuki's News](https://t.me/HitsukiNews) channel.
+
+## To contribute
+
+* You must sign off on your commit.
+* You must sign the commit via GPG Key.
+* (optional) Make sure your PR passes all CI.
+* (optional) Try to follow the rules of pep8.
+* (optional) Recommended use of flake8 linter.
 
 ## Thanks to
 
 * [PaulSonOfLars](https://github.com/PaulSonOfLars) - Marie and Rose creator, inspired me to do many things.
-* [RealAkito](https://github.com/RealAkito) - Haruka Aya creator
-* [zakaryan2004](https://github.com/zakaryan2004) - For helping out a lot with this project.
-* [MrYacha](https://github.com/MrYacha) - For Yana bot.
+* [RealAkito](https://github.com/RealAkito) - Creator of Hitsuki base, Haruka Aya.
+* [zakaryan2004](https://github.com/zakaryan2004) - For helping in the development of Haruka Aya.
 * [skittles9823](https://github.com/skittles9823) - For memes and sticker stuff.
-* [AyraHikari](https://github.com/AyraHikari) - Reworked welcome and federations v2.
+* [AyraHikari](https://github.com/AyraHikari) - Reworked welcome and other little things.
+* [nunopenim](https://github.com/nunopenim) - Creator of pyGithub_API / GitHub module.
 
 And to all other [contributors](https://github.com/HitsukiNetwork/Hitsuki/graphs/contributors) not listed here.
