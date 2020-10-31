@@ -16,6 +16,7 @@
 import html
 import wikipedia
 import re
+import urllib.parse as urlparse
 from datetime import datetime
 from typing import Optional, List
 from covid import Covid
@@ -454,6 +455,24 @@ def covid(bot: Bot, update: Update):
     message.reply_markdown(reply)
 
 
+@run_async
+def outline(bot: Bot, update: Update, args: List[str]):
+    message = update.effective_message
+    chat = update.effective_chat
+    if message.reply_to_message:
+        data = message.reply_to_message.text
+    elif len(args) >= 1:
+        data = message.text.split(None, 1)[1]
+    else:
+        message.reply_text(tld(chat.id, "misc_paste_invalid"))
+        return
+    if urlparse.urlparse(data).scheme:
+        update.message.reply_text("https://outline.com/" + data)
+    else:
+        update.message.reply_text("This is not a valid URL")
+        return
+
+
 def format_integer(number, thousand_separator=','):
     def reverse(string):
         string = "".join(reversed(string))
@@ -508,6 +527,7 @@ PASTE_STATS_HANDLER = DisableAbleCommandHandler("pastestats",
 UD_HANDLER = DisableAbleCommandHandler("ud", ud)
 WIKI_HANDLER = DisableAbleCommandHandler("wiki", wiki)
 COVID_HANDLER = DisableAbleCommandHandler("covid", covid, admin_ok=True)
+OUTLINE_HANDLER = DisableAbleCommandHandler("outline", outline, pass_args=True)
 
 dispatcher.add_handler(UD_HANDLER)
 dispatcher.add_handler(PASTE_HANDLER)
@@ -526,3 +546,4 @@ dispatcher.add_handler(
     DisableAbleCommandHandler("removebotkeyboard", reply_keyboard_remove))
 dispatcher.add_handler(WIKI_HANDLER)
 dispatcher.add_handler(COVID_HANDLER)
+dispatcher.add_handler(OUTLINE_HANDLER)
