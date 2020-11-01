@@ -20,12 +20,12 @@ from hitsuki.modules.tr_engine.strings import tld
 
 @register(pattern="^/purge")
 async def purge(event):
-    if event.from_id is None:
+    if event.sender_id is None:
         return
 
     chat = event.chat_id
 
-    if not await user_is_admin(user_id=event.from_id, message=event):
+    if not await user_is_admin(user_id=event.sender_id, message=event):
         await event.reply(tld(chat, "helpers_user_not_admin"))
         return
 
@@ -56,12 +56,12 @@ async def purge(event):
 
 @register(pattern="^/del$")
 async def delet(event):
-    if event.from_id is None:
+    if event.sender_id is None:
         return
 
     chat = event.chat_id
 
-    if not await user_is_admin(user_id=event.from_id, message=event):
+    if not await user_is_admin(user_id=event.sender_id, message=event):
         await event.reply(tld(chat, "helpers_user_not_admin"))
         return
 

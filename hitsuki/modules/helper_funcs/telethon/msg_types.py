@@ -14,9 +14,11 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
+
 from enum import IntEnum, unique
 
 from telethon import utils
+
 from hitsuki.modules.helper_funcs.string_handler import message_parser
 
 NOTE_REGEX = re.compile(r"(^\S+|^\".*\")(?: |$)")

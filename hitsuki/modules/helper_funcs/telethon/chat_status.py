@@ -13,8 +13,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from hitsuki import tbot, SUDO_USERS, WHITELIST_USERS
 from telethon.tl.types import ChannelParticipantsAdmins
+
+from hitsuki import tbot, SUDO_USERS, WHITELIST_USERS
 
 
 async def user_is_ban_protected(user_id: int, message):

@@ -1,6 +1,6 @@
 #### Bot lib ####
 git+https://github.com/HitsukiNetwork/Hitsuki-PTB.git
-telethon==1.16.4
+telethon>=1.16.4
 pyrogram
 #################
 aiohttp>=2.2.5
