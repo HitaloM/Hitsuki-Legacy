@@ -161,7 +161,7 @@ async def upgrade(c: Client, m: Message):
         else:
             await sm.edit_text("Restarting...")
             await pbot.send_message(MESSAGE_DUMP,
-                              f"**Hitsuki has been successfully updated!**")
+                              "**Hitsuki has been successfully updated!**")
             args = [sys.executable, "-m", "hitsuki"]
             os.execl(sys.executable, *args)
     else:
@@ -187,6 +187,6 @@ async def test_speed(c: Client, m: Message):
 @pbot.on_message(filters.command("restart") & filters.user(SUDO_USERS))
 async def restart(c: Client, m: Message):
     await m.reply_text("Restarting...")
-    await pbot.send_message(MESSAGE_DUMP, f"**Hitsuki is restarting...**")
+    await pbot.send_message(MESSAGE_DUMP, "**Hitsuki is restarting...**")
     args = [sys.executable, "-m", "hitsuki"]
     os.execl(sys.executable, *args)
