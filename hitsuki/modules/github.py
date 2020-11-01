@@ -15,7 +15,7 @@
 
 from typing import List
 
-from telegram.ext import CommandHandler, run_async, RegexHandler
+from telegram.ext import run_async, RegexHandler
 from telegram import Update, Bot, ParseMode, MAX_MESSAGE_LENGTH
 
 import hitsuki.modules.helper_funcs.git_api as api
