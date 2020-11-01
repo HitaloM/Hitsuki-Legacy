@@ -33,3 +33,8 @@ Can be found on telegram as [Hitsuki](https://t.me/LordHitsuki_BOT), you can als
 * [nunopenim](https://github.com/nunopenim) - Creator of pyGithub_API / GitHub module.
 
 And to all other [contributors](https://github.com/HitsukiNetwork/Hitsuki/graphs/contributors) not listed here.
+
+### DeepSource Stats
+
+[![DeepSource](https://deepsource.io/gh/HitsukiNetwork/Hitsuki.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/HitsukiNetwork/Hitsuki/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/HitsukiNetwork/Hitsuki.svg/?label=resolved+issues&show_trend=true)](https://deepsource.io/gh/HitsukiNetwork/Hitsuki/?ref=repository-badge)
