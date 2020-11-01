@@ -22,7 +22,6 @@ from requests import get
 
 from telethon import custom
 
-from hitsuki import LOGGER
 from hitsuki.events import register
 from hitsuki.modules.tr_engine.strings import tld
 
@@ -33,8 +32,6 @@ from hitsuki.modules.tr_engine.strings import tld
 #
 # This module was inspired by Android Helper Bot by Vachounet.
 # None of the code is taken from the bot itself, to avoid confusion.
-
-LOGGER.info("android: Original Android Modules by @RealAkito on Telegram (modified by @Hitalo on Telegram)")
 
 
 @register(pattern=r"^/los(?: |$)(\S*)")

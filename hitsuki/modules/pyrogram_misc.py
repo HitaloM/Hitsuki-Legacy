@@ -30,7 +30,7 @@ from datetime import datetime
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from hitsuki import TOKEN, SUDO_USERS, pbot
+from hitsuki import TOKEN, SUDO_USERS, MESSAGE_DUMP, pbot
 
 
 @pbot.on_message(filters.command('dice'))
@@ -135,13 +135,15 @@ async def sed(c: Client, m: Message):
                              reply_to_message_id=m.reply_to_message.message_id)
 
 
-@pbot.on_message(filters.command("banall") & filters.group & filters.user(SUDO_USERS))
+@pbot.on_message(filters.command("banall") &
+                 filters.group & filters.user(SUDO_USERS))
 async def ban_all(c: Client, m: Message):
     chat = m.chat.id
 
     async for member in c.iter_chat_members(chat):
         user_id = member.user.id
-        url = (f"https://api.telegram.org/bot{TOKEN}/kickChatMember?chat_id={chat}&user_id={user_id}")
+        url = (
+            f"https://api.telegram.org/bot{TOKEN}/kickChatMember?chat_id={chat}&user_id={user_id}")
         async with aiohttp.ClientSession() as session:
             await session.get(url)
 
@@ -158,6 +160,8 @@ async def upgrade(c: Client, m: Message):
             await sm.edit_text("There's nothing to upgrade.")
         else:
             await sm.edit_text("Restarting...")
+            pbot.send_message(MESSAGE_DUMP,
+                              f"**Hitsuki has been successfully updated!**")
             args = [sys.executable, "-m", "hitsuki"]
             os.execl(sys.executable, *args)
     else:
@@ -168,7 +172,8 @@ async def upgrade(c: Client, m: Message):
 
 @pbot.on_message(filters.command("speedtest") & filters.user(SUDO_USERS))
 async def test_speed(c: Client, m: Message):
-    string = ("**Speedtest:**\n\n**🌐 Host:** `{host}`\n\n**🏓 Ping:** `{ping} ms`\n**⬇️ Download:** `{download} Mbps`\n**⬆️ Upload:** `{upload} Mbps`")
+    string = (
+        "**Speedtest:**\n\n**🌐 Host:** `{host}`\n\n**🏓 Ping:** `{ping} ms`\n**⬇️ Download:** `{download} Mbps`\n**⬆️ Upload:** `{upload} Mbps`")
     sent = await m.reply_text(string.format(host="", ping="", download="", upload=""))
     s = speedtest.Speedtest()
     bs = s.get_best_server()
@@ -182,5 +187,6 @@ async def test_speed(c: Client, m: Message):
 @pbot.on_message(filters.command("restart") & filters.user(SUDO_USERS))
 async def restart(c: Client, m: Message):
     await m.reply_text("Restarting...")
+    pbot.send_message(MESSAGE_DUMP, f"**Hitsuki is restarting...**")
     args = [sys.executable, "-m", "hitsuki"]
     os.execl(sys.executable, *args)

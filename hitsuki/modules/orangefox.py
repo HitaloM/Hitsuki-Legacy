@@ -16,20 +16,21 @@
 import rapidjson as json
 
 from requests import get
+
 from telethon import custom
 
-from hitsuki import LOGGER
 from hitsuki.events import register
 from hitsuki.modules.tr_engine.strings import tld
 
-API_HOST = 'https://api.orangefox.download/v2'
+# orangefox: By @MrYacha, powered by OrangeFox API v2
+# modified by @Hitalo on Telegram
 
-LOGGER.info("orangefox: By @MrYacha, powered by OrangeFox API v2 (modified by @Hitalo on Telegram)")
+API_HOST = 'https://api.orangefox.download/v2'
 
 
 @register(pattern=r"^/(orangefox|of|fox|ofox)(?: |$)(\S*)")
 async def orangefox(event):
-    if event.from_id is None:
+    if event.sender_id is None:
         return
 
     chat_id = event.chat_id
