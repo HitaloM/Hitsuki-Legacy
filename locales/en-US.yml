@@ -709,6 +709,7 @@ misc_help: |
   - /basket: Send a basket ball.
   - /football: Send a soccer ball.
   - /dart: Send a dart.
+  - /cassino: Send a casino machine.
   - /dice: Send a dice.\n
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.

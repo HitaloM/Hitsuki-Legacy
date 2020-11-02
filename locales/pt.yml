@@ -707,6 +707,7 @@ misc_help: |
   - /basket: Envia uma bola de basquete.
   - /football: Envia uma bola de futebol.
   - /dart: Envia um dardo.
+  - /cassino: Envia uma máquina de cassino.
   - /dice: Envia um dado.\n
   *Especial | COVID-19*
   - /covid: Gerado por Worldometers, receba as estatísticas gerais de COVID-19.

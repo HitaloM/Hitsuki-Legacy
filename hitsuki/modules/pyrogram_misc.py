@@ -59,6 +59,11 @@ async def dice(c: Client, m: Message):
     dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🎯")
 
 
+@pbot.on_message(filters.command('cassino'))
+async def dice(c: Client, m: Message):
+    dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🎰")
+
+
 @pbot.on_message(filters.command("pyroid") & filters.private)
 async def ids_private(c: Client, m: Message):
     await m.reply_text("<b>Info:</b>\n\n"
