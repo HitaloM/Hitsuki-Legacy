@@ -18,6 +18,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import os
+import re
 import sys
 import html
 import regex
@@ -32,12 +33,30 @@ from pyrogram.types import Message
 
 from hitsuki import TOKEN, SUDO_USERS, MESSAGE_DUMP, pbot
 
+# pyrogram_misc: This module is an adaptation of several commands of the EduuRobot
+# https://github.com/AmanoTeam/EduuRobot
+
 
 @pbot.on_message(filters.command('dice'))
 async def dice(c: Client, m: Message):
     dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id)
     await dicen.reply_text(
         f"The dice stopped at the number {dicen.dice.value}", quote=True)
+
+
+@pbot.on_message(filters.command('basket'))
+async def dice(c: Client, m: Message):
+    dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🏀")
+
+
+@pbot.on_message(filters.command('football'))
+async def dice(c: Client, m: Message):
+    dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="⚽")
+
+
+@pbot.on_message(filters.command('dart'))
+async def dice(c: Client, m: Message):
+    dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🎯")
 
 
 @pbot.on_message(filters.command("pyroid") & filters.private)
@@ -168,6 +187,21 @@ async def upgrade(c: Client, m: Message):
         await sm.edit_text(f"Upgrade failed (process exited with {proc.returncode}):\n{stdout.decode()}")
         proc = await asyncio.create_subprocess_shell("git merge --abort")
         await proc.communicate()
+
+
+@pbot.on_message(filters.command("cmd") & filters.user(SUDO_USERS))
+async def run_cmd(c: Client, m: Message):
+    cmd = m.text.split(maxsplit=1)[1]
+    if re.match('(?i)poweroff|halt|shutdown|reboot', cmd):
+        res = ('Forbidden command.')
+    else:
+        proc = await asyncio.create_subprocess_shell(cmd,
+                                                     stdout=asyncio.subprocess.PIPE,
+                                                     stderr=asyncio.subprocess.PIPE)
+        stdout, stderr = await proc.communicate()
+        res = ("<b>Output:</b>\n<code>{}</code>".format(html.escape(stdout.decode().strip())) if stdout else '') + \
+              ("\n<b>Errors:</b>\n<code>{}</code>".format(html.escape(stderr.decode().strip())) if stderr else '')
+    await m.reply_text(res)
 
 
 @pbot.on_message(filters.command("speedtest") & filters.user(SUDO_USERS))

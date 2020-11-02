@@ -703,7 +703,10 @@ misc_help: |
   - /ud: Digite a palavra ou expressão que deseja pesquisar. Por exemplo /ud Corno
   - /removebotkeyboard: Tem um bot de teclado desagradável preso no seu grupo?
   - /wiki <keywords>: Obtenha artigos da Wikipedia apenas usando este bot!
-  - /ping: Envia o ping do not.
+  - /ping: Envia o ping do bot.
+  - /basket: Envia uma bola de basquete.
+  - /football: Envia uma bola de futebol.
+  - /dart: Envia um dardo.
   - /dice: Envia um dado.\n
   *Especial | COVID-19*
   - /covid: Gerado por Worldometers, receba as estatísticas gerais de COVID-19.

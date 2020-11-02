@@ -706,6 +706,9 @@ misc_help: |
   - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
   - /wiki <keywords>: Get wikipedia articles just using this bot!
   - /ping: See the ping of the bot.
+  - /basket: Send a basket ball.
+  - /football: Send a soccer ball.
+  - /dart: Send a dart.
   - /dice: Send a dice.\n
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
