@@ -14,7 +14,6 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import requests
-import urllib.parse
 
 from telegram import Bot, Update, ParseMode
 from telegram.ext import run_async, CommandHandler
@@ -78,20 +77,13 @@ def last_fm(bot: Bot, update: Update):
         image = first_track.get("image")[3].get(
             "#text")  # Grab URL of 300x300 image
         artist = first_track.get("artist").get("name")
-        artist1 = urllib.parse.quote(artist)
         song = first_track.get("name")
-        song1 = urllib.parse.quote(song)
-        last_user = requests.get(
-            f"{base_url}?method=track.getinfo&artist={artist1}&track={song1}&user={username}&api_key={LASTFM_API_KEY}&format=json").json().get("track")
-        scrobbles = int(last_user.get("userplaycount"))+1
         loved = int(first_track.get("loved"))
-        rep = tld(chat.id, "misc_lastfm_inp").format(user, scrobbles)
+        rep = tld(chat.id, "misc_lastfm_inp").format(user)
         if not loved:
-            rep += tld(chat.id, "misc_lastfm_pn").format(artist, song,
-                                                         scrobbles)
+            rep += tld(chat.id, "misc_lastfm_pn").format(artist, song)
         else:
-            rep += tld(chat.id, "misc_lastfm_pn_loved").format(artist, song,
-                                                               scrobbles)
+            rep += tld(chat.id, "misc_lastfm_pn_loved").format(artist, song)
         if image:
             rep += f"<a href='{image}'>\u200c</a>"
     else:
