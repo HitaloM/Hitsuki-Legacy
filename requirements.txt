@@ -32,3 +32,4 @@ bs4
 tgcrypto
 jikanpy
 lxml
+pyrate-limiter
