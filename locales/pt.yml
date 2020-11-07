@@ -765,6 +765,27 @@ weather_sunset: "• **Pôr do sol**: "
 weather_help: |
   *Comandos disponíveis:*
   - /weather <nome>: Retorna o clima de uma cidade, país ou estado.
+#AntiArabic
+modname_antiarabic: AntiArabicScript
+antiarabic_enabled: "Ativado AntiArabic! As mensagens enviadas por qualquer não administrador que contenham texto árabe serão excluídas."
+antiarabic_disabled: "AntiArabic desativado! Mensagens que contenham texto árabe não serão excluídas."
+antiarabic_setting: "A configuração atual deste bate-papo é: `{}`"
+antiarabic_help: |
+  O módulo AntiArabicScript é usado para excluir mensagens contendo os seguintes caracteres automaticamente:
+
+  • Árabe
+  • Suplemento Árabe
+  • Árabe estendido A
+  • Formulários de apresentação em Árabe -A
+  • Formas de apresentação em Árabe -B
+  • Símbolos Numéricos Rumi
+  • Símbolos Alfabéticos Matemáticos Árabes
+
+  *NOTA:* O módulo AntiArabicScript não afeta as mensagens enviadas por administradores.
+
+  *Admin apenas:*
+   - /antiarabic <on/off>: liga/desliga o módulo anti-árabe (desligado por padrão)
+   - /antiarabic: obtém o status do módulo AntiArabicScript no chat
 #Misc
 modname_misc: Outros
 misc_info_extract_error: "Não consigo extrair um usuário disso."
