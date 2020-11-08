@@ -1,15 +1,15 @@
 #    Hitsuki (A telegram bot project)
- 
+
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
- 
+
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
- 
+
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
@@ -23,7 +23,7 @@ import hitsuki.modules.sql.antispam_sql as gban_sql
 import hitsuki.modules.sql.users_sql as user_sql
 from hitsuki import dispatcher, OWNER_ID, SUDO_USERS
 
-# Adapted from https://github.com/AnimeKaizoku/SaitamaRobot
+# This module is adapted from https://github.com/AnimeKaizoku/SaitamaRobot
 
 
 def get_invalid_chats(bot: Bot, update: Update, remove: bool = False):
@@ -41,7 +41,7 @@ def get_invalid_chats(bot: Bot, update: Update, remove: bool = False):
                 try:
                     bot.editMessageText(progress_bar, chat_id,
                                         progress_message.message_id)
-                except:
+                except Exception:
                     pass
             else:
                 progress_message = bot.sendMessage(chat_id, progress_bar)
@@ -54,12 +54,12 @@ def get_invalid_chats(bot: Bot, update: Update, remove: bool = False):
         except (BadRequest, Unauthorized):
             kicked_chats += 1
             chat_list.append(cid)
-        except:
+        except Exception:
             pass
 
     try:
         progress_message.delete()
-    except:
+    except Exception:
         pass
 
     if not remove:
@@ -84,7 +84,7 @@ def get_invalid_gban(bot: Bot, update: Update, remove: bool = False):
         except BadRequest:
             ungbanned_users += 1
             ungban_list.append(user_id)
-        except:
+        except Exception:
             pass
 
     if not remove:
@@ -109,7 +109,8 @@ def dbcleanup(bot: Bot, update: Update):
     reply = f"Total invalid chats - {invalid_chat_count}\n"
     reply += f"Total invalid gbanned users - {invalid_gban_count}"
 
-    buttons = [[InlineKeyboardButton("Cleanup DB", callback_data="db_cleanup")]]
+    buttons = [[InlineKeyboardButton("Cleanup DB",
+                                     callback_data="db_cleanup")]]
 
     update.effective_message.reply_text(
         reply, reply_markup=InlineKeyboardMarkup(buttons))

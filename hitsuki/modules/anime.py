@@ -16,14 +16,13 @@
 import datetime
 import html
 import textwrap
-
 import bs4
 import jikanpy
 import requests
+
 from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.ext import CallbackQueryHandler, run_async
 
-# This module is adapted from: github.com/AnimeKaizoku/SaitamaRobot
 from hitsuki import OWNER_ID, SUDO_USERS, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 
@@ -33,6 +32,8 @@ kayo_btn = "Kayo 🏴‍☠️"
 prequel_btn = "⬅️ Prequel"
 sequel_btn = "Sequel ➡️"
 close_btn = "Close ❌"
+
+# This module is adapted from https://github.com/AnimeKaizoku/SaitamaRobot
 
 
 def shorten(description, info='anilist.co'):

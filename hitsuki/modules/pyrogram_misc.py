@@ -45,23 +45,23 @@ async def dice(c: Client, m: Message):
 
 
 @pbot.on_message(filters.command('basket'))
-async def dice(c: Client, m: Message):
-    dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🏀")
+async def basket(c: Client, m: Message):
+    await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🏀")
 
 
 @pbot.on_message(filters.command('football'))
-async def dice(c: Client, m: Message):
-    dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="⚽")
+async def football(c: Client, m: Message):
+    await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="⚽")
 
 
 @pbot.on_message(filters.command('dart'))
-async def dice(c: Client, m: Message):
-    dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🎯")
+async def dart(c: Client, m: Message):
+    await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🎯")
 
 
 @pbot.on_message(filters.command('cassino'))
-async def dice(c: Client, m: Message):
-    dicen = await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🎰")
+async def cassino(c: Client, m: Message):
+    await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🎰")
 
 
 @pbot.on_message(filters.command("pyroid") & filters.private)
@@ -185,7 +185,7 @@ async def upgrade(c: Client, m: Message):
         else:
             await sm.edit_text("Restarting...")
             await pbot.send_message(MESSAGE_DUMP,
-                              "**Hitsuki has been successfully updated!**")
+                                    "**Hitsuki has been successfully updated!**")
             args = [sys.executable, "-m", "hitsuki"]
             os.execl(sys.executable, *args)
     else:
@@ -213,14 +213,22 @@ async def run_cmd(c: Client, m: Message):
 async def test_speed(c: Client, m: Message):
     string = (
         "**Speedtest:**\n\n**🌐 Host:** `{host}`\n\n**🏓 Ping:** `{ping} ms`\n**⬇️ Download:** `{download} Mbps`\n**⬆️ Upload:** `{upload} Mbps`")
-    sent = await m.reply_text(string.format(host="", ping="", download="", upload=""))
+    sent = await m.reply_text(string.format(host="",
+                                            ping="",
+                                            download="", upload=""))
     s = speedtest.Speedtest()
     bs = s.get_best_server()
-    await sent.edit_text(string.format(host=bs["sponsor"], ping=int(bs["latency"]), download="", upload=""))
+    await sent.edit_text(string.format(host=bs["sponsor"],
+                                       ping=int(bs["latency"]),
+                                       download="", upload=""))
     dl = round(s.download() / 1024 / 1024, 2)
-    await sent.edit_text(string.format(host=bs["sponsor"], ping=int(bs["latency"]), download=dl, upload=""))
+    await sent.edit_text(string.format(host=bs["sponsor"],
+                                       ping=int(bs["latency"]),
+                                       download=dl, upload=""))
     ul = round(s.upload() / 1024 / 1024, 2)
-    await sent.edit_text(string.format(host=bs["sponsor"], ping=int(bs["latency"]), download=dl, upload=ul))
+    await sent.edit_text(string.format(host=bs["sponsor"],
+                                       ping=int(bs["latency"]),
+                                       download=dl, upload=ul))
 
 
 @pbot.on_message(filters.command("restart") & filters.user(SUDO_USERS))

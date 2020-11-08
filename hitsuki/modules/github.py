@@ -193,7 +193,7 @@ def listRepo(bot: Bot, update: Update):
 
 def __stats__():
     return "• `{}` repos shortcuts, accross `{}` chats.".format(sql.num_repos(),
-                                                      sql.num_chats())
+                                                                sql.num_chats())
 
 
 __help__ = True
@@ -202,7 +202,8 @@ RELEASE_HANDLER = DisableAbleCommandHandler("gitr", getRelease, pass_args=True,
                                             admin_ok=True)
 FETCH_HANDLER = DisableAbleCommandHandler("fetch", cmdFetch, pass_args=True,
                                           admin_ok=True)
-SAVEREPO_HANDLER = DisableAbleCommandHandler("saverepo", saveRepo, pass_args=True)
+SAVEREPO_HANDLER = DisableAbleCommandHandler("saverepo", saveRepo,
+                                             pass_args=True)
 DELREPO_HANDLER = DisableAbleCommandHandler("delrepo", delRepo, pass_args=True)
 LISTREPO_HANDLER = DisableAbleCommandHandler("listrepo", listRepo,
                                              admin_ok=True)

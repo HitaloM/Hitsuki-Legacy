@@ -17,26 +17,28 @@ import html
 import wikipedia
 import re
 import urllib.parse as urlparse
+import requests
+
 from datetime import datetime
 from typing import Optional, List
+from requests import get
 from covid import Covid
 
-import requests
 from telegram import Message, Chat, Update, Bot, MessageEntity
-from telegram import ParseMode, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import (ParseMode, ReplyKeyboardRemove,
+                      InlineKeyboardMarkup, InlineKeyboardButton)
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
 from telegram.error import BadRequest
 
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, SUPPORT_USERS, WHITELIST_USERS, sw
+from hitsuki import (dispatcher, OWNER_ID, SUDO_USERS,
+                     SUPPORT_USERS, WHITELIST_USERS, sw)
 from hitsuki.__main__ import GDPR
 from hitsuki.__main__ import STATS, USER_INFO
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user
 
 from hitsuki.modules.tr_engine.strings import tld
-
-from requests import get
 
 cvid = Covid(source="worldometers")
 
@@ -125,8 +127,8 @@ def info(bot: Bot, update: Update, args: List[str]):
             text += tld(chat.id, "misc_info_swban3")
         else:
             pass
-    except:
-        pass # avoids crash if api is down
+    except Exception:
+        pass  # avoids crash if api is down
 
     if user.id == OWNER_ID:
         text += tld(chat.id, "misc_info_is_owner")
