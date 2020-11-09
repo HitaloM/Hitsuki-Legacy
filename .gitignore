@@ -15,4 +15,4 @@ log.log
 *.backup
 hitsuki.session
 HitsukiPyro.session*
-hitsuki/log.txt
+log.txt
