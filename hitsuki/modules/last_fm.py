@@ -22,7 +22,6 @@ from hitsuki import dispatcher, LASTFM_API_KEY
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.tr_engine.strings import tld
 
-
 # Last.fm module ported from https://github.com/rsktg
 
 

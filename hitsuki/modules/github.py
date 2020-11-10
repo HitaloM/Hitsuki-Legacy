@@ -38,13 +38,13 @@ def getData(url, index):
     assets = api.getAssets(recentRelease)
     releaseName = api.getReleaseName(recentRelease)
     message = "<b>Author:</b> <a href='{}'>{}</a>\n".format(authorUrl, author)
-    message += "<b>Release Name:</b> "+releaseName+"\n\n"
+    message += "<b>Release Name:</b> " + releaseName + "\n\n"
     for asset in assets:
         message += "<b>Asset:</b> \n"
         fileName = api.getReleaseFileName(asset)
         fileURL = api.getReleaseFileURL(asset)
         assetFile = "<a href='{}'>{}</a>".format(fileURL, fileName)
-        sizeB = ((api.getSize(asset))/1024)/1024
+        sizeB = ((api.getSize(asset)) / 1024) / 1024
         size = "{0:.2f}".format(sizeB)
         downloadCount = api.getDownloadCount(asset)
         message += assetFile + "\n"
@@ -69,9 +69,9 @@ def getRelease(bot: Bot, update: Update, args: List[str]):
         msg.reply_text("Please use some arguments!")
         return
     if (
-        len(args) != 1
-        and (len(args) != 2 or not args[1].isdigit())
-        and "/" not in args[0]
+            len(args) != 1
+            and (len(args) != 2 or not args[1].isdigit())
+            and "/" not in args[0]
     ):
         msg.reply_text("Please specify a valid combination of <user>/<repo>")
         return
@@ -106,12 +106,13 @@ def hashFetch(bot: Bot, update: Update):
 @run_async
 def cmdFetch(bot: Bot, update: Update, args: List[str]):
     msg = update.effective_message
-    if(len(args) != 1):
+    if (len(args) != 1):
         msg.reply_text("Invalid repo name")
         return
     url, index = getRepo(bot, update, args[0].lower())
     if url is None and index is None:
-        msg.reply_text("There was a problem parsing your request. Likely this is not a saved repo shortcut", parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+        msg.reply_text("There was a problem parsing your request. Likely this is not a saved repo shortcut",
+                       parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         return
     text = getData(url, index)
     msg.reply_text(text, parse_mode=ParseMode.HTML,
@@ -122,7 +123,7 @@ def cmdFetch(bot: Bot, update: Update, args: List[str]):
 @run_async
 def changelog(bot: Bot, update: Update, args: List[str]):
     msg = update.effective_message
-    if(len(args) != 1):
+    if (len(args) != 1):
         msg.reply_text("Invalid repo name")
         return
     url, index = getRepo(bot, update, args[0].lower())
@@ -142,9 +143,9 @@ def saveRepo(bot: Bot, update: Update, args: List[str]):
     chat_id = update.effective_chat.id
     msg = update.effective_message
     if (
-        len(args) != 2
-        and (len(args) != 3 and not args[2].isdigit())
-        or "/" not in args[1]
+            len(args) != 2
+            and (len(args) != 3 and not args[2].isdigit())
+            or "/" not in args[1]
     ):
         msg.reply_text("Invalid data, use <reponame> <user>/<repo> <value (optional)>")
         return
@@ -161,7 +162,7 @@ def saveRepo(bot: Bot, update: Update, args: List[str]):
 def delRepo(bot: Bot, update: Update, args: List[str]):
     chat_id = update.effective_chat.id
     msg = update.effective_message
-    if(len(args) != 1):
+    if (len(args) != 1):
         msg.reply_text("Invalid repo name!")
         return
     sql.rm_repo(str(chat_id), args[0].lower())

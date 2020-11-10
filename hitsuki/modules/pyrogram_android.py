@@ -36,7 +36,8 @@ class GetDevice:
 
     def get(self):
         if self.device.lower().startswith('sm-'):
-            data = get('https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_model.json').content
+            data = get(
+                'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_model.json').content
             db = loads(data)
             try:
                 name = db[self.device.upper()][0]['name']
@@ -51,7 +52,8 @@ class GetDevice:
             except KeyError:
                 return False
         else:
-            data = get('https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
+            data = get(
+                'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
             db = loads(data)
             newdevice = self.device.strip('lte').lower() if self.device.startswith('beyond') else self.device.lower()
             try:
@@ -71,10 +73,11 @@ class GetDevice:
 @pbot.on_message(filters.command(["specs", "spec"]))
 async def specs(c: Client, update: Update):
     if len(update.command) != 2:
-        message = ("Please write your codename or model into it,\ni.e <code>/specs herolte</code> or <code>/specs sm-g610f</code>")
+        message = (
+            "Please write your codename or model into it,\ni.e <code>/specs herolte</code> or <code>/specs sm-g610f</code>")
         await c.send_message(
-                chat_id=update.chat.id,
-                text=message)
+            chat_id=update.chat.id,
+            text=message)
         return
     device = update.command[1]
     data = GetDevice(device).get()
@@ -85,8 +88,8 @@ async def specs(c: Client, update: Update):
     else:
         message = "coudn't find your device, chack device & try!"
         await c.send_message(
-                chat_id=update.chat.id,
-                text=message)
+            chat_id=update.chat.id,
+            text=message)
         return
     sfw = get(f'https://sfirmware.com/samsung-{model.lower()}/')
     if sfw.status_code == 200:
@@ -103,8 +106,8 @@ async def specs(c: Client, update: Update):
         if giz.status_code == 404:
             message = "device specs not found in bot databases!"
             await c.send_message(
-                    chat_id=update.chat.id,
-                    text=message)
+                chat_id=update.chat.id,
+                text=message)
             return
         page = BeautifulSoup(giz.content, 'lxml')
         message = '<b>Device:</b> Samsung {}\n'.format(name)
@@ -114,8 +117,8 @@ async def specs(c: Client, update: Update):
             message += "• {}: <code>{}</code>\n".format(title, data)
 
     await c.send_message(
-                chat_id=update.chat.id,
-                text=message)
+        chat_id=update.chat.id,
+        text=message)
 
 
 @pbot.on_message(filters.command(["whatis", "device", "codename"]))
@@ -123,10 +126,10 @@ async def models(c: Client, update: Update):
     if len(update.command) != 2:
         message = "Please write your codename into it, i.e <code>/whatis herolte</code>"
         await c.send_message(
-                chat_id=update.chat.id,
-                text=message,
-                disable_web_page_preview=True
-            )
+            chat_id=update.chat.id,
+            text=message,
+            disable_web_page_preview=True
+        )
         return
     device = update.command[1]
     data = GetDevice(device).get()
@@ -138,15 +141,15 @@ async def models(c: Client, update: Update):
     else:
         message = "coudn't find your device, chack device & try!"
         await c.send_message(
-                chat_id=update.chat.id,
-                text=message)
+            chat_id=update.chat.id,
+            text=message)
         return
     message = f'<b>{device}/{model.upper()}</b> is <code>{brand} {name}</code>\n'
     await c.send_message(
-                chat_id=update.chat.id,
-                text=message,
-                disable_web_page_preview=True
-            )
+        chat_id=update.chat.id,
+        text=message,
+        disable_web_page_preview=True
+    )
 
 
 @pbot.on_message(filters.command(["variants", "models"]))
@@ -154,8 +157,8 @@ async def variants(c: Client, update: Update):
     if len(update.command) != 2:
         message = "Please write your codename into it, i.e <code>/specs herolte</code>"
         await c.send_message(
-                chat_id=update.chat.id,
-                text=message)
+            chat_id=update.chat.id,
+            text=message)
         return
     device = update.command[1]
     data = GetDevice(device).get()
@@ -165,10 +168,11 @@ async def variants(c: Client, update: Update):
     else:
         message = "coudn't find your device, chack device & try!"
         await c.send_message(
-                chat_id=update.chat.id,
-                text=message)
+            chat_id=update.chat.id,
+            text=message)
         return
-    data = get('https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
+    data = get(
+        'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
     db = loads(data)
     device = db[device]
     message = f'<b>{name}</b> variants:\n\n'
@@ -187,18 +191,18 @@ async def check(c: Client, update: Update):
     if len(update.command) != 3:
         message = "Please type your device <b>MODEL</b> and <b>CSC</b> into it!\ni.e <code>/fw SM-G975F XSG!</code>"
         await c.send_message(
-                chat_id=update.chat.id,
-                text=message)
+            chat_id=update.chat.id,
+            text=message)
         return
     cmd, temp, csc = update.command
-    model = 'sm-'+temp if not temp.upper().startswith('SM-') else temp
+    model = 'sm-' + temp if not temp.upper().startswith('SM-') else temp
     fota = get(f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.xml')
     test = get(f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.test.xml')
     if test.status_code != 200:
         message = f"Couldn't find any firmwares for {temp.upper()} - {csc.upper()}, please refine your search or try again later!"
         await c.send_message(
-                chat_id=update.chat.id,
-                text=message)
+            chat_id=update.chat.id,
+            text=message)
         return
     page1 = BeautifulSoup(fota.content, 'lxml')
     page2 = BeautifulSoup(test.content, 'lxml')
@@ -230,8 +234,8 @@ async def check(c: Client, update: Update):
     cmd.split()
     if cmd in ("samcheck"):
         await c.send_message(
-                chat_id=update.chat.id,
-                text=message)
+            chat_id=update.chat.id,
+            text=message)
     elif cmd in ("samget"):
         message += "\n**Download from below:**\n"
         keyboard = [
@@ -244,6 +248,6 @@ async def check(c: Client, update: Update):
         ]
 
         await c.send_message(
-                chat_id=update.chat.id,
-                text=message,
-                reply_markup=InlineKeyboardMarkup(keyboard))
+            chat_id=update.chat.id,
+            text=message,
+            reply_markup=InlineKeyboardMarkup(keyboard))
