@@ -16,11 +16,10 @@
 from datetime import datetime
 
 from pyrogram import filters
-from pyrogram.types import User, Message
 from pyrogram.errors import PeerIdInvalid
+from pyrogram.types import User, Message
 
 from hitsuki import pbot
-
 
 WHOIS = (
     "**About [{full_name}](tg://user?id={user_id}):**\n\n"

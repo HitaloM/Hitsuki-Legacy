@@ -13,17 +13,18 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from hitsuki.modules.sql.locales_sql import switch_to_locale, prev_locale
-from hitsuki.modules.tr_engine.strings import tld, LANGUAGES
-from telegram.ext import CommandHandler
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from hitsuki import dispatcher
-from hitsuki.modules.tr_engine.list_locale import list_locales
-from hitsuki.modules.helper_funcs.chat_status import user_admin
-from telegram.ext import CallbackQueryHandler
 import re
 
+from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram.ext import CallbackQueryHandler
+from telegram.ext import CommandHandler
+
+from hitsuki import dispatcher
 from hitsuki.modules.connection import connected
+from hitsuki.modules.helper_funcs.chat_status import user_admin
+from hitsuki.modules.sql.locales_sql import switch_to_locale, prev_locale
+from hitsuki.modules.tr_engine.list_locale import list_locales
+from hitsuki.modules.tr_engine.strings import tld, LANGUAGES
 
 
 @user_admin

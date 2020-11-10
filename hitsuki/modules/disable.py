@@ -23,7 +23,6 @@ from telegram.utils.helpers import escape_markdown
 from hitsuki import dispatcher
 from hitsuki.modules.helper_funcs.handlers import CMD_STARTERS
 from hitsuki.modules.helper_funcs.misc import is_module_loaded
-
 from hitsuki.modules.tr_engine.strings import tld
 
 FILENAME = __name__.rsplit(".", 1)[-1]

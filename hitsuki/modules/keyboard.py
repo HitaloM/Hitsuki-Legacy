@@ -14,12 +14,11 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from telegram import ReplyKeyboardMarkup, KeyboardButton
-
-from hitsuki import dispatcher
-from hitsuki.modules.tr_engine.strings import tld
 from telegram.ext import CommandHandler
 
 import hitsuki.modules.sql.connection_sql as con_sql
+from hitsuki import dispatcher
+from hitsuki.modules.tr_engine.strings import tld
 
 
 def keyboard(bot, update):

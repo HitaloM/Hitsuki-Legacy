@@ -14,9 +14,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import rapidjson as json
-
 from requests import get
-
 from telethon import custom
 
 from hitsuki.events import register

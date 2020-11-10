@@ -28,7 +28,6 @@ from hitsuki.modules.helper_funcs.chat_status import bot_admin, user_admin, is_u
 from hitsuki.modules.helper_funcs.extraction import extract_user_and_text
 from hitsuki.modules.helper_funcs.string_handling import extract_time
 from hitsuki.modules.log_channel import loggable
-
 from hitsuki.modules.tr_engine.strings import tld
 
 

@@ -13,19 +13,18 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from telegram import Update, Bot
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import Update, Bot
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async
 from telegram.utils.helpers import escape_markdown
 
 import hitsuki.modules.sql.rules_sql as sql
 from hitsuki import dispatcher
+from hitsuki.modules.connection import connected
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.helper_funcs.string_handling import markdown_parser
-
 from hitsuki.modules.tr_engine.strings import tld
-from hitsuki.modules.connection import connected
 
 
 @run_async

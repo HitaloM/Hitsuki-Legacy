@@ -14,7 +14,6 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import requests
-
 from telegram import Bot, Update, ParseMode
 from telegram.ext import run_async, CommandHandler
 
@@ -22,6 +21,7 @@ import hitsuki.modules.sql.last_fm_sql as sql
 from hitsuki import dispatcher, LASTFM_API_KEY
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.tr_engine.strings import tld
+
 
 # Last.fm module ported from https://github.com/rsktg
 

@@ -25,7 +25,6 @@ from hitsuki import dispatcher
 from hitsuki.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.sql import antiflood_sql as sql
-
 from hitsuki.modules.tr_engine.strings import tld
 
 FLOOD_GROUP = 3

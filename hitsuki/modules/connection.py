@@ -15,18 +15,16 @@
 
 from typing import Optional, List
 
-from telegram import ParseMode
 from telegram import Chat, Update, Bot, User
+from telegram import ParseMode
 from telegram.ext import CommandHandler
 from telegram.ext.dispatcher import run_async
 
 import hitsuki.modules.sql.connection_sql as sql
 from hitsuki import dispatcher, SUDO_USERS
 from hitsuki.modules.helper_funcs.chat_status import user_admin
-
-from hitsuki.modules.tr_engine.strings import tld
-
 from hitsuki.modules.keyboard import keyboard
+from hitsuki.modules.tr_engine.strings import tld
 
 
 @user_admin

@@ -14,7 +14,8 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import urllib.request as url
-import json
+
+import rapidjson as json
 
 VERSION = "1.0.2"
 APIURL = "http://api.github.com/repos/"

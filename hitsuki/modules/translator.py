@@ -16,6 +16,7 @@
 import random
 from typing import Optional, List
 
+from googletrans import LANGUAGES, Translator
 from telegram import Message, Update, Bot, ParseMode, Chat
 from telegram.ext import run_async
 
@@ -23,8 +24,6 @@ from hitsuki import dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.string_handling import remove_emoji
 from hitsuki.modules.tr_engine.strings import tld, tld_list
-
-from googletrans import LANGUAGES, Translator
 
 
 @run_async

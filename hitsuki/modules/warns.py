@@ -24,6 +24,7 @@ from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, MessageHandler, Filters, CallbackQueryHandler
 from telegram.utils.helpers import mention_html
 
+import hitsuki.modules.sql.rules_sql as rules_sql
 from hitsuki import dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import is_user_admin, bot_admin, user_admin, \
@@ -34,7 +35,6 @@ from hitsuki.modules.helper_funcs.misc import split_message
 from hitsuki.modules.helper_funcs.string_handling import split_quotes
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.sql import warns_sql as sql
-import hitsuki.modules.sql.rules_sql as rules_sql
 from hitsuki.modules.tr_engine.strings import tld
 
 WARN_HANDLER_GROUP = 9

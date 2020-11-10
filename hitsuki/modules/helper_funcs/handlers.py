@@ -13,10 +13,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import telegram.ext as tg
 from pyrate_limiter import (BucketFullException, Duration, RequestRate,
                             Limiter, MemoryListBucket)
-
-import telegram.ext as tg
 from telegram import Update
 
 import hitsuki.modules.sql.antispam_sql as sql

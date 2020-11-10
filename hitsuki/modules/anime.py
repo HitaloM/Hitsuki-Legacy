@@ -16,10 +16,10 @@
 import datetime
 import html
 import textwrap
+
 import bs4
 import jikanpy
 import requests
-
 from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.ext import CallbackQueryHandler, run_async
 

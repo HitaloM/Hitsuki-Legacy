@@ -14,14 +14,14 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import datetime
-from sys import argv
 import importlib
 import re
+from sys import argv
 from typing import List
-from pyrogram import idle
 
-from telegram import Update, Bot
+from pyrogram import idle
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import Update, Bot
 from telegram.error import (Unauthorized, BadRequest, TimedOut, NetworkError,
                             ChatMigrated, TelegramError)
 from telegram.ext import (CommandHandler, Filters,
@@ -29,11 +29,11 @@ from telegram.ext import (CommandHandler, Filters,
 from telegram.ext.dispatcher import (run_async, DispatcherHandlerStop,
                                      Dispatcher)
 
+from hitsuki import (dispatcher, updater, LOGGER,
+                     TOKEN, MESSAGE_DUMP, tbot, pbot)
 # Needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from hitsuki.modules import ALL_MODULES
-from hitsuki import (dispatcher, updater, LOGGER,
-                     TOKEN, MESSAGE_DUMP, tbot, pbot)
 from hitsuki.modules.helper_funcs.misc import paginate_modules
 from hitsuki.modules.tr_engine.strings import tld
 
@@ -436,7 +436,7 @@ if __name__ == '__main__':
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     tbot.start(bot_token=TOKEN)
     pbot.start()
-    pbot.send_message(MESSAGE_DUMP, f"**Hitsuki is alive!**\n\n"
+    pbot.send_message(MESSAGE_DUMP, "**Hitsuki is alive!**\n\n"
                       f"- **app_version:** `{pbot.app_version}`\n"
                       f"- **device_model:** `{pbot.device_model}`\n"
                       f"- **system_version:** `{pbot.system_version}`\n\n"

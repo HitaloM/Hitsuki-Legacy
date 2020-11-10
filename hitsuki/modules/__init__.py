@@ -14,6 +14,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import sys
+
 from hitsuki import LOAD, NO_LOAD, LOGGER
 
 

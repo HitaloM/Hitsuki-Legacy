@@ -13,8 +13,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import yaml
 from codecs import encode, decode
+
+import yaml
 
 from hitsuki import LOGGER
 from hitsuki.modules.sql.locales_sql import prev_locale

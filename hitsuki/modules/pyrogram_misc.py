@@ -17,21 +17,21 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import asyncio
+import html
 import os
 import re
 import sys
-import html
-import regex
-import aiohttp
-import asyncio
-import speedtest
-
 from datetime import datetime
 
+import aiohttp
+import regex
+import speedtest
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from hitsuki import TOKEN, SUDO_USERS, MESSAGE_DUMP, pbot
+
 
 # pyrogram_misc: This module is an adaptation of several commands of the EduuRobot
 # https://github.com/AmanoTeam/EduuRobot

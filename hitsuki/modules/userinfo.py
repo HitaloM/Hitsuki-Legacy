@@ -16,8 +16,8 @@
 import html
 from typing import List
 
-from telegram import Update, Bot
 from telegram import ParseMode, MAX_MESSAGE_LENGTH
+from telegram import Update, Bot
 from telegram.ext.dispatcher import run_async
 from telegram.utils.helpers import escape_markdown
 
@@ -25,7 +25,6 @@ import hitsuki.modules.sql.userinfo_sql as sql
 from hitsuki import dispatcher, SUDO_USERS, OWNER_ID
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user
-
 from hitsuki.modules.tr_engine.strings import tld
 
 

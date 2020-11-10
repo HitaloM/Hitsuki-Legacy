@@ -14,16 +14,16 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import urllib
-import rapidjson as json
 
+import rapidjson as json
 from bs4 import BeautifulSoup
 from hurry.filesize import size as sizee
 from requests import get
-
 from telethon import custom
 
 from hitsuki.events import register
 from hitsuki.modules.tr_engine.strings import tld
+
 
 # Greeting all bot owners that is using this module,
 # - RealAkito (used to be peaktogoo) [Module Maker]

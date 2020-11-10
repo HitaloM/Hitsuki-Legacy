@@ -13,15 +13,14 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
 import math
+import os
 import urllib.request as urllib
-import requests
+from typing import List
 
+import requests
 from PIL import Image
 from bs4 import BeautifulSoup as bs
-
-from typing import List
 from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import TelegramError
 from telegram import Update, Bot

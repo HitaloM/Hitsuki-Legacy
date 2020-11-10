@@ -14,22 +14,21 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import html
-import wikipedia
 import re
 import urllib.parse as urlparse
-import requests
-
 from datetime import datetime
 from typing import Optional, List
-from requests import get
-from covid import Covid
 
+import requests
+import wikipedia
+from covid import Covid
+from requests import get
 from telegram import Message, Chat, Update, Bot, MessageEntity
 from telegram import (ParseMode, ReplyKeyboardRemove,
                       InlineKeyboardMarkup, InlineKeyboardButton)
+from telegram.error import BadRequest
 from telegram.ext import CommandHandler, run_async, Filters
 from telegram.utils.helpers import escape_markdown, mention_html
-from telegram.error import BadRequest
 
 from hitsuki import (dispatcher, OWNER_ID, SUDO_USERS,
                      SUPPORT_USERS, WHITELIST_USERS, sw)
@@ -37,7 +36,6 @@ from hitsuki.__main__ import GDPR
 from hitsuki.__main__ import STATS, USER_INFO
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user
-
 from hitsuki.modules.tr_engine.strings import tld
 
 cvid = Covid(source="worldometers")

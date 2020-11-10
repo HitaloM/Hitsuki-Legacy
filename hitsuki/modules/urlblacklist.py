@@ -15,11 +15,11 @@
 
 import html
 
+import tldextract
 from telegram import Bot, ParseMode, Update
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters, MessageHandler, run_async
 
-import tldextract
 from hitsuki import LOGGER, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import user_admin, user_not_admin

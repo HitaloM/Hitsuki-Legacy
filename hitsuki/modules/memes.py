@@ -15,15 +15,15 @@
 
 import random
 import re
-from zalgo_text import zalgo
-
 from typing import List
+
 from telegram import Update, Bot, ParseMode
 from telegram.ext import run_async
+from telegram.utils.helpers import escape_markdown
+from zalgo_text import zalgo
 
 from hitsuki import dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from telegram.utils.helpers import escape_markdown
 from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.tr_engine.strings import tld, tld_list
 

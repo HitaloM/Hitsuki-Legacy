@@ -15,12 +15,12 @@
 
 import logging
 import sys
-import yaml
-import spamwatch
 
-from telethon import TelegramClient
-from pyrogram import Client
+import spamwatch
 import telegram.ext as tg
+import yaml
+from pyrogram import Client
+from telethon import TelegramClient
 
 # Enable logging
 logging.basicConfig(
