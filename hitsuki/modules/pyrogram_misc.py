@@ -228,7 +228,7 @@ async def logs(c: Client, m: Message):
     await m.reply_text("Done! LOGs are sent to system_dump.")
 
 
-@pbot.on_message(filters.command("status"))
+@pbot.on_message(filters.command("hitsuki"))
 async def logs(c: Client, m: Message):
     await m.reply_text("**Hitsuki is alive!**\n\n"
                        f"- **Pyrogram version** `{pbot.app_version}`\n"
@@ -236,5 +236,5 @@ async def logs(c: Client, m: Message):
                        "- **PTB version:** `11.1.0-H1.5`\n"
                        f"- **Python version:** `{pbot.device_model}`\n"
                        f"- **System:** `{pbot.system_version}`\n\n"
-                       "**Source code:** github.com/HitsukiNetwork/Hitsuki",
+                       "**Source code:** https://git.io/JkVWl",
                        disable_web_page_preview=True)
