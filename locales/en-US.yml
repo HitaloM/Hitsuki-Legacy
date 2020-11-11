@@ -634,6 +634,11 @@ memes_help: |
   - /insults: reply a random string from an array of replies.
   - /slap: slap a user, or get slapped if not a reply.
   - /zalgofy: reply to a message to gitch it out!
+  - /shg or /shrug: pretty self-explanatory.
+  - /hug: give a hug and spread the love :)
+  - /pat: give a headpat :3
+  - /react: send a random reaction.
+  - /weebify: as a reply to a message, "weebifies" the message.
 #Misc
 modname_misc: Misc
 misc_get_id_1: The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.

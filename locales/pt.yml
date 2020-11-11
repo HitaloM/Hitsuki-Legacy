@@ -460,14 +460,14 @@ memes_not_doing_that: 'Eu não estou fazendo isso!'
 memes_runs_list:
   - "Aonde você pensa que está indo?"
   - "Hein? O quê? Eles foram embora?"
-  - "ZZZZzz ... Hein? O quê? Ah, só eles de novo!"
+  - "ZZZZzz... Hein? O quê? Ah, só eles de novo!"
   - "Volte aqui!"
   - "Não tão rápido..."
   - "Olhe para a parede!"
   - "Não me deixe sozinho com eles !!"
   - "Corra, ou você morre."
   - "Piadas sobre você, eu estou em todo lugar"
-  - "Você está prestes a se arrepender ..."
+  - "Você está prestes a se arrepender..."
   - "Você também pode tentar /kickme, eu ouvi dizer que é divertido."
   - "Vá incomodar alguém, ninguém se importa aqui."
   - "Você pode correr, mas não pode se esconder."
@@ -486,7 +486,7 @@ memes_runs_list:
   - "'Oh, olhe para mim! Eu sou tão legal e posso fugir de um bot!' - esta pessoa"
   - "Sim, sim, basta tocar /kick já."
   - "Aqui, pegue este anel e vá até Mordor enquanto estiver nele."
-  - "Diz a lenda, eles continuam correndo ..."
+  - "Diz a lenda, eles continuam correndo..."
   - "Ao contrário de Harry Potter, seus pais não podem protegê-lo de mim."
   - "O medo leva à raiva. A raiva leva ao ódio. O ódio leva ao sofrimento. Se você continuar correndo com medo, pode"
   - "seja o próximo Vader."
@@ -500,15 +500,15 @@ memes_runs_list:
   - "É divertido, porque ninguém se importa."
   - "Ah, que desperdício. Gostei disso."
   - "Francamente, minha querida, eu não dou a mínima."
-  - "Meu smoothie traz todos os caras para o parquinho ... Então corra mais rápido!"
+  - "Meu smoothie traz todos os caras para o parquinho... Então corra mais rápido!"
   - "Você não pode ABRIR a verdade!"
-  - "Há muito tempo, em uma galáxia distante ... Alguém teria se importado com isso. Não mais."
+  - "Há muito tempo, em uma galáxia distante... Alguém teria se importado com isso. Não mais."
   - "Ei, olhe para eles! Eles estão fugindo do inevitável martelo de bannillo ... fofo."
   - "Eles atiraram primeiro. Então eu fiz."
   - "O que você está concorrendo, um coelho branco?"
-  - "Como o médico diria ... CORRA!"
+  - "Como o médico diria... CORRA!"
 memes_insults_list:
-  - "Owww ... um idiota tão estúpido."
+  - "Owww... um idiota tão estúpido."
   - "Não bebam pessoal."
   - "Acho que devo ir para casa ou melhor, um assíncrono mental."
   - "Comando não encontrado. Como seu pai."
@@ -519,7 +519,7 @@ memes_insults_list:
   - "Acredite, você não é normal."
   - "Aposto que seu cérebro parece tão bom quanto novo, visto que você nunca o usa."
   - "Se eu quisesse me matar, vou elevar seu ego e pular para o seu QI."
-  - "Zumbis comem cérebros ... você está seguro."
+  - "Zumbis comem cérebros... você está seguro."
   - "Você não evoluiu dos macacos, eles evoluíram de você."
   - "Volte e fale comigo quando o seu QI exceder a sua idade."
   - "Não estou dizendo que você é estúpido, só estou dizendo que você teve azar quando se trata de pensar."
@@ -632,6 +632,11 @@ memes_help: |
   - /insults: obtenha um insulto aleatório entre algumas strings
   - /slap: bate em um usuário, ou apanha do bot se não responder ninguém.
   - /zalgofy: responda uma mensagem para tornar-la um glitch.
+  - /shg ou /shrug: bastante autoexplicativo.
+  - /hug: dê um abraço e espalhe o amor :)
+  - /pat: dar um headpat :3
+  - /react: envia uma reação aleatória.
+  - /weebify: como uma resposta a uma mensagem, "weebify" a mensagem.
 #Misc
 modname_misc: Outros
 misc_info_extract_error: "Não consigo extrair um usuário disso."
