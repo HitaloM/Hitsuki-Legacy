@@ -15,6 +15,9 @@
 
 import random
 import re
+import rapidjson as json
+import urllib.request
+import urllib.parse
 from typing import List
 
 from telegram import Update, Bot, ParseMode
@@ -26,6 +29,151 @@ from hitsuki import dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.tr_engine.strings import tld, tld_list
+
+SHRUGS = (
+    "┐(´д｀)┌",
+    "┐(´～｀)┌",
+    "┐(´ー｀)┌",
+    "┐(￣ヘ￣)┌",
+    "╮(╯∀╰)╭",
+    "╮(╯_╰)╭",
+    "┐(´д`)┌",
+    "┐(´∀｀)┌",
+    "ʅ(́◡◝)ʃ",
+    "┐(ﾟ～ﾟ)┌",
+    "┐('д')┌",
+    "┐(‘～`;)┌",
+    "ヘ(´－｀;)ヘ",
+    "┐( -“-)┌",
+    "ʅ（´◔౪◔）ʃ",
+    "ヽ(゜～゜o)ノ",
+    "ヽ(~～~ )ノ",
+    "┐(~ー~;)┌",
+    "┐(-。ー;)┌",
+    r"¯\_(ツ)_/¯",
+    r"¯\_(⊙_ʖ⊙)_/¯",
+    r"¯\_༼ ಥ ‿ ಥ ༽_/¯",
+    "乁( ⁰͡  Ĺ̯ ⁰͡ ) ㄏ",
+)
+
+HUGS = (
+"⊂(・﹏・⊂)",
+"⊂(・ヮ・⊂)",
+"⊂(・▽・⊂)",
+"(っಠ‿ಠ)っ",
+"ʕっ•ᴥ•ʔっ",
+"（っ・∀・）っ",
+"(っ⇀⑃↼)っ",
+"(つ´∀｀)つ",
+"(.づσ▿σ)づ.",
+"⊂(´・ω・｀⊂)",
+"(づ￣ ³￣)づ",
+"(.づ◡﹏◡)づ.",
+)
+
+REACTS = (
+    "ʘ‿ʘ",
+    "ヾ(-_- )ゞ",
+    "(っ˘ڡ˘ς)",
+    "(´ж｀ς)",
+    "( ಠ ʖ̯ ಠ)",
+    "(° ͜ʖ͡°)╭∩╮",
+    "(ᵟຶ︵ ᵟຶ)",
+    "(งツ)ว",
+    "ʚ(•｀",
+    "(っ▀¯▀)つ",
+    "(◠﹏◠)",
+    "( ͡ಠ ʖ̯ ͡ಠ)",
+    "( ఠ ͟ʖ ఠ)",
+    "(∩｀-´)⊃━☆ﾟ.*･｡ﾟ",
+    "(⊃｡•́‿•̀｡)⊃",
+    "(._.)",
+    "{•̃_•̃}",
+    "(ᵔᴥᵔ)",
+    "♨_♨",
+    "⥀.⥀",
+    "ح˚௰˚づ ",
+    "(҂◡_◡)",
+    "ƪ(ړײ)‎ƪ​​",
+    "(っ•́｡•́)♪♬",
+    "◖ᵔᴥᵔ◗ ♪ ♫ ",
+    "(☞ﾟヮﾟ)☞",
+    "[¬º-°]¬",
+    "(Ծ‸ Ծ)",
+    "(•̀ᴗ•́)و ̑̑",
+    "ヾ(´〇`)ﾉ♪♪♪",
+    "(ง'̀-'́)ง",
+    "ლ(•́•́ლ)",
+    "ʕ •́؈•̀ ₎",
+    "♪♪ ヽ(ˇ∀ˇ )ゞ",
+    "щ（ﾟДﾟщ）",
+    "( ˇ෴ˇ )",
+    "눈_눈",
+    "(๑•́ ₃ •̀๑) ",
+    "( ˘ ³˘)♥ ",
+    "ԅ(≖‿≖ԅ)",
+    "♥‿♥",
+    "◔_◔",
+    "⁽⁽ଘ( ˊᵕˋ )ଓ⁾⁾",
+    "乁( ◔ ౪◔)「      ┑(￣Д ￣)┍",
+    "( ఠൠఠ )ﾉ",
+    "٩(๏_๏)۶",
+    "┌(ㆆ㉨ㆆ)ʃ",
+    "ఠ_ఠ",
+    "(づ｡◕‿‿◕｡)づ",
+    "(ノಠ ∩ಠ)ノ彡( \\o°o)\\",
+    "“ヽ(´▽｀)ノ”",
+    "༼ ༎ຶ ෴ ༎ຶ༽",
+    "｡ﾟ( ﾟஇ‸இﾟ)ﾟ｡",
+    "(づ￣ ³￣)づ",
+    "(⊙.☉)7",
+    "ᕕ( ᐛ )ᕗ",
+    "t(-_-t)",
+    "(ಥ⌣ಥ)",
+    "ヽ༼ ಠ益ಠ ༽ﾉ",
+    "༼∵༽ ༼⍨༽ ༼⍢༽ ༼⍤༽",
+    "ミ●﹏☉ミ",
+    "(⊙_◎)",
+    "¿ⓧ_ⓧﮌ",
+    "ಠ_ಠ",
+    "(´･_･`)",
+    "ᕦ(ò_óˇ)ᕤ",
+    "⊙﹏⊙",
+    "(╯°□°）╯︵ ┻━┻",
+    r"¯\_(⊙︿⊙)_/¯",
+    "٩◔̯◔۶",
+    "°‿‿°",
+    "ᕙ(⇀‸↼‶)ᕗ",
+    "⊂(◉‿◉)つ",
+    "V•ᴥ•V",
+    "q(❂‿❂)p",
+    "ಥ_ಥ",
+    "ฅ^•ﻌ•^ฅ",
+    "ಥ﹏ಥ",
+    "（ ^_^）o自自o（^_^ ）",
+    "ಠ‿ಠ",
+    "ヽ(´▽`)/",
+    "ᵒᴥᵒ#",
+    "( ͡° ͜ʖ ͡°)",
+    "┬─┬﻿ ノ( ゜-゜ノ)",
+    "ヽ(´ー｀)ノ",
+    "☜(⌒▽⌒)☞",
+    "ε=ε=ε=┌(;*´Д`)ﾉ",
+    "(╬ ಠ益ಠ)",
+    "┬─┬⃰͡ (ᵔᵕᵔ͜ )",
+    "┻━┻ ︵ヽ(`Д´)ﾉ︵﻿ ┻━┻",
+    "ʕᵔᴥᵔʔ",
+    "(`･ω･´)",
+    "ʕ•ᴥ•ʔ",
+    "ლ(｀ー´ლ)",
+    "ʕʘ̅͜ʘ̅ʔ",
+    "（　ﾟДﾟ）",
+    r"¯\(°_o)/¯",
+    "(｡◕‿◕｡)",
+)
+
+normiefont = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+weebyfont = ['卂','乃','匚','刀','乇','下','厶','卄','工','丁','长','乚','从','𠘨','口','尸','㔿','尺','丂','丅','凵','リ','山','乂','丫','乙']
 
 WIDE_MAP = {i: i + 0xFEE0 for i in range(0x21, 0x7F)}
 WIDE_MAP[0x20] = 0x3000
@@ -238,6 +386,73 @@ def slap(bot: Bot, update: Update, args: List[str]):
     reply_text(repl, parse_mode=ParseMode.MARKDOWN)
 
 
+# Some bad memes from TheRealPhoenix Bot [github.com/rsktg/TheRealPhoenixBot] vvv
+
+
+@run_async
+def shrug(bot: Bot, update: Update):
+    reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
+    reply_text = reply_text(random.choice(SHRUGS))
+
+
+@run_async
+def hug(bot: Bot, update: Update):
+    reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
+    reply_text = reply_text(random.choice(HUGS))
+
+
+@run_async
+def react(bot: Bot, update: Update):
+    reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
+    reply_text = reply_text(random.choice(REACTS))
+
+
+@run_async
+def pat(bot: Bot, update: Update):
+    chat_id = update.effective_chat.id
+    msg = str(update.message.text)
+    try:
+        msg = msg.split(" ", 1)[1]
+    except IndexError:
+        msg = ""
+    msg_id = update.effective_message.reply_to_message.message_id if update.effective_message.reply_to_message else update.effective_message.message_id
+    pats = []
+    pats = json.loads(urllib.request.urlopen(urllib.request.Request(
+    'http://headp.at/js/pats.json',
+    headers={'User-Agent': 'Mozilla/5.0 (X11; U; Linux i686) '
+         'Gecko/20071127 Firefox/2.0.0.11'}
+    )).read().decode('utf-8'))
+    if "@" in msg and len(msg) > 5:
+        bot.send_photo(chat_id, f'https://headp.at/pats/{urllib.parse.quote(random.choice(pats))}', caption=msg)
+    else:
+        bot.send_photo(chat_id, f'https://headp.at/pats/{urllib.parse.quote(random.choice(pats))}', reply_to_message_id=msg_id)
+
+
+@run_async
+def weebify(bot: Bot, update: Update, args):
+    msg = update.effective_message
+    if args:
+        string = " ".join(args).lower()
+    elif msg.reply_to_message:
+        string = msg.reply_to_message.text.lower()
+    else:
+        msg.reply_text("Enter some text to weebify or reply to someone's message!")
+        return
+
+    for normiecharacter in string:
+        if normiecharacter in normiefont:
+            weebycharacter = weebyfont[normiefont.index(normiecharacter)]
+            string = string.replace(normiecharacter, weebycharacter)
+
+    if msg.reply_to_message:
+        msg.reply_to_message.reply_text(string)
+    else:
+        msg.reply_text(string)
+
+
+# Some bad memes from TheRealPhoenix Bot [github.com/rsktg/TheRealPhoenixBot] ^^^
+
+
 __help__ = True
 
 OWO_HANDLER = DisableAbleCommandHandler("owo",
@@ -257,6 +472,14 @@ SLAP_HANDLER = DisableAbleCommandHandler("slap",
                                          slap,
                                          pass_args=True,
                                          admin_ok=True)
+SHRUG_HANDLER = DisableAbleCommandHandler(["shrug", "shg"], shrug, admin_ok=True)
+HUG_HANDLER = DisableAbleCommandHandler("hug", hug, admin_ok=True)
+REACT_HANDLER = DisableAbleCommandHandler("react", react, admin_ok=True)
+PAT_HANDLER = DisableAbleCommandHandler("pat", pat, admin_ok=True)
+WEEBIFY_HANDLER = DisableAbleCommandHandler("weebify",
+                                            weebify,
+                                            pass_args=True,
+                                            admin_ok=True)
 
 dispatcher.add_handler(OWO_HANDLER)
 dispatcher.add_handler(STRETCH_HANDLER)
@@ -266,3 +489,8 @@ dispatcher.add_handler(SHOUT_HANDLER)
 dispatcher.add_handler(INSULTS_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)
 dispatcher.add_handler(SLAP_HANDLER)
+dispatcher.add_handler(SHRUG_HANDLER)
+dispatcher.add_handler(HUG_HANDLER)
+dispatcher.add_handler(REACT_HANDLER)
+dispatcher.add_handler(PAT_HANDLER)
+dispatcher.add_handler(WEEBIFY_HANDLER)
