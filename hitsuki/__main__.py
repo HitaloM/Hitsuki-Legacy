@@ -34,6 +34,7 @@ from hitsuki import (dispatcher, updater, LOGGER,
 # Needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from hitsuki.modules import ALL_MODULES
+from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.misc import paginate_modules
 from hitsuki.modules.tr_engine.strings import tld
 
@@ -321,9 +322,9 @@ def migrate_chats(bot: Bot, update: Update):
 
 def main():
     # test_handler = CommandHandler("test", test) #Unused variable
-    start_handler = CommandHandler("start", start, pass_args=True)
+    start_handler = DisableAbleCommandHandler("start", start, pass_args=True)
 
-    help_handler = CommandHandler("help", get_help)
+    help_handler = DisableAbleCommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
 
     start_callback_handler = CallbackQueryHandler(send_start,
