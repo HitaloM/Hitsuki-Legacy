@@ -86,7 +86,8 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
                    "\n#MUTE" \
                    "\n<b>Admin:</b> {}" \
                    "\n<b>User:</b> {}".format(html.escape(chatD.title),
-                                              mention_html(user.id, user.first_name),
+                                              mention_html(
+                                                  user.id, user.first_name),
                                               mention_html(member.user.id, member.user.first_name))
 
         else:
@@ -159,7 +160,8 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                    "\n<b>• Admin:</b> {}" \
                    "\n<b>• User:</b> {}" \
                    "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chatD.title),
-                                                           mention_html(user.id, user.first_name),
+                                                           mention_html(
+                                                               user.id, user.first_name),
                                                            mention_html(member.user.id, member.user.first_name), user_id)
     else:
         message.reply_text(tld(chat.id, "unmute_not_in_chat"))
@@ -253,7 +255,7 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
             # Do not reply
             message.reply_text(tld(chat.id, "tmute_success").format(
                 time_val, chatD.title),
-                               quote=False)
+                quote=False)
             return log
         else:
             LOGGER.warning(update)
@@ -316,8 +318,9 @@ def nomedia(bot: Bot, update: Update, args: List[str]) -> str:
                    "\n<b>• Admin:</b> {}" \
                    "\n<b>• User:</b> {}" \
                    "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chatD.title),
-                                              mention_html(user.id, user.first_name),
-                                              mention_html(member.user.id, member.user.first_name), user_id)
+                                                           mention_html(
+                                                               user.id, user.first_name),
+                                                           mention_html(member.user.id, member.user.first_name), user_id)
 
         else:
             message.reply_text(tld(chat.id, "restrict_already_restricted"))
@@ -377,7 +380,8 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
                    "\n<b>• Admin:</b> {}" \
                    "\n<b>• User:</b> {}" \
                    "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chatD.title),
-                                                           mention_html(user.id, user.first_name),
+                                                           mention_html(
+                                                               user.id, user.first_name),
                                                            mention_html(member.user.id, member.user.first_name), user_id)
     else:
         message.reply_text(tld(chat.id, "unrestrict_not_in_chat"))
@@ -476,7 +480,7 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
             # Do not reply
             message.reply_text(tld(chat.id, "nomedia_success").format(
                 time_val, chatD.title),
-                               quote=False)
+                quote=False)
             return log
         else:
             LOGGER.warning(update)

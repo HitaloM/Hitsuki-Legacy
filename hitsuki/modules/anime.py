@@ -441,7 +441,7 @@ def user(bot: Bot, update: Update):
                    InlineKeyboardButton(
                        close_btn,
                        callback_data=f"anime_close, {message.from_user.id}")
-               ]]
+    ]]
 
     update.effective_message.reply_photo(
         photo=img,

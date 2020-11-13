@@ -60,7 +60,7 @@ if is_module_loaded(FILENAME):
                     None, 1)[0][1:].split('@')[0]
 
                 if SpamChecker.check_user(user.id):
-                	return None
+                    return None
 
                 # disabled, admincmd, user admin
                 if sql.is_command_disabled(chat.id, command):
@@ -138,7 +138,7 @@ if is_module_loaded(FILENAME):
                 result += " - `{}`\n".format(escape_markdown(cmd))
             update.effective_message.reply_text(tld(
                 chat.id, "disable_able_commands").format(result),
-                                                parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
         else:
             update.effective_message.reply_text(
                 tld(chat.id, "disable_able_commands_none"))

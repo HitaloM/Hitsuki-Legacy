@@ -120,7 +120,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
 
         message.reply_text(tld(chat.id, "antispam_reason_updated").format(
             html.escape(old_reason), html.escape(full_reason)),
-                           parse_mode=ParseMode.HTML)
+            parse_mode=ParseMode.HTML)
 
         return
 
@@ -277,7 +277,7 @@ def check_and_ban(update, user_id, should_message=True):
                     message.reply_text(tld(
                         chat.id,
                         "antispam_spamwatch_banned").format(spamwatch_reason),
-                                       parse_mode=ParseMode.HTML)
+                        parse_mode=ParseMode.HTML)
                     return
                 else:
                     return
@@ -294,7 +294,7 @@ def check_and_ban(update, user_id, should_message=True):
 
             message.reply_text(tld(
                 chat.id, "antispam_checkban_user_removed").format(usrreason),
-                               parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
             return
 
 
