@@ -21,7 +21,7 @@ from telegram.ext import CommandHandler, RegexHandler, Filters
 from telegram.utils.helpers import escape_markdown
 
 from hitsuki import dispatcher
-from hitsuki.modules.helper_funcs.handlers import CMD_STARTERS
+from hitsuki.modules.helper_funcs.handlers import CMD_STARTERS, SpamChecker
 from hitsuki.modules.helper_funcs.misc import is_module_loaded
 from hitsuki.modules.tr_engine.strings import tld
 
@@ -58,6 +58,9 @@ if is_module_loaded(FILENAME):
                 # Should be safe since check_update passed.
                 command = update.effective_message.text_html.split(
                     None, 1)[0][1:].split('@')[0]
+
+                if SpamChecker.check_user(user.id):
+                	return None
 
                 # disabled, admincmd, user admin
                 if sql.is_command_disabled(chat.id, command):
