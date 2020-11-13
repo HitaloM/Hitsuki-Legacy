@@ -139,7 +139,7 @@ def rmwarn_handler(bot: Bot, update: Update) -> str:
             update.effective_message.edit_text(tld(
                 chat.id, 'warns_remove_success').format(
                     mention_html(user.id, user.first_name)),
-                                               parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML)
             user_member = chat.get_member(user_id)
             return tld(chat.id, 'warns_remove_log_channel').format(
                 html.escape(chat.title), mention_html(user.id,
@@ -150,7 +150,7 @@ def rmwarn_handler(bot: Bot, update: Update) -> str:
             update.effective_message.edit_text(tld(
                 chat.id, 'warns_user_has_no_warns').format(
                     mention_html(user.id, user.first_name)),
-                                               parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML)
 
     return ""
 
@@ -369,7 +369,7 @@ def reply_filter(bot: Bot, update: Update) -> str:
     chat = update.effective_chat
     message = update.effective_message
     user = update.effective_user
-    if not user:  #Ignore channel
+    if not user:  # Ignore channel
         return ""
 
     if user.id == 777000:
@@ -456,7 +456,7 @@ def set_warn_strength(bot: Bot, update: Update, args: List[str]):
 def __stats__():
     return "• `{}` overall warns, across `{}` chats.\n" \
            "• `{}` warn filters, across `{}` chats.".format(sql.num_warns(), sql.num_warn_chats(),
-                                                      sql.num_warn_filters(), sql.num_warn_filter_chats())
+                                                            sql.num_warn_filters(), sql.num_warn_filter_chats())
 
 
 def __migrate__(old_chat_id, new_chat_id):
