@@ -152,22 +152,22 @@ def send_start(bot, update):
         query = update.callback_query
         # query.message.delete()
         bot.edit_message_media(chat_id=query.message.chat_id,
-                              message_id=query.message.message_id,
-                              text=text,
-                              parse_mode=ParseMode.MARKDOWN,
-                              reply_markup=InlineKeyboardMarkup(keyboard),
-                              disable_web_page_preview=True)
+                               message_id=query.message.message_id,
+                               text=text,
+                               parse_mode=ParseMode.MARKDOWN,
+                               reply_markup=InlineKeyboardMarkup(keyboard),
+                               disable_web_page_preview=True)
     except Exception:
         pass
 
     if query:
         try:
             bot.edit_message_media(chat_id=query.message.chat_id,
-                                  message_id=query.message.message_id,
-                                  text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(keyboard),
-                                  disable_web_page_preview=True)
+                                   message_id=query.message.message_id,
+                                   text=text,
+                                   parse_mode=ParseMode.MARKDOWN,
+                                   reply_markup=InlineKeyboardMarkup(keyboard),
+                                   disable_web_page_preview=True)
         except Exception:
             return
     else:
@@ -224,27 +224,27 @@ def help_button(bot: Bot, update: Update):
             text = tld(chat.id, "here_is_help").format(mod_name, help_txt)
 
             bot.edit_message_media(chat_id=query.message.chat_id,
-                                  message_id=query.message.message_id,
-                                  text=text,
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup([[
-                                      InlineKeyboardButton(
-                                          text=tld(chat.id, "btn_go_back"),
-                                          callback_data="help_back")
-                                  ]]),
-                                  disable_web_page_preview=True)
+                                   message_id=query.message.message_id,
+                                   text=text,
+                                   parse_mode=ParseMode.MARKDOWN,
+                                   reply_markup=InlineKeyboardMarkup([[
+                                       InlineKeyboardButton(
+                                           text=tld(chat.id, "btn_go_back"),
+                                           callback_data="help_back")
+                                   ]]),
+                                   disable_web_page_preview=True)
 
         elif back_match:
             bot.edit_message_media(chat_id=query.message.chat_id,
-                                  message_id=query.message.message_id,
-                                  text=tld(chat.id, "send-help").format(
-                                      dispatcher.bot.first_name,
-                                      tld(chat.id, "cmd_multitrigger")),
-                                  parse_mode=ParseMode.MARKDOWN,
-                                  reply_markup=InlineKeyboardMarkup(
-                                      paginate_modules(chat.id, 0, HELPABLE,
-                                                       "help")),
-                                  disable_web_page_preview=True)
+                                   message_id=query.message.message_id,
+                                   text=tld(chat.id, "send-help").format(
+                                       dispatcher.bot.first_name,
+                                       tld(chat.id, "cmd_multitrigger")),
+                                   parse_mode=ParseMode.MARKDOWN,
+                                   reply_markup=InlineKeyboardMarkup(
+                                       paginate_modules(chat.id, 0, HELPABLE,
+                                                        "help")),
+                                   disable_web_page_preview=True)
 
         # ensure no spinny white circle
         bot.answer_callback_query(query.id)
@@ -296,7 +296,7 @@ def get_help(bot: Bot, update: Update):
 
         update.effective_message.reply_text(tld(
             chat.id, "help_not_found").format(args[1]),
-                                            parse_mode=ParseMode.HTML)
+            parse_mode=ParseMode.HTML)
         return
 
     send_help(
