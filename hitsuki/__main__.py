@@ -296,7 +296,7 @@ def get_help(bot: Bot, update: Update):
 
         update.effective_message.reply_text(tld(
             chat.id, "help_not_found").format(args[1]),
-                                            parse_mode=ParseMode.HTML)
+            parse_mode=ParseMode.HTML)
         return
 
     send_help(
