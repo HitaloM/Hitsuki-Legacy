@@ -62,7 +62,7 @@ def no_longer_afk(bot: Bot, update: Update):
 
     res = sql.rm_afk(user.id)
     if res:
-        if message.new_chat_members:  #dont say msg
+        if message.new_chat_members:  # dont say msg
             return
         firstname = update.effective_user.first_name
         try:
@@ -78,7 +78,7 @@ def reply_afk(bot: Bot, update: Update):
     userc = update.effective_user
     userc_id = userc.id
     if message.entities and message.parse_entities(
-        [MessageEntity.TEXT_MENTION, MessageEntity.MENTION]):
+            [MessageEntity.TEXT_MENTION, MessageEntity.MENTION]):
         entities = message.parse_entities(
             [MessageEntity.TEXT_MENTION, MessageEntity.MENTION])
 
