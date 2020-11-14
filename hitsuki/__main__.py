@@ -151,7 +151,7 @@ def send_start(bot, update):
     try:
         query = update.callback_query
         # query.message.delete()
-        bot.edit_message_text(chat_id=query.message.chat_id,
+        bot.edit_message_media(chat_id=query.message.chat_id,
                               message_id=query.message.message_id,
                               text=text,
                               parse_mode=ParseMode.MARKDOWN,
@@ -162,7 +162,7 @@ def send_start(bot, update):
 
     if query:
         try:
-            bot.edit_message_text(chat_id=query.message.chat_id,
+            bot.edit_message_media(chat_id=query.message.chat_id,
                                   message_id=query.message.message_id,
                                   text=text,
                                   parse_mode=ParseMode.MARKDOWN,
@@ -223,7 +223,7 @@ def help_button(bot: Bot, update: Update):
 
             text = tld(chat.id, "here_is_help").format(mod_name, help_txt)
 
-            bot.edit_message_text(chat_id=query.message.chat_id,
+            bot.edit_message_media(chat_id=query.message.chat_id,
                                   message_id=query.message.message_id,
                                   text=text,
                                   parse_mode=ParseMode.MARKDOWN,
@@ -235,7 +235,7 @@ def help_button(bot: Bot, update: Update):
                                   disable_web_page_preview=True)
 
         elif back_match:
-            bot.edit_message_text(chat_id=query.message.chat_id,
+            bot.edit_message_media(chat_id=query.message.chat_id,
                                   message_id=query.message.message_id,
                                   text=tld(chat.id, "send-help").format(
                                       dispatcher.bot.first_name,
