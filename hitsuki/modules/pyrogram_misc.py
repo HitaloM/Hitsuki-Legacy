@@ -70,14 +70,14 @@ async def ids_private(c: Client, m: Message):
                        "<b>User ID:</b> <code>{user_id}</code>\n"
                        "<b>Language:</b> {lang}\n"
                        "<b>Chat type:</b> {chat_type}".format(
-        first_name=m.from_user.first_name,
-        last_name=m.from_user.last_name or "",
-        username=m.from_user.username,
-        user_id=m.from_user.id,
-        lang=m.from_user.language_code,
-        chat_type=m.chat.type
-    ),
-        parse_mode="HTML")
+                           first_name=m.from_user.first_name,
+                           last_name=m.from_user.last_name or "",
+                           username=m.from_user.username,
+                           user_id=m.from_user.id,
+                           lang=m.from_user.language_code,
+                           chat_type=m.chat.type
+                       ),
+                       parse_mode="HTML")
 
 
 @pbot.on_message(filters.command("pyroid") & filters.group)
@@ -93,18 +93,18 @@ async def ids(c: Client, m: Message):
                        "<b>Chat username:</b> @{chat_username}\n"
                        "<b>Chat ID:</b> <code>{chat_id}</code>\n"
                        "<b>Chat type:</b> {chat_type}".format(
-        first_name=html.escape(d.from_user.first_name),
-        last_name=html.escape(d.from_user.last_name or ""),
-        username=d.from_user.username,
-        user_id=d.from_user.id,
-        user_dc=d.from_user.dc_id,
-        lang=d.from_user.language_code or "-",
-        chat_title=m.chat.title,
-        chat_username=m.chat.username,
-        chat_id=m.chat.id,
-        chat_type=m.chat.type
-    ),
-        parse_mode="HTML")
+                           first_name=html.escape(d.from_user.first_name),
+                           last_name=html.escape(d.from_user.last_name or ""),
+                           username=d.from_user.username,
+                           user_id=d.from_user.id,
+                           user_dc=d.from_user.dc_id,
+                           lang=d.from_user.language_code or "-",
+                           chat_title=m.chat.title,
+                           chat_username=m.chat.username,
+                           chat_id=m.chat.id,
+                           chat_type=m.chat.type
+                       ),
+                       parse_mode="HTML")
 
 
 @pbot.on_message(filters.command("ping"))
@@ -203,7 +203,8 @@ async def run_cmd(c: Client, m: Message):
                                                      stderr=asyncio.subprocess.PIPE)
         stdout, stderr = await proc.communicate()
         res = ("<b>Output:</b>\n<code>{}</code>".format(html.escape(stdout.decode().strip())) if stdout else '') + \
-              ("\n<b>Errors:</b>\n<code>{}</code>".format(html.escape(stderr.decode().strip())) if stderr else '')
+              ("\n<b>Errors:</b>\n<code>{}</code>".format(
+                  html.escape(stderr.decode().strip())) if stderr else '')
     await m.reply_text(res)
 
 
@@ -220,6 +221,6 @@ async def logs(c: Client, m: Message):
     await pbot.send_document(
         document='log.txt',
         caption="`Hitsuki's System LOGs`",
-    chat_id=SYSTEM_DUMP,
-    parse_mode="markdown"
+        chat_id=SYSTEM_DUMP,
+        parse_mode="markdown"
     )
