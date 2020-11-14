@@ -8,6 +8,7 @@ api_hash: ''
 owner_id: 123456
 owner_username: "OWNER USERNAME"
 message_dump: "CHAT ID"
+system_dump: "CHAT ID"
 gban_dump: "CHAT ID"
 load: []
 no_load: []

@@ -30,7 +30,7 @@ from telegram.ext.dispatcher import (run_async, DispatcherHandlerStop,
                                      Dispatcher)
 
 from hitsuki import (dispatcher, updater, LOGGER,
-                     TOKEN, MESSAGE_DUMP, tbot, pbot)
+                     TOKEN, SYSTEM_DUMP, tbot, pbot)
 # Needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from hitsuki.modules import ALL_MODULES
@@ -437,7 +437,7 @@ if __name__ == '__main__':
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     tbot.start(bot_token=TOKEN)
     pbot.start()
-    pbot.send_message(MESSAGE_DUMP, "**Hitsuki is alive!**\n\n"
+    pbot.send_message(SYSTEM_DUMP, "**Hitsuki is alive!**\n\n"
                       f"- **app_version:** `{pbot.app_version}`\n"
                       f"- **device_model:** `{pbot.device_model}`\n"
                       f"- **system_version:** `{pbot.system_version}`\n\n"

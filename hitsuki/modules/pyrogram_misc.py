@@ -26,12 +26,10 @@ from datetime import datetime
 
 import aiohttp
 import regex
-import speedtest
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-from hitsuki import TOKEN, SUDO_USERS, MESSAGE_DUMP, pbot
-
+from hitsuki import TOKEN, SUDO_USERS, SYSTEM_DUMP, pbot
 
 # pyrogram_misc: This module is an adaptation of several commands of the EduuRobot
 # https://github.com/AmanoTeam/EduuRobot
@@ -184,7 +182,7 @@ async def upgrade(c: Client, m: Message):
             await sm.edit_text("There's nothing to upgrade.")
         else:
             await sm.edit_text("Restarting...")
-            await pbot.send_message(MESSAGE_DUMP,
+            await pbot.send_message(SYSTEM_DUMP,
                                     "**Hitsuki has been successfully updated!**")
             args = [sys.executable, "-m", "hitsuki"]
             os.execl(sys.executable, *args)
@@ -209,31 +207,19 @@ async def run_cmd(c: Client, m: Message):
     await m.reply_text(res)
 
 
-@pbot.on_message(filters.command("speedtest") & filters.user(SUDO_USERS))
-async def test_speed(c: Client, m: Message):
-    string = (
-        "**Speedtest:**\n\n**🌐 Host:** `{host}`\n\n**🏓 Ping:** `{ping} ms`\n**⬇️ Download:** `{download} Mbps`\n**⬆️ Upload:** `{upload} Mbps`")
-    sent = await m.reply_text(string.format(host="",
-                                            ping="",
-                                            download="", upload=""))
-    s = speedtest.Speedtest()
-    bs = s.get_best_server()
-    await sent.edit_text(string.format(host=bs["sponsor"],
-                                       ping=int(bs["latency"]),
-                                       download="", upload=""))
-    dl = round(s.download() / 1024 / 1024, 2)
-    await sent.edit_text(string.format(host=bs["sponsor"],
-                                       ping=int(bs["latency"]),
-                                       download=dl, upload=""))
-    ul = round(s.upload() / 1024 / 1024, 2)
-    await sent.edit_text(string.format(host=bs["sponsor"],
-                                       ping=int(bs["latency"]),
-                                       download=dl, upload=ul))
-
-
 @pbot.on_message(filters.command("restart") & filters.user(SUDO_USERS))
 async def restart(c: Client, m: Message):
     await m.reply_text("Restarting...")
-    await pbot.send_message(MESSAGE_DUMP, "**Hitsuki is restarting...**")
+    await pbot.send_message(SYSTEM_DUMP, "**Hitsuki is restarting...**")
     args = [sys.executable, "-m", "hitsuki"]
     os.execl(sys.executable, *args)
+
+
+@pbot.on_message(filters.command("logs") & filters.user(SUDO_USERS))
+async def logs(c: Client, m: Message):
+    await pbot.send_document(
+        document='log.txt',
+        caption="`Hitsuki's System LOGs`",
+    chat_id=SYSTEM_DUMP,
+    parse_mode="markdown"
+    )
