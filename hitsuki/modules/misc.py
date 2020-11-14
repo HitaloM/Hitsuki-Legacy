@@ -184,7 +184,7 @@ def gdpr(bot: Bot, update: Update):
         mod.__gdpr__(update.effective_user.id)
 
     update.effective_message.reply_text(tld(update.effective_chat.id,
-                                            "send_gdpr"),
+                                            "misc_send_gdpr"),
                                         parse_mode=ParseMode.MARKDOWN)
 
 

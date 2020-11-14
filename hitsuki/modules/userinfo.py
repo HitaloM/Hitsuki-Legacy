@@ -59,7 +59,7 @@ def set_about_me(bot: Bot, update: Update):
     chat = update.effective_chat
     message = update.effective_message
     user_id = message.from_user.id
-    if user_id == 1087968824:
+    if user_id in (777000, 1087968824):
         message.reply_text(tld(chat.id, 'userinfo_anonymous_about'))
         return
 
@@ -111,7 +111,7 @@ def set_about_bio(bot: Bot, update: Update):
     if message.reply_to_message:
         repl_message = message.reply_to_message
         user_id = repl_message.from_user.id
-        if user_id == 1087968824:
+        if user_id in (777000, 1087968824):
             message.reply_text(tld(chat.id, 'userinfo_anonymous_bio'))
             return
         if user_id == message.from_user.id:

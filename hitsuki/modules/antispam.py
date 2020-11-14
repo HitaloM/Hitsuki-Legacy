@@ -76,6 +76,10 @@ def gban(bot: Bot, update: Update, args: List[str]):
         message.reply_text(tld(chat.id, "antispam_err_usr_support"))
         return
 
+    if int(user_id) in (777000, 1087968824):
+        message.reply_text(tld(chat.id, "antispam_err_usr_tg"))
+        return
+
     if user_id == bot.id:
         message.reply_text(tld(chat.id, "antispam_err_usr_bot"))
         return
@@ -371,6 +375,9 @@ def __stats__():
 
 def __user_info__(user_id, chat_id):
     is_gbanned = sql.is_user_gbanned(user_id)
+
+    if user_id in (777000, 1087968824):
+        return ""
 
     if user_id not in SUDO_USERS:
 

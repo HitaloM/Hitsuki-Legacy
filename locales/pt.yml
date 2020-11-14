@@ -145,6 +145,7 @@ antiflood_help: |
 modname_antispam: AntiSpam
 antispam_err_usr_sudo: 'Eu espio com meus olhinhos... uma guerra de usuário sudo! Por que eles estão brigando?'
 antispam_err_usr_support: 'OOOOH, alguém está tentando banir um usuário de suporte! *pegando pipoca*'
+antispam_err_usr_tg: 'Huh, por que eu baniria globalmente os bots do Telegram?'
 antispam_err_usr_bot: '-_- Tão divertido, deixe-me banir globalmente eu mesmo, por que não? Boa tentativa.'
 antispam_err_not_usr: 'Isso não é um usuário!'
 antispam_err_usr_deleted: 'Essa é uma conta excluída! Por que incomodá-la?'
@@ -659,6 +660,15 @@ misc_info_swban1: "\n\n<b>Essa pessoa está banida na SpamWatch!</b>"
 misc_info_swban2: "\nMotivo: <pre>{}</pre>"
 misc_info_swban3: "\nReclame em @SpamWatchSupport"
 misc_gdpr: Excluindo dados identificáveis...
+misc_send_gdrp: |
+  Seus dados pessoais foram excluídos.
+
+  Note que isso não cancelará o banimento de quaisquer chats, pois são dados de Telegram, não os dados deste bot. 
+  Floods, avisos e gbans também são preservados, a partir 
+  [disto](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), 
+  que afirma claramente que o direito de apagamento não se aplica 
+  para o desempenho de uma tarefa realizada no interesse público, 
+  como é o caso dos dados acima mencionados.
 misc_md_list: |
   O Markdown é uma ferramenta de formatação muito poderosa suportada pelo Telegram. O Hitsuki tem algumas melhorias, para garantir que \
   as mensagens salvas serão analisadas corretamente e permitem criar botões.

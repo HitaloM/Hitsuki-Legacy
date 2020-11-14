@@ -32,10 +32,11 @@ AFK_REPLY_GROUP = 8
 def afk(bot: Bot, update: Update):
     chat = update.effective_chat
     user = update.effective_user
+
     if not user:  # ignore channels
         return
 
-    if user.id == 777000:
+    if user.id in (777000, 1087968824):
         return
 
     args = update.effective_message.text.split(None, 1)

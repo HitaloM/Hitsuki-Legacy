@@ -144,6 +144,7 @@ antiflood_help: |
 modname_antispam: AntiSpam
 antispam_err_usr_sudo: I spy with my little eyes... a sudo user war! Why are you guys turning on each other?
 antispam_err_usr_support: OOOH, someone's trying to gban a support user! *grabs popcorn*
+antispam_err_usr_tg: 'Huh, why would I gban Telegram bots?'
 antispam_err_usr_bot: '-_- So funny, let me gban myself, why don''t I? Nice try.'
 antispam_err_not_usr: That's not a user!
 antispam_err_usr_deleted: That's a deleted account! Why even bother gbanning them?
@@ -661,6 +662,15 @@ misc_info_swban1: "\n\n<b>This person is banned in SpamWatch!</b>"
 misc_info_swban2: "\nReason: <pre>{}</pre>"
 misc_info_swban3: "\nAppeal at @SpamWatchSupport"
 misc_gdpr: Deleting identifiable data...
+misc_send_gdrp: |
+  Your personal data has been deleted.
+
+  Note that this will not unban you from any chats, as that is telegram data, not this bot's data. 
+  Flooding, warns, and gbans are also preserved, as of 
+  [this](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), 
+  which clearly states that the right to erasure does not apply 
+  for the performance of a task carried out in the public interest, 
+  as is the case for the aforementioned pieces of data.
 misc_md_list: |
   Markdown is a very powerful formatting tool supported by telegram. Hitsuki has some enhancements, to make sure that \
   saved messages are correctly parsed, and to allow you to create buttons.
