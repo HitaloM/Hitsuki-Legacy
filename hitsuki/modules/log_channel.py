@@ -153,7 +153,7 @@ def unsetlog(bot: Bot, update: Update):
 
 
 def __stats__():
-    return "• `{}` log channels set.".format(sql.num_logchannels())
+    return "• <code>{}</code> log channels set.".format(sql.num_logchannels())
 
 
 def __migrate__(old_chat_id, new_chat_id):

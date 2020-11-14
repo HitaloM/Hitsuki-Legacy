@@ -26,3 +26,5 @@ psycopg2-binary>=2.8.6
 hurry.filesize>=0.9
 beautifulsoup4>=4.9.3
 regex>=2020.10.28
+lxml>=4.6.1
+TgCrypto>=1.2.2

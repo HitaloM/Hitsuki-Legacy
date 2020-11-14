@@ -270,7 +270,7 @@ def __user_info__(user_id, chat_id):
 
 
 def __stats__():
-    return "• `{}` users, across `{}` chats".format(sql.num_users(),
+    return "• <code>{}</code> users, across <code>{}</code> chats".format(sql.num_users(),
                                                     sql.num_chats())
 
 

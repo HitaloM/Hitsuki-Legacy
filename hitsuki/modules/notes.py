@@ -339,7 +339,7 @@ def remove_all_notes(bot: Bot, update: Update):
 
 
 def __stats__():
-    return "• `{}` notes, accross `{}` chats.".format(sql.num_notes(),
+    return "• <code>{}</code> notes, accross <code>{}</code> chats.".format(sql.num_notes(),
                                                       sql.num_chats())
 
 

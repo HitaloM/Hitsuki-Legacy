@@ -318,7 +318,7 @@ def stop_all_filters(bot: Bot, update: Update):
 
 
 def __stats__():
-    return "• `{}` filters, across `{}` chats.".format(sql.num_filters(),
+    return "• <code>{}</code> filters, across <code>{}</code> chats.".format(sql.num_filters(),
                                                        sql.num_chats())
 
 

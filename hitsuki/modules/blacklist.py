@@ -201,7 +201,7 @@ def __migrate__(old_chat_id, new_chat_id):
 
 
 def __stats__():
-    return "• `{}` blacklist triggers, across `{}` chats.".format(
+    return "• <code>{}</code> blacklist triggers, across <code>{}</code> chats.".format(
         sql.num_blacklist_filters(), sql.num_blacklist_filter_chats())
 
 
