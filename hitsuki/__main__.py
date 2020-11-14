@@ -24,8 +24,7 @@ from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import Update, Bot
 from telegram.error import (Unauthorized, BadRequest, TimedOut, NetworkError,
                             ChatMigrated, TelegramError)
-from telegram.ext import (CommandHandler, Filters,
-                          MessageHandler, CallbackQueryHandler)
+from telegram.ext import Filters, MessageHandler, CallbackQueryHandler
 from telegram.ext.dispatcher import (run_async, DispatcherHandlerStop,
                                      Dispatcher)
 
@@ -37,6 +36,8 @@ from hitsuki.modules import ALL_MODULES
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.misc import paginate_modules
 from hitsuki.modules.tr_engine.strings import tld
+
+HITSUKI_IMG = "https://telegra.ph/file/83b942f6073733919d8de.png"
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -170,7 +171,8 @@ def send_start(bot, update):
         except Exception:
             return
     else:
-        update.effective_message.reply_text(
+        update.effective_message.reply_photo(
+            HITSUKI_IMG,
             text,
             reply_markup=InlineKeyboardMarkup(keyboard),
             parse_mode=ParseMode.MARKDOWN,
