@@ -217,9 +217,10 @@ async def restart(c: Client, m: Message):
 
 @pbot.on_message(filters.command("logs") & filters.user(SUDO_USERS))
 async def logs(c: Client, m: Message):
+    await m.reply_text("Sending LOGs...")
     await pbot.send_document(
         document='log.txt',
         caption="`Hitsuki's System LOGs`",
     chat_id=SYSTEM_DUMP,
-    parse_mode="markdown"
-    )
+    parse_mode="markdown")
+    await m.reply_text("Done! LOGs are sent to system_dump.")

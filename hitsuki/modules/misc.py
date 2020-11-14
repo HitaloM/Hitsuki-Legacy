@@ -16,6 +16,7 @@
 import html
 import re
 import urllib.parse as urlparse
+import subprocess
 from datetime import datetime
 from typing import Optional, List
 
@@ -199,10 +200,14 @@ def markdown_help(bot: Bot, update: Update):
 
 @run_async
 def stats(bot: Bot, update: Update):
-    update.effective_message.reply_text(
-        # This text doesn't get translated as it is internal message.
-        "*Current Stats:*\n" + "\n".join([mod.__stats__() for mod in STATS]),
-        parse_mode=ParseMode.MARKDOWN)
+    # This text doesn't get translated as it is internal message.
+    process = subprocess.Popen(
+        "neofetch --stdout", shell=True, text=True, stdout=subprocess.PIPE)
+    output = process.communicate()[0]
+    stats = "<b>Current stats:</b>\n" + "\n" + output + "\n".join(
+        [mod.__stats__() for mod in STATS])
+    result = re.sub(r'(\d+)', r'<code>\1</code>', stats)
+    update.effective_message.reply_text(result, parse_mode=ParseMode.HTML)
 
 
 @run_async
