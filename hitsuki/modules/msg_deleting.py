@@ -13,6 +13,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from asyncio import sleep
+
 from hitsuki.events import register
 from hitsuki.modules.helper_funcs.telethon.chat_status import user_is_admin, can_delete_messages
 from hitsuki.modules.tr_engine.strings import tld
@@ -51,7 +53,10 @@ async def purge(event):
 
     await event.client.delete_messages(chat, msgs)
     text = tld(chat, "purge_msg_success")
-    await event.respond(text, parse_mode='md')
+    done = await event.respond(text, parse_mode='md')
+
+    await sleep(2)
+    await done.delete()
 
 
 @register(pattern="^/del$")
