@@ -659,16 +659,6 @@ misc_info_is_whitelisted: "\nEssa pessoa é um dos meus usuários da lista branc
 misc_info_swban1: "\n\n<b>Essa pessoa está banida na SpamWatch!</b>"
 misc_info_swban2: "\nMotivo: <pre>{}</pre>"
 misc_info_swban3: "\nReclame em @SpamWatchSupport"
-misc_gdpr: Excluindo dados identificáveis...
-misc_send_gdrp: |
-  Seus dados pessoais foram excluídos.
-
-  Note que isso não cancelará o banimento de quaisquer chats, pois são dados de Telegram, não os dados deste bot. 
-  Floods, avisos e gbans também são preservados, a partir 
-  [disto](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), 
-  que afirma claramente que o direito de apagamento não se aplica 
-  para o desempenho de uma tarefa realizada no interesse público, 
-  como é o caso dos dados acima mencionados.
 misc_md_list: |
   O Markdown é uma ferramenta de formatação muito poderosa suportada pelo Telegram. O Hitsuki tem algumas melhorias, para garantir que \
   as mensagens salvas serão analisadas corretamente e permitem criar botões.
@@ -708,7 +698,6 @@ misc_help: |
   - /pyroid: Similar ao /id mas usando métodos do @pyrogram.
   - /info: Obtém informações sobre um usuário.
   - /whois: Obtém informações sobre um usuário usando os métodos do @pyrogram.
-  - /gdpr: Deleta suas informações da base de dados do bot (Somente no PV)
   - /markdownhelp: Resume rápido de como o Markdown funciona no Telegram (Somente no PV).
   - /git: Retorna informações sobre um usuário ou organização do GitHub.
   - /repo: Retornar a lista de repositórios de usuários ou organizações do GitHub (Limitado em 40)
@@ -773,7 +762,7 @@ last_fm_help: |
 #Purge
 modname_msg_deleting: Purgar
 purge_msg_cant_del_too_old: Todas as mensagens não podem ser excluídas. As mensagens podem ser muito antigas, talvez você não tenha direitos de exclusão ou isso pode não ser um supergrupo.
-purge_msg_success: Limpeza concluída.
+purge_msg_success: Limpeza concluída! __Esta mensagem será excluída automaticamente após 2 segundos.__
 purge_invalid: Responda a uma mensagem para selecionar por onde iniciar a limpeza.
 purge_invalid2: 'O que você deseja remover?'
 msg_deleting_help: |

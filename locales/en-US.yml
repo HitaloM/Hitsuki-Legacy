@@ -661,16 +661,6 @@ misc_info_is_whitelisted: "\nThis person is one of my whitelisted user, one rare
 misc_info_swban1: "\n\n<b>This person is banned in SpamWatch!</b>"
 misc_info_swban2: "\nReason: <pre>{}</pre>"
 misc_info_swban3: "\nAppeal at @SpamWatchSupport"
-misc_gdpr: Deleting identifiable data...
-misc_send_gdrp: |
-  Your personal data has been deleted.
-
-  Note that this will not unban you from any chats, as that is telegram data, not this bot's data. 
-  Flooding, warns, and gbans are also preserved, as of 
-  [this](https://ico.org.uk/for-organisations/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-erasure/), 
-  which clearly states that the right to erasure does not apply 
-  for the performance of a task carried out in the public interest, 
-  as is the case for the aforementioned pieces of data.
 misc_md_list: |
   Markdown is a very powerful formatting tool supported by telegram. Hitsuki has some enhancements, to make sure that \
   saved messages are correctly parsed, and to allow you to create buttons.
@@ -710,7 +700,6 @@ misc_help: |
   - /pyroid: Similar to /id but using @pyrogram's method.
   - /info: get information about a user.
   - /whois: get information about a user using @pyrogram's methods.
-  - /gdpr: deletes your information from the bot's database. Private chats only.
   - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
   - /git: Returns info about a GitHub user or organization.
   - /repo: Return the GitHub user or organization repository list (Limited at 40)
@@ -775,7 +764,7 @@ last_fm_help: |
 #Purge
 modname_msg_deleting: Purges
 purge_msg_cant_del_too_old: Cannot delete all messages. The messages may be too old, I might not have delete rights, or this might not be a supergroup.
-purge_msg_success: Purge completed.
+purge_msg_success: Purge completed! __This message will be deleted automatically after 2 seconds.__
 purge_invalid: Reply to a message to select where to start purging from.
 purge_invalid2: What do you want to delete?
 msg_deleting_help: |

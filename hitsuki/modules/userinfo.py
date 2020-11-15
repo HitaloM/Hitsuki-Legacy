@@ -161,11 +161,6 @@ def __user_info__(user_id, chat_id):
         return ""
 
 
-def __gdpr__(user_id):
-    sql.clear_user_info(user_id)
-    sql.clear_user_bio(user_id)
-
-
 __help__ = True
 
 SET_BIO_HANDLER = DisableAbleCommandHandler("setbio", set_about_bio)
