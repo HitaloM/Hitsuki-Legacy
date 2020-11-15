@@ -24,10 +24,11 @@ from telethon import TelegramClient
 
 # Enable logging
 logging.basicConfig(
+    logging.getLogger("pyrogram.syncer").setLevel(logging.WARNING),
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.FileHandler('log.txt'),
               logging.StreamHandler()],
-    level=logging.WARNING)
+    level=logging.INFO)
 
 LOGGER = logging.getLogger(__name__)
 
