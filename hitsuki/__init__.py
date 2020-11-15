@@ -27,7 +27,10 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.FileHandler('log.txt'),
               logging.StreamHandler()],
-    level=logging.WARNING)
+    level=logging.INFO)
+
+# To avoid pyrogram.syncer flood every 20s
+logging.getLogger("pyrogram.syncer").setLevel(logging.WARNING)
 
 LOGGER = logging.getLogger(__name__)
 
