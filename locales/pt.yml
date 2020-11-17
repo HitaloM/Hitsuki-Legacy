@@ -889,45 +889,18 @@ rules_help: |
 modname_translator: Tradutor
 translator_translated: |
   De `{}` para `{}`:\n{}
-translator_err: Erro ao traduzir:\n{}
-translator_help: "- /tr (código do idioma): Obtenha a tradução da mensagem respondida."
-translator_no_str: Responda a uma mensagem para traduzir!
-translator_no_args: 'Especifique o idioma para o qual deseja traduzir a mensagem respondida!'
-translator_animal_translated: |
-  Animal traduzido {} com sucesso!
-  Seu animal diz:\n`{}`
-translator_animal_lang:
-   - Eu te amo
-   - Oi!
-   - 'Felicidades!'
-   - 'Não me toque!'
-   - 'Ouve! Tenho fome!'
-   - Ziz ...
-   - 'O que é esse retângulo preto?'
-   - 'Quero sair!'
-   - 'Madeira ótima! Espere ... você está gravando ?!'
-   - 'Eu não vou falar!'
-   - 'Onde estão meus amigos?'
-   - Eu preciso de um banheiro.
-   - 'Deixa-me só!'
-   - 'Onde estão minhas testemunhas?'
-   - 'Minha perna está perdendo!'
-   - 'Me envie agora!'
-   - 'Por que você está me assediando ?!'
-   - Foda-se.
-   - 'Estou me comendo!'
-   - 'Ligue para o pacote! Existe um problema em potencial! Alguém está entrando em nosso território!'
-   - 'Há alguém ali? Estou sozinho e preciso de companhia.'
-   - 'Pare com isso!'
-   - 'Olá!'
-   - 'O que é isso?'
-   - 'Hã?'
-   - 'Manhã!'
-   - 'Vamos jogar!'
-   - 'Isto é divertido!'
-   - 'Estou com muito medo de você.'
-   - 'Estou prestes a seguir em frente!'
-   - 'você gosta.'
+translator_err: Um erro occoreu no processo de tradução:\n{}
+translator_usage: |
+  Responda uma mensagem ou escreva algo para traduzir para o idioma desejado.
+
+  Exemplo: `/tr pt-en`: Traduz Português para Inglês.
+  Ou use: `/tr en`: Traduz alguma coisa para Inglês.
+translator_help: |
+ - /tr (idioma): Tarduz a mensagem respondida.
+
+ *Exemplos:* 
+  `/tr en`: Traduz alguma coisa para Inglês.
+  `/tr pt-en`: Traduz Português para Inglês.
 #URL Blacklist
 modname_urlblacklist: Lista negra de domínios
 url_blacklist_success: "Adicionado o domínio <code>{}</code> a lista negra!"
