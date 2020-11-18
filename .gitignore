@@ -13,7 +13,7 @@ images/sticker.png
 log.err
 log.log
 *.backup
-hitsuki.session
+hitsuki.session*
 HitsukiPyro.session*
 log.txt
 venv/

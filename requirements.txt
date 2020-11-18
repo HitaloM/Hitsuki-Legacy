@@ -3,7 +3,7 @@ git+https://github.com/HitsukiNetwork/Hitsuki-PTB.git
 telethon>=1.17.5
 pyrogram>=1.0.7
 #################
-aiohttp>=3.7.2
+aiohttp[speedups]>=3.7.2
 bleach>=3.2.1
 emoji>=0.6.0
 future>=0.18.2
