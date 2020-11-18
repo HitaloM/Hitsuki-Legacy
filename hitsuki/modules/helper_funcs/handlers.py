@@ -69,14 +69,14 @@ class CustomHandler(Handler):
         pass_chat_data: bool = False,
         run_async: bool = True,
     ):
- 
+
         super().__init__(
             callback,
             pass_update_queue=pass_update_queue,
             pass_job_queue=pass_job_queue,
             pass_user_data=pass_user_data,
             pass_chat_data=pass_chat_data,
-            run_async = True,
+            run_async=True,
         )
 
 
@@ -88,7 +88,7 @@ class CustomCommandHandler(tg.CommandHandler):
 
     def check_update(self, update):
         if (isinstance(update, Update) and
-            (update.message or update.edited_message and self.allow_edited)):
+                (update.message or update.edited_message and self.allow_edited)):
             message = update.message or update.edited_message
 
             if update.effective_user and int(
@@ -130,7 +130,7 @@ class GbanLockHandler(tg.CommandHandler):
 
     def check_update(self, update):
         if (isinstance(update, Update) and
-            (update.message or update.edited_message and self.allow_edited)):
+                (update.message or update.edited_message and self.allow_edited)):
             message = update.message or update.edited_message
             if sql.is_user_gbanned(update.effective_user.id):
                 return False
