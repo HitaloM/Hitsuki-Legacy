@@ -762,7 +762,8 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
             update.effective_message.reply_document(
                 document=output,
                 filename="fbanlist.txt",
-                caption=("Here is a list of all the chats that joined the federation {}.")
+                caption=(
+                    "Here is a list of all the chats that joined the federation {}.")
                 .format(info['fname']))
 
 
