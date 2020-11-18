@@ -130,7 +130,7 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
         update.effective_message.reply_text(tld(chat.id, "feds_owner_only"))
         return
 
-    update.effective_message.reply_text(tld(chat.id, "feds_delete_confirm".format(getinfo['fname'])),
+    update.effective_message.reply_text(tld(chat.id, "feds_delete_confirm").format(getinfo['fname']),
                     reply_markup=InlineKeyboardMarkup(
                                             [[InlineKeyboardButton(text="⚠️ Delete Federation ⚠️", callback_data="rmfed_{}".format(fed_id))],
                                              [InlineKeyboardButton(text="Cancel", callback_data="rmfed_cancel")]]))
@@ -770,6 +770,7 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
 @run_async
 def del_fed_button(bot, update):
     query = update.callback_query
+    userid = query.message.chat.id
     fed_id = query.data.split("_")[1]
 
     if fed_id == 'cancel':
@@ -781,9 +782,7 @@ def del_fed_button(bot, update):
         delete = sql.del_fed(fed_id)
         if delete:
             query.message.edit_text(
-                "You have removed your Federation! Now all the Groups that are connected with `{}` do not have a Federation."
-                .format(getfed['fname']),
-                parse_mode='markdown')
+                "You have removed your Federation! Now all the Groups that are connected with `{}` do not have a Federation.".format(getfed['fname']), parse_mode='markdown')
 
 
 def is_user_fed_admin(fed_id, user_id):

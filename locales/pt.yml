@@ -380,7 +380,7 @@ feds_err_no_args: Por favor, escreva o nome da federação.
 feds_delete_not_found: 'Esta federação não foi encontrada.'
 feds_owner_only: 'Somente os proprietários da federação podem fazer isso.'
 feds_fedadmin_only: 'Somente os administradores da federação podem fazer isso.'
-feds_delete_confirm: 'Você tem certeza que quer eliminar a sua federação? Esta ação não pode ser cancelada, você irá perder sua lista de banimentos, e a federação <code>{}</code> será perdida permanentemente!'
+feds_delete_confirm: 'Você tem certeza que quer eliminar a sua federação? Esta ação não pode ser cancelada, você irá perder sua lista de banimentos, e a federação {} será perdida permanentemente!'
 feds_group_not_in_fed: 'Este grupo não está em nenhuma federação'
 feds_group_part_of_fed: "Este grupo faz parte da seguinte federação:"
 feds_group_joined_fed: Você vai mesmo se juntar a duas federações em um grupo? mas que traira.

@@ -380,7 +380,7 @@ feds_err_no_args: Please write down the name of the federation.
 feds_delete_not_found: This federation is not found!
 feds_owner_only: Only federation owners can do this!
 feds_fedadmin_only: Only federation admins can do this!
-feds_delete_confirm: Are you sure you want to delete your federation? This action cannot be cancelled, you will lose your entire ban list, and <code>{}</code> federation will be permanently lost!
+feds_delete_confirm: Are you sure you want to delete your federation? This action cannot be cancelled, you will lose your entire ban list, and {} federation will be permanently lost!
 feds_group_not_in_fed: This group is not in any federation!
 feds_group_part_of_fed: "This chat is part of the following federation:"
 feds_group_joined_fed: Uh, Are you gonna join two federations at one chat?
