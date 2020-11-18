@@ -15,54 +15,70 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from haruka import tbot, SUDO_USERS, WHITELIST_USERS
-from telethon.tl.types import ChannelParticipantsAdmins
+from telethon.tl.functions.channels import GetParticipantRequest
+from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantCreator, ChannelParticipantsAdmins
 
 
 async def user_is_ban_protected(user_id: int, message):
-    status = False
     if message.is_private or user_id in (WHITELIST_USERS + SUDO_USERS):
         return True
+
+    if message.is_channel:
+        participant = await tbot(
+            GetParticipantRequest(message.chat_id, user_id))
+        return isinstance(participant.participant,
+                          (ChannelParticipantAdmin, ChannelParticipantCreator))
 
     async for user in tbot.iter_participants(message.chat_id,
                                              filter=ChannelParticipantsAdmins):
         if user_id == user.id:
-            status = True
-            break
-    return status
+            return True
+    return False
 
 
 async def user_is_admin(user_id: int, message):
-    status = False
-    if message.is_private:
+    if message.is_private or user_id in SUDO_USERS:
         return True
+
+    if message.is_channel:
+        participant = await tbot(
+            GetParticipantRequest(message.chat_id, user_id))
+        return isinstance(participant.participant,
+                          (ChannelParticipantAdmin, ChannelParticipantCreator))
 
     async for user in tbot.iter_participants(message.chat_id,
                                              filter=ChannelParticipantsAdmins):
-        if user_id == user.id or user_id in SUDO_USERS:
-            status = True
-            break
-    return status
+        if user_id == user.id:
+            return True
+    return False
 
 
 async def is_user_admin(user_id: int, chat_id):
-    status = False
-    async for user in tbot.iter_participants(chat_id,
-                                             filter=ChannelParticipantsAdmins):
-        if user_id == user.id or user_id in SUDO_USERS:
-            status = True
-            break
-    return status
+    if user_id in SUDO_USERS:
+        return True
+
+    try:
+        participant = await tbot(GetParticipantRequest(chat_id, user_id))
+        return isinstance(participant.participant,
+                          (ChannelParticipantAdmin, ChannelParticipantCreator))
+    except TypeError:
+        async for user in tbot.iter_participants(
+                chat_id, filter=ChannelParticipantsAdmins):
+            if user_id == user.id:
+                return True
+    return False
 
 
 async def haruka_is_admin(chat_id: int):
-    status = False
-    haruka = await tbot.get_me()
-    async for user in tbot.iter_participants(chat_id,
-                                             filter=ChannelParticipantsAdmins):
-        if haruka.id == user.id:
-            status = True
-            break
-    return status
+    try:
+        participant = await tbot(GetParticipantRequest(chat_id, 'me'))
+        return isinstance(participant.participant, ChannelParticipantAdmin)
+    except TypeError:
+        async for user in tbot.iter_participants(
+                chat_id, filter=ChannelParticipantsAdmins):
+            if user.is_self:
+                return True
+    return False
 
 
 async def is_user_in_chat(chat_id: int, user_id: int):
