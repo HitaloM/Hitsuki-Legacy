@@ -17,6 +17,7 @@ import telegram.ext as tg
 from pyrate_limiter import (BucketFullException, Duration, RequestRate,
                             Limiter, MemoryListBucket)
 from telegram import Update
+from telegram.ext.handler import Handler
 
 import hitsuki.modules.sql.antispam_sql as sql
 from hitsuki import OWNER_ID, SUDO_USERS
@@ -56,6 +57,27 @@ class AntiSpam:
 
 
 SpamChecker = AntiSpam()
+
+
+class CustomHandler(Handler):
+    def __init__(
+        self,
+        callback,
+        pass_update_queue: bool = False,
+        pass_job_queue: bool = False,
+        pass_user_data: bool = False,
+        pass_chat_data: bool = False,
+        run_async: bool = True,
+    ):
+ 
+        super().__init__(
+            callback,
+            pass_update_queue=pass_update_queue,
+            pass_job_queue=pass_job_queue,
+            pass_user_data=pass_user_data,
+            pass_chat_data=pass_chat_data,
+            run_async = True,
+        )
 
 
 class CustomCommandHandler(tg.CommandHandler):

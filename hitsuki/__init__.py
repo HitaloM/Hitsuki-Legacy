@@ -143,9 +143,10 @@ WHITELIST_USERS = list(WHITELIST_USERS)
 SUPPORT_USERS = list(SUPPORT_USERS)
 
 # Load at end to ensure all prev variables have been set
-from hitsuki.modules.helper_funcs.handlers import CustomCommandHandler, CustomRegexHandler
+from hitsuki.modules.helper_funcs.handlers import CustomHandler, CustomCommandHandler, CustomRegexHandler
 
 # make sure the regex handler can take extra kwargs
 tg.RegexHandler = CustomRegexHandler
 
+tg.handler.Handler = CustomHandler
 tg.CommandHandler = CustomCommandHandler
