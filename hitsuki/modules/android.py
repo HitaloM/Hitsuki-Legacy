@@ -267,6 +267,8 @@ async def magisk(event):
     if event.sender_id is None:
         return
 
+    chat_id = event.chat_id
+
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     releases = '**Latest Magisk Releases:**\n'
     variant = ['master/stable', 'master/beta', 'canary/canary']
