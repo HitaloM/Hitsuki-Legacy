@@ -371,6 +371,68 @@ disable_help: |
   *Somente administrador:*
   - /enable <comando>: Ativa um comando.
   - /disable <comando>: Desativa um comando.
+#Feds
+modname_feds: Federações
+feds_create_fail: 'A criação da federação falhou'
+feds_create_success: "*Uma nova federação foi criada!\nNome: `{}`\nID: `{}`\n\nExecute o comando abaixo em outros grupos para adicioná-los a federação:\n`/joinfed {}`"
+feds_create_success_logger: "A federação <b>{}</b> foi criada com o ID: <pre>{}</pre>"
+feds_err_no_args: Por favor, escreva o nome da federação.
+feds_delete_not_found: 'Esta federação não foi encontrada.'
+feds_owner_only: 'Somente os proprietários da federação podem fazer isso.'
+feds_fedadmin_only: 'Somente os administradores da federação podem fazer isso.'
+feds_delete_confirm: 'Você tem certeza que quer eliminar a sua federação? Esta ação não pode ser cancelada, você irá perder sua lista de banimentos, e a federação <code>{}</code> será perdida permanentemente!'
+feds_group_not_in_fed: 'Este grupo não está em nenhuma federação'
+feds_group_part_of_fed: "Este grupo faz parte da seguinte federação:"
+feds_group_joined_fed: Você vai mesmo se juntar a duas federações em um grupo? mas que traira.
+feds_fedid_invalid: Por favor, insira um ID de federação válido
+feds_join_unknown_err: Devido a um erro desconhecido, não pode se unir a uma federação.
+feds_join_success: 'Grupo adicionado a federação!'
+feds_leave_success: "Este grupo deixou a federação: {}."
+feds_leave_not_joined: 'Como pode deixar uma federação a qual você nunca se uniu?'
+feds_promote_owner: 'Porque você está tentando promover o dono da federação?'
+feds_promote_bot: 'Eu já sou administrador de todas as federações!'
+feds_promote_success: 'Promovido com sucesso.'
+feds_promote_failed: 'Falha ao promover.'
+feds_demote_bot: 'Não posso ser rebaixado de uma federação.'
+feds_demote_target_not_admin: 'Não posso rebaixar as pessoas que não são administradores da federação.'
+feds_demote_success: 'Rebaixado com sucesso'
+feds_demote_failed: 'Falha ao rebaixar.'
+feds_info: |
+  <b>i Info da federação:</b>
+  UnionID: <code>{}</code>
+  Nome: {}
+  Criador: {}
+  Administradores: <code>{}</code>
+  Total de usuários banidos: <code>{}</code>
+  Número de grupos nesta federação: <code>{}</code>
+feds_admins: |
+  <b>Administradores de federação '{}':<b>
+feds_help: |
+  Oh, gerenciamento de grupos. Tudo é divertido, até que um spammer entre no seu grupo e você precise bloqueá-lo. Então você tem que começar a banir mais e mais, e isso dói.
+  Mas então você tem muitos grupos, e você não quer que esse remetente de spam esteja nos seus grupos, como você pode lidar com isso? Você precisa bloqueá-lo manualmente em todos os seus grupos?
+
+  Com certeza não! Com a federação, você pode banir um usuário de um chat e banir automaticamente dos outros chats na federação.
+  Você pode até definir administradores da federação, para que um admin de sua confiança possa banir usuários todos os chats que você deseja proteger.
+
+  Ainda na fase experimental, a criação de uma federação só pode ser feita pelo meu criador @Hitalo.
+
+  Comandos:
+  - /newfed <fedname>: Cria uma nova Federação com o nome dado. Os usuários podem ter apenas uma federação. Este método também pode ser usado para renomear a Federação. (máximo de 64 caracteres)
+  - /delfed: Exclui sua Federação e qualquer informação relacionada a ela. Não cancelará usuários bloqueados.
+  - /fedinfo <FedID>: Traz informações sobre a Federação especificada.
+  - /joinfed <FedID>: Une o grupo atual com uma Federação. Somente os donos do grupo podem fazer isso. Cada grupo pode estar apenas em uma federação.
+  - /leavefed <FedID>: Deixa a federação atual. Somente os donos do grupo podem fazer isso.
+  - /fpromote <user>: Promove usuários a administradores da federação, somente o dono da federação pode fazer isso.
+  - /fdemote <user>: Rebaixa um administrador da federação a um usuario normal, somente o dono da federação pode fazer isso.
+  - /fban <user>: Bane o usuário de todos os chats que fazem parte da federação a qual este grupo faz parte.
+  - /unfban <user>: Desbane o usuário de todos os chats que fazem parte da federação a qual esse grupo faz parte.
+  - /setfrules: Seta as regras da federação.
+  - /frules: Mostra as regras da federação.
+  - /chatfed: Ver em que federação está o chat atual.
+  - /fedadmins: Lista os administradores da Federação.
+  - /fbanlist: Listaa todos os usuários que foram banidos da federação até o momento.
+  - /fedchats: Lista todos os chats que estão na federação atual.
+  - /importfbans: Importa a lista de fbans da federação a partir de um arquivo de backup.
 #TODO: To be continued
 #Keyboard
 keyboard_disconnect: Desconectar de um chat
