@@ -131,9 +131,9 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
         return
 
     update.effective_message.reply_text(tld(chat.id, "feds_delete_confirm".format(getinfo['fname'])),
-                    reply_markup=InlineKeyboardMarkup(
-                                            [[InlineKeyboardButton(text="⚠️ Delete Federation ⚠️", callback_data="rmfed_{}".format(fed_id))],
-                                             [InlineKeyboardButton(text="Cancel", callback_data="rmfed_cancel")]]))
+                                        reply_markup=InlineKeyboardMarkup(
+        [[InlineKeyboardButton(text="⚠️ Delete Federation ⚠️", callback_data="rmfed_{}".format(fed_id))],
+         [InlineKeyboardButton(text="Cancel", callback_data="rmfed_cancel")]]))
 
 
 @run_async
