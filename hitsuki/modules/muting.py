@@ -135,6 +135,11 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
         message.reply_text(tld(chat.id, "unmute_is_an_admin"))
         return ""
 
+    if member.status != 'restricted':
+        message.reply_text(
+            tld(chat.id, "unmute_not_muted").format(chatD.title))
+        return ""
+
     if member.status != 'kicked' and member.status != 'left':
         if member.can_send_messages and member.can_send_media_messages \
                 and member.can_send_other_messages and member.can_add_web_page_previews:
@@ -227,7 +232,7 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     log = "<b>{}:</b>" \
-          "\n#TEMP MUTED" \
+          "\n#TMUTED" \
           "\n<b>Admin:</b> {}" \
           "\n<b>User:</b> {}" \
           "\n<b>Time:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name),
@@ -352,6 +357,11 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     member = chatD.get_member(int(user_id))
+
+    if member.status != 'restricted':
+        message.reply_text(
+            tld(chat.id, "unrestrict_not_restricted").format(chatD.title))
+        return ""
 
     if member.status != 'kicked' and member.status != 'left':
         if member.can_send_messages and member.can_send_media_messages \
