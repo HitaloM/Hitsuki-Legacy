@@ -380,7 +380,7 @@ feds_err_no_args: Please write down the name of the federation.
 feds_delete_not_found: This federation is not found!
 feds_owner_only: Only federation owners can do this!
 feds_fedadmin_only: Only federation admins can do this!
-feds_delete_confirm: Are you sure you want to delete your federation? This action cannot be cancelled, you will lose your entire ban list, and <code>{}</code> federation will be permanently lost!
+feds_delete_confirm: Are you sure you want to delete your federation? This action cannot be cancelled, you will lose your entire ban list, and {} federation will be permanently lost!
 feds_group_not_in_fed: This group is not in any federation!
 feds_group_part_of_fed: "This chat is part of the following federation:"
 feds_group_joined_fed: Uh, Are you gonna join two federations at one chat?
@@ -399,7 +399,7 @@ feds_demote_target_not_admin: I cannot demote people who are not federation admi
 feds_demote_success: Get out of here!
 feds_demote_failed: Demoting failed!
 feds_info: |
-  <b>ℹ️ Federation Information:</b>
+  <b>Federation Information:</b>
   FedID: <code>{}</code>
   Name: {}
   Creator: {}
@@ -407,7 +407,7 @@ feds_info: |
   Total banned users: <code>{}</code>
   Number of groups in this federation: <code>{}</code>
 feds_admins: |
-  <b>Admins in federation '{}':<b>
+  <b>Admins in federation '{}':</b>
 feds_help: |
   Ah, group management. Everything is fun, until the spammer starts entering your group, and you have to block it. Then you need to start banning more, and more, and it hurts.
   But then you have many groups, and you don't want this spammer to be in one of your groups - how can you deal with it? Do you have to manually block it, in all your groups?
@@ -434,6 +434,7 @@ feds_help: |
   - /fbanlist: Displays all users who are victimized at the Federation at this time.
   - /fedchats: Get all the chats that are connected in the Federation.
   - /importfbans: Reply to the Federation backup message file to import the banned list to the Federation now.
+  - /fednotif <on/off>: Notifies in PM when there are users who are fbaned/unfbanned.
 #TODO: To be continued
 #Keyboard
 keyboard_disconnect: Disconnect from a chat

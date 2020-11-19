@@ -213,9 +213,10 @@ def stop_filter(bot: Bot, update: Update):
 def reply_filter(bot: Bot, update: Update):
     chat = update.effective_chat
     message = update.effective_message
+    user = update.effective_user
 
-    if update.effective_user.id == 777000:
-        return
+    if user.id == 777000:
+        return ""
 
     to_match = extract_text(message)
     if not to_match:
@@ -319,7 +320,7 @@ def stop_all_filters(bot: Bot, update: Update):
 
 def __stats__():
     return "• <code>{}</code> filters, across <code>{}</code> chats.".format(sql.num_filters(),
-                                                       sql.num_chats())
+                                                                             sql.num_chats())
 
 
 def __migrate__(old_chat_id, new_chat_id):

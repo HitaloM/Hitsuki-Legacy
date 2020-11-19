@@ -141,4 +141,8 @@ class CustomMessageHandler(tg.MessageHandler):
 
         def check_update(self, update):
             if isinstance(update, Update) and update.effective_message:
-                return self.filters(update)
+                if self.filters(update):
+                    if SpamChecker.check_user(update.effective_user.id):
+                        return None
+                    return True
+                return False
