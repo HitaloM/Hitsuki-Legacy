@@ -18,15 +18,18 @@ import uuid
 from io import BytesIO
 from typing import List
 
-from telegram import ParseMode, Update, Bot, MessageEntity, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram import (ParseMode, Update, Bot, MessageEntity,
+                      InlineKeyboardMarkup, InlineKeyboardButton)
 from telegram.error import BadRequest, TelegramError, Unauthorized
 from telegram.ext import run_async, CommandHandler, CallbackQueryHandler
 from telegram.utils.helpers import mention_html
 
 import hitsuki.modules.sql.feds_sql as sql
-from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS, MESSAGE_DUMP, LOGGER
+from hitsuki import (dispatcher, OWNER_ID, SUDO_USERS,
+                     WHITELIST_USERS, MESSAGE_DUMP, LOGGER)
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.extraction import extract_user, extract_user_and_text
+from hitsuki.modules.helper_funcs.extraction import (extract_user,
+                                                     extract_user_and_text)
 from hitsuki.modules.helper_funcs.misc import send_to_list
 from hitsuki.modules.helper_funcs.string_handling import markdown_parser
 from hitsuki.modules.tr_engine.strings import tld
@@ -40,10 +43,6 @@ from hitsuki.modules.tr_engine.strings import tld
 # Please don't remove these comment, if you're still respecting us, the module maker and reworkers.
 #
 # Total times spend for this module is approx. 58+ hours
-
-# LOGGER.info(
-#     "feds: Original: MrYacha, Reworked 01: RealAkito, Reworked 02: AyraHikari."
-# )
 
 FBAN_ERRORS = {
     "User is an administrator of the chat", "Chat not found",
@@ -70,9 +69,11 @@ def new_fed(bot: Bot, update: Update):
     chat = update.effective_chat
     user = update.effective_user
     message = update.effective_message
+
     if chat.type != "private":
         update.effective_message.reply_text(tld(chat.id, "common_cmd_pm_only"))
         return
+
     fednam = message.text.split(None, 1)[1]
     if not fednam == '':
         fed_id = str(uuid.uuid4())
@@ -93,8 +94,8 @@ def new_fed(bot: Bot, update: Update):
             parse_mode=ParseMode.MARKDOWN)
         try:
             bot.send_message(MESSAGE_DUMP,
-                             tld(chat.id, "feds_create_success_logger").format(
-                                 fed_name, fed_id),
+                             ("Federation <b>{}</b> has been created with ID: <pre>{}</pre>")
+                             .format(fed_name, fed_id),
                              parse_mode=ParseMode.HTML)
         except Exception:
             LOGGER.warning("Cannot send a message to MESSAGE_DUMP")
@@ -106,9 +107,11 @@ def new_fed(bot: Bot, update: Update):
 def del_fed(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     user = update.effective_user
+
     if chat.type != "private":
         update.effective_message.reply_text(tld(chat.id, "common_cmd_pm_only"))
         return
+
     if args:
         is_fed_id = args[0]
         getinfo = sql.get_fed_info(is_fed_id)
@@ -137,7 +140,6 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-# @user_admin
 def fed_chat(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     fed_id = sql.get_fed_id(chat.id)
@@ -382,7 +384,7 @@ def fed_admin(bot: Bot, update: Update, args: List[str]):
 
     members = sql.all_fed_members(fed_id)
     if len(members) == 0:
-        text += "\nThere are no admins in this federation"
+        text += tld(chat.id, "feds_noadmins")
     else:
         text += "\nAdmin:\n"
         for x in members:
@@ -398,14 +400,19 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     user = update.effective_user
     fed_id = sql.get_fed_id(chat.id)
 
-    if chat.type == 'private':
-        send_message(update.effective_message,
-                     "This command is specific to the group, not to our pm!")
+    if chat.type == "private":
+        update.effective_message.reply_text(
+            tld(chat.id, "common_cmd_group_only"))
         return
 
     if not fed_id:
         update.effective_message.reply_text(
-            "This group is not a part of any federation!")
+            tld(chat.id, "feds_nofed"))
+        return
+
+    if user.id in (777000, 1087968824):
+        update.effective_message.reply_text(
+            tld(chat.id, "feds_tg_bot"))
         return
 
     info = sql.get_fed_info(fed_id)
@@ -413,11 +420,10 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     HAHA = OW.id
     FEDADMIN = sql.all_fed_users(fed_id)
     FEDADMIN.append(int(HAHA))
-    getfednotif = sql.user_feds_report(info['owner'])
 
     if is_user_fed_admin(fed_id, user.id) is False:
         update.effective_message.reply_text(
-            "Only federation admins can do this!")
+            tld(chat.id, "feds_notfadmin"))
         return
 
     message = update.effective_message
@@ -427,7 +433,7 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     fban, fbanreason = sql.get_fban_user(fed_id, user_id)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user")
+        message.reply_text(tld(chat.id, "common_err_no_user"))
         return
 
     if user_id == bot.id:
@@ -695,39 +701,6 @@ def get_frules(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def fed_notif(bot: Bot, update: Update, args: List[str]):
-    chat = update.effective_chat
-    user = update.effective_user
-    msg = update.effective_message
-    fed_id = sql.get_fed_id(chat.id)
-
-    if not fed_id:
-        update.effective_message.reply_text(
-            "This group is not a part of any federation!")
-        return
-
-    if args:
-        if args[0] in ("yes", "on"):
-            sql.set_feds_setting(user.id, True)
-            msg.reply_text(
-                "Reporting Federation back up! Every user who is fban / unfban you will be notified via PM."
-            )
-        elif args[0] in ("no", "off"):
-            sql.set_feds_setting(user.id, False)
-            msg.reply_text(
-                "Reporting Federation has stopped! Every user who is fban / unfban you will not be notified via PM."
-            )
-        else:
-            msg.reply_text("Please enter `on`/`off`", parse_mode="markdown")
-    else:
-        getreport = sql.user_feds_report(user.id)
-        msg.reply_text(
-            "Your current Federation report preferences: `{}`".format(
-                getreport),
-            parse_mode="markdown")
-
-
-@run_async
 def fed_chats(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     user = update.effective_user
@@ -776,7 +749,6 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
 @run_async
 def del_fed_button(bot, update):
     query = update.callback_query
-    userid = query.message.chat.id
     fed_id = query.data.split("_")[1]
 
     if fed_id == 'cancel':
@@ -894,9 +866,10 @@ UN_BAN_FED_HANDLER = CommandHandler("unfban", unfban, pass_args=True)
 FED_SET_RULES_HANDLER = CommandHandler("setfrules", set_frules, pass_args=True)
 FED_GET_RULES_HANDLER = CommandHandler("frules", get_frules, pass_args=True)
 FED_CHAT_HANDLER = CommandHandler("chatfed", fed_chat, pass_args=True)
-FED_ADMIN_HANDLER = CommandHandler("fedadmins", fed_admin, pass_args=True)
-FED_NOTIF_HANDLER = CommandHandler("fednotif", fed_notif, pass_args=True)
-FED_CHATLIST_HANDLER = CommandHandler("fedchats", fed_chats, pass_args=True)
+FED_ADMIN_HANDLER = DisableAbleCommandHandler("fedadmins", fed_admin,
+                                              pass_args=True)
+FED_CHATLIST_HANDLER = DisableAbleCommandHandler("fedchats", fed_chats,
+                                                 pass_args=True)
 
 DELETEBTN_FED_HANDLER = CallbackQueryHandler(del_fed_button, pattern=r"rmfed_")
 
@@ -913,7 +886,6 @@ dispatcher.add_handler(FED_SET_RULES_HANDLER)
 dispatcher.add_handler(FED_GET_RULES_HANDLER)
 dispatcher.add_handler(FED_CHAT_HANDLER)
 dispatcher.add_handler(FED_ADMIN_HANDLER)
-dispatcher.add_handler(FED_NOTIF_HANDLER)
 dispatcher.add_handler(FED_CHATLIST_HANDLER)
 
 dispatcher.add_handler(DELETEBTN_FED_HANDLER)

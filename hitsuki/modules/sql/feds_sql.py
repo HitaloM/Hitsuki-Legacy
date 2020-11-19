@@ -499,13 +499,6 @@ def search_fed_by_id(fed_id):
     return result
 
 
-def user_feds_report(user_id: int) -> bool:
-    user_setting = FEDERATION_NOTIFICATION.get(str(user_id))
-    if user_setting is None:
-        user_setting = True
-    return user_setting
-
-
 def set_feds_setting(user_id: int, setting: bool):
     with FEDS_SETTINGS_LOCK:
         global FEDERATION_NOTIFICATION

@@ -373,9 +373,12 @@ disable_help: |
   - /disable <comando>: Desativa um comando.
 #Feds
 modname_feds: Federações
+feds_noadmins: "\nEsta federação não contém administradores."
+feds_nofed: "Este grupo não está em uma federação!"
+feds_notfadmin: "Apenas admistradores podem fazer isso!"
+feds_tg_bot: "Eu não vou banir um bot do Telegram!"
 feds_create_fail: 'A criação da federação falhou'
 feds_create_success: "*Uma nova federação foi criada!\nNome: `{}`\nID: `{}`\n\nExecute o comando abaixo em outros grupos para adicioná-los a federação:\n`/joinfed {}`"
-feds_create_success_logger: "A federação <b>{}</b> foi criada com o ID: <pre>{}</pre>"
 feds_err_no_args: Por favor, escreva o nome da federação.
 feds_delete_not_found: 'Esta federação não foi encontrada.'
 feds_owner_only: 'Somente os proprietários da federação podem fazer isso.'
@@ -414,8 +417,6 @@ feds_help: |
   Com certeza não! Com a federação, você pode banir um usuário de um chat e banir automaticamente dos outros chats na federação.
   Você pode até definir administradores da federação, para que um admin de sua confiança possa banir usuários todos os chats que você deseja proteger.
 
-  Ainda na fase experimental, a criação de uma federação só pode ser feita pelo meu criador @Hitalo.
-
   Comandos:
   - /newfed <fedname>: Cria uma nova Federação com o nome dado. Os usuários podem ter apenas uma federação. Este método também pode ser usado para renomear a Federação. (máximo de 64 caracteres)
   - /delfed: Exclui sua Federação e qualquer informação relacionada a ela. Não cancelará usuários bloqueados.
@@ -430,10 +431,7 @@ feds_help: |
   - /frules: Mostra as regras da federação.
   - /chatfed: Ver em que federação está o chat atual.
   - /fedadmins: Lista os administradores da Federação.
-  - /fbanlist: Listaa todos os usuários que foram banidos da federação até o momento.
   - /fedchats: Lista todos os chats que estão na federação atual.
-  - /importfbans: Importa a lista de fbans da federação a partir de um arquivo de backup.
-  - /fednotif <on/off>: Notifica no privado quando usuário são banidos/desbanidos na fed.
 #TODO: To be continued
 #Keyboard
 keyboard_disconnect: Desconectar de um chat

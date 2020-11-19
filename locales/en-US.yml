@@ -373,9 +373,12 @@ disable_help: |
   - /disable <cmd name>: Disable a command
 #Feds
 modname_feds: Federations
+feds_noadmins: "\nThere are no admins in this federation"
+feds_nofed: "This group is not a part of any federation!"
+feds_notfadmin: "Only federation admins can do this!"
+feds_tg_bot: "Fool! You can't fban Telegram's bot!"
 feds_create_fail: Federation creation failed!
 feds_create_success: "*You have successfully created a new federation!*\nName: `{}`\nID: `{}`\n\nRun the command below in groups to add them to the federation:\n`/joinfed {}`"
-feds_create_success_logger: "Federation <b>{}</b> has been created with ID: <pre>{}</pre>"
 feds_err_no_args: Please write down the name of the federation.
 feds_delete_not_found: This federation is not found!
 feds_owner_only: Only federation owners can do this!
@@ -414,8 +417,6 @@ feds_help: |
   No longer! With Federation, you can make a ban in one chat overlap with all other chats.
   You can even designate admin federations, so your trusted admin can ban all the chats you want to protect.
 
-  Still the experimental stage, creating a Federation can only be done by my maker
-
   Command:
   - /newfed <fedname>: create a new Federation with the name given. Users are only allowed to have one Federation. This method can also be used to rename the Federation. (max. 64 characters)
   - /delfed: delete your Federation, and any information related to it. Will not cancel blocked users.
@@ -430,10 +431,7 @@ feds_help: |
   - /frules: See Federation regulations.
   - /chatfed: See the Federation in the current chat.
   - /fedadmins: Show Federation admin.
-  - /fbanlist: Displays all users who are victimized at the Federation at this time.
   - /fedchats: Get all the chats that are connected in the Federation.
-  - /importfbans: Reply to the Federation backup message file to import the banned list to the Federation now.
-  - /fednotif <on/off>: Notifies in PM when there are users who are fbaned/unfbanned.
 #TODO: To be continued
 #Keyboard
 keyboard_disconnect: Disconnect from a chat
