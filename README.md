@@ -2,7 +2,6 @@
 
 ![Banner](https://telegra.ph/file/601541db4ff2286fd1096.jpg)
 
-[![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://perso.crans.org/besson/LICENSE.html)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/5636a47ec09a4c6ab4b64b9edbc9ba6c)](https://www.codacy.com/gh/HitsukiNetwork/Hitsuki?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=HitsukiNetwork/Hitsuki&amp;utm_campaign=Badge_Grade)
 [![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/HitsukiNetwork/Hitsuki/?ref=repository-badge)
 [![GitHub contributors](https://img.shields.io/github/contributors/HitsukiNetwork/Hitsuki.svg)](https://GitHub.com/HitsukiNetwork/Hitsuki/graphs/contributors/)
@@ -19,9 +18,9 @@ Can be found on telegram as [Hitsuki](https://t.me/LordHitsuki_BOT), you can als
 
 * You must sign off on your commit.
 * You must sign the commit via GPG Key.
-* (optional) Make sure your PR passes all CI.
-* (optional) Try to follow the rules of pep8.
-* (optional) Recommended use of flake8 linter.
+* Try to follow the rules of pep8.
+* (Recommended) Use the flake8 linter.
+* (Optional) Make sure your PR passes all CI.
 
 ## Thanks to
 
