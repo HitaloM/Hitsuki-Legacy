@@ -213,9 +213,10 @@ def stop_filter(bot: Bot, update: Update):
 def reply_filter(bot: Bot, update: Update):
     chat = update.effective_chat
     message = update.effective_message
+    user = update.effective_user
 
-    if update.effective_user.id == 777000:
-        return
+    if user.id == 777000:
+        return ""
 
     to_match = extract_text(message)
     if not to_match:
