@@ -398,9 +398,8 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     user = update.effective_user
     fed_id = sql.get_fed_id(chat.id)
 
-    if chat.type == 'private':
-        send_message(update.effective_message,
-                     "This command is specific to the group, not to our pm!")
+    if chat.type == "private":
+        update.effective_message.reply_text(tld(chat.id, "common_cmd_group_only"))
         return
 
     if not fed_id:
@@ -503,7 +502,13 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
             except TelegramError:
                 pass
 
-        send_to_list(bot, FEDADMIN,
+        # Send message only to owner if fednotif is enabled
+        if getfednotif:
+            send_to = OWNER_ID
+        else:
+            send_to = FEDADMIN
+
+        send_to_list(bot, send_to,
                      "<b>FedBan reason updated</b>"
                      "\n<b>Federation:</b> {}"
                      "\n<b>Federation Admin:</b> {}"
@@ -555,6 +560,12 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
                     chat, excp.message))
         except TelegramError:
             pass
+
+    # Send message only to owner if fednotif is enabled
+    if getfednotif:
+        send_to = OWNER_ID
+    else:
+        send_to = FEDADMIN
 
     send_to_list(bot, FEDADMIN,
                  "<b>New FedBan</b>"
@@ -776,7 +787,6 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
 @run_async
 def del_fed_button(bot, update):
     query = update.callback_query
-    userid = query.message.chat.id
     fed_id = query.data.split("_")[1]
 
     if fed_id == 'cancel':
