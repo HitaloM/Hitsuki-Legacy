@@ -387,7 +387,8 @@ feds_group_joined_fed: Uh, Are you gonna join two federations at one chat?
 feds_fedid_invalid: Please enter a valid Federation ID.
 feds_join_unknown_err: Failed to join to federation due to an unknown error.
 feds_join_success: Chat joined to federation!
-feds_leave_success: "This chat has left the federation: {}!"
+feds_leave_success2: "This group has left the federation {}!"
+feds_leave_success: "Chat *{}* has left the federation *{}*"
 feds_leave_not_joined: How can you leave a federation that you never joined?!
 feds_promote_owner: Why are you trying to promote the federation owner?
 feds_promote_bot: I am already a federation admin in all federations!
