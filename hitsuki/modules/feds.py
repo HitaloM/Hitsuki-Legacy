@@ -399,7 +399,8 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     fed_id = sql.get_fed_id(chat.id)
 
     if chat.type == "private":
-        update.effective_message.reply_text(tld(chat.id, "common_cmd_group_only"))
+        update.effective_message.reply_text(
+            tld(chat.id, "common_cmd_group_only"))
         return
 
     if not fed_id:
