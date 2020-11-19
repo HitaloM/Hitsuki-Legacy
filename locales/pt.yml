@@ -398,15 +398,15 @@ feds_demote_target_not_admin: 'Não posso rebaixar as pessoas que não são admi
 feds_demote_success: 'Rebaixado com sucesso'
 feds_demote_failed: 'Falha ao rebaixar.'
 feds_info: |
-  <b>i Info da federação:</b>
-  UnionID: <code>{}</code>
+  <b>Info da federação:</b>
+  FedID: <code>{}</code>
   Nome: {}
   Criador: {}
   Administradores: <code>{}</code>
   Total de usuários banidos: <code>{}</code>
   Número de grupos nesta federação: <code>{}</code>
 feds_admins: |
-  <b>Administradores de federação '{}':<b>
+  <b>Administradores da federação '{}':</b>
 feds_help: |
   Oh, gerenciamento de grupos. Tudo é divertido, até que um spammer entre no seu grupo e você precise bloqueá-lo. Então você tem que começar a banir mais e mais, e isso dói.
   Mas então você tem muitos grupos, e você não quer que esse remetente de spam esteja nos seus grupos, como você pode lidar com isso? Você precisa bloqueá-lo manualmente em todos os seus grupos?
@@ -433,6 +433,7 @@ feds_help: |
   - /fbanlist: Listaa todos os usuários que foram banidos da federação até o momento.
   - /fedchats: Lista todos os chats que estão na federação atual.
   - /importfbans: Importa a lista de fbans da federação a partir de um arquivo de backup.
+  - /fednotif <on/off>: Notifica no privado quando usuário são banidos/desbanidos na fed.
 #TODO: To be continued
 #Keyboard
 keyboard_disconnect: Desconectar de um chat

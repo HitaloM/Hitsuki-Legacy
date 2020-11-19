@@ -372,7 +372,7 @@ def fed_admin(bot: Bot, update: Update, args: List[str]):
     info = sql.get_fed_info(fed_id)
 
     text = tld(chat.id, "feds_admins").format(info['fname'])
-    text += "👑 Owner:\n"
+    text += "Owner:\n"
     owner = bot.get_chat(info['owner'])
     try:
         owner_name = owner.first_name + " " + owner.last_name
@@ -382,9 +382,9 @@ def fed_admin(bot: Bot, update: Update, args: List[str]):
 
     members = sql.all_fed_members(fed_id)
     if len(members) == 0:
-        text += "\n🔱 There are no admins in this federation"
+        text += "\nThere are no admins in this federation"
     else:
-        text += "\n🔱 Admin:\n"
+        text += "\nAdmin:\n"
         for x in members:
             user = bot.get_chat(x)
             text += " • {}\n".format(mention_html(user.id, user.first_name))
@@ -397,17 +397,23 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     user = update.effective_user
     fed_id = sql.get_fed_id(chat.id)
+    
+    if chat.type == 'private':
+        send_message(update.effective_message,
+                     "This command is specific to the group, not to our pm!")
+        return
 
     if not fed_id:
         update.effective_message.reply_text(
             "This group is not a part of any federation!")
         return
-
+   
     info = sql.get_fed_info(fed_id)
     OW = bot.get_chat(info['owner'])
     HAHA = OW.id
     FEDADMIN = sql.all_fed_users(fed_id)
     FEDADMIN.append(int(HAHA))
+    getfednotif = sql.user_feds_report(info['owner'])
 
     if is_user_fed_admin(fed_id, user.id) is False:
         update.effective_message.reply_text(
@@ -667,7 +673,7 @@ def set_frules(bot: Bot, update: Update, args: List[str]):
 
         rules = sql.get_fed_info(fed_id)['frules']
         update.effective_message.reply_text(
-            f"Rules have been changed to :\n{rules}!")
+            f"Rules have been changed to:\n\n{rules}!")
     else:
         update.effective_message.reply_text("Please write rules to set it up!")
 
@@ -682,7 +688,7 @@ def get_frules(bot: Bot, update: Update, args: List[str]):
         return
 
     rules = sql.get_frules(fed_id)
-    text = "*Rules in this fed:*\n"
+    text = "*Rules in this fed:*\n\n"
     text += rules
     update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
     return
@@ -704,16 +710,15 @@ def fed_notif(bot: Bot, update: Update, args: List[str]):
         if args[0] in ("yes", "on"):
             sql.set_feds_setting(user.id, True)
             msg.reply_text(
-                "Reporting Federation actions turned on! You will be notified for every fban/unfban via PM."
+                "Reporting Federation back up! Every user who is fban / unfban you will be notified via PM."
             )
         elif args[0] in ("no", "off"):
             sql.set_feds_setting(user.id, False)
             msg.reply_text(
-                "Reporting Federation actions turned off! You will be notified for every fban/unfban via PM."
+                "Reporting Federation has stopped! Every user who is fban / unfban you will not be notified via PM."
             )
         else:
-            msg.reply_text("Please enter `yes`/`on`/`no`/`off`",
-                           parse_mode="markdown")
+            msg.reply_text("Please enter `on`/`off`", parse_mode="markdown")
     else:
         getreport = sql.user_feds_report(user.id)
         msg.reply_text(
@@ -747,9 +752,9 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
             parse_mode=ParseMode.HTML)
         return
 
-    text = "<b>New chat joined the federation {}:</b>\n".format(info['fname'])
+    text = "<b>Groups that have joined the federation {}:</b>\n".format(info['fname'])
     for chats in getlist:
-        chat_name = sql.get_fed_name(chats)
+        chat_name = dispatcher.bot.getChat(chats).title
         text += " • {} (<code>{}</code>)\n".format(chat_name, chats)
 
     try:
@@ -758,10 +763,10 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
         cleanr = re.compile('<.*?>')
         cleantext = re.sub(cleanr, '', text)
         with BytesIO(str.encode(cleantext)) as output:
-            output.name = "fbanlist.txt"
+            output.name = "fedchats.txt"
             update.effective_message.reply_document(
                 document=output,
-                filename="fbanlist.txt",
+                filename="fedchats.txt",
                 caption=(
                     "Here is a list of all the chats that joined the federation {}.")
                 .format(info['fname']))
@@ -824,7 +829,7 @@ def welcome_fed(bot, update):
 def __stats__():
     all_fbanned = sql.get_all_fban_users_global()
     all_feds = sql.get_all_feds_users_global()
-    return "• `{}` fbanned users, accross `{}` feds.".format(
+    return "• <code>{}</code> fbanned users, accross <code>{}</code> feds.".format(
         len(all_fbanned), len(all_feds))
 
 
@@ -907,7 +912,7 @@ dispatcher.add_handler(FED_SET_RULES_HANDLER)
 dispatcher.add_handler(FED_GET_RULES_HANDLER)
 dispatcher.add_handler(FED_CHAT_HANDLER)
 dispatcher.add_handler(FED_ADMIN_HANDLER)
-# dispatcher.add_handler(FED_NOTIF_HANDLER)
+dispatcher.add_handler(FED_NOTIF_HANDLER)
 dispatcher.add_handler(FED_CHATLIST_HANDLER)
 
 dispatcher.add_handler(DELETEBTN_FED_HANDLER)
