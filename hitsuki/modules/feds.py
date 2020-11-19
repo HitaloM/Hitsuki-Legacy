@@ -27,6 +27,7 @@ import hitsuki.modules.sql.feds_sql as sql
 from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS, MESSAGE_DUMP, LOGGER
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user, extract_user_and_text
+from hitsuki.modules.helper_funcs.misc import send_to_list
 from hitsuki.modules.helper_funcs.string_handling import markdown_parser
 from hitsuki.modules.tr_engine.strings import tld
 
@@ -466,8 +467,6 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         message.reply_text("That's not a user!")
         return
 
-    fban_user_id = int(user_id)
-
     if fban:
         user_target = mention_html(user_chat.id, user_chat.first_name)
         fed_name = info['fname']
@@ -504,31 +503,20 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
             except TelegramError:
                 pass
 
-        # Will send to current chat
-        bot.send_message(chat.id, "<b>FedBan reason updated</b>"
-                         "\n<b>Federation:</b> {}"
-                         "\n<b>Federation Admin:</b> {}"
-                         "\n<b>User:</b> {}"
-                         "\n<b>User ID:</b> <code>{}</code>"
-                         "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
-        # Send message to owner if fednotif is enabled
-        if getfednotif:
-            bot.send_message(info['owner'], "<b>FedBan reason updated</b>"
-                             "\n<b>Federation:</b> {}"
-                             "\n<b>Federation Admin:</b> {}"
-                             "\n<b>User:</b> {}"
-                             "\n<b>User ID:</b> <code>{}</code>"
-                             "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
-        # If fedlog is set, then send message, except fedlog is current chat
-        get_fedlog = sql.get_fed_log(fed_id)
-        if get_fedlog:
-            if int(get_fedlog) != int(chat.id):
-                bot.send_message(get_fedlog, "<b>FedBan reason updated</b>"
-                                 "\n<b>Federation:</b> {}"
-                                 "\n<b>Federation Admin:</b> {}"
-                                 "\n<b>User:</b> {}"
-                                 "\n<b>User ID:</b> <code>{}</code>"
-                                 "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
+        send_to_list(bot, FEDADMIN,
+                     "<b>FedBan reason updated</b>"
+                     "\n<b>Federation:</b> {}"
+                     "\n<b>Federation Admin:</b> {}"
+                     "\n<b>User:</b> {}"
+                     "\n<b>User ID:</b> <code>{}</code>"
+                     "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id,
+                                                                         user.first_name),
+                                                  mention_html(user_chat.id,
+                                                               user_chat.first_name),
+                                                  user_chat.id, reason),
+                     html=True)
+        message.reply_text("FedBan reason has been updated.")
+        return
 
     user_target = mention_html(user_chat.id, user_chat.first_name)
     fed_name = info['fname']
@@ -568,31 +556,18 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         except TelegramError:
             pass
 
-    # Will send to current chat
-    bot.send_message(chat.id, "<b>FedBan reason updated</b>"
-                     "\n<b>Federation:</b> {}"
-                     "\n<b>Federation Admin:</b> {}"
-                     "\n<b>User:</b> {}"
-                     "\n<b>User ID:</b> <code>{}</code>"
-                     "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
-    # Send message to owner if fednotif is enabled
-    if getfednotif:
-        bot.send_message(info['owner'], "<b>FedBan reason updated</b>"
-                         "\n<b>Federation:</b> {}"
-                         "\n<b>Federation Admin:</b> {}"
-                         "\n<b>User:</b> {}"
-                         "\n<b>User ID:</b> <code>{}</code>"
-                         "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
-    # If fedlog is set, then send message, except fedlog is current chat
-    get_fedlog = sql.get_fed_log(fed_id)
-    if get_fedlog:
-        if int(get_fedlog) != int(chat.id):
-            bot.send_message(get_fedlog, "<b>FedBan reason updated</b>"
-                             "\n<b>Federation:</b> {}"
-                             "\n<b>Federation Admin:</b> {}"
-                             "\n<b>User:</b> {}"
-                             "\n<b>User ID:</b> <code>{}</code>"
-                             "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id, user.first_name), user_target, fban_user_id, reason), parse_mode="HTML")
+    send_to_list(bot, FEDADMIN,
+                 "<b>New FedBan</b>"
+                 "\n<b>Federation:</b> {}"
+                 "\n<b>Federation Admin:</b> {}"
+                 "\n<b>User:</b> {}"
+                 "\n<b>User ID:</b> <code>{}</code>"
+                 "\n<b>Reason:</b> {}".format(fed_name, mention_html(user.id,
+                                                                     user.first_name),
+                                              mention_html(user_chat.id,
+                                                           user_chat.first_name),
+                                              user_chat.id, reason),
+                 html=True)
     message.reply_text("This person has been fbanned")
 
 
@@ -608,9 +583,6 @@ def unfban(bot: Bot, update: Update, args: List[str]):
             "This group is not a part of any federation!")
         return
 
-    info = sql.get_fed_info(fed_id)
-    getfednotif = sql.user_feds_report(info['owner'])
-
     if is_user_fed_admin(fed_id, user.id) is False:
         update.effective_message.reply_text(
             "Only federation admins can do this!")
@@ -621,29 +593,10 @@ def unfban(bot: Bot, update: Update, args: List[str]):
         message.reply_text("You do not seem to be referring to a user.")
         return
 
-    try:
-        user_chat = bot.get_chat(user_id)
-        fban_user_id = user_chat.id
-    except BadRequest as excp:
-        if not str(user_id).isdigit():
-            send_message(update.effective_message, excp.message)
-            return
-        elif len(str(user_id)) != 9:
-            send_message(update.effective_message, "That's so not a user!")
-            return
-        isvalid = False
-        fban_user_id = int(user_id)
-        fban_user_name = "user({})".format(user_id)
-
     user_chat = bot.get_chat(user_id)
     if user_chat.type != 'private':
         message.reply_text("That's not a user!")
         return
-
-    if isvalid:
-        user_target = mention_html(fban_user_id, fban_user_name)
-    else:
-        user_target = fban_user_name
 
     fban, fbanreason = sql.get_fban_user(fed_id, user_id)
     if fban is False:
@@ -657,28 +610,6 @@ def unfban(bot: Bot, update: Update, args: List[str]):
             user_chat.first_name))
 
     chat_list = sql.all_fed_chats(fed_id)
-    # Will send to current chat
-    bot.send_message(chat.id, "<b>Un-FedBan</b>"
-                     "\n<b>Federation:</b> {}"
-                     "\n<b>Federation Admin:</b> {}"
-                     "\n<b>User:</b> {}"
-                     "\n<b>User ID:</b> <code>{}</code>".format(info['fname'], mention_html(user.id, user.first_name), user_target, fban_user_id), parse_mode="HTML")
-    # Send message to owner if fednotif is enabled
-    if getfednotif:
-        bot.send_message(info['owner'], "<b>Un-FedBan</b>"
-                         "\n<b>Federation:</b> {}"
-                         "\n<b>Federation Admin:</b> {}"
-                         "\n<b>User:</b> {}"
-                         "\n<b>User ID:</b> <code>{}</code>".format(info['fname'], mention_html(user.id, user.first_name), user_target, fban_user_id), parse_mode="HTML")
-    # If fedlog is set, then send message, except fedlog is current chat
-    get_fedlog = sql.get_fed_log(fed_id)
-    if get_fedlog:
-        if int(get_fedlog) != int(chat.id):
-            bot.send_message(get_fedlog, "<b>Un-FedBan</b>"
-                             "\n<b>Federation:</b> {}"
-                             "\n<b>Federation Admin:</b> {}"
-                             "\n<b>User:</b> {}"
-                             "\n<b>User ID:</b> <code>{}</code>".format(info['fname'], mention_html(user.id, user.first_name), user_target, fban_user_id), parse_mode="HTML")
 
     for chat in chat_list:
         try:
@@ -741,20 +672,10 @@ def set_frules(bot: Bot, update: Update, args: List[str]):
             return
 
         rules = sql.get_fed_info(fed_id)['frules']
-        getfed = sql.get_fed_info(fed_id)
-        get_fedlog = sql.get_fed_log(fed_id)
-        if get_fedlog:
-            if eval(get_fedlog):
-                bot.send_message(
-                    get_fedlog,
-                    "*{}* has updated federation rules for fed *{}*".format(
-                        user.first_name, getfed['fname']),
-                    parse_mode="markdown")
         update.effective_message.reply_text(
             f"Rules have been changed to:\n\n{rules}!")
     else:
-        update.effective_message.reply_text(
-            "Please write rules to set this up!")
+        update.effective_message.reply_text("Please write rules to set it up!")
 
 
 @run_async
@@ -853,58 +774,9 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
 
 
 @run_async
-def set_fed_log(bot, update, args):
-    chat = update.effective_chat
-    user = update.effective_user
-
-    if chat.type == 'private':
-        send_message(update.effective_message, "This command is specific to the group, not to our pm!")
-        return
-
-    if args:
-        fedinfo = sql.get_fed_info(args[0])
-        if not fedinfo:
-            send_message(update.effective_message, "This Federation does not exist!")
-            return
-        isowner = is_user_fed_owner(args[0], user.id)
-        if not isowner:
-            send_message(update.effective_message, "Only federation creator can set federation logs.")
-            return
-        setlog = sql.set_fed_log(args[0], chat.id)
-        if setlog:
-            send_message(update.effective_message, "Federation log `{}` has been set to {}".format(fedinfo['fname'], chat.title), parse_mode="markdown")
-    else:
-        send_message(update.effective_message, "You have not provided your federated ID!")
-
-
-@run_async
-def unset_fed_log(bot, update, args):
-    chat = update.effective_chat
-    user = update.effective_user
-
-    if chat.type == 'private':
-        send_message(update.effective_message, "This command is specific to the group, not to our pm!")
-        return
-
-    if args:
-        fedinfo = sql.get_fed_info(args[0])
-        if not fedinfo:
-            send_message(update.effective_message, "This Federation does not exist!")
-            return
-        isowner = is_user_fed_owner(args[0], user.id)
-        if not isowner:
-            send_message(update.effective_message, "Only federation creator can set federation logs.")
-            return
-        setlog = sql.set_fed_log(args[0], None)
-        if setlog:
-            send_message(update.effective_message, "Federation log `{}` has been revoked on {}".format(fedinfo['fname'], chat.title), parse_mode="markdown")
-    else:
-        send_message(update.effective_message, "You have not provided your federated ID!")
-
-
-@run_async
 def del_fed_button(bot, update):
     query = update.callback_query
+    userid = query.message.chat.id
     fed_id = query.data.split("_")[1]
 
     if fed_id == 'cancel':
@@ -1025,8 +897,6 @@ FED_CHAT_HANDLER = CommandHandler("chatfed", fed_chat, pass_args=True)
 FED_ADMIN_HANDLER = CommandHandler("fedadmins", fed_admin, pass_args=True)
 FED_NOTIF_HANDLER = CommandHandler("fednotif", fed_notif, pass_args=True)
 FED_CHATLIST_HANDLER = CommandHandler("fedchats", fed_chats, pass_args=True)
-SET_FED_LOG = CommandHandler("setfedlog", set_fed_log, pass_args=True)
-UNSET_FED_LOG = CommandHandler("unsetfedlog", unset_fed_log, pass_args=True)
 
 DELETEBTN_FED_HANDLER = CallbackQueryHandler(del_fed_button, pattern=r"rmfed_")
 
@@ -1045,7 +915,5 @@ dispatcher.add_handler(FED_CHAT_HANDLER)
 dispatcher.add_handler(FED_ADMIN_HANDLER)
 dispatcher.add_handler(FED_NOTIF_HANDLER)
 dispatcher.add_handler(FED_CHATLIST_HANDLER)
-dispatcher.add_handler(SET_FED_LOG)
-dispatcher.add_handler(UNSET_FED_LOG)
 
 dispatcher.add_handler(DELETEBTN_FED_HANDLER)
