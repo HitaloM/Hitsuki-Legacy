@@ -131,9 +131,9 @@ def del_fed(bot: Bot, update: Update, args: List[str]):
         return
 
     update.effective_message.reply_text(tld(chat.id, "feds_delete_confirm").format(getinfo['fname']),
-                    reply_markup=InlineKeyboardMarkup(
-                                            [[InlineKeyboardButton(text="⚠️ Delete Federation ⚠️", callback_data="rmfed_{}".format(fed_id))],
-                                             [InlineKeyboardButton(text="Cancel", callback_data="rmfed_cancel")]]))
+                                        reply_markup=InlineKeyboardMarkup(
+        [[InlineKeyboardButton(text="⚠️ Delete Federation ⚠️", callback_data="rmfed_{}".format(fed_id))],
+         [InlineKeyboardButton(text="Cancel", callback_data="rmfed_cancel")]]))
 
 
 @run_async
@@ -397,7 +397,7 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     user = update.effective_user
     fed_id = sql.get_fed_id(chat.id)
-    
+
     if chat.type == 'private':
         send_message(update.effective_message,
                      "This command is specific to the group, not to our pm!")
@@ -407,7 +407,7 @@ def fed_ban(bot: Bot, update: Update, args: List[str]):
         update.effective_message.reply_text(
             "This group is not a part of any federation!")
         return
-   
+
     info = sql.get_fed_info(fed_id)
     OW = bot.get_chat(info['owner'])
     HAHA = OW.id
@@ -752,7 +752,8 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
             parse_mode=ParseMode.HTML)
         return
 
-    text = "<b>Groups that have joined the federation {}:</b>\n".format(info['fname'])
+    text = "<b>Groups that have joined the federation {}:</b>\n".format(
+        info['fname'])
     for chats in getlist:
         chat_name = dispatcher.bot.getChat(chats).title
         text += " • {} (<code>{}</code>)\n".format(chat_name, chats)
