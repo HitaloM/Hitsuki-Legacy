@@ -28,7 +28,6 @@ from hitsuki import dispatcher, OWNER_ID, SUDO_USERS, WHITELIST_USERS, MESSAGE_D
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from hitsuki.modules.helper_funcs.string_handling import markdown_parser
-from hitsuki.modules.helper_funcs.alternate import send_message
 from hitsuki.modules.tr_engine.strings import tld
 
 # Greeting all bot owners that is using this module,
@@ -192,16 +191,6 @@ def join_fed(bot: Bot, update: Update, args: List[str]):
             message.reply_text(tld(chat.id, "feds_join_unknown_err"))
             return
 
-        get_fedlog = sql.get_fed_log(args[0])
-        getfed = sql.search_fed_by_id(fedd)
-        if get_fedlog:
-            if eval(get_fedlog):
-                bot.send_message(
-                    get_fedlog,
-                    "Chat *{}* has joined the federation *{}*".format(
-                        chat.title, getfed['fname']),
-                    parse_mode="markdown")
-
         message.reply_text(tld(chat.id, "feds_join_success"))
 
 
@@ -216,18 +205,8 @@ def leave_fed(bot: Bot, update: Update, args: List[str]):
     getuser = bot.get_chat_member(chat.id, user.id).status
     if getuser in 'creator' or user.id in SUDO_USERS:
         if sql.chat_leave_fed(chat.id) is True:
-            get_fedlog = sql.get_fed_log(fed_id)
-            if get_fedlog:
-                if eval(get_fedlog):
-                    bot.send_message(
-                        get_fedlog,
-                        tld(chat.id, "feds_leave_success").format(
-                            chat.title, fed_info['fname']),
-                        parse_mode="markdown")
-            send_message(
-                update.effective_message,
-                tld(chat.id, "feds_leave_success2").format(
-                    fed_info['fname']))
+            update.effective_message.reply_text(
+                tld(chat.id, "feds_leave_success").format(fed_info['fname']))
         else:
             update.effective_message.reply_text(
                 tld(chat.id, "feds_leave_not_joined"))
