@@ -264,19 +264,17 @@ def adminlist(bot: Bot, update: Update):
     update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
 
-# TODO: Finalize this command, add automatic message deleting
 @user_admin
 @run_async
 def reaction(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
     if len(args) >= 1:
-        var = args[0]
-        print(var)
-        if var == "False":
+        var = args[0].lower()
+        if var == "false":
             sql.set_command_reaction(chat.id, False)
             update.effective_message.reply_text(
                 tld(chat.id, "admin_disable_reaction"))
-        elif var == "True":
+        elif var == "true":
             sql.set_command_reaction(chat.id, True)
             update.effective_message.reply_text(
                 tld(chat.id, "admin_enable_reaction"))

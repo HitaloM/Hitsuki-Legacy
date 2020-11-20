@@ -64,6 +64,7 @@ admin_help: |
   - /invitelink: Obter link de convite do grupo
   - /promote: Promova um usuário ao responder esse usuário ou use seu nome de usuário.
   - /demote: Rebaixe um usuário ao responder esse usuário ou use seu nome de usuário.
+  - /reaction False ou True: Desativa ou ativa a reação do a comandos administrativos usados por membros comuns.
 #AFK
 modname_afk: AFK
 user_now_afk: "{} está agora AFK!"

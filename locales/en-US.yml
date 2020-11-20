@@ -63,6 +63,7 @@ admin_help: |
   - /invitelink: Gets the invite link of the group
   - /promote: Promotes a user Reply to the user or use their username.
   - /demote: Demotes a user. Reply to the user or use their username.
+  - /reaction False or True: Disables or enable the bot reaction for administrative commands used by common members.
 #AFK
 modname_afk: AFK
 user_now_afk: "User {} is now AFK!"

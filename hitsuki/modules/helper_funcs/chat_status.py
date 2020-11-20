@@ -162,6 +162,8 @@ def user_admin(func):
         elif (admin_sql.command_reaction(chat.id) is True):
             update.effective_message.reply_text(
                 tld(chat.id, 'helpers_user_not_admin'))
+        else:
+        	update.effective_message.delete()
 
     return is_admin
 
