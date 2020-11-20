@@ -786,8 +786,8 @@ misc_help: |
    Se você quiser usar esses caracteres, certifique-se de escapar deles!
    *Exemplo:* \\?.
 #Anime
-modname_anime: Anime
-anime_help: |
+modname_anime_search: Anime
+anime_search_help: |
    Obtenha informações sobre animes, mangás ou personagens a partir do AniList.
 
    *Comandos disponíveis:*
@@ -799,6 +799,7 @@ anime_help: |
    - /kaizoku <anime>: busca um anime no animekaizoku.com
    - /kayo <anime>: busca um anime no animekayo.com
    - /airing <anime>: retorna informações de exibição de anime.
+   - /whatanime <resposta a uma mídia>: Procure de qual anime é a imagem.
 #lastfm
 modname_last_fm: LastFM
 misc_setuser_lastfm_error: Não é assim que funciona... \nExecute /setuser seguido do seu nome de usuário!
