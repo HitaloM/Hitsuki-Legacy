@@ -67,7 +67,7 @@ def calculate_eta(current, total, start_time):
 @pbot.on_message(filters.command('whatanime'))
 async def whatanime(c: Client, m: Message):
     media = m.photo or m.animation or m.video or m.document
-    chat_id=m.chat.id
+    chat_id = m.chat.id
     if not media:
         reply = m.reply_to_message
         if not getattr(reply, 'empty', True):
