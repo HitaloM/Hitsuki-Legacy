@@ -18,8 +18,7 @@ from telegraph import Telegraph
 
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from pyrogram.types import (InlineKeyboardMarkup, InlineKeyboardButton,
-                            InlineQueryResultArticle, InputTextMessageContent)
+from pyrogram.types import (InlineKeyboardMarkup, InlineKeyboardButton)
 
 from hitsuki import pbot
 
