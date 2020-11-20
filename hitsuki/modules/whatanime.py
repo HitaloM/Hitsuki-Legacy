@@ -30,7 +30,7 @@ from pyrogram.types import Message
 
 from hitsuki import pbot
 
-session = aiohttp.ClientSession() 
+session = aiohttp.ClientSession()
 progress_callback_data = {}
 
 
@@ -39,7 +39,7 @@ def format_bytes(size):
     # 2**10 = 1024
     power = 1024
     n = 0
-    power_labels = {0 : '', 1: 'K', 2: 'M', 3: 'G', 4: 'T'}
+    power_labels = {0: '', 1: 'K', 2: 'M', 3: 'G', 4: 'T'}
     while size > power:
         size /= power
         n += 1
@@ -57,7 +57,8 @@ def calculate_eta(current, total, start_time):
     end_time = time.time()
     elapsed_time = end_time - start_time
     seconds = (elapsed_time * (total / current)) - elapsed_time
-    thing = ''.join(str(timedelta(seconds=seconds)).split('.')[:-1]).split(', ')
+    thing = ''.join(str(timedelta(seconds=seconds)
+                        ).split('.')[:-1]).split(', ')
     thing[-1] = thing[-1].rjust(8, '0')
     return ', '.join(thing)
 
@@ -100,8 +101,10 @@ async def whatanime(c: Client, m: Message):
             anilist_id = match['anilist_id']
             episode = match['episode']
             similarity = match['similarity']
-            from_time = str(datetime.timedelta(seconds=match['from'])).split('.', 1)[0].rjust(8, '0')
-            to_time = str(datetime.timedelta(seconds=match['to'])).split('.', 1)[0].rjust(8, '0')
+            from_time = str(datetime.timedelta(seconds=match['from'])).split(
+                '.', 1)[0].rjust(8, '0')
+            to_time = str(datetime.timedelta(seconds=match['to'])).split(
+                '.', 1)[0].rjust(8, '0')
             at_time = match['at']
             text = f'<a href="https://anilist.co/anime/{anilist_id}">{title_romaji}</a>'
             if title_english:
@@ -115,6 +118,7 @@ async def whatanime(c: Client, m: Message):
                 text += f'<b>Episode:</b> {episode}\n'
             if nsfw:
                 text += '<b>Hentai/NSFW:</b> Yes'
+
             async def _send_preview():
                 url = f'https://media.trace.moe/video/{anilist_id}/{urlencode(filename)}?t={at_time}&token={tokenthumb}'
                 with tempfile.NamedTemporaryFile() as file:
@@ -134,7 +138,8 @@ async def whatanime(c: Client, m: Message):
 
 async def progress_callback(current, total, reply):
     message_identifier = (reply.chat.id, reply.message_id)
-    last_edit_time, prevtext, start_time = progress_callback_data.get(message_identifier, (0, None, time.time()))
+    last_edit_time, prevtext, start_time = progress_callback_data.get(
+        message_identifier, (0, None, time.time()))
     if current == total:
         try:
             progress_callback_data.pop(message_identifier)
@@ -142,7 +147,8 @@ async def progress_callback(current, total, reply):
             pass
     elif (time.time() - last_edit_time) > 1:
         if last_edit_time:
-            download_speed = format_bytes((total - current) / (time.time() - start_time))
+            download_speed = format_bytes(
+                (total - current) / (time.time() - start_time))
         else:
             download_speed = '0 B'
         text = f'''Downloading...

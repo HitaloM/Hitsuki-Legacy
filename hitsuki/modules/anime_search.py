@@ -29,6 +29,7 @@ from hitsuki.modules.disable import DisableAbleCommandHandler
 info_btn = "More Information"
 close_btn = "Close ❌"
 
+
 @run_async
 def user(bot: Bot, update: Update):
     message = update.effective_message
@@ -103,7 +104,7 @@ def user(bot: Bot, update: Update):
                    InlineKeyboardButton(
                        close_btn,
                        callback_data=f"anime_close, {message.from_user.id}")
-               ]]
+    ]]
 
     update.effective_message.reply_photo(
         photo=img,
