@@ -26,6 +26,7 @@ from datetime import datetime
 
 import aiohttp
 import regex
+from telethon import __version__, version
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
@@ -225,3 +226,15 @@ async def logs(c: Client, m: Message):
         chat_id=SYSTEM_DUMP,
         parse_mode="markdown")
     await m.reply_text("Done! LOGs are sent to system_dump.")
+
+
+@pbot.on_message(filters.command("status"))
+async def logs(c: Client, m: Message):
+    await m.reply_text("**Hitsuki is alive!**\n\n"
+                      f"- **Pyrogram version** `{pbot.app_version}`\n"
+                      f"- **Telethon version:** `{version.__version__}`\n"
+                       "- **PTB version:** `11.1.0-H1.5`\n"
+                      f"- **Python version:** `{pbot.device_model}`\n"
+                      f"- **System:** `{pbot.system_version}`\n\n"
+                       "**Source code:** github.com/HitsukiNetwork/Hitsuki",
+                       disable_web_page_preview=True)

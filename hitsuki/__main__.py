@@ -432,10 +432,7 @@ if __name__ == '__main__':
     LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     tbot.start(bot_token=TOKEN)
     pbot.start()
-    pbot.send_message(SYSTEM_DUMP, "**Hitsuki is alive!**\n\n"
-                      f"- **app_version:** `{pbot.app_version}`\n"
-                      f"- **device_model:** `{pbot.device_model}`\n"
-                      f"- **system_version:** `{pbot.system_version}`\n\n"
+    pbot.send_message(SYSTEM_DUMP, "**Hitsuki is alive!**\n"
                       f"**Start time:** `{timenow}`")
     main()
     idle()

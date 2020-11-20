@@ -29,6 +29,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 
 from hitsuki import pbot
+from hitsuki.modules.tr_engine.strings import tld
 
 session = aiohttp.ClientSession()
 progress_callback_data = {}
@@ -66,12 +67,13 @@ def calculate_eta(current, total, start_time):
 @pbot.on_message(filters.command('whatanime'))
 async def whatanime(c: Client, m: Message):
     media = m.photo or m.animation or m.video or m.document
+    chat_id=m.chat.id
     if not media:
         reply = m.reply_to_message
         if not getattr(reply, 'empty', True):
             media = reply.photo or reply.animation or reply.video or reply.document
     if not media:
-        await m.reply_text('Photo or GIF or Video required')
+        await m.reply_text(tld(chat_id, "err_example_whatanime"))
         return
     with tempfile.TemporaryDirectory() as tempdir:
         reply = await m.reply_text('Downloading...')
@@ -79,7 +81,7 @@ async def whatanime(c: Client, m: Message):
         new_path = os.path.join(tempdir, '1.png')
         proc = await asyncio.create_subprocess_exec('ffmpeg', '-i', path, '-frames:v', '1', new_path)
         await proc.communicate()
-        await reply.edit_text('Uploading...')
+        await reply.edit_text(tld(chat_id, "uploading_whatanime"))
         with open(new_path, 'rb') as file:
             async with session.post('https://trace.moe/api/search', data={'image': file}) as resp:
                 json = await resp.json()

@@ -48,7 +48,7 @@ admin_err_demote_creator: Essa pessoa é o CRIADOR do grupo, como você pode reb
 admin_err_demote_noadmin: 'Você não pode rebaixar aqueles que não foram promovidos!'
 admin_err_self_demote: 'Eu não posso me rebaixar!'
 admin_demote_success: O administrador {} rebaixou {} com sucesso em <b>{}</b>!
-admin_err_cant_demote: Não foi possível fazer o rebaixamento. Pode não ser um administrador ou o status de administrador foi designado por outro usuário, portanto, não posso agir sobre ele!
+admin_err_cant_demote: Este usuário foi promovido por outra pessoa; Não posso alterar suas permissões! Rebaixe manualmente.
 admin_list: "Administradores em *{}*:"
 admin_err_no_perm_invitelink: Não tenho acesso ao link do convite, tente alterar minhas permissões!
 admin_err_chat_no_invitelink: Desculpe, mas só posso dar links de convite para supergrupos e canais!
@@ -787,6 +787,8 @@ misc_help: |
    *Exemplo:* \\?.
 #Anime
 modname_anime_search: Anime
+err_example_whatanime: "Responda uma foto, GIF ou vídeo com este comando."
+uploading_whatanime: "Enviando..."
 anime_search_help: |
    Obtenha informações sobre animes, mangás ou personagens a partir do AniList.
 
