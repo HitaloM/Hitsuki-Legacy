@@ -30,9 +30,10 @@ telegraph.create_account(short_name='hitsuki')
 @pbot.on_message(filters.command('nhentai'))
 async def nhentai(c: Client, m: Message):
     query = m.text.split(" ")[1]
-    title, tags, artist, total_pages, post_url, cover_image = nhentai_data(query)
+    title, tags, artist, total_pages, post_url, cover_image = nhentai_data(
+        query)
     await m.reply_text(
-         f"<code>{title}</code>\n\n<b>Tags:</b>\n{tags}\n<b>Artists:</b>\n{artist}\n<b>Pages:</b>\n{total_pages}",
+        f"<code>{title}</code>\n\n<b>Tags:</b>\n{tags}\n<b>Artists:</b>\n{artist}\n<b>Pages:</b>\n{total_pages}",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -59,9 +60,9 @@ def nhentai_data(noombers):
     post_content = ""
 
     extensions = {
-        'j':'jpg',
-        'p':'png',
-        'g':'gif'
+        'j': 'jpg',
+        'p': 'png',
+        'g': 'gif'
     }
     for i, x in enumerate(pages):
         media_id = res["media_id"]
@@ -71,21 +72,21 @@ def nhentai_data(noombers):
         links.append(link)
 
     for i in info:
-        if i["type"]=="tag":
+        if i["type"] == "tag":
             tag = i['name']
             tag = tag.split(" ")
             tag = "_".join(tag)
-            tags+=f"#{tag} "
-        if i["type"]=="artist":
-            artist=f"{i['name']} "
+            tags += f"#{tag} "
+        if i["type"] == "artist":
+            artist = f"{i['name']} "
 
     for link in links:
-        post_content+=f"<img src={link}><br>"
+        post_content += f"<img src={link}><br>"
 
     post = telegraph.create_page(
         f"{title}",
         html_content=post_content,
-        author_name="Hitsuki", 
+        author_name="Hitsuki",
         author_url="https://t.me/LordHitsuki_BOT"
     )
-    return title,tags,artist,total_pages,post['url'],links[0]
+    return title, tags, artist, total_pages, post['url'], links[0]
