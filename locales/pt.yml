@@ -800,6 +800,7 @@ anime_search_help: |
    - /kayo <anime>: busca um anime no animekayo.com
    - /airing <anime>: retorna informações de exibição de anime.
    - /whatanime <resposta a uma mídia>: Procure de qual anime é a imagem.
+   - /nhentai <nhentai id>: Retorna o nhentai no formato de instant preview.
 #lastfm
 modname_last_fm: LastFM
 misc_setuser_lastfm_error: Não é assim que funciona... \nExecute /setuser seguido do seu nome de usuário!
