@@ -433,6 +433,8 @@ feds_help: |
   - /chatfed: Ver em que federação está o chat atual.
   - /fedadmins: Lista os administradores da Federação.
   - /fedchats: Lista todos os chats que estão na federação atual.
+  - /fbanlist json ou csv: Retorna a lista dos usuários banidos na federação em csv ou json.
+  - /importfbans: Responda a uma lista de usuários banidos para importar para a atual federação.
 #TODO: To be continued
 #Keyboard
 keyboard_disconnect: Desconectar de um chat
