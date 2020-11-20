@@ -232,13 +232,13 @@ async def anime_search(c: Client, m: Message):
         image = info.replace('anilist.co/anime/', 'img.anili.st/media/')
         if trailer:
             buttons = [
-                    [InlineKeyboardButton("More Info", url=info),
-                    InlineKeyboardButton("Trailer 🎬", url=trailer)]
-                    ]
+                [InlineKeyboardButton("More Info", url=info),
+                 InlineKeyboardButton("Trailer 🎬", url=trailer)]
+            ]
         else:
-           buttons = [
-                    [InlineKeyboardButton("More Info", url=info)]
-                    ]
+            buttons = [
+                [InlineKeyboardButton("More Info", url=info)]
+            ]
         if image:
             try:
                 await m.reply_photo(image, caption=msg, reply_markup=InlineKeyboardMarkup(buttons))
@@ -247,7 +247,6 @@ async def anime_search(c: Client, m: Message):
                 await m.edit(msg)
         else:
             await m.edit(msg)
-
 
 
 @pbot.on_message(filters.command('character'))
@@ -314,4 +313,3 @@ async def manga_search(c: Client, m: Message):
                 await edrep(m, text=ms_g)
         else:
             await edrep(m, text=ms_g)
-
