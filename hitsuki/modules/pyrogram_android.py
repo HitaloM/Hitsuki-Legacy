@@ -56,7 +56,8 @@ class GetDevice:
             data = get(
                 'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
             db = loads(data)
-            newdevice = self.device.strip('lte').lower() if self.device.startswith('beyond') else self.device.lower()
+            newdevice = self.device.strip('lte').lower() if self.device.startswith(
+                'beyond') else self.device.lower()
             try:
                 name = db[newdevice][0]['name']
                 model = db[newdevice][0]['model']
@@ -99,8 +100,10 @@ async def specs(c: Client, update: Update):
         res = page.find_all('tr', {'class': 'mdata-group-val'})
         res = res[2:]
         for info in res:
-            title = re.findall(r'<td>.*?</td>', str(info))[0].strip().replace('td', 'b')
-            data = re.findall(r'<td>.*?</td>', str(info))[-1].strip().replace('td', 'code')
+            title = re.findall(r'<td>.*?</td>', str(info)
+                               )[0].strip().replace('td', 'b')
+            data = re.findall(r'<td>.*?</td>', str(info)
+                              )[-1].strip().replace('td', 'code')
             message += "• {}: <code>{}</code>\n".format(title, data)
     else:
         giz = get(f'https://www.gizmochina.com/product/samsung-{device}/')
@@ -180,7 +183,8 @@ async def variants(c: Client, update: Update):
     for i in device:
         name = i['name']
         model = i['model']
-        message += '<b>Model</b>: <code>{}</code> \n<b>Name:</b> <code>{}</code>\n\n'.format(model, name)
+        message += '<b>Model</b>: <code>{}</code> \n<b>Name:</b> <code>{}</code>\n\n'.format(
+            model, name)
 
     await c.send_message(
         chat_id=update.chat.id,
@@ -197,8 +201,10 @@ async def check(c: Client, update: Update):
         return
     cmd, temp, csc = update.command
     model = 'sm-' + temp if not temp.upper().startswith('SM-') else temp
-    fota = get(f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.xml')
-    test = get(f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.test.xml')
+    fota = get(
+        f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.xml')
+    test = get(
+        f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.test.xml')
     if test.status_code != 200:
         message = f"Couldn't find any firmwares for {temp.upper()} - {csc.upper()}, please refine your search or try again later!"
         await c.send_message(
@@ -259,8 +265,8 @@ async def twrp(c: Client, update: Update):
     if not len(update.command) == 2:
         m = "Type the device codename, example: <code>/twrp j7xelte</code>"
         await c.send_message(
-                chat_id=update.chat.id,
-                text=m)
+            chat_id=update.chat.id,
+            text=m)
         return
 
     device = update.command[1]
@@ -268,8 +274,8 @@ async def twrp(c: Client, update: Update):
     if url.status_code == 404:
         m = "TWRP is not available for <code>{device}</code>"
         await c.send_message(
-                chat_id=update.chat.id,
-                text=m)
+            chat_id=update.chat.id,
+            text=m)
         return
 
     else:
@@ -287,8 +293,9 @@ async def twrp(c: Client, update: Update):
             size = trs[i].find("span", {"class": "filesize"}).text
         m += f'📥 <b>Size:</b> <code>{size}</code>\n'
         m += f'📦 <b>File:</b> <code>{dl_file.lower()}</code>'
-        keyboard = [[InlineKeyboardButton(text="Click here to download", url=dl_link)]]
+        keyboard = [[InlineKeyboardButton(
+            text="Click here to download", url=dl_link)]]
         await c.send_message(
-                chat_id=update.chat.id,
-                text=m,
-                reply_markup=InlineKeyboardMarkup(keyboard))
+            chat_id=update.chat.id,
+            text=m,
+            reply_markup=InlineKeyboardMarkup(keyboard))
