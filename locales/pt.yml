@@ -831,7 +831,7 @@ last_fm_help: |
 #Purge
 modname_msg_deleting: Purgar
 purge_msg_cant_del_too_old: Todas as mensagens não podem ser excluídas. As mensagens podem ser muito antigas, talvez você não tenha direitos de exclusão ou isso pode não ser um supergrupo.
-purge_msg_success: Limpeza concluída! __Esta mensagem será excluída automaticamente após 2 segundos.__
+purge_msg_success: Limpeza de {} mensagens concluída! __Esta mensagem será excluída automaticamente após 5 segundos.__
 purge_invalid: Responda a uma mensagem para selecionar por onde iniciar a limpeza.
 purge_invalid2: 'O que você deseja remover?'
 msg_deleting_help: |

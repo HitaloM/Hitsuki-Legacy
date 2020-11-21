@@ -833,7 +833,7 @@ last_fm_help: |
 #Purge
 modname_msg_deleting: Purges
 purge_msg_cant_del_too_old: Cannot delete all messages. The messages may be too old, I might not have delete rights, or this might not be a supergroup.
-purge_msg_success: Purge completed! __This message will be deleted automatically after 2 seconds.__
+purge_msg_success: Purge of {} messages completed! __This message will be deleted automatically after 5 seconds.__
 purge_invalid: Reply to a message to select where to start purging from.
 purge_invalid2: What do you want to delete?
 msg_deleting_help: |
