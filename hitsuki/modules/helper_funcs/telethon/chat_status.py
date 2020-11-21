@@ -17,6 +17,7 @@ from telethon.tl.functions.channels import GetParticipantRequest
 from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantCreator, ChannelParticipantsAdmins
 
 from hitsuki import tbot, SUDO_USERS, WHITELIST_USERS
+from hitsuki.mwt import MWT
 
 
 async def user_is_ban_protected(user_id: int, message):
@@ -53,6 +54,8 @@ async def user_is_admin(user_id: int, message):
     return False
 
 
+# Cache admin status for 10 mins to avoid extra API requests.
+@MWT(timeout=60 * 10)
 async def is_user_admin(user_id: int, chat_id):
     if user_id in SUDO_USERS:
         return True

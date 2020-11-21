@@ -61,7 +61,8 @@ async def orangefox(event):
         await event.reply(reply_text)
         return
 
-    reply_text = tld(chat_id, "fox_release_device").format(
+    reply_text = tld(chat_id, "fox_release_title")
+    reply_text += tld(chat_id, "fox_release_device").format(
         fullname=device['fullname'],
         codename=device['codename']
     )

@@ -14,12 +14,13 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
-
-from bs4 import BeautifulSoup
-from pyrogram import Client, filters
-from pyrogram.types import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from rapidjson import loads
 from requests import get
+from bs4 import BeautifulSoup
+from rapidjson import loads
+
+from pyrogram import Client, filters
+from pyrogram.types import Message
+from pyrogram.types import Update, InlineKeyboardButton, InlineKeyboardMarkup
 
 from hitsuki import pbot
 
@@ -251,3 +252,43 @@ async def check(c: Client, update: Update):
             chat_id=update.chat.id,
             text=message,
             reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+@pbot.on_message(filters.command("twrp"))
+async def twrp(c: Client, update: Update):
+    if not len(update.command) == 2:
+        m = "Type the device codename, example: <code>/twrp j7xelte</code>"
+        await c.send_message(
+                chat_id=update.chat.id,
+                text=m)
+        return
+
+    device = update.command[1]
+    url = get(f'https://dl.twrp.me/{device}/')
+    if url.status_code == 404:
+        m = "TWRP is not available for <code>{device}</code>"
+        await c.send_message(
+                chat_id=update.chat.id,
+                text=m)
+        return
+
+    else:
+        m = f'<b>Latest TWRP for {device}</b>\n'
+        page = BeautifulSoup(url.content, 'lxml')
+        date = page.find("em").text.strip()
+        m += f'📅 <b>Updated:</b> <code>{date}</code>\n'
+        trs = page.find('table').find_all('tr')
+        row = 2 if trs[0].find('a').text.endswith('tar') else 1
+
+        for i in range(row):
+            download = trs[i].find('a')
+            dl_link = f"https://dl.twrp.me{download['href']}"
+            dl_file = download.text
+            size = trs[i].find("span", {"class": "filesize"}).text
+        m += f'📥 <b>Size:</b> <code>{size}</code>\n'
+        m += f'📦 <b>File:</b> <code>{dl_file.lower()}</code>'
+        keyboard = [[InlineKeyboardButton(text="Click here to download", url=dl_link)]]
+        await c.send_message(
+                chat_id=update.chat.id,
+                text=m,
+                reply_markup=InlineKeyboardMarkup(keyboard))
