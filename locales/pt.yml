@@ -40,7 +40,11 @@ common_this_chat: Este chat
 common_invalid_arg: 'Argumento inválido! Por favor use `on`/`yes` ou `off`/`no`!'
 #Admins
 modname_admin: Admin
-admin_cache_refreshed: Cache de administradores atualizado!
+admin_no_promote_perm: "Você não tem direitos suficientes para promover/rebaixar alguém!"
+admin_no_pin_perm: "Você não tem direitos suficientes para fazer fixar/desafixar mensagens!"
+admin_no_changeinfo_perm: "Você não tem direitos suficientes para alterar as informações deste grupo!"
+admin_no_ban_perm: "Você não tem direitos suficientes para banir/desbanir usuários!"
+admin_no_kick_perm: "Você não tem direitos suficientes para remover usuários!"
 admin_err_no_perm: 'Não posso promover/rebaixar pessoas aqui! Verifique se eu sou um administrador e posso adicionar novos administradores.'
 admin_err_user_admin: 'Como posso promover alguém que já é administrador?'
 admin_err_self_promote: 'Eu não posso me promover! Peça a um administrador que faça isso por mim.'

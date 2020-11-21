@@ -51,7 +51,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
             return ""
 
     if user_can_promote(chat, user, bot.id) is False:
-        message.reply_text("You don't have enough rights to promote someone!")
+        message.reply_text(tld(chat.id, "admin_no_promote_perm"))
         return ""
 
     if not chatD.get_member(bot.id).can_promote_members:
@@ -113,6 +113,10 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
         if chat.type == "private":
             return ""
 
+    if user_can_promote(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_promote_perm"))
+        return ""
+
     if not chatD.get_member(bot.id).can_promote_members:
         update.effective_message.reply_text(tld(chat.id, "admin_err_no_perm"))
         return ""
@@ -169,10 +173,15 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 def pin(bot: Bot, update: Update, args: List[str]) -> str:
     user = update.effective_user
     chat = update.effective_chat
+    message = update.effective_message
 
     is_group = chat.type != "private" and chat.type != "channel"
 
     prev_message = update.effective_message.reply_to_message
+
+    if user_can_pin(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_pin_perm"))
+        return ""
 
     is_silent = True
     if len(args) >= 1:
@@ -204,6 +213,11 @@ def pin(bot: Bot, update: Update, args: List[str]) -> str:
 def unpin(bot: Bot, update: Update) -> str:
     chat = update.effective_chat
     user = update.effective_user
+    message = update.effective_message
+
+    if user_can_pin(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_pin_perm"))
+        return ""
 
     try:
         bot.unpinChatMessage(chat.id)
@@ -273,9 +287,15 @@ def adminlist(bot: Bot, update: Update):
 @run_async
 def reaction(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
+    user = update.effective_user
+    message = update.effective_message
+
     if len(args) >= 1:
         var = args[0].lower()
-        if var == "false":
+        if user_can_changeinfo(chat, user, bot.id) is False:
+            message.reply_text(tld(chat.id, "admin_no_changeinfo_perm"))
+            return ""
+        elif var == "false":
             sql.set_command_reaction(chat.id, False)
             update.effective_message.reply_text(
                 tld(chat.id, "admin_disable_reaction"))

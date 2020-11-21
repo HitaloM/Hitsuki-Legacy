@@ -25,6 +25,7 @@ from hitsuki import dispatcher, LOGGER
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import bot_admin, user_admin, is_user_ban_protected, can_restrict, \
     is_user_admin, is_user_in_chat
+from hitsuki.modules.helper_funcs.admin_rights import user_can_ban
 from hitsuki.modules.helper_funcs.extraction import extract_user_and_text
 from hitsuki.modules.helper_funcs.string_handling import extract_time
 from hitsuki.modules.log_channel import loggable
@@ -42,6 +43,10 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     message = update.effective_message  # type: Optional[Message]
 
     user_id, reason = extract_user_and_text(message, args)
+
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_ban_perm"))
+        return ""
 
     if not user_id:
         message.reply_text(tld(chat.id, "common_err_no_user"))
@@ -108,6 +113,10 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     message = update.effective_message  # type: Optional[Message]
 
     user_id, reason = extract_user_and_text(message, args)
+
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_ban_perm"))
+        return ""
 
     if not user_id:
         message.reply_text(tld(chat.id, "common_err_no_user"))
@@ -195,6 +204,10 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id, reason = extract_user_and_text(message, args)
 
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_kick_perm"))
+        return ""
+
     if not user_id:
         message.reply_text(tld(chat.id, "common_err_no_user"))
         return ""
@@ -269,6 +282,7 @@ def kickme(bot: Bot, update: Update):
 def banme(bot: Bot, update: Update):
     user_id = update.effective_message.from_user.id
     chat = update.effective_chat
+
     if is_user_admin(update.effective_chat, user_id):
         update.effective_message.reply_text(
             tld(chat.id, "bans_err_usr_is_admin"))
@@ -294,6 +308,10 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
 
     user_id, reason = extract_user_and_text(message, args)
+
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_ban_perm"))
+        return ""
 
     if not user_id:
         return ""
@@ -332,6 +350,10 @@ def sban(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     message = update.effective_message  # type: Optional[Message]
+
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_ban_perm"))
+        return ""
 
     update.effective_message.delete()
 

@@ -15,6 +15,10 @@
 
 from telegram import User, Chat
 
+# This module has been ported from SkyleeBot
+# Created by @starry69 on GitHub
+# Ported from github.com/SensiPeeps/skyleebot
+
 
 # checks whether the user is allowed to promote users
 def user_can_promote(chat: Chat, user: User, bot_id: int) -> bool:
