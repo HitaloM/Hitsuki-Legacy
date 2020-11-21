@@ -35,6 +35,6 @@ def user_can_pin(chat: Chat, user: User, bot_id: int) -> bool:
     return chat.get_member(user.id).can_pin_messages
 
 
-# checks whether the user is allowed to change group info 
+# checks whether the user is allowed to change group info
 def user_can_changeinfo(chat: Chat, user: User, bot_id: int) -> bool:
     return chat.get_member(user.id).can_change_info

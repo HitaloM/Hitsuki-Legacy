@@ -180,7 +180,7 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
                 mention_html(user.id, user.first_name),
                 mention_html(member.user.id, member.user.first_name),
                 html.escape(chat.title), time_val),
-                               quote=False)
+                quote=False)
             return log
         else:
             LOGGER.warning(update)
