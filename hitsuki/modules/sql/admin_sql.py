@@ -44,7 +44,7 @@ def command_reaction(chat_id: Union[str, int]) -> bool:
             str(chat_id))
         if chat_setting:
             return chat_setting.comm_reaction
-        return False
+        return True
     finally:
         SESSION.close()
 
