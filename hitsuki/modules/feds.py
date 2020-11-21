@@ -763,7 +763,7 @@ def fed_import_bans(bot: Bot, update: Update, chat_data):
             "This group is not a part of any federation!")
         return
 
-    if is_user_fed_owner(fed_id, user.id) == False:
+    if is_user_fed_owner(fed_id, user.id) is False:
         update.effective_message.reply_text(
             "Only federation owners can do this!")
         return
@@ -825,10 +825,10 @@ def fed_import_bans(bot: Bot, update: Update, chat_data):
                     if int(import_userid) == bot.id:
                         failed += 1
                         continue
-                    if is_user_fed_owner(fed_id, import_userid) == True:
+                    if is_user_fed_owner(fed_id, import_userid) is True:
                         failed += 1
                         continue
-                    if is_user_fed_admin(fed_id, import_userid) == True:
+                    if is_user_fed_admin(fed_id, import_userid) is True:
                         failed += 1
                         continue
                     if str(import_userid) == str(OWNER_ID):
@@ -876,10 +876,10 @@ def fed_import_bans(bot: Bot, update: Update, chat_data):
                     if int(import_userid) == bot.id:
                         failed += 1
                         continue
-                    if is_user_fed_owner(fed_id, import_userid) == True:
+                    if is_user_fed_owner(fed_id, import_userid) is True:
                         failed += 1
                         continue
-                    if is_user_fed_admin(fed_id, import_userid) == True:
+                    if is_user_fed_admin(fed_id, import_userid) is True:
                         failed += 1
                         continue
                     if str(import_userid) == str(OWNER_ID):
@@ -918,7 +918,7 @@ def fed_ban_list(bot: Bot, update: Update, args: List[str], chat_data):
             "This group is not a part of any federation!")
         return
 
-    if is_user_fed_owner(fed_id, user.id) == False:
+    if is_user_fed_owner(fed_id, user.id) is False:
         update.effective_message.reply_text(
             "Only federation owners can do this!")
         return
@@ -994,7 +994,7 @@ def fed_ban_list(bot: Bot, update: Update, args: List[str], chat_data):
         len(getfban), info['fname'])
     for users in getfban:
         getuserinfo = sql.get_all_fban_users_target(fed_id, users)
-        if getuserinfo == False:
+        if getuserinfo is False:
             text = "There are no users banned from the federation {}".format(
                 info['fname'])
             break
