@@ -27,6 +27,7 @@ from hitsuki import dispatcher
 from hitsuki.modules.connection import connected
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import bot_admin, user_admin, can_pin
+from hitsuki.modules.helper_funcs.admin_rights import user_can_pin, user_can_promote, user_can_changeinfo
 from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.sql import admin_sql as sql
@@ -48,6 +49,10 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
         chatD = update.effective_chat
         if chat.type == "private":
             return ""
+
+    if user_can_promote(chat, user, bot.id) is False:
+        message.reply_text("You don't have enough rights to promote someone!")
+        return ""
 
     if not chatD.get_member(bot.id).can_promote_members:
         message.reply_text(tld(chat.id, "admin_err_no_perm"))
