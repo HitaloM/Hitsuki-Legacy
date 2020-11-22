@@ -101,8 +101,8 @@ async def specs(c: Client, update: Update):
     if sfw.status_code == 404:
         message = "device specs not found in bot database, make sure this is a Samsung device!"
         await c.send_message(
-    	    chat_id=update.chat.id,
-    	    text=message)
+            chat_id=update.chat.id,
+            text=message)
         return
 
         page = BeautifulSoup(sfw.content, 'lxml')
