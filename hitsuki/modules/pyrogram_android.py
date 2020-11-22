@@ -23,6 +23,7 @@ from pyrogram.types import Message
 from pyrogram.types import Update, InlineKeyboardButton, InlineKeyboardMarkup
 
 from hitsuki import pbot
+from hitsuki.mwt import MWT
 
 fw_links = {"SAMMOBILE": "https://www.sammobile.com/samsung/firmware/{}/{}/",
             "SAMFW": "https://samfw.com/firmware/{}/{}/",
@@ -30,6 +31,7 @@ fw_links = {"SAMMOBILE": "https://www.sammobile.com/samsung/firmware/{}/{}/",
             }.items()
 
 
+@MWT(timeout=60 * 10)
 class GetDevice:
     def __init__(self, device):
         """Get device info by codename or model!"""
@@ -81,6 +83,7 @@ async def specs(c: Client, update: Update):
             chat_id=update.chat.id,
             text=message)
         return
+
     device = update.command[1]
     data = GetDevice(device).get()
     if data:
@@ -93,8 +96,15 @@ async def specs(c: Client, update: Update):
             chat_id=update.chat.id,
             text=message)
         return
+
     sfw = get(f'https://sfirmware.com/samsung-{model.lower()}/')
-    if sfw.status_code == 200:
+    if sfw.status_code == 404:
+        message = "device specs not found in bot database, make sure this is a Samsung device!"
+        await c.send_message(
+    	    chat_id=update.chat.id,
+    	    text=message)
+        return
+
         page = BeautifulSoup(sfw.content, 'lxml')
         message = '<b>Device:</b> Samsung {}\n'.format(name)
         res = page.find_all('tr', {'class': 'mdata-group-val'})
@@ -104,20 +114,6 @@ async def specs(c: Client, update: Update):
                                )[0].strip().replace('td', 'b')
             data = re.findall(r'<td>.*?</td>', str(info)
                               )[-1].strip().replace('td', 'code')
-            message += "• {}: <code>{}</code>\n".format(title, data)
-    else:
-        giz = get(f'https://www.gizmochina.com/product/samsung-{device}/')
-        if giz.status_code == 404:
-            message = "device specs not found in bot databases!"
-            await c.send_message(
-                chat_id=update.chat.id,
-                text=message)
-            return
-        page = BeautifulSoup(giz.content, 'lxml')
-        message = '<b>Device:</b> Samsung {}\n'.format(name)
-        for info in page.find_all('div', {'class': 'aps-feature-info'}):
-            title = info.find('strong').text
-            data = info.find('span').text
             message += "• {}: <code>{}</code>\n".format(title, data)
 
     await c.send_message(
@@ -132,9 +128,9 @@ async def models(c: Client, update: Update):
         await c.send_message(
             chat_id=update.chat.id,
             text=message,
-            disable_web_page_preview=True
-        )
+            disable_web_page_preview=True)
         return
+
     device = update.command[1]
     data = GetDevice(device).get()
     if data:
@@ -148,12 +144,12 @@ async def models(c: Client, update: Update):
             chat_id=update.chat.id,
             text=message)
         return
+
     message = f'<b>{device}/{model.upper()}</b> is <code>{brand} {name}</code>\n'
     await c.send_message(
         chat_id=update.chat.id,
         text=message,
-        disable_web_page_preview=True
-    )
+        disable_web_page_preview=True)
 
 
 @pbot.on_message(filters.command(["variants", "models"]))
@@ -164,6 +160,7 @@ async def variants(c: Client, update: Update):
             chat_id=update.chat.id,
             text=message)
         return
+
     device = update.command[1]
     data = GetDevice(device).get()
     if data:
@@ -175,11 +172,13 @@ async def variants(c: Client, update: Update):
             chat_id=update.chat.id,
             text=message)
         return
+
     data = get(
         'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
     db = loads(data)
     device = db[device]
     message = f'<b>{name}</b> variants:\n\n'
+
     for i in device:
         name = i['name']
         model = i['model']
@@ -199,6 +198,7 @@ async def check(c: Client, update: Update):
             chat_id=update.chat.id,
             text=message)
         return
+
     cmd, temp, csc = update.command
     model = 'sm-' + temp if not temp.upper().startswith('SM-') else temp
     fota = get(
@@ -211,6 +211,7 @@ async def check(c: Client, update: Update):
             chat_id=update.chat.id,
             text=message)
         return
+
     page1 = BeautifulSoup(fota.content, 'lxml')
     page2 = BeautifulSoup(test.content, 'lxml')
     os1 = page1.find("latest").get("o")
