@@ -83,7 +83,6 @@ async def specs(c: Client, update: Update):
             chat_id=update.chat.id,
             text=message)
         return
-
     device = update.command[1]
     data = GetDevice(device).get()
     if data:
@@ -96,15 +95,8 @@ async def specs(c: Client, update: Update):
             chat_id=update.chat.id,
             text=message)
         return
-
     sfw = get(f'https://sfirmware.com/samsung-{model.lower()}/')
-    if sfw.status_code == 404:
-        message = "device specs not found in bot database, make sure this is a Samsung device!"
-        await c.send_message(
-            chat_id=update.chat.id,
-            text=message)
-        return
-
+    if sfw.status_code == 200:
         page = BeautifulSoup(sfw.content, 'lxml')
         message = '<b>Device:</b> Samsung {}\n'.format(name)
         res = page.find_all('tr', {'class': 'mdata-group-val'})
@@ -115,6 +107,13 @@ async def specs(c: Client, update: Update):
             data = re.findall(r'<td>.*?</td>', str(info)
                               )[-1].strip().replace('td', 'code')
             message += "• {}: <code>{}</code>\n".format(title, data)
+
+    else:
+        message = "Device specs not found in bot database, make sure this is a Samsung device!"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
 
     await c.send_message(
         chat_id=update.chat.id,
