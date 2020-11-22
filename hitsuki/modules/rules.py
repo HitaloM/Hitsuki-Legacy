@@ -115,9 +115,11 @@ def set_rules(bot: Bot, update: Update):
 
     elif msg.reply_to_message and len(args) == 1:
         txt = msg.reply_to_message.text
-        offset = len(txt) - len(raw_text)  # set correct offset relative to command
-        markdown_rules = markdown_parser(txt, entities=msg.parse_entities(), offset=offset)
- 
+        # set correct offset relative to command
+        offset = len(txt) - len(raw_text)
+        markdown_rules = markdown_parser(
+            txt, entities=msg.parse_entities(), offset=offset)
+
         sql.set_rules(chat_id, markdown_rules)
         msg.reply_text(tld(chat.id, "rules_success"))
 
