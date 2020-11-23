@@ -30,7 +30,7 @@ from telegram.ext.dispatcher import (run_async, DispatcherHandlerStop,
                                      Dispatcher)
 
 from hitsuki import (dispatcher, updater, LOGGER,
-                     TOKEN, SYSTEM_DUMP, tbot, pbot)
+                     TOKEN, tbot, pbot)
 # Needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from hitsuki.modules import ALL_MODULES

@@ -17,7 +17,6 @@ import re
 import uuid
 import rapidjson as json
 import time
-from time import sleep
 from io import BytesIO
 from typing import List
 
