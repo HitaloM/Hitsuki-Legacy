@@ -147,7 +147,8 @@ def saveRepo(bot: Bot, update: Update, args: List[str]):
             and (len(args) != 3 and not args[2].isdigit())
             or "/" not in args[1]
     ):
-        msg.reply_text("Invalid data, use <reponame> <user>/<repo> <value (optional)>")
+        msg.reply_text(
+            "Invalid data, use <reponame> <user>/<repo> <value (optional)>")
         return
     index = 0
     if len(args) == 3:
@@ -193,7 +194,7 @@ def listRepo(bot: Bot, update: Update):
 
 def __stats__():
     return "• <code>{}</code> repos shortcuts, accross <code>{}</code> chats.".format(sql.num_repos(),
-                                                                sql.num_chats())
+                                                                                      sql.num_chats())
 
 
 __help__ = True
