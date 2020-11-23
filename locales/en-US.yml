@@ -39,6 +39,7 @@ common_this_chat: This chat
 common_invalid_arg: Invalid argument! Please type `on`/`yes` or `off`/`no`!
 #Admins
 modname_admin: Admin
+admin_cache_refresh: Admins cache refreshed!
 admin_no_promote_perm: "You don't have enough rights to promote/demote someone!"
 admin_no_pin_perm: "You don't have enough rights to pin/unpin messages!"
 admin_no_changeinfo_perm: "You don't have enough rights to change chat info!"
@@ -61,6 +62,7 @@ admin_enable_reaction: Enabled response to user-triggered admin commands.
 admin_err_wrong_arg: Please enter True or False!
 admin_reaction_status: Response for user-triggered admin commands is currently *{}*!
 admin_help: |
+  Make it easy to promote and demote users with the admin module\n!
   /adminlist | /admins: Lists the admins in the chat\n
   *Admin only:*
   - /pin: Silently pins the message replied to. Add 'loud', 'notify' or 'violent' to send a notification to users.
@@ -69,6 +71,9 @@ admin_help: |
   - /promote: Promotes a user Reply to the user or use their username.
   - /demote: Demotes a user. Reply to the user or use their username.
   - /reaction False or True: Disables or enable the bot reaction for administrative commands used by common members.
+  - /admincache: Update the admin cache, to take into account new admins/admin permissions.\n
+  Sometimes, you promote or demote an admin manually, and Hitsuki doesn't realise it immediately. This is because to avoid spamming telegram servers, admin status is cached locally.
+  This means that you sometimes have to wait a few minutes for admin rights to update. If you want to update them immediately, you can use the /admincache command; that'll force Hitsuki to check who the admins are again.
 #AFK
 modname_afk: AFK
 user_now_afk: "User {} is now AFK!"
