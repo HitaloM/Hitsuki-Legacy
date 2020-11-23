@@ -54,13 +54,13 @@ def add_blacklist_url(bot: Bot, update: Update):
                     chat.id, "url_blacklist_success").format(
                         html.escape(extract_url.domain + "." +
                                     extract_url.suffix)),
-                                   parse_mode=ParseMode.HTML)
+                    parse_mode=ParseMode.HTML)
             else:
                 message.reply_text(tld(chat.id, "url_blacklist_invalid"))
         else:
             message.reply_text(tld(chat.id, "url_blacklist_success_2").format(
                 len(blacklisted)),
-                               parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML)
     else:
         message.reply_text(tld(chat.id, "url_blacklist_invalid_2"))
 
