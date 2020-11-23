@@ -36,8 +36,7 @@ def getData(repoURL):
 def getReleaseData(repoData, index):
     if index < len(repoData):
         return repoData[index]
-    else:
-        return None
+    return None
 
 
 def getAuthor(releaseData):

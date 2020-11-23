@@ -778,9 +778,8 @@ def fed_import_bans(bot: Bot, update: Update, chat_data):
                 update.effective_message.reply_text(
                     "You can backup your data once every 30 minutes!\nYou can backup data again at `{}`".format(waktu), parse_mode=ParseMode.MARKDOWN)
                 return
-            else:
-                if user.id not in SUDO_USERS:
-                    put_chat(chat.id, new_jam, chat_data)
+            if user.id not in SUDO_USERS:
+                put_chat(chat.id, new_jam, chat_data)
         else:
             if user.id not in SUDO_USERS:
                 put_chat(chat.id, new_jam, chat_data)
@@ -942,9 +941,8 @@ def fed_ban_list(bot: Bot, update: Update, args: List[str], chat_data):
                     update.effective_message.reply_text(
                         "You can back up your data once every 30 minutes!\nYou can back up data again at `{}`".format(waktu), parse_mode=ParseMode.MARKDOWN)
                     return
-                else:
-                    if user.id not in SUDO_USERS:
-                        put_chat(chat.id, new_jam, chat_data)
+                if user.id not in SUDO_USERS:
+                    put_chat(chat.id, new_jam, chat_data)
             else:
                 if user.id not in SUDO_USERS:
                     put_chat(chat.id, new_jam, chat_data)
@@ -960,7 +958,7 @@ def fed_ban_list(bot: Bot, update: Update, args: List[str], chat_data):
                 update.effective_message.reply_document(document=output, filename="hitsuki_fbanned_users.json",
                                                         caption="Total {} User are blocked by the Federation {}.".format(len(getfban), info['fname']))
             return
-        elif args[0] == 'csv':
+        if args[0] == 'csv':
             jam = time.time()
             new_jam = jam + 1800
             cek = get_chat(chat.id, chat_data)
@@ -971,9 +969,8 @@ def fed_ban_list(bot: Bot, update: Update, args: List[str], chat_data):
                     update.effective_message.reply_text(
                         "You can back up data once every 30 minutes!\nYou can back up data again at `{}`".format(waktu), parse_mode=ParseMode.MARKDOWN)
                     return
-                else:
-                    if user.id not in SUDO_USERS:
-                        put_chat(chat.id, new_jam, chat_data)
+                if user.id not in SUDO_USERS:
+                    put_chat(chat.id, new_jam, chat_data)
             else:
                 if user.id not in SUDO_USERS:
                     put_chat(chat.id, new_jam, chat_data)
@@ -1016,9 +1013,8 @@ def fed_ban_list(bot: Bot, update: Update, args: List[str], chat_data):
                 update.effective_message.reply_text(
                     "You can back up data once every 30 minutes!\nYou can back up data again at `{}`".format(waktu), parse_mode=ParseMode.MARKDOWN)
                 return
-            else:
-                if user.id not in SUDO_USERS:
-                    put_chat(chat.id, new_jam, chat_data)
+            if user.id not in SUDO_USERS:
+                put_chat(chat.id, new_jam, chat_data)
         else:
             if user.id not in SUDO_USERS:
                 put_chat(chat.id, new_jam, chat_data)
@@ -1079,8 +1075,7 @@ def welcome_fed(bot, update):
             "This user is banned in current federation! I will remove him.")
         bot.kick_chat_member(chat.id, user.id)
         return True
-    else:
-        return False
+    return False
 
 
 def __stats__():

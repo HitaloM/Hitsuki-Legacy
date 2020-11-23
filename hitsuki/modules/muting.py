@@ -49,8 +49,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
     else:
         if chat.type == "private":
             return ""
-        else:
-            chatD = chat
+        chatD = chat
 
     user_id = extract_user(message, args)
     if not user_id:
@@ -115,8 +114,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
     else:
         if chat.type == "private":
             return ""
-        else:
-            chatD = chat
+        chatD = chat
 
     user_id = extract_user(message, args)
     if not user_id:
@@ -129,8 +127,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
         if excp.message == "User not found.":
             message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
             return ""
-        else:
-            raise
+        raise
 
     if is_user_ban_protected(chat, user_id, member):
         message.reply_text(tld(chat.id, "unmute_is_an_admin"))
@@ -190,8 +187,7 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
     else:
         if chat.type == "private":
             return ""
-        else:
-            chatD = chat
+        chatD = chat
 
     user_id, reason = extract_user_and_text(message, args)
 
@@ -205,8 +201,7 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
         if excp.message == "User not found":
             message.reply_text(tld(chat.id, "mute_not_existed"))
             return ""
-        else:
-            raise
+        raise
 
     if is_user_admin(chat, user_id, member):
         message.reply_text(tld(chat.id, "mute_is_admin"))
@@ -251,9 +246,8 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
             message.reply_text(
                 tld(chat.id, "tmute_success").format(time_val, chatD.title))
             return log
-        else:
-            message.reply_text(
-                tld(chat.id, "mute_already_mute").format(chatD.title))
+        message.reply_text(
+            tld(chat.id, "mute_already_mute").format(chatD.title))
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
@@ -262,11 +256,10 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
                 time_val, chatD.title),
                 quote=False)
             return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception("ERROR muting user %s in chat %s (%s) due to %s",
-                             user_id, chat.title, chat.id, excp.message)
-            message.reply_text(tld(chat.id, "mute_cant_mute"))
+        LOGGER.warning(update)
+        LOGGER.exception("ERROR muting user %s in chat %s (%s) due to %s",
+                         user_id, chat.title, chat.id, excp.message)
+        message.reply_text(tld(chat.id, "mute_cant_mute"))
 
     return ""
 
@@ -286,8 +279,7 @@ def nomedia(bot: Bot, update: Update, args: List[str]) -> str:
     else:
         if chat.type == "private":
             return ""
-        else:
-            chatD = chat
+        chatD = chat
 
     user_id = extract_user(message, args)
     if not user_id:
@@ -351,8 +343,7 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
     else:
         if chat.type == "private":
             return ""
-        else:
-            chatD = chat
+        chatD = chat
 
     user_id = extract_user(message, args)
     if not user_id:
@@ -415,8 +406,7 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
     else:
         if chat.type == "private":
             return ""
-        else:
-            chatD = chat
+        chatD = chat
 
     user_id, reason = extract_user_and_text(message, args)
 
@@ -430,8 +420,7 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
         if excp.message == "User not found":
             message.reply_text(tld(chat.id, "mute_not_existed"))
             return ""
-        else:
-            raise
+        raise
 
     if is_user_admin(chat, user_id, member):
         message.reply_text(tld(chat.id, "restrict_is_admin"))
@@ -480,10 +469,9 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
             message.reply_text(
                 tld(chat.id, "nomedia_success").format(time_val, chatD.title))
             return log
-        else:
-            message.reply_text(
-                tld(chat.id,
-                    "restrict_already_restricted").format(chatD.title))
+        message.reply_text(
+            tld(chat.id,
+                "restrict_already_restricted").format(chatD.title))
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
@@ -492,11 +480,10 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
                 time_val, chatD.title),
                 quote=False)
             return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception("ERROR muting user %s in chat %s (%s) due to %s",
-                             user_id, chat.title, chat.id, excp.message)
-            message.reply_text(tld(chat.id, "restrict_cant_restricted"))
+        LOGGER.warning(update)
+        LOGGER.exception("ERROR muting user %s in chat %s (%s) due to %s",
+                         user_id, chat.title, chat.id, excp.message)
+        message.reply_text(tld(chat.id, "restrict_cant_restricted"))
 
     return ""
 
@@ -516,14 +503,12 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
     if res:
         update.effective_message.reply_text(tld(chat.id, "muteme_muted"))
         log = "<b>{}:</b>" \
-              "\n#MUTEME" \
-              "\n<b>User:</b> {}" \
-              "\n<b>ID:</b> <code>{}</code>".format(html.escape(chat.title),
+                  "\n#MUTEME" \
+                  "\n<b>User:</b> {}" \
+                  "\n<b>ID:</b> <code>{}</code>".format(html.escape(chat.title),
                                                     mention_html(user.id, user.first_name), user_id)
         return log
-
-    else:
-        update.effective_message.reply_text(tld(chat.id, "mute_cant_mute"))
+    update.effective_message.reply_text(tld(chat.id, "mute_cant_mute"))
 
 
 MUTE_HANDLER = DisableAbleCommandHandler("mute",

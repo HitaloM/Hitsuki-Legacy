@@ -115,8 +115,7 @@ def get_fed_id(chat_id):
     get = FEDERATION_CHATS.get(str(chat_id))
     if get is None:
         return False
-    else:
-        return get['fid']
+    return get['fid']
 
 
 def new_fed(owner_id, fed_name, fed_id):
@@ -348,8 +347,7 @@ def all_fed_chats(fed_id):
         getfed = FEDERATION_CHATS_BYID.get(fed_id)
         if getfed is None:
             return []
-        else:
-            return getfed
+        return getfed
 
 
 def all_fed_users(fed_id):
@@ -450,8 +448,7 @@ def get_fban_user(fed_id, user_id):
                 if int(I.user_id) == int(user_id):
                     reason = I.reason
         return True, reason
-    else:
-        return False, None
+    return False, None
 
 
 def get_all_fban_users(fed_id):
@@ -489,8 +486,7 @@ def search_fed_by_id(fed_id):
     get = FEDERATION_BYFEDID.get(fed_id)
     if get is None:
         return False
-    else:
-        return get
+    return get
     result = False
     for Q in curr:
         if Q.fed_id == fed_id:

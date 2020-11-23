@@ -237,8 +237,7 @@ def get_warn_setting(chat_id):
         setting = SESSION.query(WarnSettings).get(str(chat_id))
         if setting:
             return setting.warn_limit, setting.soft_warn
-        else:
-            return 3, False
+        return 3, False
 
     finally:
         SESSION.close()
@@ -249,8 +248,7 @@ def get_soft_warn(chat_id):
         setting = SESSION.query(WarnSettings).get(str(chat_id))
         if setting:
             return setting.soft_warn
-        else:
-            return False
+        return False
 
     finally:
         SESSION.close()

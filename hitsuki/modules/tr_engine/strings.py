@@ -38,7 +38,7 @@ def tld(chat_id, t, show_none=True):
                 encode(strings['en-US'][t], 'latin-1', 'backslashreplace'),
                 'unicode-escape')
             return result
-        elif LOCALE in ('pt') and t in strings['pt']:
+        if LOCALE in ('pt') and t in strings['pt']:
             result = decode(
                 encode(strings['pt'][t], 'latin-1', 'backslashreplace'),
                 'unicode-escape')
@@ -62,7 +62,7 @@ def tld_list(chat_id, t):
         LOCALE = LANGUAGE.locale_name
         if LOCALE in ('en-US') and t in strings['en-US']:
             return strings['en-US'][t]
-        elif LOCALE in ('pt') and t in strings['pt']:
+        if LOCALE in ('pt') and t in strings['pt']:
             return strings['pt'][t]
 
     if t in strings['en-US']:
