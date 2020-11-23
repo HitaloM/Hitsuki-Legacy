@@ -208,8 +208,7 @@ def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
                         message.reply_to_message, warner)
         return warn(
             chat.get_member(user_id).user, chat, reason, message, warner)
-    else:
-        message.reply_text(tld(chat.id, 'common_err_no_user'))
+    message.reply_text(tld(chat.id, 'common_err_no_user'))
     return ""
 
 
