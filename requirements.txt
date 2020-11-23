@@ -28,5 +28,5 @@ beautifulsoup4>=4.9.3
 regex>=2020.10.28
 lxml>=4.6.1
 TgCrypto>=1.2.2
-cachetools>=4.4.1
+cachetools>=4.1.1
 telegraph>=1.4.1
