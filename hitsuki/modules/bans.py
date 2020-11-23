@@ -58,8 +58,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
         if excp.message == "User not found.":
             message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
             return ""
-        else:
-            raise
+        raise
 
     if user_id == bot.id:
         message.reply_text(tld(chat.id, "bans_err_usr_is_bot"))
@@ -92,12 +91,11 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
             # Do not reply
             message.reply_text(reply, quote=False, parse_mode=ParseMode.HTML)
             return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s",
-                             user_id, chat.title, chat.id, excp.message)
-            message.reply_text(
-                tld(chat.id, "bans_err_unknown").format("banning"))
+        LOGGER.warning(update)
+        LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s",
+                         user_id, chat.title, chat.id, excp.message)
+        message.reply_text(
+            tld(chat.id, "bans_err_unknown").format("banning"))
 
     return ""
 
@@ -128,8 +126,7 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
         if excp.message == "User not found.":
             message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
             return ""
-        else:
-            raise
+        raise
 
     if is_user_ban_protected(chat, user_id, member):
         message.reply_text(tld(chat.id, "bans_err_usr_is_admin"))
@@ -182,12 +179,11 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
                 html.escape(chat.title), time_val),
                 quote=False)
             return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s",
-                             user_id, chat.title, chat.id, excp.message)
-            message.reply_text(
-                tld(chat.id, "bans_err_unknown").format("tbanning"))
+        LOGGER.warning(update)
+        LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s",
+                         user_id, chat.title, chat.id, excp.message)
+        message.reply_text(
+            tld(chat.id, "bans_err_unknown").format("tbanning"))
 
     return ""
 
@@ -218,8 +214,7 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
         if excp.message == "User not found.":
             message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
             return ""
-        else:
-            raise
+        raise
 
     if user_id == bot.id:
         message.reply_text(tld(chat.id, "bans_kick_is_bot"))
@@ -248,9 +243,7 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
             log += tld(chat.id, "bans_logger_reason").format(reason)
 
         return log
-
-    else:
-        message.reply_text(tld(chat.id, "bans_err_unknown").format("kicking"))
+    message.reply_text(tld(chat.id, "bans_err_unknown").format("kicking"))
 
     return ""
 
@@ -322,8 +315,7 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
         if excp.message == "User not found":
             message.reply_text(tld(chat.id, "common_err_no_user"))
             return ""
-        else:
-            raise
+        raise
 
     if is_user_in_chat(chat, user_id):
         message.reply_text(tld(chat.id, "bans_unban_user_in_chat"))
@@ -367,8 +359,7 @@ def sban(bot: Bot, update: Update, args: List[str]) -> str:
     except BadRequest as excp:
         if excp.message == "User not found":
             return ""
-        else:
-            raise
+        raise
 
     if is_user_ban_protected(chat, user_id, member):
         return ""
@@ -389,10 +380,9 @@ def sban(bot: Bot, update: Update, args: List[str]) -> str:
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s",
-                             user_id, chat.title, chat.id, excp.message)
+        LOGGER.warning(update)
+        LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s",
+                         user_id, chat.title, chat.id, excp.message)
     return ""
 
 

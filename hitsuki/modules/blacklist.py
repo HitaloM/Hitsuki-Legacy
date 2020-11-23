@@ -46,9 +46,8 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
     else:
         if chat.type == "private":
             return
-        else:
-            chat_id = update.effective_chat.id
-            chat_name = chat.title
+        chat_id = update.effective_chat.id
+        chat_name = chat.title
 
     filter_list = tld(chat.id, "blacklist_active_list").format(chat_name)
 
@@ -87,8 +86,7 @@ def add_blacklist(bot: Bot, update: Update):
         chat_id = update.effective_chat.id
         if chat.type == "private":
             return
-        else:
-            chat_name = chat.title
+        chat_name = chat.title
 
     if len(words) > 1:
         text = words[1]
@@ -129,8 +127,7 @@ def unblacklist(bot: Bot, update: Update):
         chat_id = update.effective_chat.id
         if chat.type == "private":
             return
-        else:
-            chat_name = chat.title
+        chat_name = chat.title
 
     if len(words) > 1:
         text = words[1]

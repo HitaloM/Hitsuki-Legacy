@@ -117,13 +117,13 @@ def set_about_bio(bot: Bot, update: Update):
         if user_id == message.from_user.id:
             message.reply_text(tld(chat.id, 'userinfo_bio_you_cant_set'))
             return
-        elif user_id == bot.id and sender.id not in SUDO_USERS:
+        if user_id == bot.id and sender.id not in SUDO_USERS:
             message.reply_text(tld(chat.id, 'userinfo_bio_bot_sudo_only'))
             return
-        elif user_id in SUDO_USERS and sender.id not in SUDO_USERS:
+        if user_id in SUDO_USERS and sender.id not in SUDO_USERS:
             message.reply_text(tld(chat.id, 'userinfo_bio_sudo_sudo_only'))
             return
-        elif user_id == OWNER_ID:
+        if user_id == OWNER_ID:
             message.reply_text(tld(chat.id, 'userinfo_bio_owner_nobio'))
             return
 
@@ -153,12 +153,11 @@ def __user_info__(user_id, chat_id):
         me = me[:500]
     if bio and me:
         return tld(chat_id, "userinfo_what_i_and_other_say").format(me, bio)
-    elif bio:
+    if bio:
         return tld(chat_id, "userinfo_what_other_say").format(bio)
-    elif me:
+    if me:
         return tld(chat_id, "userinfo_what_i_say").format(me)
-    else:
-        return ""
+    return ""
 
 
 __help__ = True

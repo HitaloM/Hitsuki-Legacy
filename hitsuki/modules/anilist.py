@@ -201,8 +201,7 @@ async def anime_search(c: Client, m: Message):
     if len(search) == 1:
         await m.reply_text('Provide anime name!')
         return
-    else:
-        search = search[1]
+    search = search[1]
     variables = {'search': search}
     json = requests.post(url, json={'query': anime_query, 'variables': variables}).json()[
         'data'].get('Media', None)

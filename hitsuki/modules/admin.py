@@ -311,7 +311,7 @@ def reaction(bot: Bot, update: Update, args: List[str]) -> str:
         if user_can_changeinfo(chat, user, bot.id) is False:
             message.reply_text(tld(chat.id, "admin_no_changeinfo_perm"))
             return ""
-        elif var == "false":
+        if var == "false":
             sql.set_command_reaction(chat.id, False)
             update.effective_message.reply_text(
                 tld(chat.id, "admin_disable_reaction"))

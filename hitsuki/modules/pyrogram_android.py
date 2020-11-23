@@ -276,25 +276,23 @@ async def twrp(c: Client, update: Update):
             chat_id=update.chat.id,
             text=m)
         return
+    m = f'<b>Latest TWRP for {device}</b>\n'
+    page = BeautifulSoup(url.content, 'lxml')
+    date = page.find("em").text.strip()
+    m += f'📅 <b>Updated:</b> <code>{date}</code>\n'
+    trs = page.find('table').find_all('tr')
+    row = 2 if trs[0].find('a').text.endswith('tar') else 1
 
-    else:
-        m = f'<b>Latest TWRP for {device}</b>\n'
-        page = BeautifulSoup(url.content, 'lxml')
-        date = page.find("em").text.strip()
-        m += f'📅 <b>Updated:</b> <code>{date}</code>\n'
-        trs = page.find('table').find_all('tr')
-        row = 2 if trs[0].find('a').text.endswith('tar') else 1
-
-        for i in range(row):
-            download = trs[i].find('a')
-            dl_link = f"https://dl.twrp.me{download['href']}"
-            dl_file = download.text
-            size = trs[i].find("span", {"class": "filesize"}).text
-        m += f'📥 <b>Size:</b> <code>{size}</code>\n'
-        m += f'📦 <b>File:</b> <code>{dl_file.lower()}</code>'
-        keyboard = [[InlineKeyboardButton(
-            text="Click here to download", url=dl_link)]]
-        await c.send_message(
-            chat_id=update.chat.id,
-            text=m,
-            reply_markup=InlineKeyboardMarkup(keyboard))
+    for i in range(row):
+        download = trs[i].find('a')
+        dl_link = f"https://dl.twrp.me{download['href']}"
+        dl_file = download.text
+        size = trs[i].find("span", {"class": "filesize"}).text
+    m += f'📥 <b>Size:</b> <code>{size}</code>\n'
+    m += f'📦 <b>File:</b> <code>{dl_file.lower()}</code>'
+    keyboard = [[InlineKeyboardButton(
+        text="Click here to download", url=dl_link)]]
+    await c.send_message(
+        chat_id=update.chat.id,
+        text=m,
+        reply_markup=InlineKeyboardMarkup(keyboard))
