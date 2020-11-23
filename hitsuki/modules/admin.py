@@ -86,6 +86,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
                           can_pin_messages=bot_member.can_pin_messages,
                           can_promote_members=bot_member.can_promote_members)
 
+    ADMIN_CACHE.pop(update.effective_chat.id)
     message.reply_text(tld(chat.id, "admin_promote_success").format(
         mention_html(user.id, user.first_name),
         mention_html(user_member.user.id, user_member.user.first_name),
@@ -150,6 +151,8 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                               can_restrict_members=False,
                               can_pin_messages=False,
                               can_promote_members=False)
+
+        ADMIN_CACHE.pop(update.effective_chat.id)
         message.reply_text(tld(chat.id, "admin_demote_success").format(
             mention_html(user.id, user.first_name),
             mention_html(user_member.user.id, user_member.user.first_name),
