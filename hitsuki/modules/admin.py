@@ -287,7 +287,7 @@ def adminlist(bot: Bot, update: Update):
 @user_admin
 def refresh_admin(bot, update):
     ADMIN_CACHE.pop(update.effective_chat.id)
-    update.effective_message.reply_text(tld(chat.id, "admin_cache_refresh"))
+    update.effective_message.reply_text("Admins cache refreshed!")
 
 
 @user_admin
