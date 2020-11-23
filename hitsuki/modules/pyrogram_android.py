@@ -19,7 +19,6 @@ from bs4 import BeautifulSoup
 from rapidjson import loads
 
 from pyrogram import Client, filters
-from pyrogram.types import Message
 from pyrogram.types import Update, InlineKeyboardButton, InlineKeyboardMarkup
 
 from hitsuki import pbot

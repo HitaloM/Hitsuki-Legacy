@@ -26,7 +26,6 @@ from datetime import datetime
 
 import aiohttp
 import regex
-from telethon import version
 from pyrogram import Client, filters
 from pyrogram.types import Message
 

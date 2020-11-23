@@ -16,7 +16,6 @@
 import urllib
 
 import rapidjson as json
-from bs4 import BeautifulSoup
 from hurry.filesize import size as sizee
 from requests import get
 from telethon import custom
