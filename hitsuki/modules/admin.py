@@ -286,8 +286,11 @@ def adminlist(bot: Bot, update: Update):
 @run_async
 @user_admin
 def refresh_admin(bot, update):
-    ADMIN_CACHE.pop(update.effective_chat.id)
-    update.effective_message.reply_text("Admins cache refreshed!")
+    if ADMIN_CACHE:
+        ADMIN_CACHE.pop(update.effective_chat.id)
+        update.effective_message.reply_text("Admins cache refreshed!")
+    else:
+        update.effective_message.reply_text("There's nothing to be cleaned up at the moment")
 
 
 @user_admin
