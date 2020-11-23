@@ -87,9 +87,9 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
                           can_promote_members=bot_member.can_promote_members)
 
     try:
-       ADMIN_CACHE.pop(update.effective_chat.id)
+        ADMIN_CACHE.pop(update.effective_chat.id)
     except Exception:
-       pass
+        pass
     message.reply_text(tld(chat.id, "admin_promote_success").format(
         mention_html(user.id, user.first_name),
         mention_html(user_member.user.id, user_member.user.first_name),
@@ -156,9 +156,9 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                               can_promote_members=False)
 
         try:
-           ADMIN_CACHE.pop(update.effective_chat.id)
+            ADMIN_CACHE.pop(update.effective_chat.id)
         except Exception:
-           pass
+            pass
         message.reply_text(tld(chat.id, "admin_demote_success").format(
             mention_html(user.id, user.first_name),
             mention_html(user_member.user.id, user_member.user.first_name),
