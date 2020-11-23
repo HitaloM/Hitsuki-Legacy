@@ -26,6 +26,7 @@ from hitsuki import dispatcher, LOGGER
 from hitsuki.modules.connection import connected
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import user_admin
+from hitsuki.modules.helper_funcs.handlers import MessageHandlerChecker
 from hitsuki.modules.helper_funcs.extraction import extract_text
 from hitsuki.modules.helper_funcs.filters import CustomFilters
 from hitsuki.modules.helper_funcs.misc import build_keyboard
@@ -226,6 +227,8 @@ def reply_filter(bot: Bot, update: Update):
     for keyword in chat_filters:
         pattern = r"( |^|[^\w])" + re.escape(keyword) + r"( |$|[^\w])"
         if re.search(pattern, to_match, flags=re.IGNORECASE):
+            if MessageHandlerChecker.check_user(update.effective_user.id):
+                return
             filt = sql.get_filter(chat.id, keyword)
             if filt.is_sticker:
                 message.reply_sticker(filt.reply)

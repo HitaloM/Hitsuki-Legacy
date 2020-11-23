@@ -26,6 +26,7 @@ import hitsuki.modules.sql.notes_sql as sql
 from hitsuki import dispatcher, MESSAGE_DUMP, LOGGER
 from hitsuki.modules.connection import connected
 from hitsuki.modules.disable import DisableAbleCommandHandler
+from hitsuki.modules.helper_funcs.handlers import MessageHandlerChecker
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.helper_funcs.misc import build_keyboard, revert_buttons
 from hitsuki.modules.helper_funcs.msg_types import get_note_type
@@ -70,6 +71,8 @@ def get(bot, update, notename, show_none=True, no_format=False):
     message = update.effective_message
 
     if note:
+        if MessageHandlerChecker.check_user(update.effective_user.id):
+            return
         pass
     elif notename[0] == "#":
         hashnote = sql.get_note(chat_id, notename[1:])

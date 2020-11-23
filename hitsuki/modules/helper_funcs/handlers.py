@@ -56,6 +56,7 @@ class AntiSpam:
 
 
 SpamChecker = AntiSpam()
+MessageHandlerChecker = AntiSpam()
 
 
 class CustomCommandHandler(tg.CommandHandler):

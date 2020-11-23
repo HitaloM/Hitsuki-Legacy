@@ -184,7 +184,7 @@ async def upgrade(c: Client, m: Message):
         else:
             await sm.edit_text("Restarting...")
             await pbot.send_message(SYSTEM_DUMP,
-                                    "**Hitsuki has been successfully updated!**")
+                                    "**Hitsuki is updating!**")
             args = [sys.executable, "-m", "hitsuki"]
             os.execl(sys.executable, *args)
     else:
