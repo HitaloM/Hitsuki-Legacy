@@ -205,8 +205,7 @@ def connected(bot, update, chat, user_id, need_admin=True):
             tld(chat.id, "connection_err_unknown"))
         disconnect_chat(bot, update)
         return
-    else:
-        return False
+    return False
 
 
 __help__ = True
