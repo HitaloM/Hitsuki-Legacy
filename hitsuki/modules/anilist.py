@@ -21,6 +21,7 @@ from pyrogram.types import Message
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from hitsuki import pbot
+from hitsuki.modules.tr_engine.strings import tld
 
 url = 'https://graphql.anilist.co'
 
@@ -28,8 +29,8 @@ url = 'https://graphql.anilist.co'
 def shorten(description, info='anilist.co'):
     ms_g = ""
     if len(description) > 700:
-        description = description[0:500] + '....'
-        ms_g += f"\n**Description**: __{description}__[Read More]({info})"
+        description = description[0:500] + '...'
+        ms_g += f"\n**Description**: __{description}__ [Read More]({info})"
     else:
         ms_g += f"\n**Description**: __{description}__"
     return (
@@ -74,7 +75,7 @@ airing_query = '''
         } 
       }
     }
-    '''
+'''
 
 fav_query = """
 query ($id: Int) { 
@@ -126,6 +127,7 @@ anime_query = '''
       }
     }
 '''
+
 character_query = """
     query ($query: String) {
         Character (search: $query) {
@@ -179,8 +181,9 @@ async def edrep(m: Message, **kwargs):
 @pbot.on_message(filters.command('airing'))
 async def anime_airing(c: Client, m: Message):
     search_str = m.text.split(' ', 1)
+    chat_id = m.chat.id
     if len(search_str) == 1:
-        await m.reply_text('Provide anime name!')
+        await m.reply_text(tld(chat_id, "anime_no_arg"))
         return
     variables = {'search': search_str[1]}
     response = requests.post(
@@ -198,8 +201,9 @@ async def anime_airing(c: Client, m: Message):
 @pbot.on_message(filters.command('anime'))
 async def anime_search(c: Client, m: Message):
     search = m.text.split(' ', 1)
+    chat_id = m.chat.id
     if len(search) == 1:
-        await m.reply_text('Provide anime name!')
+        await m.reply_text(tld(chat_id, "anime_no_arg"))
         return
     else:
         search = search[1]
@@ -211,7 +215,7 @@ async def anime_search(c: Client, m: Message):
         for x in json['genres']:
             msg += f"{x}, "
         msg = msg[:-2] + '`\n'
-        msg += "**Studios**: `"
+        msg += tld(chat_id, "anime_studios")
         for x in json['studios']['nodes']:
             msg += f"{x['name']}, "
         msg = msg[:-2] + '`\n'
@@ -226,14 +230,15 @@ async def anime_search(c: Client, m: Message):
             'description', 'N/A').replace('<i>', '').replace('</i>', '').replace('<br>', '')
         msg += shorten(description, info)
         image = info.replace('anilist.co/anime/', 'img.anili.st/media/')
+        more_info = tld(chat_id, "anime_more_info")
         if trailer:
             buttons = [
-                [InlineKeyboardButton("More Info", url=info),
+                [InlineKeyboardButton(more_info, url=info),
                  InlineKeyboardButton("Trailer 🎬", url=trailer)]
             ]
         else:
             buttons = [
-                [InlineKeyboardButton("More Info", url=info)]
+                [InlineKeyboardButton(more_info, url=info)]
             ]
         if image:
             try:
@@ -248,8 +253,9 @@ async def anime_search(c: Client, m: Message):
 @pbot.on_message(filters.command('character'))
 async def character_search(c: Client, m: Message):
     search = m.text.split(' ', 1)
+    chat_id = m.chat.id
     if len(search) == 1:
-        await m.reply_text('Provide chacter name!')
+        await m.reply_text(tld(chat_id, "character_no_arg"))
         return
     search = search[1]
     variables = {'query': search}
@@ -271,8 +277,9 @@ async def character_search(c: Client, m: Message):
 @pbot.on_message(filters.command('manga'))
 async def manga_search(c: Client, m: Message):
     search = m.text.split(' ', 1)
+    chat_id = m.chat.id
     if len(search) == 1:
-        await m.reply_text('Provide manga name!')
+        await m.reply_text(tld(chat_id, "manga_no_arg"))
         return
     search = search[1]
     variables = {'search': search}
@@ -289,12 +296,12 @@ async def manga_search(c: Client, m: Message):
             if title_native:
                 ms_g += f"(`{title_native}`)"
         if start_date:
-            ms_g += f"\n**Start Date** - `{start_date}`"
+            ms_g += tld(chat_id, "manga_start_date").format(start_date)
         if status:
-            ms_g += f"\n**Status** - `{status}`"
+            ms_g += tld(chat_id, "manga_status").format(status)
         if score:
-            ms_g += f"\n**Score** - `{score}`"
-        ms_g += '\n**Genres** - '
+            ms_g += tld(chat_id, "manga_score").format(score)
+        ms_g += tld(chat_id, "manga_genre")
         for x in json.get('genres', []):
             ms_g += f"{x}, "
         ms_g = ms_g[:-2]

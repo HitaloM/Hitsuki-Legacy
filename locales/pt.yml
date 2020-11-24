@@ -799,6 +799,19 @@ misc_help: |
    *Exemplo:* \\?.
 #Anime
 modname_anime_search: Anime
+anime_no_arg: 'Forneça o nome do anime!'
+anime_studios: "**Estúdios**: `"
+anime_more_info: Mais Informações
+character_no_arg: 'Forneça nome do personagem!'
+manga_no_arg: 'Forneça nome do mangá!'
+manga_start_date: "\n**Data de Início** - `{}`"
+manga_status: "\n**Status** - `{}`"
+manga_score: "\n**Pontuação** - `{}`"
+manga_genre: '\n**Gêneros** - '
+similarity_whatanime: '\n<b>Similaridade:</b> {}%\n'
+nsfw_whatanime: '<b>Hentai/NSFW:</b> Sim'
+episode_whatanime: '<b>Episódio:</b> {}\n'
+synonyms_whatanime: '\n<b>Sinônimos:</b> {}'
 err_example_whatanime: "Responda uma foto, GIF ou vídeo com este comando."
 downloading_whatanime: "Baixando..."
 uploading_whatanime: "Enviando..."

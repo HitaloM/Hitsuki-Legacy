@@ -23,6 +23,7 @@ from hitsuki import pbot
 from hitsuki.modules.anilist import (url, anime_query, manga_query, t,
                                      shorten, airing_query, character_query)
 from hitsuki.modules.nhentai import nhentai, nhentai_data
+from hitsuki.modules.tr_engine.strings import tld
 
 
 class AioHttp:

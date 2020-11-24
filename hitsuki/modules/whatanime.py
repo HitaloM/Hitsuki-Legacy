@@ -114,12 +114,12 @@ async def whatanime(c: Client, m: Message):
             if title_native:
                 text += f' ({title_native})'
             if synonyms:
-                text += f'\n<b>Synonyms:</b> {synonyms}'
-            text += f'\n<b>Similarity:</b> {(Decimal(similarity) * 100).quantize(Decimal(".01"))}%\n'
+                text += tld(chat_id, "synonyms_whatanime").format(synonyms)
+            text += tld(chat_id, "similarity_whatanime").format(((Decimal(similarity) * 100).quantize(Decimal(".01"))))
             if episode:
-                text += f'<b>Episode:</b> {episode}\n'
+                text += tld(chat_id, "episode_whatanime").format(episode)
             if nsfw:
-                text += '<b>Hentai/NSFW:</b> Yes'
+                text += tld(chat_id, "nsfw_whatanime")
 
             async def _send_preview():
                 url = f'https://media.trace.moe/video/{anilist_id}/{urlencode(filename)}?t={at_time}&token={tokenthumb}'
