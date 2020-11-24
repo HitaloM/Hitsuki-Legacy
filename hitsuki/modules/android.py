@@ -35,7 +35,7 @@ from hitsuki.modules.tr_engine.strings import tld
 # v2 - Hitalo (@HitaloSama on GitHub) [Pyrogram Adapt]
 # This module was entirely re-written in pyrogram for the Hitsuki bot
 # Some commands have been ported/adapted from other bots.
-# 
+#
 # Important credits:
 # * The ofox command was originally developed by MrYacha.
 # * The /twrp, /specs, /whatis, /variants, /samcheck and /samget
