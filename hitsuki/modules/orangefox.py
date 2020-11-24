@@ -29,7 +29,7 @@ from hitsuki.modules.tr_engine.strings import tld
 API_HOST = 'https://api.orangefox.download/v2'
 
 
-@pbot.on_message(filters.command(["orangefox", "of", "fox", "ofox"])) 
+@pbot.on_message(filters.command(["orangefox", "of", "fox", "ofox"]))
 async def orangefox(c: Client, update: Update):
 
     chat_id = update.chat.id
@@ -85,7 +85,7 @@ async def orangefox(c: Client, update: Update):
     btn = tld(chat_id, "btn_dl")
     url = (release['url'])
     keyboard = [[InlineKeyboardButton(
-            text=btn, url=url)]]
+        text=btn, url=url)]]
     await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
     return
 
