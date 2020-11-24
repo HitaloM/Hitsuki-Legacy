@@ -34,10 +34,10 @@ from hitsuki.modules.tr_engine.strings import tld
 #
 # v2 - Hitalo (@HitaloSama on GitHub) [Pyrogram Adapt]
 # This module was entirely re-written in pyrogram for the Hitsuki bot by me (Hitalo)
-# Please don't remove these comment, if you're still respecting me, the module maker.
 #
 # This module was inspired by Android Helper Bot by Vachounet.
 # None of the code is taken from the bot itself, to avoid confusion
+# Please don't remove these comment, show respect to module contributors.
 
 fw_links = {"SAMMOBILE": "https://www.sammobile.com/samsung/firmware/{}/{}/",
             "SAMFW": "https://samfw.com/firmware/{}/{}/",
