@@ -13,41 +13,319 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import re
 import urllib
-
 import rapidjson as json
-from hurry.filesize import size as sizee
+from rapidjson import loads
 from requests import get
-from telethon import custom
+from hurry.filesize import size as sizee
 
-from hitsuki.events import register
+from pyrogram import Client, filters
+from pyrogram.types import Message, Update, InlineKeyboardButton, InlineKeyboardMarkup
+
+from hitsuki import pbot
+from hitsuki.mwt import MWT
 from hitsuki.modules.tr_engine.strings import tld
 
-
 # Greeting all bot owners that is using this module,
-# - RealAkito (used to be peaktogoo) [Module Maker]
+# v1 - RealAkito (used to be peaktogoo) [Original module Maker]
 # have spent so much time of their life into making this module better, stable, and well more supports.
+#
+# v2 - Hitalo (@HitaloSama on GitHub) [Pyrogram Adapt]
+# This module was entirely re-written in pyrogram for the Hitsuki bot by me (Hitalo)
 # Please don't remove these comment, if you're still respecting me, the module maker.
 #
 # This module was inspired by Android Helper Bot by Vachounet.
-# None of the code is taken from the bot itself, to avoid confusion.
+# None of the code is taken from the bot itself, to avoid confusion
+
+fw_links = {"SAMMOBILE": "https://www.sammobile.com/samsung/firmware/{}/{}/",
+            "SAMFW": "https://samfw.com/firmware/{}/{}/",
+            "SAMFREW": "https://samfrew.com/model/{}/region/{}/",
+            }.items()
 
 
-@register(pattern=r"^/los(?: |$)(\S*)")
-async def los(event):
-    if event.sender_id is None:
+@MWT(timeout=60 * 10)
+class GetDevice:
+    def __init__(self, device):
+        """Get device info by codename or model!"""
+        self.device = device
+
+    def get(self):
+        if self.device.lower().startswith('sm-'):
+            data = get(
+                'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_model.json').content
+            db = loads(data)
+            try:
+                name = db[self.device.upper()][0]['name']
+                device = db[self.device.upper()][0]['device']
+                brand = db[self.device.upper()][0]['brand']
+                model = self.device.lower()
+                return {'name': name,
+                        'device': device,
+                        'model': model,
+                        'brand': brand
+                        }
+            except KeyError:
+                return False
+        else:
+            data = get(
+                'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
+            db = loads(data)
+            newdevice = self.device.strip('lte').lower() if self.device.startswith(
+                'beyond') else self.device.lower()
+            try:
+                name = db[newdevice][0]['name']
+                model = db[newdevice][0]['model']
+                brand = db[newdevice][0]['brand']
+                device = self.device.lower()
+                return {'name': name,
+                        'device': device,
+                        'model': model,
+                        'brand': brand
+                        }
+            except KeyError:
+                return False
+
+
+@pbot.on_message(filters.command(["specs", "spec"]))
+async def specs(c: Client, update: Update):
+    if len(update.command) != 2:
+        message = (
+            "Please write your codename or model into it,\ni.e <code>/specs herolte</code> or <code>/specs sm-g610f</code>")
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
+    device = update.command[1]
+    data = GetDevice(device).get()
+    if data:
+        name = data['name']
+        model = data['model']
+        device = name.lower().replace(' ', '-')
+    else:
+        message = "coudn't find your device, chack device & try!"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
+    sfw = get(f'https://sfirmware.com/samsung-{model.lower()}/')
+    if sfw.status_code == 200:
+        page = BeautifulSoup(sfw.content, 'lxml')
+        message = '<b>Device:</b> Samsung {}\n'.format(name)
+        res = page.find_all('tr', {'class': 'mdata-group-val'})
+        res = res[2:]
+        for info in res:
+            title = re.findall(r'<td>.*?</td>', str(info)
+                               )[0].strip().replace('td', 'b')
+            data = re.findall(r'<td>.*?</td>', str(info)
+                              )[-1].strip().replace('td', 'code')
+            message += "• {}: <code>{}</code>\n".format(title, data)
+
+    else:
+        message = "Device specs not found in bot database, make sure this is a Samsung device!"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
         return
 
-    chat_id = event.chat_id
+    await c.send_message(
+        chat_id=update.chat.id,
+        text=message)
+
+
+@pbot.on_message(filters.command(["whatis", "device", "codename"]))
+async def models(c: Client, update: Update):
+    if len(update.command) != 2:
+        message = "Please write your codename into it, i.e <code>/whatis herolte</code>"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message,
+            disable_web_page_preview=True)
+        return
+
+    device = update.command[1]
+    data = GetDevice(device).get()
+    if data:
+        name = data['name']
+        device = data['device']
+        brand = data['brand']
+        model = data['model']
+    else:
+        message = "coudn't find your device, chack device & try!"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
+
+    message = f'<b>{device}/{model.upper()}</b> is <code>{brand} {name}</code>\n'
+    await c.send_message(
+        chat_id=update.chat.id,
+        text=message,
+        disable_web_page_preview=True)
+
+
+@pbot.on_message(filters.command(["variants", "models"]))
+async def variants(c: Client, update: Update):
+    if len(update.command) != 2:
+        message = "Please write your codename into it, i.e <code>/specs herolte</code>"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
+
+    device = update.command[1]
+    data = GetDevice(device).get()
+    if data:
+        name = data['name']
+        device = data['device']
+    else:
+        message = "coudn't find your device, chack device & try!"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
+
+    data = get(
+        'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
+    db = loads(data)
+    device = db[device]
+    message = f'<b>{name}</b> variants:\n\n'
+
+    for i in device:
+        name = i['name']
+        model = i['model']
+        message += '<b>Model</b>: <code>{}</code> \n<b>Name:</b> <code>{}</code>\n\n'.format(
+            model, name)
+
+    await c.send_message(
+        chat_id=update.chat.id,
+        text=message)
+
+
+@pbot.on_message(filters.command(["samget", "samcheck"]))
+async def check(c: Client, update: Update):
+    if len(update.command) != 3:
+        message = "Please type your device <b>MODEL</b> and <b>CSC</b> into it!\ni.e <code>/fw SM-G975F XSG!</code>"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
+
+    cmd, temp, csc = update.command
+    model = 'sm-' + temp if not temp.upper().startswith('SM-') else temp
+    fota = get(
+        f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.xml')
+    test = get(
+        f'http://fota-cloud-dn.ospserver.net/firmware/{csc.upper()}/{model.upper()}/version.test.xml')
+    if test.status_code != 200:
+        message = f"Couldn't find any firmwares for {temp.upper()} - {csc.upper()}, please refine your search or try again later!"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+        return
+
+    page1 = BeautifulSoup(fota.content, 'lxml')
+    page2 = BeautifulSoup(test.content, 'lxml')
+    os1 = page1.find("latest").get("o")
+    os2 = page2.find("latest").get("o")
+    if page1.find("latest").text.strip():
+        pda1, csc1, phone1 = page1.find("latest").text.strip().split('/')
+        message = f'<b>\nMODEL:</b> <code>{model.upper()}</code>\n<b>CSC:</b> <code>{csc.upper()}</code>\n'
+        message += '<b>Latest Avaliable Firmware:</b>\n'
+        message += f'• PDA: <code>{pda1}</code>\n• CSC: <code>{csc1}</code>\n'
+        if phone1:
+            message += f'• Phone: <code>{phone1}</code>\n'
+        if os1:
+            message += f'• Android: <code>{os1}</code>\n'
+        message += '\n'
+    else:
+        message = f'<b>No public release found for {model.upper()} and {csc.upper()}.</b>\n\n'
+    message += '<b>Latest Test Firmware:</b>\n'
+    if len(page2.find("latest").text.strip().split('/')) == 3:
+        pda2, csc2, phone2 = page2.find("latest").text.strip().split('/')
+        message += f'• PDA: <code>{pda2}</code>\n• CSC: <code>{csc2}</code>\n'
+        if phone2:
+            message += f'• Phone: <code>{phone2}</code>\n'
+        if os2:
+            message += f'• Android: <code>{os2}</code>\n'
+    else:
+        md5 = page2.find("latest").text.strip()
+        message += f'• Hash: <code>{md5}</code>\n• Android: <code>{os2}</code>\n\n'
+    cmd.split()
+    if cmd in ("samcheck"):
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message)
+    elif cmd in ("samget"):
+        message += "\n**Download from below:**\n"
+        keyboard = [
+            [
+                InlineKeyboardButton(
+                    site_name, url=fw_link.format(model.upper(), csc.upper())
+                )
+            ]
+            for site_name, fw_link in fw_links
+        ]
+
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=message,
+            reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+@pbot.on_message(filters.command("twrp"))
+async def twrp(c: Client, update: Update):
+    if not len(update.command) == 2:
+        m = "Type the device codename, example: <code>/twrp j7xelte</code>"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=m)
+        return
+
+    device = update.command[1]
+    url = get(f'https://dl.twrp.me/{device}/')
+    if url.status_code == 404:
+        m = "TWRP is not available for <code>{device}</code>"
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=m)
+        return
+
+    else:
+        m = f'<b>Latest TWRP for {device}</b>\n'
+        page = BeautifulSoup(url.content, 'lxml')
+        date = page.find("em").text.strip()
+        m += f'📅 <b>Updated:</b> <code>{date}</code>\n'
+        trs = page.find('table').find_all('tr')
+        row = 2 if trs[0].find('a').text.endswith('tar') else 1
+
+        for i in range(row):
+            download = trs[i].find('a')
+            dl_link = f"https://dl.twrp.me{download['href']}"
+            dl_file = download.text
+            size = trs[i].find("span", {"class": "filesize"}).text
+        m += f'📥 <b>Size:</b> <code>{size}</code>\n'
+        m += f'📦 <b>File:</b> <code>{dl_file.lower()}</code>'
+        keyboard = [[InlineKeyboardButton(
+            text="Click here to download", url=dl_link)]]
+        await c.send_message(
+            chat_id=update.chat.id,
+            text=m,
+            reply_markup=InlineKeyboardMarkup(keyboard))
+
+
+@pbot.on_message(filters.command(["los", "lineage"]))
+async def los(c: Client, update: Update):
+
+    chat_id = update.chat.id,
     try:
-        device_ = event.pattern_match.group(1)
-        device = urllib.parse.quote_plus(device_)
+        device = update.command[1]
     except Exception:
         device = ''
 
     if device == '':
         reply_text = tld(chat_id, "cmd_example").format("los")
-        await event.reply(reply_text, link_preview=False)
+        await update.reply_text(reply_text, disable_web_page_preview=True)
         return
 
     fetch = get(f'https://download.lineageos.org/api/v1/{device}/nightly/*')
@@ -64,30 +342,29 @@ async def los(event):
         reply_text += tld(chat_id, "build_size").format(buildsize_b)
         reply_text += tld(chat_id, "version").format(version)
 
-        keyboard = [custom.Button.url(tld(chat_id, "btn_dl"), f"{url}")]
-        await event.reply(reply_text, buttons=keyboard, link_preview=False)
+        btn = tld(chat_id, "btn_dl")
+        keyboard = [[InlineKeyboardButton(
+        text=btn, url=url)]]
+        await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
         return
 
     else:
         reply_text = tld(chat_id, "err_not_found")
-    await event.reply(reply_text, link_preview=False)
+    await update.reply_text(reply_text, disable_web_page_preview=True)
 
 
-@register(pattern=r"^/evo(?: |$)(\S*)")
-async def evo(event):
-    if event.sender_id is None:
-        return
+@pbot.on_message(filters.command(["evo", "evox"]))
+async def evo(c: Client, update: Update):
 
-    chat_id = event.chat_id
+    chat_id = update.chat.id,
     try:
-        device_ = event.pattern_match.group(1)
-        device = urllib.parse.quote_plus(device_)
+        device = update.command[1]
     except Exception:
         device = ''
 
     if device == "example":
         reply_text = tld(chat_id, "err_example_device")
-        await event.reply(reply_text, link_preview=False)
+        await update.reply_text(reply_text, disable_web_page_preview=True)
         return
 
     if device == "x00t":
@@ -98,7 +375,7 @@ async def evo(event):
 
     if device == '':
         reply_text = tld(chat_id, "cmd_example").format("evo")
-        await event.reply(reply_text, link_preview=False)
+        await update.reply_text(reply_text, disable_web_page_preview=True)
         return
 
     fetch = get(
@@ -106,7 +383,7 @@ async def evo(event):
     )
 
     if fetch.status_code in [500, 504, 505]:
-        await event.reply(
+        await update.reply_text(
             "Hitsuki have been trying to connect to Github User Content, It seem like Github User Content is down"
         )
         return
@@ -128,58 +405,35 @@ async def evo(event):
             reply_text += tld(chat_id, "maintainer").format(
                 f"[{maintainer}](https://t.me/{maintainer_url})")
 
-            keyboard = [custom.Button.url(tld(chat_id, "btn_dl"), f"{url}")]
-            await event.reply(reply_text, buttons=keyboard, link_preview=False)
+            btn = tld(chat_id, "btn_dl")
+            keyboard = [[InlineKeyboardButton(
+            text=btn, url=url)]]
+            await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
             return
 
         except ValueError:
             reply_text = tld(chat_id, "err_json")
-            await event.reply(reply_text, link_preview=False)
+            await update.reply_text(reply_text, disable_web_page_preview=True)
             return
 
     elif fetch.status_code == 404:
         reply_text = tld(chat_id, "err_not_found")
-        await event.reply(reply_text, link_preview=False)
+        await update.reply_text(reply_text, disable_web_page_preview=True)
         return
 
 
-@register(pattern=r"^/phh$")
-async def phh(event):
-    if event.sender_id is None:
-        return
+@pbot.on_message(filters.command(["bootleggers", "btlg"]))
+async def bootleggers(c: Client, update: Update):
 
-    chat_id = event.chat_id
-
-    fetch = get(
-        "https://api.github.com/repos/phhusson/treble_experimentations/releases/latest"
-    )
-    usr = json.loads(fetch.content)
-    reply_text = tld(chat_id, "phh_releases")
-    for i in range(len(usr)):
-        try:
-            name = usr['assets'][i]['name']
-            url = usr['assets'][i]['browser_download_url']
-            reply_text += f"[{name}]({url})\n"
-        except IndexError:
-            continue
-    await event.reply(reply_text)
-
-
-@register(pattern=r"^/bootleggers(?: |$)(\S*)")
-async def bootleggers(event):
-    if event.sender_id is None:
-        return
-
-    chat_id = event.chat_id
+    chat_id = update.chat.id,
     try:
-        codename_ = event.pattern_match.group(1)
-        codename = urllib.parse.quote_plus(codename_)
+        codename = update.command[1]
     except Exception:
         codename = ''
 
     if codename == '':
         reply_text = tld(chat_id, "cmd_example").format("bootleggers")
-        await event.reply(reply_text, link_preview=False)
+        await update.reply_text(reply_text, disable_web_page_preview=True)
         return
 
     fetch = get('https://bootleggersrom-devices.github.io/api/devices.json')
@@ -230,15 +484,33 @@ async def bootleggers(event):
 
     elif fetch.status_code == 404:
         reply_text = tld(chat_id, "err_api")
-    await event.reply(reply_text, link_preview=False)
+    await update.reply_text(reply_text, disable_web_page_preview=True)
 
 
-@register(pattern=r"^/magisk$")
-async def magisk(event):
-    if event.sender_id is None:
-        return
+@pbot.on_message(filters.command("phh"))
+async def phh(c: Client, update: Update):
 
-    chat_id = event.chat_id
+    chat_id = update.chat.id
+
+    fetch = get(
+        "https://api.github.com/repos/phhusson/treble_experimentations/releases/latest"
+    )
+    usr = json.loads(fetch.content)
+    reply_text = tld(chat_id, "phh_releases")
+    for i in range(len(usr)):
+        try:
+            name = usr['assets'][i]['name']
+            url = usr['assets'][i]['browser_download_url']
+            reply_text += f"[{name}]({url})\n"
+        except IndexError:
+            continue
+    await update.reply_text(reply_text)
+
+
+@pbot.on_message(filters.command("magisk"))
+async def evo(c: Client, update: Update):
+
+    chat_id = update.chat.id
 
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     releases = '**Latest Magisk Releases:**\n'
@@ -272,7 +544,7 @@ async def magisk(event):
         else:
             releases += f'[Uninstaller]({data["uninstaller"]["link"]})\n'
 
-    await event.reply(releases, link_preview=False)
+    await update.reply_text(releases, disable_web_page_preview=True)
 
 
 __help__ = True
