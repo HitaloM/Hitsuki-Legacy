@@ -36,6 +36,7 @@ from hitsuki import (dispatcher, OWNER_ID, SUDO_USERS,
 from hitsuki.__main__ import STATS, USER_INFO
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user
+from hitsuki.modules.sql.locales_sql import prev_locale
 from hitsuki.modules.tr_engine.strings import tld
 
 cvid = Covid(source="worldometers")
@@ -391,29 +392,46 @@ def ud(bot: Bot, update: Update):
 
 @run_async
 def wiki(bot: Bot, update: Update):
-    kueri = re.split(pattern="wiki", string=update.effective_message.text)
+    msg = update.effective_message
+    chat_id = update.effective_chat.id
+    args = update.effective_message.text.split(None, 1)
+    text = args[1]
     wikipedia.set_lang("en")
-    if len(str(kueri[1])) == 0:
-        update.effective_message.reply_text("Enter keywords!")
+    try:
+        pagewiki = wikipedia.page(text)
+    except wikipedia.exceptions.PageError:
+        msg.reply_text("No results found!")
+        return
+    except wikipedia.exceptions.DisambiguationError as refer:
+        refer = str(refer).split("\n")
+        if len(refer) >= 6:
+            batas = 6
+        else:
+            batas = len(refer)
+        text = ""
+        for x in range(batas):
+            if x == 0:
+                text += refer[x]+"\n"
+            else:
+                text += "- `"+refer[x]+"`\n"
+        msg.reply_text(text, parse_mode="markdown")
+        return
+    except IndexError:
+        msg.reply_text("Write a message to search from wikipedia sources.")
+        return
+    title = pagewiki.title
+    summary = pagewiki.summary
+    if update.effective_message.chat.type == "private":
+        msg.reply_text(("The result of {} is:\n\n<b>{}</b>\n{}").format(text, title, summary), parse_mode=ParseMode.HTML)
     else:
-        try:
-            pertama = update.effective_message.reply_text("🔄 Loading...")
-            keyboard = InlineKeyboardMarkup([[
-                InlineKeyboardButton(text="🔧 More Info...",
-                                     url=wikipedia.page(kueri).url)
-            ]])
-            bot.editMessageText(chat_id=update.effective_chat.id,
-                                message_id=pertama.message_id,
-                                text=wikipedia.summary(kueri, sentences=10),
-                                reply_markup=keyboard)
-        except wikipedia.PageError as e:
-            update.effective_message.reply_text("⚠ Error: {}".format(e))
-        except BadRequest as et:
-            update.effective_message.reply_text("⚠ Error: {}".format(et))
-        except wikipedia.exceptions.DisambiguationError as eet:
-            update.effective_message.reply_text(
-                "⚠ Error\n There are too many query! Express it more!\nPossible query result:\n{}"
-                .format(eet))
+        if len(summary) >= 200:
+            title = pagewiki.title
+            summary = summary[:200]+"..."
+            button = InlineKeyboardMarkup([[InlineKeyboardButton(text="Read More...", url="t.me/{}?start=wiki-{}".format(bot.username, title.replace(' ', '_')))]])
+        else:
+            button = None
+        msg.reply_text(("The result of {} is:\n\n<b>{}</b>\n{}").format(text, title, summary), parse_mode=ParseMode.HTML, reply_markup=button)
+
 
 
 @run_async

@@ -15,6 +15,7 @@
 
 import datetime
 import importlib
+import wikipedia
 import re
 from sys import argv
 from typing import List
@@ -114,6 +115,19 @@ def start(bot: Bot, update: Update, args: List[str]):
 
             elif args[0][1:].isdigit() and "rules" in IMPORTED:
                 IMPORTED["rules"].send_rules(update, args[0], from_pm=True)
+
+            elif args[0][:4] == "wiki":
+                wiki = args[0].split("-")[1].replace('_', ' ')
+                message = update.effective_message
+                wikipedia.set_lang("en")
+                pagewiki = wikipedia.page(wiki)
+                title = pagewiki.title
+                summary = pagewiki.summary
+                if len(summary) >= 4096:
+                    summary = summary[:4000]+"..."
+                message.reply_text("<b>{}</b>\n{}".format(title, summary), parse_mode=ParseMode.HTML,
+                    reply_markup=InlineKeyboardMarkup(
+                            [[InlineKeyboardButton(text="Read on Wikipedia", url=pagewiki.url)]]))
 
         else:
             send_start(bot, update)
