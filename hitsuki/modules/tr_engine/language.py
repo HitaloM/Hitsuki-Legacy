@@ -71,11 +71,11 @@ def locale(bot, update, args):
             native_lang = list_locales[locale]
             message.reply_text(tld(
                 chat.id, "language_current_locale").format(native_lang),
-                               parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
         else:
             message.reply_text(tld(
                 chat.id, "language_current_locale").format("English (US)"),
-                               parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
 
 
 @user_admin
