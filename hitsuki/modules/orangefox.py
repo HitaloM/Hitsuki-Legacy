@@ -17,7 +17,10 @@ import rapidjson as json
 from requests import get
 from telethon import custom
 
-from hitsuki.events import register
+from pyrogram import Client, filters
+from pyrogram.types import Message, Update, InlineKeyboardButton, InlineKeyboardMarkup
+
+from hitsuki import pbot
 from hitsuki.modules.tr_engine.strings import tld
 
 # orangefox: By @MrYacha, powered by OrangeFox API v2
@@ -26,15 +29,13 @@ from hitsuki.modules.tr_engine.strings import tld
 API_HOST = 'https://api.orangefox.download/v2'
 
 
-@register(pattern=r"^/(orangefox|of|fox|ofox)(?: |$)(\S*)")
-async def orangefox(event):
-    if event.sender_id is None:
-        return
+@pbot.on_message(filters.command(["orangefox", "of", "fox", "ofox"])) 
+async def orangefox(c: Client, update: Update):
 
-    chat_id = event.chat_id
+    chat_id = update.chat.id
 
     try:
-        codename = event.pattern_match.group(2)
+        codename = update.command[1]
     except Exception:
         codename = ''
 
@@ -46,19 +47,19 @@ async def orangefox(event):
             reply_text += f"\n • {device['fullname']} (`{device['codename']}`)"
 
         reply_text += '\n\n' + tld(chat_id, "fox_get_release")
-        await event.reply(reply_text)
+        await update.reply_text(reply_text)
         return
 
     device = _send_request(f'device/{codename}')
     if not device:
         reply_text = tld(chat_id, "fox_device_not_found")
-        await event.reply(reply_text)
+        await update.reply_text(reply_text)
         return
 
     release = _send_request(f'device/{codename}/releases/stable/last')
     if not release:
         reply_text = tld(chat_id, "fox_release_not_found")
-        await event.reply(reply_text)
+        await update.reply_text(reply_text)
         return
 
     reply_text = tld(chat_id, "fox_release_title")
@@ -81,8 +82,11 @@ async def orangefox(event):
         status=status
     )
 
-    keyboard = [custom.Button.url(tld(chat_id, "btn_dl"), release['url'])]
-    await event.reply(reply_text, buttons=keyboard, link_preview=False)
+    btn = tld(chat_id, "btn_dl")
+    url = (release['url'])
+    keyboard = [[InlineKeyboardButton(
+            text=btn, url=url)]]
+    await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
     return
 
 
