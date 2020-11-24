@@ -126,8 +126,8 @@ def start(bot: Bot, update: Update, args: List[str]):
                 if len(summary) >= 4096:
                     summary = summary[:4000]+"..."
                 message.reply_text("<b>{}</b>\n{}".format(title, summary), parse_mode=ParseMode.HTML,
-                    reply_markup=InlineKeyboardMarkup(
-                            [[InlineKeyboardButton(text="Read on Wikipedia", url=pagewiki.url)]]))
+                                   reply_markup=InlineKeyboardMarkup(
+                    [[InlineKeyboardButton(text="Read on Wikipedia", url=pagewiki.url)]]))
 
         else:
             send_start(bot, update)

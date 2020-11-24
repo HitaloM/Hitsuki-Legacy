@@ -422,16 +422,18 @@ def wiki(bot: Bot, update: Update):
     title = pagewiki.title
     summary = pagewiki.summary
     if update.effective_message.chat.type == "private":
-        msg.reply_text(("The result of {} is:\n\n<b>{}</b>\n{}").format(text, title, summary), parse_mode=ParseMode.HTML)
+        msg.reply_text(("The result of {} is:\n\n<b>{}</b>\n{}").format(text,
+                                                                        title, summary), parse_mode=ParseMode.HTML)
     else:
         if len(summary) >= 200:
             title = pagewiki.title
             summary = summary[:200]+"..."
-            button = InlineKeyboardMarkup([[InlineKeyboardButton(text="Read More...", url="t.me/{}?start=wiki-{}".format(bot.username, title.replace(' ', '_')))]])
+            button = InlineKeyboardMarkup([[InlineKeyboardButton(
+                text="Read More...", url="t.me/{}?start=wiki-{}".format(bot.username, title.replace(' ', '_')))]])
         else:
             button = None
-        msg.reply_text(("The result of {} is:\n\n<b>{}</b>\n{}").format(text, title, summary), parse_mode=ParseMode.HTML, reply_markup=button)
-
+        msg.reply_text(("The result of {} is:\n\n<b>{}</b>\n{}").format(text,
+                                                                        title, summary), parse_mode=ParseMode.HTML, reply_markup=button)
 
 
 @run_async
