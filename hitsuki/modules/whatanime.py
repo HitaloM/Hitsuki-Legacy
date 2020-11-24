@@ -76,7 +76,7 @@ async def whatanime(c: Client, m: Message):
         await m.reply_text(tld(chat_id, "err_example_whatanime"))
         return
     with tempfile.TemporaryDirectory() as tempdir:
-        reply = await m.reply_text('Downloading...')
+        reply = await m.reply_text(tld(chat_id, "downloading_whatanime"))
         path = await c.download_media(media, file_name=os.path.join(tempdir, '0'), progress=progress_callback, progress_args=(reply,))
         new_path = os.path.join(tempdir, '1.png')
         proc = await asyncio.create_subprocess_exec('ffmpeg', '-i', path, '-frames:v', '1', new_path)

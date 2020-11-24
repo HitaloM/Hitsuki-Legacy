@@ -803,6 +803,7 @@ misc_help: |
 #Anime
 modname_anime_search: Anime
 err_example_whatanime: "Reply to a photo, GIF, or video with this command."
+downloading_whatanime: "Downloading..."
 uploading_whatanime: "Uploading..."
 anime_search_help: |
    Get information about anime, manga or characters from AniList.
@@ -817,7 +818,8 @@ anime_search_help: |
    - /kayo <anime>: search an anime on animekayo.com
    - /airing <anime>: returns anime airing info.
    - /whatanime <replying to a media>: Find what anime a media is from.
-   - /nhentai <nhentai id>: Returns the nhentai in telegraph instant preview format.
+   - /nhentai <nhentai id>: Returns the nhentai in telegraph instant preview format.\n
+   This module also supports inline for the manga, anime, character, airing and nhentai commands, just type the user name of the bot in the text box and a space.
 #lastfm  
 modname_last_fm: LastFM
 misc_setuser_lastfm_error: That's not how this works...\nRun /setuser followed by your username!
