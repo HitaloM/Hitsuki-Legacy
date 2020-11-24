@@ -344,7 +344,7 @@ async def los(c: Client, update: Update):
 
         btn = tld(chat_id, "btn_dl")
         keyboard = [[InlineKeyboardButton(
-        text=btn, url=url)]]
+            text=btn, url=url)]]
         await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
         return
 
@@ -407,7 +407,7 @@ async def evo(c: Client, update: Update):
 
             btn = tld(chat_id, "btn_dl")
             keyboard = [[InlineKeyboardButton(
-            text=btn, url=url)]]
+                text=btn, url=url)]]
             await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
             return
 
