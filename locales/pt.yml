@@ -715,6 +715,17 @@ memes_help: |
   - /pat: dar um headpat :3
   - /react: envia uma reação aleatória.
   - /weebify: como uma resposta a uma mensagem, "weebify" a mensagem.
+#Weather
+modname_weather: Clima
+weather_temp: "• **Temperatura:** "
+weather_cond: "• **Condição:** "
+weather_hum: "• **Umidade:** "
+weather_wind: "• **Vento:** "
+weather_sunrise: "• **Nascer do sol**: "
+weather_sunset: "• **Pôr do sol**: "
+weather_help: |
+   *Comandos disponíveis:*
+   - /weather <nome>: Retorna o clima de uma cidade, país ou estado.
 #Misc
 modname_misc: Outros
 misc_info_extract_error: "Não consigo extrair um usuário disso."

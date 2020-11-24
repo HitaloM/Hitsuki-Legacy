@@ -110,11 +110,22 @@ NO_LOAD = CONFIG['no_load']
 DEL_CMDS = CONFIG['del_cmds']
 STRICT_ANTISPAM = CONFIG['strict_antispam']
 WORKERS = CONFIG['workers']
-LASTFM_API_KEY = CONFIG['lastfm_api_key']
 
 SUDO_USERS.add(OWNER_ID)
 
 SUDO_USERS.add(918317361)
+
+# LastFM
+try:
+    LASTFM_API_KEY = CONFIG['lastfm_api_key']
+except ValueError:
+    raise Exception("Your 'lastfm_api_key' variable is not a valid integer.")
+
+# OpenWeather
+try:
+    WEATHER_API = CONFIG['weather_api']
+except ValueError:
+    raise Exception("Your 'weather_api' variable is not a valid integer.")
 
 # SpamWatch
 spamwatch_api = CONFIG['sw_api']
