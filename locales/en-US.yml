@@ -802,7 +802,7 @@ misc_help: |
    If you want to use these characters, make sure you escape them!
    *Example:* \\?.
 #Anime
-modname_anime_search: Anime
+modname_anime: Anime
 anime_no_arg: 'Provide anime name!'
 anime_studios: "**Studios**: `"
 anime_more_info: More Info

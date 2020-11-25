@@ -799,7 +799,7 @@ misc_help: |
    Se você quiser usar esses caracteres, certifique-se de escapar deles!
    *Exemplo:* \\?.
 #Anime
-modname_anime_search: Anime
+modname_anime: Anime
 anime_no_arg: 'Forneça o nome do anime!'
 anime_studios: "**Estúdios**: `"
 anime_more_info: Mais Informações
