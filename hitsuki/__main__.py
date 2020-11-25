@@ -146,8 +146,10 @@ def send_start(bot, update):
     text = tld(chat.id, 'main_start_pm')
 
     keyboard = [[
-        InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_support'),
-                             url="https://github.com/HitsukiNetwork/Hitsuki")
+        InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_source'),
+                             url="https://github.com/HitsukiNetwork/Hitsuki"),
+        InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_channel'),
+                             url="https://t.me/HitsukiNews")
     ]]
     keyboard += [[
         InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_lang'),

@@ -17,14 +17,13 @@ btn_go_back: Voltar
 main_start_group: Olá! Estou vivo :3
 
 main_start_pm: |
-  Olá! Meu nome é Hitsuki - Estou aqui para ajudá-lo a gerenciar seus grupos!
-  Clique no botão Ajuda para descobrir mais sobre como me usar em todo o meu potencial.
-
-  Siga [Hitsuki](https://t.me/HitsukiNews) ( @HitsukiNews ) se você quiser acompanhar as novidades, atualizações e tempo de inatividade do bot!
+  Olá! Meu nome é *Hitsuki*.
+  Eu posso ajudar a administrar seus grupos com ótimas funções, sinta-se a vontade para me adicionar aos seus grupos!
 
   Deseja me adicionar ao seu grupo? [Clique aqui!](t.me/LordHitsuki_BOT?startgroup=true)
 
-main_start_btn_support: '📦 Código fonte'
+main_start_btn_source: '📦 Código fonte'
+main_start_btn_channel: '📬 Canal de notícias'
 main_start_btn_ctrlpnl: '🛠 Painel de controle'
 main_start_btn_lang: '🇧🇷 Idioma'
 #Common
