@@ -55,8 +55,8 @@ async def inline_query_handler(client, query):
                                                  caption="Hey! I have an inline mode, click the buttons below to start your exploration! (.づ◡﹏◡)づ.",
                                                  photo_url="https://telegra.ph/file/5536473a204e5191b80f8.png",
                                                  parse_mode="html",
-                                                 title=f"Need Help?",
-                                                 description=f"Click Here...",
+                                                 title="Need Help?",
+                                                 description="Click Here...",
                                                  reply_markup=InlineKeyboardMarkup(
                                                      [[
                                                          InlineKeyboardButton(
