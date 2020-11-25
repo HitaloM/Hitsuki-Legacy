@@ -22,7 +22,6 @@ from pyrogram import Client, filters
 from pyrogram.types import Update
 
 from hitsuki import pbot
-from hitsuki.modules.tr_engine.strings import tld
 
 
 @pbot.on_message(filters.command("direct"))

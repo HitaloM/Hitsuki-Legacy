@@ -25,7 +25,7 @@ from inspect import getfullargspec
 from pyrogram import Client, filters
 from pyrogram.types import Message, Update, InlineKeyboardMarkup, InlineKeyboardButton
 
-from hitsuki import OWNER_ID, SUDO_USERS, pbot
+from hitsuki import pbot
 from hitsuki.modules.tr_engine.strings import tld
 
 telegraph = Telegraph()
