@@ -14,39 +14,42 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
-from random import choice
-
 import requests
+from random import choice
 from bs4 import BeautifulSoup
 
-from hitsuki.events import register
+from pyrogram import Client, filters
+from pyrogram.types import Update
 
-# This module is ported from Telegram-UserBot (Paperplane)
+from hitsuki import pbot
+from hitsuki.modules.tr_engine.strings import tld
 
 
-@register(pattern=r"^/direct(?: |$)([\s\S]*)")
-async def direct_link_generator(request):
-    textx = await request.get_reply_message()
-    message = request.pattern_match.group(1)
-    if message:
-        pass
-    elif textx:
-        message = textx.text
-    else:
-        await request.reply("Usage: `/direct <url>`")
+@pbot.on_message(filters.command("direct"))
+async def direct_link_generator(c: Client, update: Update):
+    if not len(update.command) == 2:
+        m = "Usage: `/direct <url>`"
+        await update.reply_text(
+            parse_mode="md",
+            text=m)
         return
-    reply = ''
-    links = re.findall(r'\bhttps?://.*\.\S+', message)
+
+    text = update.command[1]
+    if text:
+        links = re.findall(r'\bhttps?://.*\.\S+', text)
+    else:
+        return
+    reply = []
     if not links:
-        reply = "No links found!"
-        await request.reply(reply)
+        await update.reply_text("No links found!")
+        return
     for link in links:
         if 'sourceforge.net' in link:
-            reply += sourceforge(link)
+            reply.append(sourceforge(link))
         else:
-            reply += '`' + re.findall(r"\bhttps?://(.*?[^/]+)",
-                                      link)[0] + 'is not supported`\n'
-    await request.reply(reply)
+            reply.append(re.findall(r"\bhttps?://(.*?[^/]+)", link)[0] + ' is not supported')
+
+    await update.reply_text("\n".join(reply))
 
 
 def sourceforge(url: str) -> str:
@@ -55,17 +58,20 @@ def sourceforge(url: str) -> str:
     except IndexError:
         reply = "No SourceForge links found\n"
         return reply
-    file_path = re.findall(r'files(.*)/download', link)[0]
-    reply = f"Mirrors for __{file_path.split('/')[-1]}__\n"
+    file_path = re.findall(r'/files(.*)/download', link)
+    if not file_path:
+        file_path = re.findall(r'/files(.*)', link)
+    file_path = file_path[0]
+    reply = f"Mirrors for <i>{file_path.split('/')[-1]}</i>\n"
     project = re.findall(r'projects?/(.*?)/files', link)[0]
     mirrors = f'https://sourceforge.net/settings/mirror_choices?' \
-              f'projectname={project}&filename={file_path}'
-    page = BeautifulSoup(requests.get(mirrors).content, 'html.parser')
+        f'projectname={project}&filename={file_path}'
+    page = BeautifulSoup(requests.get(mirrors).content, 'lxml')
     info = page.find('ul', {'id': 'mirrorList'}).findAll('li')
     for mirror in info[1:]:
         name = re.findall(r'\((.*)\)', mirror.text.strip())[0]
         dl_url = f'https://{mirror["id"]}.dl.sourceforge.net/project/{project}/{file_path}'
-        reply += f'[{name}]({dl_url}) '
+        reply += f'<a href="{dl_url}">{name}</a> '
     return reply
 
 
