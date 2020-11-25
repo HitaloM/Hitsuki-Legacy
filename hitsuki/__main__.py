@@ -25,7 +25,7 @@ from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import Update, Bot
 from telegram.error import (Unauthorized, BadRequest, TimedOut, NetworkError,
                             ChatMigrated, TelegramError)
-from telegram.ext import (CommandHandler, Filters,
+from telegram.ext import (Filters,
                           MessageHandler, CallbackQueryHandler)
 from telegram.ext.dispatcher import (run_async, DispatcherHandlerStop,
                                      Dispatcher)

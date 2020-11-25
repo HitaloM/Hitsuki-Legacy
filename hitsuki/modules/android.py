@@ -14,7 +14,6 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
-import urllib
 import rapidjson as json
 from bs4 import BeautifulSoup
 from rapidjson import loads
@@ -22,7 +21,7 @@ from requests import get
 from hurry.filesize import size as sizee
 
 from pyrogram import Client, filters
-from pyrogram.types import Message, Update, InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import Update, InlineKeyboardButton, InlineKeyboardMarkup
 
 from hitsuki import pbot
 from hitsuki.mwt import MWT
