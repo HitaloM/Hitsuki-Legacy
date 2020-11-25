@@ -33,11 +33,12 @@ from hitsuki import TOKEN, SUDO_USERS, SYSTEM_DUMP, pbot
 # /dice, /ping, /pyroid, sed/regex, /upgrade, /cmd, /restart
 #
 # The /ip command is a pyrogram adaptation of MicroBot
-# 
+#
 # EduuRobot: github.com/AmanoTeam/EduuRobot
 # MicroBot: github.com/Nick80835/microbot
 #
 # Please do not remove these comments!
+
 
 @pbot.on_message(filters.command('dice'))
 async def dice(c: Client, m: Message):
@@ -239,33 +240,34 @@ async def ping(c: Client, update: Update):
     if not ip:
         await update.reply_text("Provide an IP!")
         return
- 
+
     async with aioclient.get(f"http://ip-api.com/json/{ip}") as response:
         if response.status == 200:
             lookup_json = await response.json()
         else:
             await update.reply_text(f"An error occurred when looking for **{ip}**: **{response.status}**")
             return
- 
+
     fixed_lookup = {}
- 
+
     for key, value in lookup_json.items():
-        special = {"lat": "Latitude", "lon": "Longitude", "isp": "ISP", "as": "AS", "asname": "AS name"}
+        special = {"lat": "Latitude", "lon": "Longitude",
+                   "isp": "ISP", "as": "AS", "asname": "AS name"}
         if key in special:
             fixed_lookup[special[key]] = str(value)
             continue
- 
+
         key = re.sub(r"([a-z])([A-Z])", r"\g<1> \g<2>", key)
         key = key.capitalize()
- 
+
         if not value:
             value = "None"
- 
+
         fixed_lookup[key] = str(value)
- 
+
     text = ""
- 
+
     for key, value in fixed_lookup.items():
         text = text + f"**{key}:** `{value}`\n"
- 
+
     await update.reply_text(text)
