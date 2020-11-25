@@ -115,7 +115,8 @@ async def whatanime(c: Client, m: Message):
                 text += f' ({title_native})'
             if synonyms:
                 text += tld(chat_id, "synonyms_whatanime").format(synonyms)
-            text += tld(chat_id, "similarity_whatanime").format(((Decimal(similarity) * 100).quantize(Decimal(".01"))))
+            text += tld(chat_id, "similarity_whatanime").format(
+                ((Decimal(similarity) * 100).quantize(Decimal(".01"))))
             if episode:
                 text += tld(chat_id, "episode_whatanime").format(episode)
             if nsfw:
