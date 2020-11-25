@@ -20,7 +20,8 @@ from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup, InlineQu
                             InputTextMessageContent, InlineQueryResultArticle)
 
 from hitsuki import pbot
-from hitsuki.modules.anime import (url, anime_query, manga_query, t, shorten, airing_query, character_query, nhentai_data)
+from hitsuki.modules.anime import (url, anime_query, manga_query, t, shorten,
+                                   airing_query, character_query, nhentai_data)
 
 
 class AioHttp:
@@ -286,7 +287,7 @@ async def inline_query_handler(client, query):
         json = requests.post(url, json={
                              'query': character_query, 'variables': variables}).json()['data']['Character']
         if json:
-            ms_g = f"**{json.get('name').get('full')}**(`{json.get('name').get('native')}`)\n❤️ Favourites : {json['favourites']}\n"
+            ms_g = f"**{json.get('name').get('full')}**(`{json.get('name').get('native')}`)\n❤️ Favourites: {json['favourites']}\n"
             description = f"{json['description']}"
             site_url = json.get('siteUrl')
             ms_g += shorten(description, site_url)

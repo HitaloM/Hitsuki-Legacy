@@ -62,6 +62,8 @@ admin_enable_reaction: Resposta ativada para comandos de administração usados 
 admin_err_wrong_arg: Digite True ou False!
 admin_reaction_status: 'A resposta para comandos de administração usados por membros é atualmente *{}*!'
 admin_help: |
+  Torne fácil promover e rebaixar membros com o módulo de administração!\n
+  *Comandos de usuário:*
   /adminlist | /admins: Mostrar os administradores do grupo\n
   *Apenas Administrador:*
   - /pin: Fixa silenciosamente a mensagem respondida. Adicione 'loud', 'notify' ou 'violent' para enviar uma notificação aos usuários.
@@ -236,7 +238,7 @@ bans_sban_logger: "<b>{}:</b>\n#UNBAN\n<b>Administrador:</b> {}\n<b>Usuario:</b>
 bans_help: |
   Algumas pessoas precisam ser banidas publicamente, como spammers, aborrecimentos ou simplesmente trolls.\n
   Este módulo permite que você faça isso facilmente, expondo as ações deles ao público!\n
-  Os comandos disponíveis são:
+  *Os comandos disponíveis são:*
   - /ban: Bane um usuário do chat.
   - /banme: Bane a si mesmo do chat.
   - /tban: Bane temporariamente um usuário do chat, você estabelece o tempo com int<d/h/m> (dias, horas ou minutos)
@@ -272,7 +274,7 @@ blacklist_help: |
   - /geturl: Lista as urls que estão atualmente na lista negra.
   - /addurl <urls>: Adiciona um site a lista negra.O bot irá analizar automaticamente a url.
   - /delurl <urls>: Elimina um site da lista negra.\n
-  Exemplos:
+  *Exemplos:*
   /addblacklist "Sopa de macaco" UMA DELICIA
   Isto removeria qualquer mensagem com 'Sopa de macaco'.\n
   /addurl bit.ly
@@ -426,7 +428,7 @@ feds_help: |
   Com certeza não! Com a federação, você pode banir um usuário de um chat e banir automaticamente dos outros chats na federação.
   Você pode até definir administradores da federação, para que um admin de sua confiança possa banir usuários todos os chats que você deseja proteger.
 
-  Comandos:
+  *Comandos disponíveis:*
   - /newfed <fedname>: Cria uma nova Federação com o nome dado. Os usuários podem ter apenas uma federação. Este método também pode ser usado para renomear a Federação. (máximo de 64 caracteres)
   - /delfed: Exclui sua Federação e qualquer informação relacionada a ela. Não cancelará usuários bloqueados.
   - /fedinfo <FedID>: Traz informações sobre a Federação especificada.
@@ -495,7 +497,7 @@ locks_list: |
 locks_help: |
   Os stickers o incomodam? Ou você deseja impedir que as pessoas compartilhem links? Ou fotos? Você está no lugar certo!\n
   O módulo de bloqueio permite bloquear alguns elementos comuns no mundo do telegram; O bot irá removê-los automaticamente!\n
-  Os comandos disponíveis são:
+  *Comandos disponíveis:*
   - /lock <item(s)>: bloqueia o uso de um "tipo de item". Agora, somente administradores podem usar esse item!
   - /unlock <item(s)>: desbloqueia o uso de um "tipo de item". Todos os usuários podem usá-lo novamente.
   - /locks: lista os itens bloqueados no chat.
@@ -516,14 +518,17 @@ log_channel_invalid_message: 'Esta não é uma mensagem encaminhada! Leia a ajud
 log_channel_unlink_success: 'O canal foi desvinculado de {}!'
 log_channel_unlink_none: 'Nenhum canal de registro foi estabelecido!'
 log_channel_help: |
+ As ações recentes são boas, mas não ajudam você a registrar todas as ações executadas pelo bot. É por isso que você precisa de canais de registro!\n
+ Os canais de registro podem ajudá-lo a controlar exatamente o que os outros administradores estão fazendo. Banir, silenciar, avisos, notas - tudo pode ser moderado.\n
+ A configuração de um canal de registro é feita pelas seguintes etapas:
+ - Adicione Hitsuki ao seu canal, como administrador. Isso é feito por meio da guia "adicionar administradores".
+ - Envie /setlog para o seu canal.
+ - Encaminhe o comando /setlog para o grupo que você deseja registrar.
+ - Parabéns! tudo feito.\n
   *Somente administrador:*
   - /logchannel: obter informação do canal de registro.
   - /setlog: estabelecer o canal de registor.
-  - /unsetlog: desestabelecer o canal de registro.\n
-  A configuração do canal de registro é feita por:
-  - adicione o bot ao canal desejado (como administrador)
-  - enviando /setlog no canal
-  - reenviando /setlog ao grupo
+  - /unsetlog: desestabelecer o canal de registro.
 #Memes and etc.
 modname_memes: Memes
 memes_no_message: Preciso de uma mensagem para o meme.
@@ -923,7 +928,7 @@ notes_help: |
   Salve dados para futuros usuários com notas!
   As notas são ótimas para armazenar informações aleatórias; um número de telefone, um belo gif, uma imagem engraçada - qualquer coisa!
 
-  Os comandos disponíveis são:
+  *Comandos disponíveis*:
    - /save <nome> <conteúdo>: Salve o conteúdo em uma nota chamada "nome". Responder a uma mensagem salvará essa mensagem. Até funciona na mídia!
    - /get <nome>: Obtenha a nota chamada "nome".
    - #<name>: Mesma coisa que `/get nome`.
@@ -955,6 +960,11 @@ reports_success: "{} denunciou a mensagem aos administradores."
 reports_pm_enable: "Denúncias ativadas no seu PV."
 reports_pm_disable: "Denúncias desativadas no seu PV."
 reporting_help: |
+  Somos todos pessoas ocupadas que não têm tempo para monitorar nossos grupos 24 horas por dia, 7 dias por semana. Mas como você reage se alguém em seu grupo estiver enviando spam?
+
+  Apresentando denúncias; se alguém em seu grupo acha que alguém precisa ser punido, agora eles têm uma maneira fácil de ligar para todos os administradores.
+
+  *Comandos de usuários:*
   - /report <motivo>: Responda a uma mensagem para denunciá-la aos administradores.
   - @admin: Responda a uma mensagem para denunciá-la aos administradores.
   NOTA: Nenhum deles será ativado se usado pelos administradores.
@@ -972,6 +982,9 @@ rules_button_click: "Clique no botão abaixo para obter as regras para este grup
 rules: "Regras"
 rules_success: "As regras para este grupo foram definidas com sucesso."
 rules_help: |
+  Cada chat funciona com regras diferentes; este módulo ajudará a tornar essas regras mais claras!
+
+  *Comandos de usuários:*
   - /rules: obtenha as regras para este grupo.
 
   *Somente administrador:*
@@ -1086,7 +1099,7 @@ welcome_settings: |
 welcome_help: |
   Dê boas-vindas calorosamente a seus membros com o módulo de Boas vindas! Ou um triste adeus ... Depende!
 
-  os comandos de boas vindas são:
+  *Comandos disponíveis:*
   - /welcome <on/off/yes/no>: ativa/desativa mensagens de boas-vindas. Se nenhuma opção for oferecida, ela retornará a mensagem de boas-vindas e as configurações atuais.
   - /goodbye <on/off/yes/no>: ativa/desativa mensagens de despedida. Se nenhuma opção for dada, ela retornará a mensagem de despedida atual e as configurações.
   - /setwelcome <message>: define sua nova mensagem de boas-vindas! Markdown e botões são suportados, bem como preenchimentos.
@@ -1245,6 +1258,9 @@ warns_strength_invalid_arg: 'Argumento inválido. os argumentos aceitos são on/
 warns_strength_off: Os warns estão configurados para *kickar* os usuários quando eles ultrapassam os limites.
 warns_strength_on: Os warns estão configurados para *banir* os usuários quando eles ultrapassam os limites.
 warns_help: |
+  Mantenha seus membros sob controle com avisos; impeça que eles fiquem fora de controle!
+
+  *Comandos de usuário:*
   - /warns <userhandle>: verifique quantos warns um usuário possui (e veja os motivos, se houver).
   - /warnlist: lista de todos os filtros de warn atuais
 

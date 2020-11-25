@@ -61,7 +61,8 @@ admin_enable_reaction: Enabled response to user-triggered admin commands.
 admin_err_wrong_arg: Please enter True or False!
 admin_reaction_status: Response for user-triggered admin commands is currently *{}*!
 admin_help: |
-  Make it easy to promote and demote users with the admin module\n!
+  Make it easy to promote and demote users with the admin module!\n
+  *User commands:*
   /adminlist | /admins: Lists the admins in the chat\n
   *Admin only:*
   - /pin: Silently pins the message replied to. Add 'loud', 'notify' or 'violent' to send a notification to users.
@@ -517,14 +518,17 @@ log_channel_invalid_message: This isn't a forwarded message! Please read help(ty
 log_channel_unlink_success: Channel has been unlinked from {}!
 log_channel_unlink_none: No log channel has been set yet!
 log_channel_help: |
+ Recent actions are nice, but they don't help you log every action taken by the bot. This is why you need log channels!\n
+ Log channels can help you keep track of exactly what the other admins are doing. Bans, Mutes, warns, notes - everything can be moderated.\n
+ Setting a log channel is done by the following steps:
+ - Add Hitsuki to your channel, as an admin. This is done via the "add administrators" tab.
+ - Send /setlog to your channel.
+ - Forward the /setlog command to the group you wish to be logged.
+ - Congrats! all done.\n
   *Admin only:*
   - /logchannel: get log channel info
   - /setlog: set the log channel.
-  - /unsetlog: unset the log channel.\n
-  Setting the log channel is done by:
-  - adding the bot to the desired channel (as an admin!)
-  - sending /setlog in the channel
-  - forwarding the /setlog to the group
+  - /unsetlog: unset the log channel.
 #Memes and etc.
 modname_memes: Memes
 memes_no_message: I need a message to meme.
@@ -926,12 +930,14 @@ notes_help: |
   Save data for future users with notes!
   Notes are great to save random tidbits of information; a phone number, a nice gif, a funny picture - anything!
 
-  Available commands are:
-   - /save <name> <content>: Save content to a note with the name "name". Replying to a message will save that message. Even works on media!
+   *User commands:*
+   - /notes: List all notes in the current chat
    - /get <name>: Get the note with the name "name".
    - #<name>: same as `/get name`
+
+  *Admin commands:*
+   - /save <name> <content>: Save content to a note with the name "name". Replying to a message will save that message. Even works on media!
    - /clear <name>: delete the note called "name"
-   - /notes: List all notes in the current chat
    - /saved: same as /notes
    - /clearall: Clean all notes in your group, only use this if you know what you're doing
 
@@ -957,6 +963,11 @@ reports_success: "User {} reported the message to the admins."
 reports_pm_enable: "Enabled reporting in your pm!"
 reports_pm_disable: "Disabled reporting in your pm!"
 reporting_help: |
+  We're all busy people who don't have time to monitor our groups 24/7. But how do you react if someone in your group is spamming?
+
+  Presenting reports; if someone in your group thinks someone needs reporting, they now have an easy way to call all admins.
+
+  *User commands:*
   - /report <reason>: reply to a message to report it to admins.
   - @admin: reply to a message to report it to admins.
   NOTE: neither of these will get triggered if used by admins
@@ -975,6 +986,9 @@ rules: "Rules"
 rules_success: "Successfully set rules for this group."
 rules_clean_success: "Successfully cleared rules!"
 rules_help: |
+  Every chat works with different rules; this module will help make those rules clearer!
+
+  *User commands:*
   - /rules: get the rules for this chat.
 
   *Admin only:*
@@ -1249,6 +1263,9 @@ warns_strength_invalid_arg: Invalid argument! Only on/yes/no/off are accepted!
 warns_strength_off: Warns are currently set to *kick* users when they exceed the limits.
 warns_strength_on: Warns are currently set to *ban* users when they exceed the limits.
 warns_help: |
+  Keep your members in check with warnings; stop them getting out of control!
+
+  *User commands:*
   - /warns <userhandle>: check how many warnings a user has (and see the reasons if present).
   - /warnlist: list of all current warning filters
 
