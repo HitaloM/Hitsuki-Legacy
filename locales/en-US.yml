@@ -788,6 +788,7 @@ misc_help: |
   - /football: Send a soccer ball.
   - /dart: Send a dart.
   - /cassino: Send a casino machine.
+  - /ip: Displays information about an IP / domain.
   - /dice: Send a dice.\n
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.

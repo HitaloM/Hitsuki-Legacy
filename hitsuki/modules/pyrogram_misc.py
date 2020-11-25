@@ -1,39 +1,43 @@
-# Copyright (C) 2018-2020 Amano Team <contact@amanoteam.com>
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy of
-# this software and associated documentation files (the "Software"), to deal in
-# the Software without restriction, including without limitation the rights to
-# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-# the Software, and to permit persons to whom the Software is furnished to do so,
-# subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#    Hitsuki (A telegram bot project)
+
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import asyncio
 import html
 import os
 import re
 import sys
-from datetime import datetime
-
 import aiohttp
 import regex
+from datetime import datetime
+from aiohttp import ClientSession
+
 from pyrogram import Client, filters
-from pyrogram.types import Message
+from pyrogram.types import Message, Update
 
 from hitsuki import TOKEN, SUDO_USERS, SYSTEM_DUMP, pbot
 
-# pyrogram_misc: This module is an adaptation of several commands of the EduuRobot
-# https://github.com/AmanoTeam/EduuRobot
-
+# Some commands in this module are EduuRobot ports (authorized)
+# EduuRobot commands:
+# /dice, /ping, /pyroid, sed/regex, /upgrade, /cmd, /restart
+#
+# The /ip command is a pyrogram adaptation of MicroBot
+# 
+# EduuRobot: github.com/AmanoTeam/EduuRobot
+# MicroBot: github.com/Nick80835/microbot
+#
+# Please do not remove these comments!
 
 @pbot.on_message(filters.command('dice'))
 async def dice(c: Client, m: Message):
@@ -225,3 +229,43 @@ async def logs(c: Client, m: Message):
         chat_id=SYSTEM_DUMP,
         parse_mode="markdown")
     await m.reply_text("Done! LOGs are sent to system_dump.")
+
+
+@pbot.on_message(filters.command("ip"))
+async def ping(c: Client, update: Update):
+    ip = update.command[1]
+
+    aioclient = ClientSession()
+    if not ip:
+        await update.reply_text("Provide an IP!")
+        return
+ 
+    async with aioclient.get(f"http://ip-api.com/json/{ip}") as response:
+        if response.status == 200:
+            lookup_json = await response.json()
+        else:
+            await update.reply_text(f"An error occurred when looking for **{ip}**: **{response.status}**")
+            return
+ 
+    fixed_lookup = {}
+ 
+    for key, value in lookup_json.items():
+        special = {"lat": "Latitude", "lon": "Longitude", "isp": "ISP", "as": "AS", "asname": "AS name"}
+        if key in special:
+            fixed_lookup[special[key]] = str(value)
+            continue
+ 
+        key = re.sub(r"([a-z])([A-Z])", r"\g<1> \g<2>", key)
+        key = key.capitalize()
+ 
+        if not value:
+            value = "None"
+ 
+        fixed_lookup[key] = str(value)
+ 
+    text = ""
+ 
+    for key, value in fixed_lookup.items():
+        text = text + f"**{key}:** `{value}`\n"
+ 
+    await update.reply_text(text)

@@ -785,6 +785,7 @@ misc_help: |
   - /football: Envia uma bola de futebol.
   - /dart: Envia um dardo.
   - /cassino: Envia uma máquina de cassino.
+  - /ip: Mostra informações sobre um IP / domínio.
   - /dice: Envia um dado.\n
   *Especial | COVID-19*
   - /covid: Gerado por Worldometers, receba as estatísticas gerais de COVID-19.
