@@ -60,14 +60,14 @@ def weather(bot: Bot, update: Update):
                 try:
                     countrycode = timezone_countries[f'{country}']
                 except KeyError:
-                    weather.edit("`Invalid country.`")
+                    weather.edit(tld(chat_id, "weather_invalid"))
                     return
                 city = newcity[0].strip() + "," + countrycode.strip()
         url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={APPID}'
         request = get(url)
         result = json.loads(request.text)
         if request.status_code != 200:
-            info = f"No weather information for this location!"
+            info = tld(chat_id, "weather_no_info")
             bot.send_message(chat_id = update.effective_chat.id,
                              text=info,
                              parse_mode=ParseMode.MARKDOWN,

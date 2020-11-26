@@ -717,6 +717,8 @@ memes_help: |
   - /weebify: como uma resposta a uma mensagem, "weebify" a mensagem.
 #Weather
 modname_weather: Clima
+weather_no_info: "Sem informações de clima para essa localização!"
+weather_invalid: "Localização inválida."
 weather_temp: "• **Temperatura:** "
 weather_cond: "• **Condição:** "
 weather_hum: "• **Umidade:** "
