@@ -277,7 +277,7 @@ def get_help(bot: Bot, update: Update):
                                      url="t.me/{}?start=help".format(
                                          bot.username)),
                 InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_channel'),
-                             url="https://t.me/HitsukiNews")
+                                     url="https://t.me/HitsukiNews")
             ]]))
         return
 
