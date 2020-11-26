@@ -17,7 +17,6 @@ import re
 import rapidjson as json
 from datetime import datetime
 from bs4 import BeautifulSoup
-from rapidjson import loads
 from requests import get
 from hurry.filesize import size as sizee
 
@@ -61,7 +60,7 @@ class GetDevice:
         if self.device.lower().startswith('sm-'):
             data = get(
                 'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_model.json').content
-            db = loads(data)
+            db = json.loads(data)
             try:
                 name = db[self.device.upper()][0]['name']
                 device = db[self.device.upper()][0]['device']
@@ -77,7 +76,7 @@ class GetDevice:
         else:
             data = get(
                 'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
-            db = loads(data)
+            db = json.loads(data)
             newdevice = self.device.strip('lte').lower() if self.device.startswith(
                 'beyond') else self.device.lower()
             try:
@@ -194,7 +193,7 @@ async def variants(c: Client, update: Update):
 
     data = get(
         'https://raw.githubusercontent.com/androidtrackers/certified-android-devices/master/by_device.json').content
-    db = loads(data)
+    db = json.loads(data)
     device = db[device]
     message = f'<b>{name}</b> variants:\n\n'
 
@@ -554,7 +553,7 @@ async def aex(c: Client, update: Update):
         device = ''
 
     if device == '':
-        reply_text = tld(chat_id, "cmd_example").format("aex")
+        reply_text = tld(chat_id, "cmd_example_aex")
         await update.reply_text(reply_text, disable_web_page_preview=True)
         return
 
