@@ -191,7 +191,8 @@ def markdown_help(bot: Bot, update: Update):
 def stats(bot: Bot, update: Update):
     update.effective_message.reply_text(
         # This text doesn't get translated as it is internal message.
-        "<b>Current Stats:</b>\n" + "\n".join([mod.__stats__() for mod in STATS]),
+        "<b>Current Stats:</b>\n" + \
+        "\n".join([mod.__stats__() for mod in STATS]),
         parse_mode=ParseMode.HTML)
 
 

@@ -27,11 +27,12 @@ def ReplyCheck(m: Message):
 
     if m.reply_to_message:
         reply_id = m.reply_to_message.message_id
- 
+
     elif not m.from_user.is_self:
         reply_id = m.message_id
 
     return reply_id
+
 
 infotext = (
     "**[{full_name}](tg://user?id={user_id})**\n"
@@ -85,12 +86,12 @@ async def whois(c: Client, m: Message):
     desc = await c.get_chat(get_user)
     desc = desc.description
     await m.reply_text(
-            infotext.format(
-                full_name=FullName(user),
-                user_id=user.id,
-                first_name=user.first_name,
-                last_name=user.last_name if user.last_name else "None",
-                username=user.username if user.username else "None",
-                last_online=LastOnline(user),
-                bio=desc if desc else "`No bio set up.`"),
-            disable_web_page_preview=True)
+        infotext.format(
+            full_name=FullName(user),
+            user_id=user.id,
+            first_name=user.first_name,
+            last_name=user.last_name if user.last_name else "None",
+            username=user.username if user.username else "None",
+            last_online=LastOnline(user),
+            bio=desc if desc else "`No bio set up.`"),
+        disable_web_page_preview=True)
