@@ -73,7 +73,5 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
                    parse_mode=ParseMode.MARKDOWN)
 
 
-__help__ = True
-
 dispatcher.add_handler(
     DisableAbleCommandHandler("tr", do_translate, pass_args=True))

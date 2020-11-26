@@ -720,7 +720,6 @@ memes_help: |
   - /react: send a random reaction.
   - /weebify: as a reply to a message, "weebifies" the message.
 #Weather
-modname_weather: Weather
 weather_no_info: "No weather information for this location!"
 weather_invalid: "Invalid country."
 weather_temp: "• **Temperature:** "
@@ -729,9 +728,6 @@ weather_hum: "• **Humidity:** "
 weather_wind: "• **Wind:** "
 weather_sunrise: "• **Sunrise**: "
 weather_sunset: "• **Sunset**: "
-weather_help: |
-   *Available commands:*
-   - /weather <name>: Returns the weather in a city, country or state.
 #Misc
 modname_misc: Misc
 misc_get_id_1: The original sender, {}, has an ID of `{}`.\nThe forwarder, {}, has an ID of `{}`.
@@ -801,6 +797,8 @@ misc_help: |
   - /wiki <keywords>: Get wikipedia articles just using this bot!
   - /ping: See the ping of the bot.
   - /ip: Displays information about an IP / domain.
+  - /tr (language code): Get the translation of the replied message.
+  - /weather <name>: Returns the weather in a city, country or state.
   - /dice: Send a dice.\n
   *Special | COVID-19*
   - /covid: Powered by Worldometers, Give stats about overall stats of COVID-19.
@@ -1004,11 +1002,9 @@ rules_help: |
    - /clearrules: clear the rules for this chat.
    - /setrules <your rules here>: set the rules for this chat.
 #Translator
-modname_translator: Translator
 translator_translated: |
   From `{}` to `{}`:\n{}
 translator_err: Error occured while translating:\n{}
-translator_help: "- /tr (language code): Get the translation of the replied message."
 translator_no_str: Reply to a message to translate!
 translator_no_args: Specify the language you want to translate the replied message to!
 translator_animal_translated: |

@@ -275,9 +275,7 @@ def get_help(bot: Bot, update: Update):
             reply_markup=InlineKeyboardMarkup([[
                 InlineKeyboardButton(text=tld(chat.id, 'btn_help'),
                                      url="t.me/{}?start=help".format(
-                                         bot.username)),
-                InlineKeyboardButton(text=tld(chat.id, 'main_start_btn_channel'),
-                                     url="https://t.me/HitsukiNews")
+                                         bot.username))
             ]]))
         return
 
