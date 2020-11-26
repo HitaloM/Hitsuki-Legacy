@@ -61,7 +61,7 @@ def weather(bot: Bot, update: Update):
                 try:
                     countrycode = timezone_countries[f'{country}']
                 except KeyError:
-                    weather.edit(tld(chat_id, "weather_invalid"))
+                    message.reply_text(tld(chat_id, "weather_invalid"))
                     return
                 city = newcity[0].strip() + "," + countrycode.strip()
         url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={APPID}'

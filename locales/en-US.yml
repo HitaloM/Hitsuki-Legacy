@@ -137,10 +137,25 @@ direct_links_help: |
 modname_antiflood: Antiflood
 flood_mute: I would like to leave the flooding to natural disasters. But you, you were just a disappointment. *Muted*!
 flood_err_no_perm: I can't mute people here, give me permissions first! Until then, I'll disable antiflood.
-flood_logger_success: '<b>{}:</b>\n#MUTED\n<b>User:</b> {}\nFlooded the group.'
-flood_logger_fail: '<b>{}:</b>\n#INFO\nNo mute permissions! Antiflood disabled'
-flood_logger_set_off: '<b>{}:</b>\n#SETFLOOD\n<b>Admin:</b> {}\nDisabled antiflood.'
-flood_logger_set_on: '<b>{}:</b>\n#SETFLOOD\n<b>Admin:</b> {}\nSet antiflood to <code>{}</code>.'
+flood_logger_success: |
+  <b>{}:</b>
+  #MUTED
+  <b>• User:</b> {}
+  Flooded the group.
+flood_logger_fail: |
+  <b>{}:</b>
+  #INFO
+  No mute permissions! AntiFlood disabled
+flood_logger_set_off: |
+  <b>{}:</b>
+  #SETFLOOD
+  <b>• Admin:</b> {}
+  Disabled antiflood.
+flood_logger_set_on: |
+  <b>{}:</b>
+  #SETFLOOD
+  <b>• Admin:</b> {}
+  Set antiflood to <code>{}</code>.'
 flood_set: Antiflood has been updated and set to {}
 flood_set_off: Antiflood has been disabled.
 flood_status_off: I'm not currently enforcing flood control!
@@ -218,24 +233,41 @@ bans_err_usr_is_admin: Why would I ban an admin? That sounds like a pretty dumb 
 bans_logger: |
   <b>{}:</b>
   #BANNED
-  <b>Admin:</b> {}
-  <b>User:</b> {} (<code>{}</code>)
+  <b>• Admin:</b> {}
+  <b>• User:</b> {} (<code>{}</code>)
 bans_banned_success: Admin {} has successfully banned {} in <b>{}</b>!
 bans_logger_reason: \n<b>Reason:</b> {}
 bans_err_unknown: "Unknown error: {} failed."
 bans_err_tban_no_arg: You haven't specified a time to ban this user for!
-bans_tban_logger: '<b>{}:</b>\n#TEMP_BANNED\n<b>Admin:</b> {}\n<b>User:</b> {} (<code>{}</code>)\n<b>Time:</b> {}'
+bans_tban_logger: |
+  <b>{}:</b>
+  #TEMP_BANNED
+  <b>• Admin:</b> {}
+  <b>• User:</b> {} (<code>{}</code>)
+  <b>• Time:</b> {}
 bans_tbanned_success: Admin {} has successfully banned {} in <b>{}</b> for {}!
 bans_kick_is_bot: I'm not kicking myself!
 bans_kick_is_admin: Why would I kick an admin? That sounds like a pretty dumb idea.
 bans_kick_success: Admin {} has successfully kicked {} in <b>{}</b>!
-bans_kick_logger: '<b>{}:</b>\n#KICKED\n<b>Admin:</b> {}\n<b>User:</b> {} (<code>{}</code>)'
+bans_kick_logger: |
+  <b>{}:</b>
+  #KICKED
+  <b>• Admin:</b> {}
+  <b>• User:</b> {} (<code>{}</code>)
 bans_kickme_success: No problem.
 bans_kickme_failed: I cannot kick you! You're lucky today.
 bans_unban_user_in_chat: Why are you trying to unban someone that's already in the chat?
 bans_unban_success: Yep, this user can join!
-bans_unban_logger: '<b>{}:</b>\n#UNBANNED\n<b>Admin:</b> {}\n<b>User:</b> {} (<code>{}</code>)'
-bans_sban_logger: '<b>{}:</b>\n#UNBANNED\n<b>Admin:</b> {}\n<b>User:</b> {} (<code>{}</code>)'
+bans_unban_logger: |
+  <b>{}:</b>
+  #UNBANNED
+  <b>• Admin:</b> {}
+  <b>• User:</b> {} (<code>{}</code>)
+bans_sban_logger: |
+  <b>{}:</b>
+  #UNBANNED
+  <b>• Admin:</b> {}
+  <b>• User:</b> {} (<code>{}</code>)'
 bans_help: |
   Some people need to be publicly banned; spammers, annoyances, or just trolls.\n
   This module allows you to do that easily, by exposing some common actions, so everyone will see!\n
@@ -1207,39 +1239,39 @@ warns_max_warn_ban: "{} warnings, {} has been banned!"
 warns_warn_ban_log_channel: |
   <b>{}:</b>
   #WARN_BAN
-  <b>Admin:</b> {}
-  <b>User:</b> {} (<code>{}</code>)
-  <b>Reason:</b> {}
-  <b>Warn Count:</b> <code>{}/{}</code>
+  <b>• Admin:</b> {}
+  <b>• User:</b> {} (<code>{}</code>)
+  <b>• Reason:</b> {}
+  <b>• Warn Count:</b> <code>{}/{}</code>
 warns_warn_log_channel: |
   <b>{}:</b>
   #WARN
-  <b>Admin:</b> {}
-  <b>User:</b> {} (<code>{}</code>)
-  <b>Reason:</b> {}
-  <b>Counts:</b> <code>{}/{}</code>
+  <b>• Admin:</b> {}
+  <b>• User:</b> {} (<code>{}</code>)
+  <b>• Reason:</b> {}
+  <b>• Counts:</b> <code>{}/{}</code>
 warns_remove_log_channel: |
   <b>{}:</b>
   #UNWARN
-  <b>Admin:</b> {}
-  <b>User:</b> {} (<code>{}</code>)
+  <b>• Admin:</b> {}
+  <b>• User:</b> {} (<code>{}</code>)
 warns_reset_log_channel: |
   <b>{}:</b>
   #RESETWARNS
-  <b>Admin:</b> {}
-  <b>User:</b> {} (<code>{}</code>)
+  <b>• Admin:</b> {}
+  <b>• User:</b> {} (<code>{}</code>)
 warns_set_warn_limit_log_channel: |
   <b>{}:</b>
   #SET_WARN_LIMIT
-  <b>Admin:</b> {}
+  <b>• Admin:</b> {}
   Set the warn limit to <code>{}</code>
 warns_strength_on_log_channel: |
   <b>{}:</b>\n
-  <b>Admin:</b> {}\n
+  <b>• Admin:</b> {}\n
   Has enabled strong warns. Users will be banned.
 warns_strength_off_log_channel: |
   <b>{}:</b>\n
-  <b>Admin:</b> {}\n
+  <b>• Admin:</b> {}\n
   Has disabled strong warns. Users will only be kicked.
 warns_btn_remove_warn: Remove warn
 warns_btn_rules: Rules

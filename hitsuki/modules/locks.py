@@ -160,7 +160,7 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
 
                 return "<b>{}:</b>" \
                        "\n#LOCK" \
-                       "\n<b>Admin:</b> {}" \
+                       "\n<b>• Admin:</b> {}" \
                        "\nLocked <code>{}</code>.".format(html.escape(chat.title),
                                                           mention_html(user.id, user.first_name), args[0])
 
@@ -171,7 +171,7 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
                                    parse_mode=ParseMode.MARKDOWN)
                 return "<b>{}:</b>" \
                        "\n#LOCK" \
-                       "\n<b>Admin:</b> {}" \
+                       "\n<b>• Admin:</b> {}" \
                        "\nLocked <code>{}</code>.".format(html.escape(chat.title),
                                                           mention_html(user.id, user.first_name), args[0])
 
@@ -202,7 +202,7 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
                                    parse_mode=ParseMode.MARKDOWN)
                 return "<b>{}:</b>" \
                        "\n#UNLOCK" \
-                       "\n<b>Admin:</b> {}" \
+                       "\n<b>• Admin:</b> {}" \
                        "\nUnlocked <code>{}</code>.".format(html.escape(chat.title),
                                                             mention_html(user.id, user.first_name), args[0])
 
@@ -231,7 +231,7 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
 
                 return "<b>{}:</b>" \
                        "\n#UNLOCK" \
-                       "\n<b>Admin:</b> {}" \
+                       "\n<b>• Admin:</b> {}" \
                        "\nUnlocked <code>{}</code>.".format(html.escape(chat.title),
                                                             mention_html(user.id, user.first_name), args[0])
             else:

@@ -97,8 +97,8 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
         parse_mode=ParseMode.HTML)
     return f"<b>{html.escape(chatD.title)}:</b>" \
         "\n#PROMOTED" \
-           f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}" \
-           f"\n<b>User:</b> {mention_html(user_member.user.id, user_member.user.first_name)}"
+           f"\n<b>• Admin:</b> {mention_html(user.id, user.first_name)}" \
+           f"\n<b>• User:</b> {mention_html(user_member.user.id, user_member.user.first_name)}"
 
 
 @run_async
@@ -166,8 +166,8 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
             parse_mode=ParseMode.HTML)
         return f"<b>{html.escape(chatD.title)}:</b>" \
             "\n#DEMOTED" \
-               f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}" \
-               f"\n<b>User:</b> {mention_html(user_member.user.id, user_member.user.first_name)}"
+               f"\n<b>• Admin:</b> {mention_html(user.id, user.first_name)}" \
+               f"\n<b>• User:</b> {mention_html(user_member.user.id, user_member.user.first_name)}"
 
     except BadRequest:
         message.reply_text(tld(chat.id, "admin_err_cant_demote"))
@@ -209,7 +209,7 @@ def pin(bot: Bot, update: Update, args: List[str]) -> str:
                 raise
         return f"<b>{html.escape(chat.title)}:</b>" \
             "\n#PINNED" \
-               f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}"
+               f"\n<b>• Admin:</b> {mention_html(user.id, user.first_name)}"
 
     return ""
 
@@ -238,7 +238,7 @@ def unpin(bot: Bot, update: Update) -> str:
 
     return f"<b>{html.escape(chat.title)}:</b>" \
            "\n#UNPINNED" \
-           f"\n<b>Admin:</b> {mention_html(user.id, user.first_name)}"
+           f"\n<b>• Admin:</b> {mention_html(user.id, user.first_name)}"
 
 
 @run_async

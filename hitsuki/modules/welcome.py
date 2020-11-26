@@ -789,7 +789,7 @@ def set_welcome(bot: Bot, update: Update) -> str:
 
     return "<b>{}:</b>" \
            "\n#SET_WELCOME" \
-           "\n<b>Admin:</b> {}" \
+           "\n<b>• Admin:</b> {}" \
            "\nSet the welcome message.".format(escape(chat.title),
                                                mention_html(user.id, user.first_name))
 
@@ -805,7 +805,7 @@ def reset_welcome(bot: Bot, update: Update) -> str:
         tld(chat.id, 'welcome_reset_welcome_success'))
     return "<b>{}:</b>" \
            "\n#RESET_WELCOME" \
-           "\n<b>Admin:</b> {}" \
+           "\n<b>• Admin:</b> {}" \
            "\nReset the welcome message to default.".format(escape(chat.title),
                                                             mention_html(user.id, user.first_name))
 
@@ -834,7 +834,7 @@ def set_goodbye(bot: Bot, update: Update) -> str:
     msg.reply_text(tld(chat.id, 'welcome_set_goodbye_success'))
     return "<b>{}:</b>" \
            "\n#SET_GOODBYE" \
-           "\n<b>Admin:</b> {}" \
+           "\n<b>• Admin:</b> {}" \
            "\nSet the goodbye message.".format(escape(chat.title),
                                                mention_html(user.id, user.first_name))
 
@@ -850,7 +850,7 @@ def reset_goodbye(bot: Bot, update: Update) -> str:
         tld(chat.id, 'welcome_reset_goodbye_success'))
     return "<b>{}:</b>" \
            "\n#RESET_GOODBYE" \
-           "\n<b>Admin:</b> {}" \
+           "\n<b>• Admin:</b> {}" \
            "\nReset the goodbye message.".format(escape(chat.title),
                                                  mention_html(user.id, user.first_name))
 
@@ -887,7 +887,7 @@ def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
             tld(chat.id, 'welcome_clean_set_off'))
         return "<b>{}:</b>" \
                "\n#CLEAN_WELCOME" \
-               "\n<b>Admin:</b> {}" \
+               "\n<b>• Admin:</b> {}" \
                "\nHas toggled clean welcomes to <code>OFF</code>.".format(escape(chat.title),
                                                                                    mention_html(user.id, user.first_name))
     else:
