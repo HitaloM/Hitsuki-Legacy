@@ -105,6 +105,7 @@ err_example_device: 'Por que você está tentando obter o dispositivo de exemplo
 err_json: Diga ao mantenedor da ROM para consertar seu json OTA. Estou certo de que isso não funcionará com o OTA e também não funcionará com este bot :P
 btn_dl: Clique aqui para baixar
 cmd_example: 'Digite o **codinome** do dispositivo!\nPor exemplo, `/{} tissot`'
+cmd_example_aex: 'Digite o **codinome** do dispositivo e a **versão do Android**!\nPor exemplo, `/aex whyred q`'
 android_help: |
   *Custom ROMs*
   - /pixys <device>: Obtenha a versão mais recente da ROM PixysOS para um dispositivo
