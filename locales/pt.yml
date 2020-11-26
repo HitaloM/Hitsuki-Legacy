@@ -13,7 +13,7 @@ here_is_help: Aqui está a ajuda para o módulo *{}*:\n\n{}
 help_not_found: 'Linha de ajuda para <code>{}</code> não encontrada!'
 help_pm_only: Entre em contato comigo no PV para obter a lista de possíveis comandos.
 btn_help: '❔ Ajuda'
-btn_go_back: Voltar
+btn_go_back: ⬅️ Voltar
 main_start_group: Olá! Estou vivo :3
 
 main_start_pm: |

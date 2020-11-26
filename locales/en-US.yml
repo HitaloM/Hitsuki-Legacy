@@ -12,7 +12,7 @@ here_is_help: Here is some help for the *{}* module:\n\n{}
 help_not_found: Help string for <code>{}</code> not found!
 help_pm_only: Contact me in PM to get the list of possible commands.
 btn_help: '❔ Help'
-btn_go_back: Back
+btn_go_back: ⬅️ Back
 main_start_group: Hey there! I'm alive :3
 
 main_start_pm: |
