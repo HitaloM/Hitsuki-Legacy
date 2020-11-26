@@ -44,7 +44,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
 
         msg.reply_text(tld(chat.id, 'translator_animal_translated').format(
             translation_type, reply),
-                       parse_mode=ParseMode.MARKDOWN)
+            parse_mode=ParseMode.MARKDOWN)
         return
 
     if msg.reply_to_message:
