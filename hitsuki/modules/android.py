@@ -530,16 +530,16 @@ async def pixys(c: Client, update: Update):
             InlineKeyboardButton(text=tld(chat_id, "btn_dl"), url=f"{url}")
         ]]
         await update.reply_text(reply_text,
-                           reply_markup=InlineKeyboardMarkup(keyboard),
-                           parse_mode="markdown",
-                           disable_web_page_preview=True)
+                                reply_markup=InlineKeyboardMarkup(keyboard),
+                                parse_mode="markdown",
+                                disable_web_page_preview=True)
         return
 
     elif fetch.status_code == 404:
         reply_text = tld(chat_id, "err_not_found")
     await update.reply_text(reply_text,
-                       parse_mode="markdown",
-                       disable_web_page_preview=True)
+                            parse_mode="markdown",
+                            disable_web_page_preview=True)
 
 
 @pbot.on_message(filters.command("aex"))
@@ -586,9 +586,10 @@ async def aex(c: Client, update: Update):
                 InlineKeyboardButton(text=tld(chat_id, "btn_dl"), url=f"{url}")
             ]]
             await update.reply_text(reply_text,
-                               reply_markup=InlineKeyboardMarkup(keyboard),
-                               parse_mode="markdown",
-                               disable_web_page_preview=True)
+                                    reply_markup=InlineKeyboardMarkup(
+                                        keyboard),
+                                    parse_mode="markdown",
+                                    disable_web_page_preview=True)
             return
     else:
         await update.reply_text(tld(chat_id, "err_not_found"))
