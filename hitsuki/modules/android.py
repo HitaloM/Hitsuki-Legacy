@@ -554,121 +554,121 @@ async def aex(c: Client, update: Update):
 
     if device == '':
         reply_text = tld(chat_id, "cmd_example_aex"))
-        await update.reply_text(reply_text, disable_web_page_preview=True)
+        await update.reply_text(reply_text, disable_web_page_preview = True)
         return
 
-    res = get(AEX_OTA_API + device + '/' + version.lower())
+    res=get(AEX_OTA_API + device + '/' + version.lower())
     if res.status_code == 200:
-        apidata = json.loads(res.text)
+        apidata=json.loads(res.text)
         if apidata.get('error'):
             await update.reply_text(tld(chat_id, "err_not_found"))
             return
         else:
-            developer = apidata.get('developer')
-            developer_url = apidata.get('developer_url')
-            xda = apidata.get('forum_url')
-            filename = apidata.get('filename')
-            url = "https://downjson.loads.aospextended.com/download/" + device + "/" + version + "/" + apidata.get(
+            developer=apidata.get('developer')
+            developer_url=apidata.get('developer_url')
+            xda=apidata.get('forum_url')
+            filename=apidata.get('filename')
+            url="https://downjson.loads.aospextended.com/download/" + device + "/" + version + "/" + apidata.get(
                 'filename')
-            builddate = datetime.strptime(apidata.get('build_date'),
+            builddate=datetime.strptime(apidata.get('build_date'),
                                           "%Y%m%d-%H%M").strftime("%d %B %Y")
-            buildsize = sizee(int(apidata.get('filesize')))
+            buildsize=sizee(int(apidata.get('filesize')))
 
-            reply_text = tld(chat_id, "download").format(filename, url)
+            reply_text=tld(chat_id, "download").format(filename, url)
             reply_text += tld(chat_id, "build_size").format(buildsize)
             reply_text += tld(chat_id, "build_date").format(builddate)
             reply_text += tld(
                 chat_id,
                 "maintainer").format(f"[{developer}]({developer_url})")
 
-            keyboard = [[
-                InlineKeyboardButton(text=tld(chat_id, "btn_dl"), url=f"{url}")
+            keyboard=[[
+                InlineKeyboardButton(text = tld(chat_id, "btn_dl"), url = f"{url}")
             ]]
             await update.reply_text(reply_text,
-                                    reply_markup=InlineKeyboardMarkup(
+                                    reply_markup = InlineKeyboardMarkup(
                                         keyboard),
-                                    parse_mode="markdown",
-                                    disable_web_page_preview=True)
+                                    parse_mode = "markdown",
+                                    disable_web_page_preview = True)
             return
     else:
         await update.reply_text(tld(chat_id, "err_not_found"))
 
 
-@pbot.on_message(filters.command("phh"))
+@ pbot.on_message(filters.command("phh"))
 async def phh(c: Client, update: Update):
 
-    chat_id = update.chat.id
+    chat_id=update.chat.id
 
-    fetch = get(
+    fetch=get(
         "https://api.github.com/repos/phhusson/treble_experimentations/releases/latest"
     )
-    usr = json.loads(fetch.content)
-    reply_text = tld(chat_id, "phh_releases")
+    usr=json.loads(fetch.content)
+    reply_text=tld(chat_id, "phh_releases")
     for i in range(len(usr)):
         try:
-            name = usr['assets'][i]['name']
-            url = usr['assets'][i]['browser_download_url']
+            name=usr['assets'][i]['name']
+            url=usr['assets'][i]['browser_download_url']
             reply_text += f"[{name}]({url})\n"
         except IndexError:
             continue
     await update.reply_text(reply_text)
 
 
-@pbot.on_message(filters.command("magisk"))
+@ pbot.on_message(filters.command("magisk"))
 async def evo(c: Client, update: Update):
 
-    chat_id = update.chat.id
+    chat_id=update.chat.id
 
-    url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
-    releases = '**Latest Magisk Releases:**\n'
-    variant = ['master/stable', 'master/beta', 'canary/canary']
+    url='https://raw.githubusercontent.com/topjohnwu/magisk_files/'
+    releases='**Latest Magisk Releases:**\n'
+    variant=['master/stable', 'master/beta', 'canary/canary']
     for variants in variant:
-        fetch = get(url + variants + '.json')
-        data = json.loads(fetch.content)
+        fetch=get(url + variants + '.json')
+        data=json.loads(fetch.content)
         if variants == "master/stable":
-            name = "**Stable**"
-            cc = 0
-            branch = "master"
+            name="**Stable**"
+            cc=0
+            branch="master"
         elif variants == "master/beta":
-            name = "**Beta**"
-            cc = 0
-            branch = "master"
+            name="**Beta**"
+            cc=0
+            branch="master"
         elif variants == "canary/canary":
-            name = "**Canary**"
-            cc = 1
-            branch = "canary"
+            name="**Canary**"
+            cc=1
+            branch="canary"
 
         if variants == "canary/canary":
-            releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({url}{branch}/{data["magisk"]["link"]}) | ' \
+            releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({url}{branch}/{data["magisk"]["link"]}) | '
                         f'[APK v{data["app"]["version"]}]({url}{branch}/{data["app"]["link"]}) | '
         else:
-            releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | ' \
+            releases += f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | '
                         f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
 
         if cc == 1:
-            releases += f'[Uninstaller]({url}{branch}/{data["uninstaller"]["link"]}) | ' \
+            releases += f'[Uninstaller]({url}{branch}/{data["uninstaller"]["link"]}) | '
                         f'[Changelog]({url}{branch}/notes.md)\n'
         else:
             releases += f'[Uninstaller]({data["uninstaller"]["link"]})\n'
 
-    await update.reply_text(releases, disable_web_page_preview=True)
+    await update.reply_text(releases, disable_web_page_preview = True)
 
 
 # OrangeFox: By @MrYacha, powered by OrangeFox API v2
-@pbot.on_message(filters.command(["orangefox", "of", "fox", "ofox"]))
+@ pbot.on_message(filters.command(["orangefox", "of", "fox", "ofox"]))
 async def orangefox(c: Client, update: Update):
 
-    chat_id = update.chat.id
+    chat_id=update.chat.id
 
     try:
-        codename = update.command[1]
+        codename=update.command[1]
     except Exception:
-        codename = ''
+        codename=''
 
     if codename == '':
-        reply_text = tld(chat_id, "fox_devices_title")
+        reply_text=tld(chat_id, "fox_devices_title")
 
-        devices = _send_request('device/releases/stable')
+        devices=_send_request('device/releases/stable')
         for device in devices:
             reply_text += f"\n • {device['fullname']} (`{device['codename']}`)"
 
@@ -676,22 +676,22 @@ async def orangefox(c: Client, update: Update):
         await update.reply_text(reply_text)
         return
 
-    device = _send_request(f'device/{codename}')
+    device=_send_request(f'device/{codename}')
     if not device:
-        reply_text = tld(chat_id, "fox_device_not_found")
+        reply_text=tld(chat_id, "fox_device_not_found")
         await update.reply_text(reply_text)
         return
 
-    release = _send_request(f'device/{codename}/releases/stable/last')
+    release=_send_request(f'device/{codename}/releases/stable/last')
     if not release:
-        reply_text = tld(chat_id, "fox_release_not_found")
+        reply_text=tld(chat_id, "fox_release_not_found")
         await update.reply_text(reply_text)
         return
 
-    reply_text = tld(chat_id, "fox_release_title")
+    reply_text=tld(chat_id, "fox_release_title")
     reply_text += tld(chat_id, "fox_release_device").format(
-        fullname=device['fullname'],
-        codename=device['codename']
+        fullname = device['fullname'],
+        codename = device['codename']
     )
     reply_text += tld(chat_id,
                       "fox_release_version").format(release['version'])
@@ -699,9 +699,9 @@ async def orangefox(c: Client, update: Update):
     reply_text += tld(chat_id, "fox_release_md5").format(release['md5'])
 
     if device['maintained'] == 3:
-        status = tld(chat_id, "fox_release_maintained_3")
+        status=tld(chat_id, "fox_release_maintained_3")
     else:
-        status = tld(chat_id, "fox_release_maintained_1")
+        status=tld(chat_id, "fox_release_maintained_1")
 
     reply_text += tld(chat_id, "fox_release_maintainer").format(
         name=device['maintainer']['name'],
