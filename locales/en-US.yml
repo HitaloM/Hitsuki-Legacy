@@ -791,8 +791,6 @@ misc_help: |
   - /info: get information about a user.
   - /whois: get information about a user using @pyrogram's methods.
   - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
-  - /git: Returns info about a GitHub user or organization.
-  - /repo: Return the GitHub user or organization repository list (Limited at 40)
   - /paste: Create a paste or a shortened url using [dogbin](https://del.dog)
   - /getpaste: Get the content of a paste or shortened url from [dogbin](https://del.dog)
   - /pastestats: Get stats of a paste or shortened url from [dogbin](https://del.dog)
@@ -800,10 +798,6 @@ misc_help: |
   - /removebotkeyboard: Got a nasty bot keyboard stuck in your group?
   - /wiki <keywords>: Get wikipedia articles just using this bot!
   - /ping: See the ping of the bot.
-  - /basket: Send a basket ball.
-  - /football: Send a soccer ball.
-  - /dart: Send a dart.
-  - /cassino: Send a casino machine.
   - /ip: Displays information about an IP / domain.
   - /dice: Send a dice.\n
   *Special | COVID-19*

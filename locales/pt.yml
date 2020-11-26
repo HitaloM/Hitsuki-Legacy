@@ -789,8 +789,6 @@ misc_help: |
   - /info: Obtém informações sobre um usuário.
   - /whois: Obtém informações sobre um usuário usando os métodos do @pyrogram.
   - /markdownhelp: Resume rápido de como o Markdown funciona no Telegram (Somente no PV).
-  - /git: Retorna informações sobre um usuário ou organização do GitHub.
-  - /repo: Retornar a lista de repositórios de usuários ou organizações do GitHub (Limitado em 40)
   - /paste: Crie uma URL colada ou encurtada usando [dogbin](https://del.dog)
   - /getpaste: Obtenha o conteúdo de uma URL colada ou encurtada do [dogbin](https://del.dog)
   - /pastestats: Obtenha estatísticas de uma URL colada ou encurtada do [dogbin](https://del.dog)
@@ -798,10 +796,6 @@ misc_help: |
   - /removebotkeyboard: Tem um bot de teclado desagradável preso no seu grupo?
   - /wiki <keywords>: Obtenha artigos da Wikipedia apenas usando este bot!
   - /ping: Envia o ping do bot.
-  - /basket: Envia uma bola de basquete.
-  - /football: Envia uma bola de futebol.
-  - /dart: Envia um dardo.
-  - /cassino: Envia uma máquina de cassino.
   - /ip: Mostra informações sobre um IP / domínio.
   - /dice: Envia um dado.\n
   *Especial | COVID-19*

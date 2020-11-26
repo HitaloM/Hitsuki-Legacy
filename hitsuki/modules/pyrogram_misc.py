@@ -47,26 +47,6 @@ async def dice(c: Client, m: Message):
         f"The dice stopped at the number {dicen.dice.value}", quote=True)
 
 
-@pbot.on_message(filters.command('basket'))
-async def basket(c: Client, m: Message):
-    await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🏀")
-
-
-@pbot.on_message(filters.command('football'))
-async def football(c: Client, m: Message):
-    await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="⚽")
-
-
-@pbot.on_message(filters.command('dart'))
-async def dart(c: Client, m: Message):
-    await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🎯")
-
-
-@pbot.on_message(filters.command('cassino'))
-async def cassino(c: Client, m: Message):
-    await c.send_dice(m.chat.id, reply_to_message_id=m.message_id, emoji="🎰")
-
-
 @pbot.on_message(filters.command("pyroid") & filters.private)
 async def ids_private(c: Client, m: Message):
     await m.reply_text("<b>Info:</b>\n\n"
