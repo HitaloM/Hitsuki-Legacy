@@ -39,6 +39,7 @@ def get_tz(con):
     except KeyError:
         return
 
+
 @run_async
 def weather(bot: Bot, update: Update):
     message = update.effective_message
@@ -68,7 +69,7 @@ def weather(bot: Bot, update: Update):
         result = json.loads(request.text)
         if request.status_code != 200:
             info = f"No weather information for this location!"
-            bot.send_message(chat_id = update.effective_chat.id,
+            bot.send_message(chat_id=update.effective_chat.id,
                              text=info,
                              parse_mode=ParseMode.MARKDOWN,
                              disable_web_page_preview=True)
@@ -109,7 +110,8 @@ def weather(bot: Bot, update: Update):
             icon = "☁️"
 
         ctimezone = tz(c_tz[country][0])
-        time = datetime.now(ctimezone).strftime("%A %d %b, %H:%M").lstrip("0").replace(" 0", " ")
+        time = datetime.now(ctimezone).strftime(
+            "%A %d %b, %H:%M").lstrip("0").replace(" 0", " ")
         fullc_n = c_n[f"{country}"]
         dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
 
@@ -125,24 +127,27 @@ def weather(bot: Bot, update: Update):
             return temp[0]
 
         def sun(unix):
-            xx = datetime.fromtimestamp(unix, tz=ctimezone).strftime("%H:%M").lstrip("0").replace(" 0", " ")
+            xx = datetime.fromtimestamp(unix, tz=ctimezone).strftime(
+                "%H:%M").lstrip("0").replace(" 0", " ")
             return xx
 
         if city:
             info = f"*{cityname}, {fullc_n}*\n"
             info += f"`{time}`\n\n"
             info += tld(chat_id, "weather_temp") + f"`{celsius(curtemp)}°C\n`"
-            info += tld(chat_id, "weather_cond") + f"`{condmain}, {conddet}` " + f"{icon}\n"
+            info += tld(chat_id, "weather_cond") + \
+                f"`{condmain}, {conddet}` " + f"{icon}\n"
             info += tld(chat_id, "weather_hum") + f"`{humidity}%`\n"
             info += tld(chat_id, "weather_wind") + f"`{kmph[0]} km/h`\n"
             info += tld(chat_id, "weather_sunrise") + f"`{sun(sunrise)}`\n"
             info += tld(chat_id, "weather_sunset") + f"`{sun(sunset)}`"
-            bot.send_message(chat_id = update.effective_chat.id,
+            bot.send_message(chat_id=update.effective_chat.id,
                              text=info,
                              parse_mode=ParseMode.MARKDOWN,
                              disable_web_page_preview=True)
 
-__help__ = True 
+
+__help__ = True
 
 WEATHER_HANDLER = DisableAbleCommandHandler("weather", weather)
 
