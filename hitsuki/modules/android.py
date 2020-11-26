@@ -15,6 +15,7 @@
 
 import re
 import rapidjson as json
+from datetime import datetime
 from bs4 import BeautifulSoup
 from rapidjson import loads
 from requests import get
@@ -491,6 +492,106 @@ async def bootleggers(c: Client, update: Update):
     elif fetch.status_code == 404:
         reply_text = tld(chat_id, "err_api")
     await update.reply_text(reply_text, disable_web_page_preview=True)
+
+
+@pbot.on_message(filters.command("pixys"))
+async def pixys(c: Client, update: Update):
+
+    chat_id = update.chat.id,
+    try:
+        device = update.command[1]
+    except Exception:
+        device = ''
+
+    if device == '':
+        reply_text = tld(chat_id, "cmd_example").format("pixys")
+        await update.reply_text(reply_text, disable_web_page_preview=True)
+        return
+
+    fetch = get(
+        f'https://raw.githubusercontent.com/PixysOS-Devices/official_devices/ten/{device}/build.json'
+    )
+    if fetch.status_code == 200:
+        usr = fetch.json()
+        response = usr['response'][0]
+        filename = response['filename']
+        url = response['url']
+        buildsize_a = response['size']
+        buildsize_b = sizee(int(buildsize_a))
+        romtype = response['romtype']
+        version = response['version']
+
+        reply_text = tld(chat_id, "download").format(filename, url)
+        reply_text += tld(chat_id, "build_size").format(buildsize_b)
+        reply_text += tld(chat_id, "version").format(version)
+        reply_text += tld(chat_id, "rom_type").format(romtype)
+
+        keyboard = [[
+            InlineKeyboardButton(text=tld(chat_id, "btn_dl"), url=f"{url}")
+        ]]
+        await update.reply_text(reply_text,
+                           reply_markup=InlineKeyboardMarkup(keyboard),
+                           parse_mode="markdown",
+                           disable_web_page_preview=True)
+        return
+
+    elif fetch.status_code == 404:
+        reply_text = tld(chat_id, "err_not_found")
+    await update.reply_text(reply_text,
+                       parse_mode="markdown",
+                       disable_web_page_preview=True)
+
+
+@pbot.on_message(filters.command("aex"))
+async def aex(c: Client, update: Update):
+    AEX_OTA_API = "https://api.aospextended.com/ota/"
+
+    chat_id = update.chat.id,
+    try:
+        device = update.command[1]
+        version = update.command[2]
+    except Exception:
+        device = ''
+
+    if device == '':
+        reply_text = tld(chat_id, "cmd_example").format("aex")
+        await update.reply_text(reply_text, disable_web_page_preview=True)
+        return
+
+    res = get(AEX_OTA_API + device + '/' + version.lower())
+    if res.status_code == 200:
+        apidata = json.loads(res.text)
+        if apidata.get('error'):
+            await update.reply_text(tld(chat_id, "err_not_found"))
+            return
+        else:
+            developer = apidata.get('developer')
+            developer_url = apidata.get('developer_url')
+            xda = apidata.get('forum_url')
+            filename = apidata.get('filename')
+            url = "https://downloads.aospextended.com/download/" + device + "/" + version + "/" + apidata.get(
+                'filename')
+            builddate = datetime.strptime(apidata.get('build_date'),
+                                          "%Y%m%d-%H%M").strftime("%d %B %Y")
+            buildsize = sizee(int(apidata.get('filesize')))
+
+            reply_text = tld(chat_id, "download").format(filename, url)
+            reply_text += tld(chat_id, "build_size").format(buildsize)
+            reply_text += tld(chat_id, "build_date").format(builddate)
+            reply_text += tld(
+                chat_id,
+                "maintainer").format(f"[{developer}]({developer_url})")
+
+            keyboard = [[
+                InlineKeyboardButton(text=tld(chat_id, "btn_dl"), url=f"{url}")
+            ]]
+            await update.reply_text(reply_text,
+                               reply_markup=InlineKeyboardMarkup(keyboard),
+                               parse_mode="markdown",
+                               disable_web_page_preview=True)
+            return
+    else:
+        await update.reply_text(tld(chat_id, "err_not_found"))
 
 
 @pbot.on_message(filters.command("phh"))

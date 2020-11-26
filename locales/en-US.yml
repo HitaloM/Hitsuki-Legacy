@@ -106,6 +106,8 @@ btn_dl: Click here to Download
 cmd_example: Please type your device **codename**!\nFor example, `/{} tissot`
 android_help: |
   *Specific ROM for a device*
+  - /pixys <device>: Get the latest PixysOS ROM for a device
+  - /aex <device> <version>: Get the latest AOSP Extended ROM for a device
   - /evo <device>: Get the latest Evolution X ROM for a device
   - /los <device>: Get the latest LineageOS ROM for a device
   - /bootleggers <device>: Get the latest Bootleggers ROM for a device\n
