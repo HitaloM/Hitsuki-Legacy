@@ -104,11 +104,9 @@ err_example_device: Why are you trying to get the example device?
 err_json: Tell the rom maintainer to fix their OTA json. I'm sure this won't work with OTA and it won't work with this bot too :P
 btn_dl: Click here to Download
 cmd_example: Please type your device **codename**!\nFor example, `/{} tissot`
-cmd_example_aex: 'Please type your device **codename** and **Android Version** !\nFor example, `/aex whyred q`'
 android_help: |
   *Specific ROM for a device*
   - /pixys <device>: Get the latest PixysOS ROM for a device
-  - /aex <device> <version>: Get the latest AOSP Extended ROM for a device
   - /evo <device>: Get the latest Evolution X ROM for a device
   - /los <device>: Get the latest LineageOS ROM for a device
   - /bootleggers <device>: Get the latest Bootleggers ROM for a device\n
