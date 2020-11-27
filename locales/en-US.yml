@@ -860,7 +860,7 @@ synonyms_whatanime: '\n<b>Synonyms:</b> {}'
 err_example_whatanime: "Reply to a photo, GIF, or video with this command."
 downloading_whatanime: "Downloading..."
 uploading_whatanime: "Uploading..."
-anime_search_help: |
+anime_help: |
    Get information about anime, manga or characters from AniList.
 
    *Available commands:*
