@@ -84,8 +84,9 @@ async def inline_query_handler(client, query):
                                          )
 
     answers = []
-    if string.split()[0] == "nhentai":
-        if len(string.split()) == 1:
+    txt = string.split()
+    if len(txt) != 0 and txt[0] == "nhentai":
+        if len(txt) == 1:
             await client.answer_inline_query(query.id,
                                              results=answers,
                                              switch_pm_text="Enter nHentai ID",
@@ -117,9 +118,8 @@ async def inline_query_handler(client, query):
                                          ],
                                          cache_time=1
                                          )
-
-    elif string.split()[0] == "anime":
-        if len(string.split()) == 1:
+    elif len(txt) != 0 and txt[0] == "anime":
+        if len(txt) == 1:
             await client.answer_inline_query(query.id,
                                              results=answers,
                                              switch_pm_text="Search an Anime",
@@ -181,8 +181,8 @@ async def inline_query_handler(client, query):
                                          cache_time=0,
                                          is_gallery=False
                                          )
-    elif string.split()[0] == "manga":
-        if len(string.split()) == 1:
+    elif len(txt) != 0 and txt[0] == "manga":
+        if len(txt) == 1:
             await client.answer_inline_query(query.id,
                                              results=answers,
                                              switch_pm_text="Search a Manga",
@@ -230,8 +230,8 @@ async def inline_query_handler(client, query):
                                          cache_time=0,
                                          is_gallery=False
                                          )
-    elif string.split()[0] == "airing":
-        if len(string.split()) == 1:
+    elif len(txt) != 0 and txt[0] == "airing":
+        if len(txt) == 1:
             await client.answer_inline_query(query.id,
                                              results=answers,
                                              switch_pm_text="Get the Airing Status",
@@ -261,7 +261,7 @@ async def inline_query_handler(client, query):
             ms_g += f"\n**Episode**: `{response['nextAiringEpisode']['episode']}`\n**Airing In**: `{airing_time_final}`"
         else:
             in_des = "N/A"
-            ms_g += f"\n**Episode**:{response['episodes']}\n**Status**: `N/A`"
+            ms_g += f"\n**Episode**: `{response['episodes']}`\n**Status**: `N/A`"
         answers.append(InlineQueryResultArticle(
             title=f"{response['title']['romaji']}",
             description=f"{in_des}",
@@ -274,8 +274,8 @@ async def inline_query_handler(client, query):
                                          cache_time=0,
                                          is_gallery=False
                                          )
-    elif string.split()[0] == "char":
-        if len(string.split()) == 1:
+    elif len(txt) != 0 and txt[0] == "char":
+        if len(txt) == 1:
             await client.answer_inline_query(query.id,
                                              results=answers,
                                              switch_pm_text="Get Character Info",
@@ -287,7 +287,7 @@ async def inline_query_handler(client, query):
         json = requests.post(url, json={
                              'query': character_query, 'variables': variables}).json()['data']['Character']
         if json:
-            ms_g = f"**{json.get('name').get('full')}**(`{json.get('name').get('native')}`)\n❤️ Favourites: {json['favourites']}\n"
+            ms_g = f"**{json.get('name').get('full')}**\nFavourites: {json['favourites']}\n"
             description = f"{json['description']}"
             site_url = json.get('siteUrl')
             ms_g += shorten(description, site_url)
@@ -299,7 +299,7 @@ async def inline_query_handler(client, query):
                     photo_url=image,
                     parse_mode="markdown",
                     title=f"{json.get('name').get('full')}",
-                    description=f"❤️{json['favourites']}",
+                    description=f"❤️ {json['favourites']}",
                     reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("More Info", url=site_url)]])))
             else:
                 answers.append(InlineQueryResultArticle(

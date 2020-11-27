@@ -202,7 +202,7 @@ async def anime_airing(c: Client, m: Message):
         airing_time_final = t(airing_time)
         ms_g += f"\n**Episode**: `{response['nextAiringEpisode']['episode']}`\n**Airing In**: `{airing_time_final}`"
     else:
-        ms_g += f"\n**Episode**:{response['episodes']}\n**Status**: `N/A`"
+        ms_g += f"\n**Episode**: `{response['episodes']}`\n**Status**: `N/A`"
     await m.reply_text(ms_g)
 
 
