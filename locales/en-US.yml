@@ -291,7 +291,7 @@ blacklist_no_list: There are no blacklist filters in <b>{}</b>!
 blacklist_add: Added <code>{}</code> to the blacklist in <b>{}</b>!
 blacklist_del: Removed <code>{}</code> from the blacklist in <b>{}</b>!
 blacklist_multi_del: Removed <code>{}</code> triggers from the blacklist in <b>{}</b>!
-blacklist_err_add_no_args: Tell me what words you would like to {} the blacklist.
+blacklist_err_add_no_args: Tell me what words you would like to add to the blacklist.
 blacklist_err_del_no_args: Tell me what words you would like to remove from the blacklist.
 blacklist_err_not_trigger: This isn't a blacklisted trigger!
 blacklist_err_multidel_no_trigger: None of those triggers existed, so nothing was removed from blacklist.
@@ -539,7 +539,7 @@ locks_help: |
   /lock sticker
 #Log channel
 modname_log_channel: Log Channel
-log_channel_link: \n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">click here</a>
+log_channel_link: \n\n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">click here</a>
 log_channel_deleted: This log channel has been deleted - unsetting.
 log_channel_err_format: \n\nFormatting has been disabled due to an unexpected error.
 log_channel_grp_curr_conf: "This group has all its logs sent to: {} (`{}`)"

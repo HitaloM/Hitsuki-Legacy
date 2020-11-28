@@ -52,10 +52,13 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
         return
 
     try:
-        if msg.reply_to_message and msg.reply_to_message.text:
-
+        if msg.reply_to_message:
             args = update.effective_message.text.split(None, 1)
-            text = msg.reply_to_message.text
+            if msg.reply_to_message.text:
+                text = msg.reply_to_message.text
+            elif msg.reply_to_message.caption:
+                text = msg.reply_to_message.caption
+
             message = update.effective_message
             dest_lang = None
 
@@ -79,7 +82,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
                         dest_lang = source_lang
                         source_lang = None
                         break
-                if dest_lang == None:
+                if dest_lang is None:
                     dest_lang = source_lang.split("-")[1]
                     source_lang = source_lang.split("-")[0]
             else:
@@ -91,7 +94,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
                 if emoji in text:
                     text = text.replace(emoji, '')
 
-            if source_lang == None:
+            if source_lang is None:
                 detection = trl.detect(text)
                 tekstr = trl.translate(text, dest=dest_lang)
                 return message.reply_text(
@@ -99,8 +102,9 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
                     parse_mode=ParseMode.MARKDOWN)
             else:
                 tekstr = trl.translate(text, dest=dest_lang, src=source_lang)
-                message.reply_text(f"Translated from `{source_lang}` to `{dest_lang}`:\n`{tekstr.text}`",
-                                   parse_mode=ParseMode.MARKDOWN)
+                message.reply_text(
+                    f"Translated from `{source_lang}` to `{dest_lang}`:\n`{tekstr.text}`",
+                    parse_mode=ParseMode.MARKDOWN)
         else:
             args = update.effective_message.text.split(None, 2)
             message = update.effective_message
@@ -129,21 +133,31 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
                     else:
                         dest_lang = temp_source_lang.split("-")[1]
                         source_lang = temp_source_lang.split("-")[0]
-            if dest_lang == None:
+        
+            if dest_lang is None:
                 detection = trl.detect(text)
                 tekstr = trl.translate(text, dest=source_lang)
                 return message.reply_text(
-                    "Translated from `{}` to `{}`:\n`{}`".format(detection.lang, source_lang, tekstr.text),
+                    "Translated from `{}` to `{}`:\n`{}`".format(
+                        detection.lang, source_lang, tekstr.text),
                     parse_mode=ParseMode.MARKDOWN)
             else:
                 tekstr = trl.translate(text, dest=dest_lang, src=source_lang)
-                message.reply_text("Translated from `{}` to `{}`:\n`{}`".format(source_lang, dest_lang, tekstr.text),
-                                   parse_mode=ParseMode.MARKDOWN)
+                message.reply_text(
+                    "Translated from `{}` to `{}`:\n`{}`".format(
+                        source_lang, dest_lang, tekstr.text),
+                    parse_mode=ParseMode.MARKDOWN)
 
     except IndexError:
-        pass
+        update.effective_message.reply_text(
+            "Reply to messages or write messages from other languages ​​for translating into the intended language\n\n"
+            "Example: `/tr pt-en` to translate from English to Malayalam\n"
+            "Or use: `/tr en` for automatic detection and translating it into Malayalam.",
+            parse_mode="markdown",
+            disable_web_page_preview=True)
     except ValueError:
-        update.effective_message.reply_text("The intended language is not found!")
+        update.effective_message.reply_text(
+            "The intended language is not found!")
     else:
         return
 

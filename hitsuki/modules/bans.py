@@ -278,7 +278,6 @@ def kickme(bot: Bot, update: Update):
 @run_async
 @bot_admin
 @can_restrict
-@loggable
 def banme(bot: Bot, update: Update):
     user_id = update.effective_message.from_user.id
     chat = update.effective_chat

@@ -84,8 +84,8 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
                                parse_mode=ParseMode.HTML)
             return "<b>{}:</b>" \
                    "\n#MUTE" \
-                   "\n<b>Admin:</b> {}" \
-                   "\n<b>User:</b> {}".format(html.escape(chatD.title),
+                   "\n<b>• Admin:</b> {}" \
+                   "\n<b>• User:</b> {}".format(html.escape(chatD.title),
                                               mention_html(
                                                   user.id, user.first_name),
                                               mention_html(member.user.id, member.user.first_name))
@@ -235,9 +235,9 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
 
     log = "<b>{}:</b>" \
           "\n#TMUTED" \
-          "\n<b>Admin:</b> {}" \
-          "\n<b>User:</b> {}" \
-          "\n<b>Time:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name),
+          "\n<b>• Admin:</b> {}" \
+          "\n<b>• User:</b> {}" \
+          "\n<b>• Time:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name),
                                      mention_html(member.user.id, member.user.first_name), time_val)
     if reason:
         log += tld(chat.id, "bans_logger_reason").format(reason)
@@ -517,8 +517,8 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
         update.effective_message.reply_text(tld(chat.id, "muteme_muted"))
         log = "<b>{}:</b>" \
               "\n#MUTEME" \
-              "\n<b>User:</b> {}" \
-              "\n<b>ID:</b> <code>{}</code>".format(html.escape(chat.title),
+              "\n<b>• User:</b> {}" \
+              "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chat.title),
                                                     mention_html(user.id, user.first_name), user_id)
         return log
 

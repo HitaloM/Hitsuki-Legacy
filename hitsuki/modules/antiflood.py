@@ -23,6 +23,7 @@ from telegram.utils.helpers import mention_html
 
 from hitsuki import dispatcher
 from hitsuki.modules.helper_funcs.chat_status import is_user_admin, user_admin, can_restrict
+from hitsuki.modules.helper_funcs.admin_rights import user_can_changeinfo
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.sql import antiflood_sql as sql
 from hitsuki.modules.tr_engine.strings import tld
@@ -73,6 +74,10 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat
     user = update.effective_user
     message = update.effective_message
+
+    if user_can_changeinfo(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_changeinfo_perm"))
+        return ""
 
     if len(args) >= 1:
         val = args[0].lower()

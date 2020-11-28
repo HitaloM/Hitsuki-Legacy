@@ -141,7 +141,7 @@ flood_logger_success: |
   <b>{}:</b>
   #MUTED
   <b>• Usuário:</b> {}
-  Inundou o grupo.
+  Imundou o grupo.
 flood_logger_fail: |
   <b>{}:</b>
   #INFO
@@ -155,7 +155,7 @@ flood_logger_set_on: |
   <b>{}:</b>
   #SETFLOOD
   <b>• Admin:</b> {}
-  Antiflood definido para <code>{}</code>.
+  AntiFlood definido para <code>{}</code>.
 flood_set: O AntiFlood foi atualizado e estabelecido para {}
 flood_set_off: AntiFlood foi desativado.
 flood_status_off: 'Não estou aplicando o controle AntiFlood!'
@@ -233,9 +233,9 @@ bans_err_usr_is_admin: 'Por que eu baniria um administrador? Isso soa como uma i
 bans_logger: |
   <b>{}:</b>
   #BAN
-  <b>• Administrador:</b> {}
+  <b>• Admin:</b> {}
   <b>• Usuário:</b> {} (<code>{}</code>)
-bans_banned_success: Admin {} baniu corretamento o usuario {} no <b>{}</b>!
+bans_banned_success: Admin {} baniu corretamente o usuário {} no <b>{}</b>!
 bans_logger_reason: \n<b>Motivo:</b> {}
 bans_err_unknown: "Erro desconhecido: {} falhou."
 bans_err_tban_no_arg: 'Você não especificou o tempo para banir este usuário!'
@@ -245,14 +245,14 @@ bans_tban_logger: |
   <b>• Admin:</b> {}
   <b>• Usuário: </b> {} (<code>{}</code>)
   <b>• Hora:</b> {}
-bans_tbanned_success: Admin {} ha baneado correctamente a {} en <b>{}</b> por {}!
+bans_tbanned_success: Admin {} baniu corretamente o usuário {} em <b>{}</b> por {}!
 bans_kick_is_bot: 'Não posso expulsar a mim mesmo!'
 bans_kick_is_admin: 'Porque eu kickaria um administrador? Não me parece uma boa ideia.'
 bans_kick_success: Admin {} expulsou corretamente o usuário {} no <b>{}</b>!
 bans_kick_logger: |
   <b>{}:</b>
   #KICKED
-  <b>• Administrador:</b> {}
+  <b>• Admin:</b> {}
   <b>• Usuário:</b> {} (<code>{}</code>)"
 bans_kickme_success: Se você quer sair, tudo bem.
 bans_kickme_failed: 'Não posso te kickar, você tem sorte.'
@@ -261,12 +261,12 @@ bans_unban_success: 'Este usuário pode entrar novamente no grupo.'
 bans_unban_logger: |
   <b>{}:</b>
   #UNBAN
-  <b>• Administrador:</b> {}
+  <b>• Admin:</b> {}
   <b>• Usuário:</b> {} (<code>{}</code>)"
 bans_sban_logger: |
   <b>{}:</b>
   #UNBAN
-  <b>• Administrador:</b> {}
+  <b>• Admin:</b> {}
   <b>• Usuário:</b> {} (<code>{}</code>)"
 bans_help: |
   Algumas pessoas precisam ser banidas publicamente, como spammers, aborrecimentos ou simplesmente trolls.\n
@@ -539,7 +539,7 @@ locks_help: |
   /lock sticker
 #Log channel
 modname_log_channel: Canal de logs
-log_channel_link: \n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">clique aqui</a>
+log_channel_link: \n\n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">clique aqui</a>
 log_channel_deleted: Este canal de logs foi removido - incompatibilidade.
 log_channel_err_format: \n\nO formato foi desativado devido a um erro inesperado.
 log_channel_grp_curr_conf: "Este grupo tem todos os seus registros enviados para: {} (`{}`)"
@@ -958,7 +958,7 @@ clear_success: "Nota removida com sucesso em *{}*."
 note_in_chat: "*Notas em {}:*\n"
 note_in_local: "*Notas locaos:*\n"
 note_none_in_chat: "Não há notas em *{}*!"
-note_get: "\nVocê pode ver o comteúdo dessas notas com `/get notename` ou `#notename`."
+note_get: "\nVocê pode ver o conteúdo dessas notas com `/get notename` ou `#notename`."
 note_fail_to_import: "Não foi possível importar esses arquivos/fotos porque são originários de outro bot. Esta é uma restrição da API do Telegram e não pode ser evitada. Desculpe pela inconveniência!"
 notes_must_be_creator: "Você deve ser o criador desse chat."
 notes_cleanup_success: "{} nota(s) foram limpas com sucesso."
@@ -1233,39 +1233,39 @@ warns_max_warn_ban: "{} avisos, {} foi banido!"
 warns_warn_ban_log_channel: |
   <b>{}:</b>
   #WARN_BAN
-  <b>• Administrador:</b> {}
+  <b>• Admin:</b> {}
   <b>• Usuário:</b> {} (<code>{}</code>)
   <b>• Razão:</b> {}
   <b>• Aviso:</b> <code>{}/{}</code>
 warns_warn_log_channel: |
   <b>{}:</b>
   #WARN
-  <b>• Administrador:</b> {}
+  <b>• Admin:</b> {}
   <b>• Usuário:</b> {} (<code>{}</code>)
   <b>• Razão:</b> {}
   <b>• Aviso:</b> <code>{}/{}</code>
 warns_remove_log_channel: |
   <b>{}:</b>
   #UNWARN
-  <b>• Administrador:</b> {}
+  <b>• Admin:</b> {}
   <b>• Usuário:</b> {} (<code>{}</code>)
 warns_reset_log_channel: |
   <b>{}:</b>
   #RESETWARNS
-  <b>• Administrador:</b> {}
+  <b>• Admin:</b> {}
   <b>• Usuário:</b> {} (<code>{}</code>)
 warns_set_warn_limit_log_channel: |
   <b>{}:</b>
   #SET_WARN_LIMIT
-  <b>• Administrador:</b> {}
+  <b>• Admin:</b> {}
   Definido o limite de warn como <code>{}</code>
 warns_strength_on_log_channel: |
   <b>{}:</b>\n
-  <b>• Administrador:</b> {}\n
+  <b>• Admin:</b> {}\n
   Você acionou warns. Os usuários serão banidos.
 warns_strength_off_log_channel: |
   <b>{}:</b>\n
-  <b>• Administrador:</b> {}\n
+  <b>• Admin:</b> {}\n
   Você desativou warns fortes. Os usuários serão kickados apenas.
 warns_btn_remove_warn: Remover warn
 warns_btn_rules: Regras

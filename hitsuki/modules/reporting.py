@@ -83,8 +83,8 @@ def report(bot: Bot, update: Update) -> str:
 
         if chat.username and chat.type == Chat.SUPERGROUP:
             msg = "<b>{}:</b>" \
-                  "\n<b>Reported user:</b> {} (<code>{}</code>)" \
-                  "\n<b>Reported by:</b> {} (<code>{}</code>)".format(html.escape(chat.title),
+                  "\n<b>• Reported user:</b> {} (<code>{}</code>)" \
+                  "\n<b>• Reported by:</b> {} (<code>{}</code>)".format(html.escape(chat.title),
                                                                       mention_html(
                                                                           reported_user.id,
                                                                           reported_user.first_name),
@@ -92,7 +92,7 @@ def report(bot: Bot, update: Update) -> str:
                                                                       mention_html(user.id,
                                                                                    user.first_name),
                                                                       user.id)
-            link = "\n<b>Link:</b> " \
+            link = "\n\n<b>Link:</b> " \
                    "<a href=\"http://telegram.me/{}/{}\">click here</a>".format(chat.username, message.message_id)
 
             should_forward = True
