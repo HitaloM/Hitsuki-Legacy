@@ -133,7 +133,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
                     else:
                         dest_lang = temp_source_lang.split("-")[1]
                         source_lang = temp_source_lang.split("-")[0]
-        
+
             if dest_lang is None:
                 detection = trl.detect(text)
                 tekstr = trl.translate(text, dest=source_lang)
