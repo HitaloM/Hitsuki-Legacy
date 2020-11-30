@@ -20,7 +20,6 @@ from pytz import (country_timezones as c_tz,
                   timezone as tz, country_names as c_n)
 
 from telegram import Bot, Update, ParseMode
-from telegram.ext import CommandHandler
 from telegram.ext import run_async
 
 from hitsuki import WEATHER_API, dispatcher

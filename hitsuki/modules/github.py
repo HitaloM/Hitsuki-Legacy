@@ -193,7 +193,7 @@ def listRepo(bot: Bot, update: Update):
 
 def __stats__():
     return "• <code>{}</code> repos shortcuts, accross <code>{}</code> chats.".format(sql.num_repos(),
-                                                                sql.num_chats())
+                                                                                      sql.num_chats())
 
 
 __help__ = True

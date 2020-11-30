@@ -14,16 +14,15 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import random
-from typing import Optional, List
+from typing import List
 from emoji import UNICODE_EMOJI
-from googletrans import LANGUAGES, Translator
+from googletrans import LANGUAGES
 
-from telegram import Message, Update, Bot, ParseMode, Chat
+from telegram import Update, Bot, ParseMode
 from telegram.ext import run_async
 
 from hitsuki import dispatcher, trl
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.string_handling import remove_emoji
 from hitsuki.modules.tr_engine.strings import tld, tld_list
 
 
@@ -64,7 +63,7 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
 
             try:
                 source_lang = args[1].split(None, 1)[0]
-            except:
+            except Exception:
                 source_lang = "en"
 
             if source_lang.count('-') == 2:

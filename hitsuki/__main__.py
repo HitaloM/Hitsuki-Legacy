@@ -94,7 +94,7 @@ def send_help(chat_id, text, keyboard=None):
 
 @run_async
 def test(bot: Bot, update: Update):
-    # pprint(eval(str(update)))
+    # print(eval(str(update)))
     update.effective_message.reply_text("Hello! _I_ *have* `markdown`",
                                         parse_mode=ParseMode.MARKDOWN)
     print(update.effective_message)
@@ -125,9 +125,11 @@ def start(bot: Bot, update: Update, args: List[str]):
                 summary = pagewiki.summary
                 if len(summary) >= 4096:
                     summary = summary[:4000]+"..."
-                message.reply_text("<b>{}</b>\n{}".format(title, summary), parse_mode=ParseMode.HTML,
+                message.reply_text("<b>{}</b>\n{}".format(title, summary),
+                                   parse_mode=ParseMode.HTML,
                                    reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton(text="Read on Wikipedia", url=pagewiki.url)]]))
+                    [[InlineKeyboardButton(text="Read on Wikipedia",
+                                           url=pagewiki.url)]]))
 
         else:
             send_start(bot, update)

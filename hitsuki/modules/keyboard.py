@@ -60,7 +60,7 @@ def keyboard(bot, update):
         else:
             btn3 = ""
 
-        #TODO: Remove except garbage
+        # TODO: Remove except garbage
 
     update.effective_message.reply_text(
         tld(chat.id, "keyboard_updated"),

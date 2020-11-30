@@ -41,7 +41,7 @@ infotext = (
     " • Last Name: `{last_name}`\n"
     " • Username: `{username}`\n"
     " • Last Online: `{last_online}`\n"
-    " • Bio: {bio}")
+    " • Bio: __{bio}__")
 
 
 def LastOnline(user: User):

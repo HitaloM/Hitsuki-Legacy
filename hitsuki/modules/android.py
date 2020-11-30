@@ -15,7 +15,6 @@
 
 import re
 import rapidjson as json
-from datetime import datetime
 from bs4 import BeautifulSoup
 from requests import get
 from hurry.filesize import size as sizee
@@ -562,9 +561,7 @@ async def phh(c: Client, update: Update):
 
 
 @pbot.on_message(filters.command("magisk"))
-async def evo(c: Client, update: Update):
-
-    chat_id = update.chat.id
+async def magisk(c: Client, update: Update):
 
     url = 'https://raw.githubusercontent.com/topjohnwu/magisk_files/'
     releases = '**Latest Magisk Releases:**\n'

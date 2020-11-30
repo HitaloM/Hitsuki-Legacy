@@ -213,7 +213,7 @@ async def logs(c: Client, m: Message):
 
 
 @pbot.on_message(filters.command("ip"))
-async def ping(c: Client, update: Update):
+async def ip(c: Client, update: Update):
     ip = update.command[1]
 
     aioclient = ClientSession()
