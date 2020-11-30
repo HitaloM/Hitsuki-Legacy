@@ -69,7 +69,7 @@ def keyboard(bot, update):
             KeyboardButton("/notes - {}".format(tld(chat.id,
                                                     "keyboard_notes")))
         ], [KeyboardButton(btn1)], [KeyboardButton(btn2)],
-                                          [KeyboardButton(btn3)]]))
+            [KeyboardButton(btn3)]]))
 
 
 KEYBOARD_HANDLER = CommandHandler(["keyboard"], keyboard)
