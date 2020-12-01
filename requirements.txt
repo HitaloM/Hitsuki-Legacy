@@ -7,7 +7,6 @@ aiohttp[speedups]>=3.7.2
 bleach>=3.2.1
 emoji>=0.6.0
 future>=0.18.2
-googletrans>=3.0.0
 markdown2>=2.3.10
 Pillow>=8.0.1
 PyYAML>=5.3.1

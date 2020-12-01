@@ -15,11 +15,10 @@
 
 import logging
 import sys
-
 import spamwatch
 import telegram.ext as tg
 import yaml
-from googletrans import Translator
+
 from pyrogram import Client
 from telethon import TelegramClient
 
@@ -149,8 +148,6 @@ tbot = TelegramClient("hitsuki", API_KEY, API_HASH)
 pbot = Client("HitsukiPyro", api_id=API_KEY,
               api_hash=API_HASH,
               bot_token=TOKEN)
-
-trl = Translator()
 
 SUDO_USERS = list(SUDO_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)

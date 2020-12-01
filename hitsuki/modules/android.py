@@ -289,7 +289,7 @@ async def twrp(c: Client, update: Update):
         return
 
     device = update.command[1]
-    url = get(f'https://dl.twrp.me/{device}/')
+    url = get(f'https://eu.dl.twrp.me/{device}/')
     if url.status_code == 404:
         m = "TWRP is not available for <code>{device}</code>"
         await c.send_message(

@@ -61,7 +61,7 @@ def sourceforge(url: str) -> str:
     if not file_path:
         file_path = re.findall(r'/files(.*)', link)
     file_path = file_path[0]
-    reply = f"Mirrors for <i>{file_path.split('/')[-1]}</i>\n"
+    reply = f"Mirrors for <code>{file_path.split('/')[-1]}</code>\n"
     project = re.findall(r'projects?/(.*?)/files', link)[0]
     mirrors = f'https://sourceforge.net/settings/mirror_choices?' \
         f'projectname={project}&filename={file_path}'
