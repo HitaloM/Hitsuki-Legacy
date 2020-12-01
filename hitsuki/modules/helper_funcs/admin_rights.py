@@ -15,8 +15,6 @@
 
 from telegram import User, Chat
 
-from hitsuki import SUDO_USERS
-
 # This module has been ported from SkyleeBot
 # Created by @starry69 on GitHub
 # Ported from github.com/SensiPeeps/skyleebot

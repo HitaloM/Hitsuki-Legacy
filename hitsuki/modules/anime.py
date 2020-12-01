@@ -35,8 +35,8 @@ url = 'https://graphql.anilist.co'
 
 
 airing_query = '''
-    query ($id: Int,$search: String) { 
-      Media (id: $id, type: ANIME,search: $search) { 
+    query ($id: Int,$search: String) {
+      Media (id: $id, type: ANIME,search: $search) {
         id
         episodes
         title {
@@ -49,14 +49,14 @@ airing_query = '''
            airingAt
            timeUntilAiring
            episode
-        } 
+        }
       }
     }
 '''
 
 fav_query = """
-query ($id: Int) { 
-      Media (id: $id, type: ANIME) { 
+query ($id: Int) {
+      Media (id: $id, type: ANIME) {
         id
         title {
           romaji
@@ -68,8 +68,8 @@ query ($id: Int) {
 """
 
 anime_query = '''
-   query ($id: Int,$search: String) { 
-      Media (id: $id, type: ANIME,search: $search) { 
+   query ($id: Int,$search: String) {
+      Media (id: $id, type: ANIME,search: $search) {
         id
         idMal
         title {
@@ -95,7 +95,7 @@ anime_query = '''
           }
           trailer{
                id
-               site 
+               site
                thumbnail
           }
           averageScore
@@ -125,8 +125,8 @@ character_query = """
 """
 
 manga_query = """
-query ($id: Int,$search: String) { 
-      Media (id: $id, type: MANGA,search: $search) { 
+query ($id: Int,$search: String) {
+      Media (id: $id, type: MANGA,search: $search) {
         id
         title {
           romaji
@@ -251,7 +251,7 @@ async def anime_search(c: Client, m: Message):
         if image:
             try:
                 await m.reply_photo(image, caption=msg, reply_markup=InlineKeyboardMarkup(buttons))
-            except:
+            except Exception:
                 msg += f" [〽️]({image})"
                 await m.edit(msg)
         else:
@@ -319,7 +319,7 @@ async def manga_search(c: Client, m: Message):
         if image:
             try:
                 await m.reply_photo(image, caption=ms_g)
-            except:
+            except Exception:
                 ms_g += f" [〽️]({image})"
                 await edrep(m, text=ms_g)
         else:

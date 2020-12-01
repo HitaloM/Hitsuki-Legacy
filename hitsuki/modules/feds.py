@@ -750,12 +750,11 @@ def fed_chats(bot: Bot, update: Update, args: List[str]):
 
 @run_async
 def fed_import_bans(bot: Bot, update: Update, chat_data):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    msg = update.effective_message  # type: Optional[Message]
+    chat = update.effective_chat
+    user = update.effective_user
+    msg = update.effective_message
 
     fed_id = sql.get_fed_id(chat.id)
-    info = sql.get_fed_info(fed_id)
 
     if not fed_id:
         update.effective_message.reply_text(
@@ -807,7 +806,7 @@ def fed_import_bans(bot: Bot, update: Update, chat_data):
                         continue
                     try:
                         data = json.loads(x)
-                    except json.decoder.JSONDecodeError as err:
+                    except json.decoder.JSONDecodeError:
                         failed += 1
                         continue
                     try:
@@ -906,8 +905,8 @@ def fed_import_bans(bot: Bot, update: Update, chat_data):
 
 @run_async
 def fed_ban_list(bot: Bot, update: Update, args: List[str], chat_data):
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
+    chat = update.effective_chat
+    user = update.effective_user
 
     fed_id = sql.get_fed_id(chat.id)
     info = sql.get_fed_info(fed_id)
@@ -922,8 +921,8 @@ def fed_ban_list(bot: Bot, update: Update, args: List[str], chat_data):
             "Only federation owners can do this!")
         return
 
-    user = update.effective_user  # type: Optional[Chat]
-    chat = update.effective_chat  # type: Optional[Chat]
+    user = update.effective_user
+    chat = update.effective_chat
     getfban = sql.get_all_fban_users(fed_id)
     if len(getfban) == 0:
         update.effective_message.reply_text("The federation ban list of {} is empty.".format(
@@ -1005,7 +1004,7 @@ def fed_ban_list(bot: Bot, update: Update, args: List[str], chat_data):
 
     try:
         update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
-    except:
+    except Exception:
         jam = time.time()
         new_jam = jam + 1800
         cek = get_chat(chat.id, chat_data)
