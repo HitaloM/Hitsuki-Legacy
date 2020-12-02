@@ -98,6 +98,7 @@ xda_thread: "**XDA Thread:** [Here]({})\n"
 changelog: "**Device Changelog:** `{}`\n"
 weekly: "**Weekly**\n"
 phh_releases: "**Phh's latest GSI release(s)**\n"
+phhmagisk_releases: "**Phh's latest Magisk release(s)**\n"
 err_not_found: Couldn't find any results matching your query.
 err_api: Couldn't reach the API.
 err_example_device: Why are you trying to get the example device?
@@ -111,7 +112,8 @@ android_help: |
   - /los <device>: Get the latest LineageOS ROM for a device
   - /bootleggers <device>: Get the latest Bootleggers ROM for a device\n
   *GSI*
-  - /phh: Get the latest PHH AOSP GSIs!\n
+  - /phh: Get the latest PHH AOSP GSIs
+  - /phhmagisk: Get the latest PHH Magisk\n
   *Device firmware:*
   - /samcheck <model> <csc>: Samsung only - shows the latest firmware info for the given device, taken from samsung servers.
   - /samget <model> <csc>: Samsung only - gets firmware download links from samfrew, sammobile and sfirmwares for the given device.\n
@@ -122,7 +124,7 @@ android_help: |
   - /ofox <device>: Gets the download link and basic OFRP information to the specified device.
   - /models <codename>: Search for Android device models using codename.
   - /whatis <codename>: Find out which smartphone is using the codename.
-  - /specs <codename>: Samsung Only - Find smartphone specifications trought sfirmware / gizmodo chine
+  - /samspec <codename>: Samsung Only - Find smartphone specifications trought sfirmware / gizmodo chine
 #DirectLinks
 modname_direct_links: Direct Links
 direct_links_help: |
@@ -1168,7 +1170,7 @@ userinfo_help: |
   - /me: will get your or another user's info
 #Stickers
 modname_stickers: Stickers
-stickers_stickerid: Sticker ID:\n```{}```
+stickers_stickerid: Sticker ID:\n<code>{}</code>
 stickers_stickerid_no_reply: Please reply to a sticker to get its ID.
 stickers_getsticker_no_reply: Please reply to a sticker for me to upload its PNG.
 stickers_kang_error: Yea, I can't kang that.

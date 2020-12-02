@@ -92,8 +92,8 @@ class GetDevice:
                 return False
 
 
-@pbot.on_message(filters.command(["specs", "spec"]))
-async def specs(c: Client, update: Update):
+@pbot.on_message(filters.command("samspec"))
+async def samspecs(c: Client, update: Update):
     if len(update.command) != 2:
         message = (
             "Please write your codename or model into it,\ni.e <code>/specs herolte</code> or <code>/specs sm-g610f</code>")
@@ -558,6 +558,34 @@ async def phh(c: Client, update: Update):
         except IndexError:
             continue
     await update.reply_text(reply_text)
+
+
+@pbot.on_message(filters.command("phhmagisk"))
+async def phhmagisk(c: Client, update: Update):
+
+    chat_id = update.chat.id
+
+    fetch = get(
+        "https://api.github.com/repos/expressluke/phh-magisk-builder/releases/latest"
+    )
+    usr = json.loads(fetch.content)
+    reply_text = tld(chat_id, "phhmagisk_releases")
+    for i in range(len(usr)):
+        try:
+            name = usr['assets'][i]['name']
+            url = usr['assets'][i]['browser_download_url']
+            tag = usr['tag_name']
+            size_bytes = usr['assets'][i]['size']
+            size = float("{:.2f}".format((size_bytes/1024)/1024))
+            reply_text += f"**Tag:** `{tag}`\n"
+            reply_text += f"**Size**: `{size} MB`\n\n"
+            btn = tld(chat_id, "btn_dl")
+            keyboard = [[InlineKeyboardButton(
+            text=btn, url=url)]]
+        except IndexError:
+            continue
+    await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
+    return
 
 
 @pbot.on_message(filters.command("magisk"))

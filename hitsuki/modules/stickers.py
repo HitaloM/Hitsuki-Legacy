@@ -14,6 +14,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import math
+import html
 import os
 import urllib.request as urllib
 from typing import List
@@ -41,8 +42,8 @@ def stickerid(bot: Bot, update: Update):
     if msg.reply_to_message and msg.reply_to_message.sticker:
         update.effective_message.reply_text(tld(
             chat.id, 'stickers_stickerid').format(
-                escape_markdown(msg.reply_to_message.sticker.file_id)),
-            parse_mode=ParseMode.MARKDOWN)
+                html.escape(msg.reply_to_message.sticker.file_id)),
+            parse_mode=ParseMode.HTML)
     else:
         update.effective_message.reply_text(
             tld(chat.id, 'stickers_stickerid_no_reply'))

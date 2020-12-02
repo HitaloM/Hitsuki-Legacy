@@ -99,6 +99,7 @@ xda_thread: "**Tópico no XDA:** [AQUI]({})\n"
 changelog: "**Changelog:** `{}`\n"
 weekly: "**Semanalmente**"
 phh_releases: "**Últimos lançamentos de GSI do PHH:**\n"
+phhmagisk_releases: "**Ultima versão do Magisk do PHH:**\n"
 err_not_found: Não foi possível encontrar nenhum resultado correspondente à sua consulta.
 err_api: Não foi possível acessar a API.
 err_example_device: 'Por que você está tentando obter o dispositivo de exemplo?'
@@ -112,7 +113,8 @@ android_help: |
   - /los <device>: Receba a versão mais recente da ROM LineageOS para um dispositivo
   - /bootleggers <device>: Receba a versão mais recente da ROM Bootleggers para um dispositivo\n
   *GSI*
-  - /phh: Receba as últimas GSIs AOSP do PHH!\n
+  - /phh: Receba as últimas GSIs AOSP do PHH
+  - /phh: Receba a última versão do Magisk do PHH\n
   *Firmwares:*
   - /samcheck <modelo> <csc>: Apenas Samsung - mostra as últimas informações de firmware do dispositivo dado, direto dos servidores da Samsung.
   - /samget <modelo> <csc>: Apenas Samsung - envia o firmware mais recente do dispositivo dado direto do samfrew, sammobile e sfirmwares.\n
@@ -123,7 +125,7 @@ android_help: |
   - /ofox <codinome>: Obtém o link de download e as informações básicas do OFRP para o dispositivo especificado.
   - /whatis <codinome>: Descubra qual smartphone é usando o codinome
   - /models <codinome>: Veja os modelos de um smartphone usando o codinome
-  - /specs <codinome>: Apenas Samsung - Encontra as especificações de um parelho através do sfirmware / gizmodo china
+  - /samspec <codinome>: Apenas Samsung - Encontra as especificações de um parelho através do sfirmware / gizmodo china
 #DirectLinks
 modname_direct_links: Links Diretos
 direct_links_help: |
@@ -1163,7 +1165,7 @@ userinfo_help: |
   - /me: obterá as informações de outro usuário
 #Stickers
 modname_stickers: Stickers
-stickers_stickerid: ID do sticker:\n```{}```
+stickers_stickerid: ID do sticker:\n<code>{}</code>
 stickers_stickerid_no_reply: Por favor responda a um sticker para obter seu ID.
 stickers_getsticker_no_reply: Por favor, responda a um sticker para obter seu PNG.
 stickers_kang_error: Sim, eu não sei.
