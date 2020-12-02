@@ -15,6 +15,7 @@
 
 from functools import wraps
 from typing import List, Dict
+from math import ceil
 
 from telegram import MAX_MESSAGE_LENGTH, InlineKeyboardButton, Bot, ParseMode, Update
 from telegram.error import TelegramError
@@ -73,31 +74,32 @@ def paginate_modules(chat_id,
                                        prefix, chat, x))
             for x in module_dict.keys()
         ])
-
-    pairs = [
-        modules[i * 3:(i + 1) * 3] for i in range((len(modules) + 3 - 1) // 3)
-    ]
-
-    round_num = len(modules) / 3
-    calc = len(modules) - round(round_num)
-    if calc == 1:
+ 
+    pairs = list(zip(modules[::2], modules[1::2]))
+ 
+    if len(modules) % 2 == 1:
         pairs.append((modules[-1], ))
-    elif calc == 2:
-        pairs.append((modules[-1], ))
-
-    # max_num_pages = ceil(len(pairs) / 28)
-    # modulo_page = page_n % max_num_pages
-
+ 
+    max_num_pages = ceil(len(pairs) / 7)
+    modulo_page = page_n % max_num_pages
+ 
     # can only have a certain amount of buttons side by side
-
-    #if len(pairs) > 21:
-    #    pairs = pairs[modulo_page * 28:28]
-    # else:
-    #     pairs += [[
-    #         EqInlineKeyboardButton(tld(chat_id, 'btn_go_back'),
-    #                                callback_data="bot_start")
-    #     ]]
-
+    if len(pairs) > 7:
+        pairs = pairs[modulo_page * 7:7 * (modulo_page + 1)] + [
+            (EqInlineKeyboardButton(
+                "<<", callback_data="{}_prev({})".format(prefix, modulo_page)),
+             EqInlineKeyboardButton(tld(chat_id, 'btn_go_back'),
+                                    callback_data="bot_start"),
+             EqInlineKeyboardButton(">>",
+                                    callback_data="{}_next({})".format(
+                                        prefix, modulo_page)))
+        ]
+    else:
+        pairs += [[
+            EqInlineKeyboardButton(tld(chat_id, 'btn_go_back'),
+                                   callback_data="bot_start")
+        ]]
+ 
     return pairs
 
 

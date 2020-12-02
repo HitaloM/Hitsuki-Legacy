@@ -283,13 +283,14 @@ def adminlist(bot: Bot, update: Update):
         or tld(chat.id, "common_this_chat").lower())
     for admin in administrators:
         user = admin.user
-        name = "[{}](tg://user?id={})".format(user.first_name, user.id)
+        first_name = html.escape(user.first_name)
+        name = "<a href='tg://user?id={}'>{}</a>".format(user.id, first_name)
         if user.username:
-            esc = escape_markdown("@" + user.username)
-            name = "[{}](tg://user?id={})".format(esc, user.id)
+            esc = html.escape("@" + user.username)
+            name = "<a href='tg://user?id={}'>{}</a>".format(user.id, esc)
         text += "\n - {}".format(name)
 
-    update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
+    update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
 
 @run_async

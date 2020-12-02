@@ -14,6 +14,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
+import html
 from io import BytesIO
 from time import sleep
 from typing import List
@@ -231,28 +232,27 @@ def slist(bot: Bot, update: Update):
     for user_id in SUDO_USERS:
         try:
             user = bot.get_chat(user_id)
-            name = "[{}](tg://user?id={})".format(
-                user.first_name + (user.last_name or ""), user.id)
+            name = "<a href='tg://user?id={}'>{}</a>".format(
+                user.id, user.first_name + (user.last_name or ""))
             if user.username:
-                name = escape_markdown("@" + user.username)
-            text1 += "\n - `{}`".format(name)
+                name = html.escape("@" + user.username)
+            text1 += "\n - {}".format(name)
         except BadRequest as excp:
             if excp.message == 'Chat not found':
                 text1 += "\n - ({}) - not found".format(user_id)
     for user_id in SUPPORT_USERS:
         try:
             user = bot.get_chat(user_id)
-            name = "[{}](tg://user?id={})".format(
-                user.first_name + (user.last_name or ""), user.id)
+            name = "<a href='tg://user?id={}'>{}</a>".format(
+                user.id, user.first_name + (user.last_name or ""))
             if user.username:
-                name = escape_markdown("@" + user.username)
-            text2 += "\n - `{}`".format(name)
+                name = html.escape("@" + user.username)
+            text2 += "\n - {}".format(name)
         except BadRequest as excp:
             if excp.message == 'Chat not found':
                 text2 += "\n - ({}) - not found".format(user_id)
     message.reply_text(text1 + "\n" + text2 + "\n",
-                       parse_mode=ParseMode.MARKDOWN)
-    #message.reply_text(text2 + "\n", parse_mode=ParseMode.MARKDOWN)
+                       parse_mode=ParseMode.HTML)
 
 
 @run_async

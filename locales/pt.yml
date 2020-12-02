@@ -54,7 +54,7 @@ admin_err_demote_noadmin: 'Você não pode rebaixar aqueles que não foram promo
 admin_err_self_demote: 'Eu não posso me rebaixar!'
 admin_demote_success: O administrador {} rebaixou {} com sucesso em <b>{}</b>!
 admin_err_cant_demote: Este usuário foi promovido por outra pessoa; Não posso alterar suas permissões! Rebaixe manualmente.
-admin_list: "Administradores em *{}*:"
+admin_list: "Administradores em <b>{}</b>:"
 admin_err_no_perm_invitelink: Não tenho acesso ao link do convite, tente alterar minhas permissões!
 admin_err_chat_no_invitelink: Desculpe, mas só posso dar links de convite para supergrupos e canais!
 admin_disable_reaction: Resposta desativada para comandos de administração usados por membros.

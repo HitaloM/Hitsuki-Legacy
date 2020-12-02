@@ -219,6 +219,8 @@ def error_callback(bot, update, error):
 def help_button(bot: Bot, update: Update):
     query = update.callback_query
     chat = update.effective_chat
+    prev_match = re.match(r"help_prev\((.+?)\)", query.data)
+    next_match = re.match(r"help_next\((.+?)\)", query.data)
     back_match = re.match(r"help_back", query.data)
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
     try:
@@ -244,6 +246,32 @@ def help_button(bot: Bot, update: Update):
                                           callback_data="help_back")
                                   ]]),
                                   disable_web_page_preview=True)
+
+        elif prev_match:
+            curr_page = int(prev_match.group(1))
+            bot.edit_message_text(chat_id=query.message.chat_id,
+                                  message_id=query.message.message_id,
+                                  text=tld(chat.id, "send-help").format(
+                                      dispatcher.bot.first_name,
+                                      tld(chat.id, "cmd_multitrigger")),
+                                  parse_mode=ParseMode.MARKDOWN,
+                                  reply_markup=InlineKeyboardMarkup(
+                                      paginate_modules(
+                                          chat.id, curr_page - 1, HELPABLE,
+                                          "help")))
+
+        elif next_match:
+            next_page = int(next_match.group(1))
+            bot.edit_message_text(chat_id=query.message.chat_id,
+                                  message_id=query.message.message_id,
+                                  text=tld(chat.id, "send-help").format(
+                                      dispatcher.bot.first_name,
+                                      tld(chat.id, "cmd_multitrigger")),
+                                  parse_mode=ParseMode.MARKDOWN,
+                                  reply_markup=InlineKeyboardMarkup(
+                                      paginate_modules(
+                                          chat.id, next_page + 1, HELPABLE,
+                                          "help")))
 
         elif back_match:
             bot.edit_message_text(chat_id=query.message.chat_id,
