@@ -581,7 +581,7 @@ async def phhmagisk(c: Client, update: Update):
             reply_text += f"**Size**: `{size} MB`\n\n"
             btn = tld(chat_id, "btn_dl")
             keyboard = [[InlineKeyboardButton(
-            text=btn, url=url)]]
+                text=btn, url=url)]]
         except IndexError:
             continue
     await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
