@@ -98,12 +98,14 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
                 detection = trl.detect(text)
                 tekstr = trl.translate(text, dest=dest_lang)
                 return message.reply_text(
-                    f"Translated from `{detection.lang}` to `{dest_lang}`:\n`{tekstr.text}`",
+                    tld(chat.id, "translator_translated").format(
+                        detection.lang, dest_lang, tekstr.text),
                     parse_mode=ParseMode.MARKDOWN)
             else:
                 tekstr = trl.translate(text, dest=dest_lang, src=source_lang)
                 message.reply_text(
-                    f"Translated from `{source_lang}` to `{dest_lang}`:\n`{tekstr.text}`",
+                    tld(chat.id, "translator_translated").format(
+                        source_lang, dest_lang, tekstr.text),
                     parse_mode=ParseMode.MARKDOWN)
         else:
             args = update.effective_message.text.split(None, 2)
@@ -138,31 +140,27 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
                 detection = trl.detect(text)
                 tekstr = trl.translate(text, dest=source_lang)
                 return message.reply_text(
-                    "Translated from `{}` to `{}`:\n`{}`".format(
-                        detection.lang, source_lang, tekstr.text),
+                    tld(chat.id, "translator_translated").format(
+                        detection.lang, dest_lang, tekstr.text),
                     parse_mode=ParseMode.MARKDOWN)
             else:
                 tekstr = trl.translate(text, dest=dest_lang, src=source_lang)
-                message.reply_text(
-                    "Translated from `{}` to `{}`:\n`{}`".format(
+                message.reply_text(tld(chat.id, "translator_translated").format(
                         source_lang, dest_lang, tekstr.text),
                     parse_mode=ParseMode.MARKDOWN)
 
     except IndexError:
-        update.effective_message.reply_text(
-            "Reply to messages or write messages from other languages ​​for translating into the intended language\n\n"
-            "Example: `/tr pt-en` to translate from Portuguese to English\n"
-            "Or use: `/tr en` for automatic detection and translating it into English.",
+        update.effective_message.reply_text(tld(chat.id, "translator_no_args"),
             parse_mode="markdown",
             disable_web_page_preview=True)
     except ValueError:
-        update.effective_message.reply_text(
-            "The intended language is not found!")
+        update.effective_message.reply_text(tld(chat.id, "translator_err"))
     else:
         return
 
 
 __help__ = True
 
-dispatcher.add_handler(
-    DisableAbleCommandHandler("tr", do_translate, pass_args=True))
+TR_HANDLER = DisableAbleCommandHandler("tr", do_translate, pass_args=True)
+
+dispatcher.add_handler(TR_HANDLER)

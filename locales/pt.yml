@@ -234,9 +234,10 @@ bans_err_usr_is_bot: Eu não vou me banir, você está louco?
 bans_err_usr_is_admin: 'Por que eu baniria um administrador? Isso soa como uma ideia boba.'
 bans_logger: |
   <b>{}:</b>
-  #BAN
+  #BANNED
   <b>• Admin:</b> {}
-  <b>• Usuário:</b> {} (<code>{}</code>)
+  <b>• Usuário:</b> {}
+  <b>• ID:</b> <code>{}</code>
 bans_banned_success: Admin {} baniu corretamente o usuário {} no <b>{}</b>!
 bans_logger_reason: \n<b>Motivo:</b> {}
 bans_err_unknown: "Erro desconhecido: {} falhou."
@@ -245,8 +246,9 @@ bans_tban_logger: |
   <b>{}:</b>
   #TEMP_BANNED
   <b>• Admin:</b> {}
-  <b>• Usuário: </b> {} (<code>{}</code>)
-  <b>• Hora:</b> {}
+  <b>• Usuário: </b>
+  <b>• ID:</b> <code>{}</code>
+  <b>• Tempo:</b> {}
 bans_tbanned_success: Admin {} baniu corretamente o usuário {} em <b>{}</b> por {}!
 bans_kick_is_bot: 'Não posso expulsar a mim mesmo!'
 bans_kick_is_admin: 'Porque eu kickaria um administrador? Não me parece uma boa ideia.'
@@ -255,7 +257,8 @@ bans_kick_logger: |
   <b>{}:</b>
   #KICKED
   <b>• Admin:</b> {}
-  <b>• Usuário:</b> {} (<code>{}</code>)"
+  <b>• Usuário:</b> {}
+  <b>• ID:</b> <code>{}</code>
 bans_kickme_success: Se você quer sair, tudo bem.
 bans_kickme_failed: 'Não posso te kickar, você tem sorte.'
 bans_unban_user_in_chat: 'Porque está tentando desbanir alguém que já está na conversa?'
@@ -264,12 +267,14 @@ bans_unban_logger: |
   <b>{}:</b>
   #UNBAN
   <b>• Admin:</b> {}
-  <b>• Usuário:</b> {} (<code>{}</code>)
+  <b>• Usuário:</b> {}
+  <b>• ID:</b> <code>{}</code>
 bans_sban_logger: |
   <b>{}:</b>
   #UNBAN
   <b>• Admin:</b> {}
-  <b>• Usuário:</b> {} (<code>{}</code>)
+  <b>• Usuário:</b> {}
+  <b>• ID:</b> <code>{}</code>
 bans_help: |
   Algumas pessoas precisam ser banidas publicamente, como spammers, aborrecimentos ou simplesmente trolls.\n
   Este módulo permite que você faça isso facilmente, expondo as ações deles ao público!\n
@@ -1035,12 +1040,12 @@ rules_help: |
 #Translator
 modname_translator: Tradutor
 translator_translated: |
-  De `{}` para `{}`:\n{}
-translator_err: Erro ao traduzir:\n{}
+  De `{}` para `{}`:\n`{}`
+translator_err: Erro ao traduzir
 translator_no_str: Responda a uma mensagem para traduzir!
 translator_no_args: 'Especifique o idioma para o qual deseja traduzir a mensagem respondida!'
 translator_animal_translated: |
-  Animal traduzido {} com sucesso!
+  {} animal traduzido com sucesso!
   Seu animal diz:\n`{}`
 translator_animal_lang:
    - Eu te amo
@@ -1048,10 +1053,10 @@ translator_animal_lang:
    - 'Felicidades!'
    - 'Não me toque!'
    - 'Ouve! Tenho fome!'
-   - Ziz ...
+   - Ziz...
    - 'O que é esse retângulo preto?'
    - 'Quero sair!'
-   - 'Madeira ótima! Espere ... você está gravando ?!'
+   - 'Madeira ótima! Espere... você está gravando?!'
    - 'Eu não vou falar!'
    - 'Onde estão meus amigos?'
    - Eu preciso de um banheiro.
@@ -1059,7 +1064,7 @@ translator_animal_lang:
    - 'Onde estão minhas testemunhas?'
    - 'Minha perna está perdendo!'
    - 'Me envie agora!'
-   - 'Por que você está me assediando ?!'
+   - 'Por que você está me assediando?!'
    - Foda-se.
    - 'Estou me comendo!'
    - 'Ligue para o pacote! Existe um problema em potencial! Alguém está entrando em nosso território!'
@@ -1076,7 +1081,17 @@ translator_animal_lang:
    - 'você gosta.'
 translator_help: |
   *Comandos disponíveis:*
-  - /tr (código do idioma): Obtenha a tradução da mensagem respondida.
+  - /tr (código do idioma): Obtenha a tradução da mensagem respondida.\n
+  *Exemplos:*
+  `/tr en`: Traduz alguma coisa apara inglês.
+  `/tr ja-en`: traduz do Japonês para o Inglês.\n
+  *Códigos de idioma disponíveis:*
+  `af,am,ar,az,be,bg,bn,bs,ca,ceb,co,cs,cy,da,de,el,en,eo,es,
+  et,eu,fa,fi,fr,fy,ga,gd,gl,gu,ha,haw,hi,hmn,hr,ht,hu,hy,
+  id,ig,is,it,iw,ja,jw,ka,kk,km,kn,ko,ku,ky,la,lb,lo,lt,lv,mg,mi,mk,
+  ml,mn,mr,ms,mt,my,ne,nl,no,ny,pa,pl,ps,pt,ro,ru,sd,si,sk,sl,
+  sm,sn,so,sq,sr,st,su,sv,sw,ta,te,tg,th,tl,tr,uk,ur,uz,
+  vi,xh,yi,yo,zh,zh_CN,zh_TW,zu`
 #URL Blacklist
 modname_urlblacklist: Lista negra de domínios
 url_blacklist_success: "Adicionado o domínio <code>{}</code> a lista negra!"
