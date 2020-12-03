@@ -146,6 +146,8 @@ def weather(bot: Bot, update: Update):
                              disable_web_page_preview=True)
 
 
+__help__ = True
+
 WEATHER_HANDLER = DisableAbleCommandHandler("weather", weather)
 
 dispatcher.add_handler(WEATHER_HANDLER)

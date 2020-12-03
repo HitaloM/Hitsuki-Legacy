@@ -18,6 +18,7 @@ import sys
 import spamwatch
 import telegram.ext as tg
 import yaml
+from googletrans import Translator
 
 from pyrogram import Client
 from telethon import TelegramClient
@@ -142,6 +143,8 @@ else:
 updater = tg.Updater(TOKEN, workers=WORKERS)
 
 dispatcher = updater.dispatcher
+
+trl = Translator()
 
 tbot = TelegramClient("hitsuki", API_KEY, API_HASH)
 
