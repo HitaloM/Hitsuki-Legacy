@@ -44,6 +44,7 @@ admin_no_promote_perm: "Você não tem direitos suficientes para promover/rebaix
 admin_no_pin_perm: "Você não tem direitos suficientes para fazer fixar/desafixar mensagens!"
 admin_no_changeinfo_perm: "Você não tem direitos suficientes para alterar as informações deste grupo!"
 admin_no_ban_perm: "Você não tem direitos suficientes para banir/desbanir usuários!"
+admin_no_mute_perm: "Você não tem direitos suficientes para restringir usuários!"
 admin_no_kick_perm: "Você não tem direitos suficientes para remover usuários!"
 admin_err_no_perm: 'Não posso promover/rebaixar pessoas aqui! Verifique se eu sou um administrador e posso adicionar novos administradores.'
 admin_err_user_admin: 'Como posso promover alguém que já é administrador?'
@@ -546,7 +547,7 @@ locks_help: |
   /lock sticker
 #Log channel
 modname_log_channel: Canal de logs
-log_channel_link: \n\n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">clique aqui</a>
+log_channel_link: \n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">clique aqui</a>
 log_channel_deleted: Este canal de logs foi removido - incompatibilidade.
 log_channel_err_format: \n\nO formato foi desativado devido a um erro inesperado.
 log_channel_grp_curr_conf: "Este grupo tem todos os seus registros enviados para: {} (`{}`)"

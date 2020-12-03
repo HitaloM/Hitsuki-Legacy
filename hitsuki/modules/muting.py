@@ -30,6 +30,7 @@ from hitsuki.modules.helper_funcs.chat_status import bot_admin, user_admin, is_u
     is_user_ban_protected
 from hitsuki.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from hitsuki.modules.helper_funcs.string_handling import extract_time
+from hitsuki.modules.helper_funcs.admin_rights import user_can_ban
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.tr_engine.strings import tld
 
@@ -51,6 +52,10 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
             return ""
         else:
             chatD = chat
+
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_mute_perm"))
+        return ""
 
     user_id = extract_user(message, args)
     if not user_id:
@@ -117,6 +122,10 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
             return ""
         else:
             chatD = chat
+
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_mute_perm"))
+        return ""
 
     user_id = extract_user(message, args)
     if not user_id:
@@ -193,8 +202,11 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
         else:
             chatD = chat
 
-    user_id, reason = extract_user_and_text(message, args)
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_mute_perm"))
+        return ""
 
+    user_id, reason = extract_user_and_text(message, args)
     if not user_id:
         message.reply_text(tld(chat.id, "mute_not_refer"))
         return ""
@@ -289,6 +301,10 @@ def nomedia(bot: Bot, update: Update, args: List[str]) -> str:
         else:
             chatD = chat
 
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_mute_perm"))
+        return ""
+
     user_id = extract_user(message, args)
     if not user_id:
         message.reply_text(tld(chat.id, "restrict_invalid"))
@@ -354,6 +370,10 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
         else:
             chatD = chat
 
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_mute_perm"))
+        return ""
+
     user_id = extract_user(message, args)
     if not user_id:
         message.reply_text(tld(chat.id, "unrestrict_invalid"))
@@ -418,8 +438,11 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
         else:
             chatD = chat
 
-    user_id, reason = extract_user_and_text(message, args)
+    if user_can_ban(chat, user, bot.id) is False:
+        message.reply_text(tld(chat.id, "admin_no_mute_perm"))
+        return ""
 
+    user_id, reason = extract_user_and_text(message, args)
     if not user_id:
         message.reply_text(tld(chat.id, "mute_not_refer"))
         return ""

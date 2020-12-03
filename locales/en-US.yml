@@ -43,6 +43,7 @@ admin_no_promote_perm: "You don't have enough rights to promote/demote someone!"
 admin_no_pin_perm: "You don't have enough rights to pin/unpin messages!"
 admin_no_changeinfo_perm: "You don't have enough rights to change chat info!"
 admin_no_ban_perm: "You don't have enough rights to ban/unban users!"
+admin_no_mute_perm: "You don't have enough rights to restrict users!"
 admin_no_kick_perm: "You don't have enough rights to kick users!"
 admin_err_no_perm: I can't promote/demote people here! Make sure I'm an admin and can appoint new admins.
 admin_err_user_admin: How am I meant to promote someone who's already an admin?
@@ -235,7 +236,8 @@ bans_logger: |
   <b>{}:</b>
   #BANNED
   <b>• Admin:</b> {}
-  <b>• User:</b> {} (<code>{}</code>)
+  <b>• User:</b> {}
+  <b>• ID:</b> <code>{}</code>
 bans_banned_success: Admin {} has successfully banned {} in <b>{}</b>!
 bans_logger_reason: \n<b>Reason:</b> {}
 bans_err_unknown: "Unknown error: {} failed."
@@ -244,7 +246,8 @@ bans_tban_logger: |
   <b>{}:</b>
   #TEMP_BANNED
   <b>• Admin:</b> {}
-  <b>• User:</b> {} (<code>{}</code>)
+  <b>• User:</b> {}
+  <b>• ID:</b> <code>{}</code>
   <b>• Time:</b> {}
 bans_tbanned_success: Admin {} has successfully banned {} in <b>{}</b> for {}!
 bans_kick_is_bot: I'm not kicking myself!
@@ -254,7 +257,8 @@ bans_kick_logger: |
   <b>{}:</b>
   #KICKED
   <b>• Admin:</b> {}
-  <b>• User:</b> {} (<code>{}</code>)
+  <b>• User:</b> {}
+  <b>• ID:</b> <code>{}</code>
 bans_kickme_success: No problem.
 bans_kickme_failed: I cannot kick you! You're lucky today.
 bans_unban_user_in_chat: Why are you trying to unban someone that's already in the chat?
@@ -263,12 +267,14 @@ bans_unban_logger: |
   <b>{}:</b>
   #UNBANNED
   <b>• Admin:</b> {}
-  <b>• User:</b> {} (<code>{}</code>)
+  <b>• User:</b> {}
+  <b>• ID:</b> <code>{}</code>
 bans_sban_logger: |
   <b>{}:</b>
   #UNBANNED
   <b>• Admin:</b> {}
-  <b>• User:</b> {} (<code>{}</code>)
+  <b>• User:</b> {}
+  <b>• ID:</b> <code>{}</code>
 bans_help: |
   Some people need to be publicly banned; spammers, annoyances, or just trolls.\n
   This module allows you to do that easily, by exposing some common actions, so everyone will see!\n
@@ -541,7 +547,7 @@ locks_help: |
   /lock sticker
 #Log channel
 modname_log_channel: Log Channel
-log_channel_link: \n\n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">click here</a>
+log_channel_link: \n<b>Link:</b> <a href=\"http://telegram.me/{}/{}\">click here</a>
 log_channel_deleted: This log channel has been deleted - unsetting.
 log_channel_err_format: \n\nFormatting has been disabled due to an unexpected error.
 log_channel_grp_curr_conf: "This group has all its logs sent to: {} (`{}`)"
@@ -1257,26 +1263,30 @@ warns_warn_ban_log_channel: |
   <b>{}:</b>
   #WARN_BAN
   <b>• Admin:</b> {}
-  <b>• User:</b> {} (<code>{}</code>)
+  <b>• User:</b> {}
+  <b>• ID:</b> <code>{}</code>
   <b>• Reason:</b> {}
   <b>• Warn Count:</b> <code>{}/{}</code>
 warns_warn_log_channel: |
   <b>{}:</b>
   #WARN
   <b>• Admin:</b> {}
-  <b>• User:</b> {} (<code>{}</code>)
+  <b>• User:</b> {}
+  <b>• ID:</b> <code>{}</code>
   <b>• Reason:</b> {}
   <b>• Counts:</b> <code>{}/{}</code>
 warns_remove_log_channel: |
   <b>{}:</b>
   #UNWARN
   <b>• Admin:</b> {}
-  <b>• User:</b> {} (<code>{}</code>)
+  <b>• User:</b> {}
+  <b>• ID:</b> <code>{}</code>
 warns_reset_log_channel: |
   <b>{}:</b>
   #RESETWARNS
   <b>• Admin:</b> {}
-  <b>• User:</b> {} (<code>{}</code>)
+  <b>• User:</b> {}
+  <b>• ID:</b> <code>{}</code>
 warns_set_warn_limit_log_channel: |
   <b>{}:</b>
   #SET_WARN_LIMIT
