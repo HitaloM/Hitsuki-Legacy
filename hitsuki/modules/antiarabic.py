@@ -51,7 +51,7 @@ def antiarabic_setting(bot: Bot, update: Update, args: List[str]):
         else:
             msg.reply_text(tld(chat.id, "antiarabic_setting").format(
                 sql.chat_antiarabic(chat.id)),
-                           parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
 
 
 @bot_admin
