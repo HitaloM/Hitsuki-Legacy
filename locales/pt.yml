@@ -39,7 +39,6 @@ common_this_chat: Este chat
 common_invalid_arg: 'Argumento inválido! Por favor use `on`/`yes` ou `off`/`no`!'
 #Admins
 modname_admin: Admin
-admin_cache_refresh: Cache de administradores limpado!
 admin_no_promote_perm: "Você não tem direitos suficientes para promover/rebaixar alguém!"
 admin_no_pin_perm: "Você não tem direitos suficientes para fazer fixar/desafixar mensagens!"
 admin_no_changeinfo_perm: "Você não tem direitos suficientes para alterar as informações deste grupo!"
@@ -73,9 +72,6 @@ admin_help: |
   - /promote: Promova um usuário ao responder esse usuário ou use seu nome de usuário.
   - /demote: Rebaixe um usuário ao responder esse usuário ou use seu nome de usuário.
   - /reaction False ou True: Desativa ou ativa a reação do a comandos administrativos usados por membros comuns.
-  - /admincache: Atualize o cache do administrador para levar em consideração as novas permissões de administrador ou novos administradores.\n
-  Às vezes, você promove ou rebaixa um administrador manualmente e o Hitsuki não percebe isso imediatamente. Isso ocorre porque, para evitar o spam aos servidores do Telegram, o status do administrador é armazenado em cache localmente.
-  Isso significa que às vezes você tem que esperar alguns minutos para que os direitos de administrador sejam atualizados. Se você deseja atualizá-los imediatamente, você pode usar o comando /admincache; isso forçará o Hitsuki a verificar quem são os administradores novamente.
 #AFK
 modname_afk: AFK
 user_now_afk: "{} está agora AFK!"

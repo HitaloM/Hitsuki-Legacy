@@ -14,15 +14,12 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from functools import wraps
-from cachetools import TTLCache
 
 from telegram import Chat, ChatMember, Update, Bot
 
 import hitsuki.modules.sql.admin_sql as admin_sql
 from hitsuki import dispatcher, DEL_CMDS, SUDO_USERS, WHITELIST_USERS
 from hitsuki.modules.tr_engine.strings import tld
-
-ADMIN_CACHE = TTLCache(maxsize=512, ttl=60*10)
 
 
 def can_delete(chat: Chat, bot_id: int) -> bool:
@@ -54,20 +51,8 @@ def is_user_admin(chat: Chat, user_id: int, member: ChatMember = None) -> bool:
         return True
 
     if not member:
-        # Try to fetch from cache first
-        try:
-            return user_id in ADMIN_CACHE[chat.id]
-        except BaseException:
-            # BaseException happend means cache is deleted,
-            # so query Bot API again and return user status
-            # while saving it in cache for future usage
-            chat_admins = dispatcher.bot.getChatAdministrators(chat.id)
-            admin_list = [x.user.id for x in chat_admins]
-            ADMIN_CACHE[chat.id] = admin_list
-
-            if user_id in admin_list:
-                return True
-            return False
+        member = chat.get_member(user_id)
+    return member.status in ('administrator', 'creator')
 
 
 def is_bot_admin(chat: Chat,

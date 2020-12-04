@@ -26,7 +26,7 @@ from telegram.utils.helpers import mention_html, escape_markdown
 from hitsuki import dispatcher
 from hitsuki.modules.connection import connected
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.chat_status import bot_admin, user_admin, can_pin, ADMIN_CACHE
+from hitsuki.modules.helper_funcs.chat_status import bot_admin, user_admin, can_pin
 from hitsuki.modules.helper_funcs.admin_rights import user_can_pin, user_can_promote, user_can_changeinfo
 from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.log_channel import loggable
@@ -86,10 +86,6 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
                           can_pin_messages=bot_member.can_pin_messages,
                           can_promote_members=bot_member.can_promote_members)
 
-    try:
-        ADMIN_CACHE.pop(update.effective_chat.id)
-    except Exception:
-        pass
     message.reply_text(tld(chat.id, "admin_promote_success").format(
         mention_html(user.id, user.first_name),
         mention_html(user_member.user.id, user_member.user.first_name),
@@ -155,10 +151,6 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                               can_pin_messages=False,
                               can_promote_members=False)
 
-        try:
-            ADMIN_CACHE.pop(update.effective_chat.id)
-        except Exception:
-            pass
         message.reply_text(tld(chat.id, "admin_demote_success").format(
             mention_html(user.id, user.first_name),
             mention_html(user_member.user.id, user_member.user.first_name),
@@ -293,13 +285,6 @@ def adminlist(bot: Bot, update: Update):
     update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
 
 
-@run_async
-@user_admin
-def refresh_admin(bot, update):
-    ADMIN_CACHE.pop(update.effective_chat.id)
-    update.effective_message.reply_text("Admins cache refreshed!")
-
-
 @user_admin
 @run_async
 def reaction(bot: Bot, update: Update, args: List[str]) -> str:
@@ -352,7 +337,6 @@ REACT_HANDLER = DisableAbleCommandHandler("reaction",
                                           pass_args=True,
                                           filters=Filters.group)
 
-ADMIN_REFRESH_HANDLER = CommandHandler("admincache", refresh_admin)
 ADMINLIST_HANDLER = DisableAbleCommandHandler(["adminlist", "admins"],
                                               adminlist)
 
@@ -361,6 +345,5 @@ dispatcher.add_handler(UNPIN_HANDLER)
 dispatcher.add_handler(INVITE_HANDLER)
 dispatcher.add_handler(PROMOTE_HANDLER)
 dispatcher.add_handler(DEMOTE_HANDLER)
-dispatcher.add_handler(ADMIN_REFRESH_HANDLER)
 dispatcher.add_handler(ADMINLIST_HANDLER)
 dispatcher.add_handler(REACT_HANDLER)
