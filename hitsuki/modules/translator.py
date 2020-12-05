@@ -145,13 +145,13 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
             else:
                 tekstr = trl.translate(text, dest=dest_lang, src=source_lang)
                 message.reply_text(tld(chat.id, "translator_translated").format(
-                        source_lang, dest_lang, tekstr.text),
+                    source_lang, dest_lang, tekstr.text),
                     parse_mode=ParseMode.MARKDOWN)
 
     except IndexError:
         update.effective_message.reply_text(tld(chat.id, "translator_no_args"),
-            parse_mode="markdown",
-            disable_web_page_preview=True)
+                                            parse_mode="markdown",
+                                            disable_web_page_preview=True)
     except ValueError:
         update.effective_message.reply_text(tld(chat.id, "translator_err"))
     else:
