@@ -21,7 +21,7 @@ from telegram import Update, Bot
 from telegram.error import BadRequest
 from telegram.ext import CommandHandler, Filters
 from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import mention_html, escape_markdown
+from telegram.utils.helpers import mention_html
 
 from hitsuki import dispatcher
 from hitsuki.modules.connection import connected

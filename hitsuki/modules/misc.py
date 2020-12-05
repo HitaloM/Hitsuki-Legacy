@@ -14,9 +14,7 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import html
-import re
 import urllib.parse as urlparse
-import subprocess
 from datetime import datetime
 from typing import Optional, List
 

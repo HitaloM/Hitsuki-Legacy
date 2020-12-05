@@ -16,14 +16,13 @@
 import random
 from typing import Optional, List
 from emoji import UNICODE_EMOJI
-from googletrans import LANGUAGES, Translator
+from googletrans import LANGUAGES
 
-from telegram import Message, Update, Bot, ParseMode, Chat
+from telegram import Update, Bot, ParseMode
 from telegram.ext import run_async
 
 from hitsuki import dispatcher, trl
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.string_handling import remove_emoji
 from hitsuki.modules.tr_engine.strings import tld, tld_list
 
 

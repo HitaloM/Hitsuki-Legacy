@@ -26,7 +26,6 @@ from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import TelegramError
 from telegram import Update, Bot
 from telegram.ext import run_async
-from telegram.utils.helpers import escape_markdown
 
 from hitsuki import dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
