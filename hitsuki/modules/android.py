@@ -15,6 +15,7 @@
 
 import re
 import rapidjson as json
+from yaml import load, Loader
 from bs4 import BeautifulSoup
 from requests import get
 from hurry.filesize import size as sizee
@@ -43,6 +44,7 @@ from hitsuki.modules.tr_engine.strings import tld
 # None of the code is taken from the bot itself, to avoid confusion.
 # Please don't remove these comment, show respect to module contributors.
 
+MIUI_FIRM = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/data/latest.yml"
 fw_links = {"SAMMOBILE": "https://www.sammobile.com/samsung/firmware/{}/{}/",
             "SAMFW": "https://samfw.com/firmware/{}/{}/",
             "SAMFREW": "https://samfrew.com/model/{}/region/{}/",
@@ -90,6 +92,53 @@ class GetDevice:
                         }
             except KeyError:
                 return False
+
+
+@pbot.on_message(filters.command("miui"))
+async def miui(c: Client, update: Update):
+    if len(update.command) != 2:
+        message = "Please write a codename, example: `/miui whyred`"
+        await update.reply_text(message)
+        return
+
+    codename = update.command[1]
+
+    yaml_data = load(get(MIUI_FIRM).content, Loader=Loader)
+    data = [i for i in yaml_data if codename in i['codename']]
+
+    if len(data) < 1:
+        await update.reply_text("Provide a valid codename!")
+        return
+
+    for fw in data:
+        av = fw['android']
+        branch = fw['branch']
+        method = fw['method']
+        link = fw['link']
+        fname = fw['name']
+        version = fw['version']
+        size = fw['size']
+        date = fw['date']
+        md5 = fw['md5']
+
+        btn = branch + ' | ' + method + ' | ' + version
+
+        keyboard = [[InlineKeyboardButton(text=btn, url=link)]]
+
+    device = fname.split(" ")
+    device.pop()
+    device = " ".join(device)
+
+    text = f"**The latest firmwares for {device} are:**"
+    text += f"\n\n**Name:** `{fname}`"
+    text += f"\n**Android:** `{av}`"
+    text += f"\n**Size:** `{size}`"
+    text += f"\n**Date:** `{date}`"
+    text += f"\n**MD5:** `{md5}`"
+
+    await update.reply_text(text,
+                            reply_markup=InlineKeyboardMarkup(keyboard),
+                            parse_mode="markdown")
 
 
 @pbot.on_message(filters.command("samspec"))
