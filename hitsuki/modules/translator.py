@@ -16,14 +16,13 @@
 import random
 from typing import Optional, List
 from emoji import UNICODE_EMOJI
-from googletrans import LANGUAGES, Translator
+from googletrans import LANGUAGES
 
-from telegram import Message, Update, Bot, ParseMode, Chat
+from telegram import Update, Bot, ParseMode
 from telegram.ext import run_async
 
 from hitsuki import dispatcher, trl
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.string_handling import remove_emoji
 from hitsuki.modules.tr_engine.strings import tld, tld_list
 
 
@@ -146,13 +145,13 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
             else:
                 tekstr = trl.translate(text, dest=dest_lang, src=source_lang)
                 message.reply_text(tld(chat.id, "translator_translated").format(
-                        source_lang, dest_lang, tekstr.text),
+                    source_lang, dest_lang, tekstr.text),
                     parse_mode=ParseMode.MARKDOWN)
 
     except IndexError:
         update.effective_message.reply_text(tld(chat.id, "translator_no_args"),
-            parse_mode="markdown",
-            disable_web_page_preview=True)
+                                            parse_mode="markdown",
+                                            disable_web_page_preview=True)
     except ValueError:
         update.effective_message.reply_text(tld(chat.id, "translator_err"))
     else:

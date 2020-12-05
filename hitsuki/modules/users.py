@@ -23,7 +23,6 @@ from telegram import TelegramError, Update, Bot, ParseMode
 from telegram.error import BadRequest
 from telegram.ext import MessageHandler, Filters, CommandHandler
 from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import escape_markdown
 
 import hitsuki.modules.sql.users_sql as sql
 from hitsuki import dispatcher, OWNER_ID, LOGGER, SUDO_USERS, SUPPORT_USERS

@@ -13,17 +13,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import html
 from typing import List
 
-from telegram import Message, Chat, Update, Bot, User, ParseMode
+from telegram import Update, Bot, ParseMode
 from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import mention_html
 
-from hitsuki import dispatcher, LOGGER, SUDO_USERS
-from hitsuki.modules.helper_funcs.chat_status import user_not_admin, user_admin, can_delete, is_user_admin, bot_admin
-from hitsuki.modules.log_channel import loggable
+from hitsuki import dispatcher
+from hitsuki.modules.helper_funcs.chat_status import user_not_admin, user_admin, can_delete, bot_admin
 from hitsuki.modules.helper_funcs.extraction import extract_text
 from hitsuki.modules.sql import antiarabic_sql as sql
 from hitsuki.modules.tr_engine.strings import tld
