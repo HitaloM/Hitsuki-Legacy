@@ -122,16 +122,13 @@ async def miui(c: Client, update: Update):
         size = fw['size']
         date = fw['date']
         md5 = fw['md5']
+        codename = fw['codename']
 
         btn = branch + ' | ' + method + ' | ' + version
 
         keyboard = [[InlineKeyboardButton(text=btn, url=link)]]
 
-    device = fname.split(" ")
-    device.pop()
-    device = " ".join(device)
-
-    text = f"**The latest firmwares for {device} are:**"
+    text = f"**MIUI - Last build for {codename}:**"
     text += f"\n\n**Name:** `{fname}`"
     text += f"\n**Android:** `{av}`"
     text += f"\n**Size:** `{size}`"
