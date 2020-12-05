@@ -114,7 +114,8 @@ android_help: |
   *Firmwares:*
   - /samcheck <modelo> <csc>: Apenas Samsung - mostra as últimas informações de firmware do dispositivo dado, direto dos servidores da Samsung.
   - /samget <modelo> <csc>: Apenas Samsung - envia o firmware mais recente do dispositivo dado direto do samfrew, sammobile e sfirmwares.
-  - /miui <codinome>: Apenas Xiaomi - envia a última versão da MIUI para o dispositivo dado.\n
+  - /miui <codinome>: Apenas Xiaomi - envia a última versão da MIUI para o dispositivo dado.
+  - /realmeui <codinome>: Apenas Realme - envia a última versão da RealmeUI para o dispositivo dado.\n
   *Outros*
   - /magisk: Receba as últimas versões do Magisk
   - /twrp <codinome>: Obtém o twrp mais recente para um dispositivo Android através do codinome.

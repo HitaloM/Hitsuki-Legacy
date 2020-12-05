@@ -45,6 +45,8 @@ from hitsuki.modules.tr_engine.strings import tld
 # Please don't remove these comment, show respect to module contributors.
 
 MIUI_FIRM = "https://raw.githubusercontent.com/XiaomiFirmwareUpdater/miui-updates-tracker/master/data/latest.yml"
+REALME_FIRM = "https://raw.githubusercontent.com/RealmeUpdater/realme-updates-tracker/master/data/latest.yml"
+
 fw_links = {"SAMMOBILE": "https://www.sammobile.com/samsung/firmware/{}/{}/",
             "SAMFW": "https://samfw.com/firmware/{}/{}/",
             "SAMFREW": "https://samfrew.com/model/{}/region/{}/",
@@ -132,6 +134,49 @@ async def miui(c: Client, update: Update):
     text = f"**The latest firmwares for {device} are:**"
     text += f"\n\n**Name:** `{fname}`"
     text += f"\n**Android:** `{av}`"
+    text += f"\n**Size:** `{size}`"
+    text += f"\n**Date:** `{date}`"
+    text += f"\n**MD5:** `{md5}`"
+
+    await update.reply_text(text,
+                            reply_markup=InlineKeyboardMarkup(keyboard),
+                            parse_mode="markdown")
+
+
+@pbot.on_message(filters.command("realmeui"))
+async def realmeui(c: Client, update: Update):
+    if len(update.command) != 2:
+        message = "Please write a codename, example: `/realmeui RMX2061`"
+        await update.reply_text(message)
+        return
+
+    codename = update.command[1]
+
+    yaml_data = load(get(REALME_FIRM).content, Loader=Loader)
+    data = [i for i in yaml_data if codename in i['codename']]
+
+    if len(data) < 1:
+        await update.reply_text("Provide a valid codename!")
+        return
+
+    for fw in data:
+        reg = fw['region']
+        link = fw['download']
+        device = fw['device']
+        version = fw['version']
+        cdn = fw['codename']
+        sys = fw['system']
+        size = fw['size']
+        date = fw['date']
+        md5 = fw['md5']
+
+        btn = reg + ' | ' + version
+
+        keyboard = [[InlineKeyboardButton(text=btn, url=link)]]
+
+    text = f"**RealmeUI - Last build for {codename}:**"
+    text += f"\n\n**Device:** `{device}`"
+    text += f"\n**System:** `{sys}`"
     text += f"\n**Size:** `{size}`"
     text += f"\n**Date:** `{date}`"
     text += f"\n**MD5:** `{md5}`"

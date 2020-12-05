@@ -113,7 +113,8 @@ android_help: |
   *Device firmware:*
   - /samcheck <model> <csc>: Samsung only - shows the latest firmware info for the given device, taken from samsung servers.
   - /samget <model> <csc>: Samsung only - gets firmware download links from samfrew, sammobile and sfirmwares for the given device.
-  - /miui <codename>: Xiaomi only - gets latest MIUI download links for the given device.\n
+  - /miui <codename>: Xiaomi only - gets latest MIUI download links for the given device.
+  - /realmeui <codename>: Realme only - gets latest RealmeUI download links for the given device.\n
   *Misc*
   - /magisk: Get latest Magisk releases.
   - /twrp <codename>: Gets latest twrp for the android device using the codename.
