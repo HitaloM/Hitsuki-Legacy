@@ -6,7 +6,7 @@ aiohttp>=2.2.5
 bleach
 emoji
 future
-googletrans
+googletrans>=3.1.0a0
 hurry.filesize
 markdown2
 Pillow>=4.2.0
