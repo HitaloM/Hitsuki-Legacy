@@ -38,13 +38,13 @@ def antiarabic_setting(bot: Bot, update: Update, args: List[str]):
 
     if chat.type != chat.PRIVATE:
         if len(args) >= 1:
-            if args[0] in ("yes", "on"):
+            if args[0].lower() in ("yes", "on", "true"):
                 sql.set_chat_setting(chat.id, True)
                 msg.reply_text(tld(chat.id, "antiarabic_enabled"))
 
-            elif args[0] in ("no", "off"):
+            elif args[0].lower() in ("no", "off", "false"):
                 sql.set_chat_setting(chat.id, False)
-                msg.reply_text(tld(chat.id, "antiarabic_edisabled"))
+                msg.reply_text(tld(chat.id, "antiarabic_disabled"))
         else:
             msg.reply_text(tld(chat.id, "antiarabic_setting").format(
                 sql.chat_antiarabic(chat.id)),
