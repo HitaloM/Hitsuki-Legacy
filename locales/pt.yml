@@ -854,7 +854,6 @@ misc_help: |
   - /ud: Digite a palavra ou expressão que deseja pesquisar. Por exemplo /ud Corno
   - /removebotkeyboard: Tem um bot de teclado desagradável preso no seu grupo?
   - /wiki <keywords>: Obtenha artigos da Wikipedia apenas usando este bot!
-  - /ping: Envia o ping do bot.
   - /ip: Mostra informações sobre um IP / domínio.
   - /dice: Envia um dado.\n
   *Especial | COVID-19*

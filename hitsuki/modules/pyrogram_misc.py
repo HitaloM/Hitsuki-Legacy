@@ -26,7 +26,7 @@ from aiohttp import ClientSession
 from pyrogram import Client, filters
 from pyrogram.types import Message, Update
 
-from hitsuki import TOKEN, SUDO_USERS, SYSTEM_DUMP, pbot
+from hitsuki import TOKEN, SUDO_USERS, pbot
 
 # Some commands in this module are EduuRobot ports (authorized)
 # EduuRobot commands:
@@ -90,15 +90,6 @@ async def ids(c: Client, m: Message):
                            chat_type=m.chat.type
                        ),
                        parse_mode="HTML")
-
-
-@pbot.on_message(filters.command("ping"))
-async def ping(c: Client, m: Message):
-    first = datetime.now()
-    sent = await m.reply_text("**Pong!**")
-    second = datetime.now()
-    await sent.edit_text(
-        f"**Pong!** `{(second - first).microseconds / 1000}`ms")
 
 
 @pbot.on_message(filters.regex(r'^s/(.+)?/(.+)?(/.+)?') & filters.reply)
@@ -167,8 +158,6 @@ async def upgrade(c: Client, m: Message):
             await sm.edit_text("There's nothing to upgrade.")
         else:
             await sm.edit_text("Restarting...")
-            await pbot.send_message(SYSTEM_DUMP,
-                                    "**Hitsuki is updating!**")
             args = [sys.executable, "-m", "hitsuki"]
             os.execl(sys.executable, *args)
     else:
@@ -196,36 +185,24 @@ async def run_cmd(c: Client, m: Message):
 @pbot.on_message(filters.command("restart") & filters.user(SUDO_USERS))
 async def restart(c: Client, m: Message):
     await m.reply_text("Restarting...")
-    await pbot.send_message(SYSTEM_DUMP, "**Hitsuki is restarting...**")
     args = [sys.executable, "-m", "hitsuki"]
     os.execl(sys.executable, *args)
 
 
-@pbot.on_message(filters.command("logs") & filters.user(SUDO_USERS))
-async def logs(c: Client, m: Message):
-    await m.reply_text("Sending LOGs...")
-    await pbot.send_document(
-        document='log.txt',
-        caption="`Hitsuki's System LOGs`",
-        chat_id=SYSTEM_DUMP,
-        parse_mode="markdown")
-    await m.reply_text("Done! LOGs are sent to system_dump.")
-
-
 @pbot.on_message(filters.command("ip"))
-async def ip(c: Client, update: Update):
-    ip = update.command[1]
+async def ip(c: Client, m: Message):
+    ip = m.text.split(maxsplit=1)[1]
 
     aioclient = ClientSession()
     if not ip:
-        await update.reply_text("Provide an IP!")
+        await m.reply_text("Provide an IP!")
         return
 
     async with aioclient.get(f"http://ip-api.com/json/{ip}") as response:
         if response.status == 200:
             lookup_json = await response.json()
         else:
-            await update.reply_text(f"An error occurred when looking for **{ip}**: **{response.status}**")
+            await m.reply_text(f"An error occurred when looking for **{ip}**: **{response.status}**", parse_mode="markdown")
             return
 
     fixed_lookup = {}
@@ -250,4 +227,4 @@ async def ip(c: Client, update: Update):
     for key, value in fixed_lookup.items():
         text = text + f"**{key}:** `{value}`\n"
 
-    await update.reply_text(text)
+    await m.reply_text(text, parse_mode="markdown")

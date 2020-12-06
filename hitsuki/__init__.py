@@ -75,11 +75,6 @@ except ValueError:
     raise Exception("Your 'message_dump' must be set.")
 
 try:
-    SYSTEM_DUMP = CONFIG['system_dump']
-except ValueError:
-    raise Exception("Your 'system_dump' must be set.")
-
-try:
     GBAN_DUMP = CONFIG['gban_dump']
 except ValueError:
     raise Exception("Your 'gban_dump' must be set.")
