@@ -20,11 +20,10 @@ import re
 import sys
 import aiohttp
 import regex
-from datetime import datetime
 from aiohttp import ClientSession
 
 from pyrogram import Client, filters
-from pyrogram.types import Message, Update
+from pyrogram.types import Message
 
 from hitsuki import TOKEN, SUDO_USERS, pbot
 
