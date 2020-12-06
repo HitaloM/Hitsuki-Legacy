@@ -20,7 +20,7 @@ from telegram.ext import CommandHandler, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
 
 from hitsuki import dispatcher
-from hitsuki.modules.helper_funcs.chat_status import user_not_admin, user_admin, can_delete, bot_admin
+from hitsuki.modules.helper_funcs.chat_status import user_not_admin, user_admin, can_delete
 from hitsuki.modules.helper_funcs.extraction import extract_text
 from hitsuki.modules.sql import antiarabic_sql as sql
 from hitsuki.modules.tr_engine.strings import tld
