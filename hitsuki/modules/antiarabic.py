@@ -51,7 +51,6 @@ def antiarabic_setting(bot: Bot, update: Update, args: List[str]):
                 parse_mode=ParseMode.MARKDOWN)
 
 
-@bot_admin
 @user_not_admin
 @run_async
 def antiarabic(bot: Bot, update: Update):
