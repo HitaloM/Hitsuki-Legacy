@@ -73,7 +73,6 @@ def get(bot, update, notename, show_none=True, no_format=False):
     if note:
         if MessageHandlerChecker.check_user(update.effective_user.id):
             return
-        pass
     elif notename[0] == "#":
         hashnote = sql.get_note(chat_id, notename[1:])
         if hashnote:
@@ -95,11 +94,10 @@ def get(bot, update, notename, show_none=True, no_format=False):
                                     from_chat_id=MESSAGE_DUMP,
                                     message_id=note.value)
             except BadRequest as excp:
-                if excp.message == "Message to forward not found":
-                    message.reply_text(tld(chat.id, "note_lost"))
-                    sql.rm_note(chat_id, notename)
-                else:
+                if excp.message != "Message to forward not found":
                     raise
+                message.reply_text(tld(chat.id, "note_lost"))
+                sql.rm_note(chat_id, notename)
         else:
             try:
                 bot.forward_message(chat_id=chat_id,
@@ -114,11 +112,7 @@ def get(bot, update, notename, show_none=True, no_format=False):
             else:
                 raise
     else:
-        if note:
-            text = note.value
-        else:
-            text = None
-
+        text = note.value if note else None
         keyb = []
         parseMode = ParseMode.MARKDOWN
         buttons = sql.get_buttons(chat_id, notename)

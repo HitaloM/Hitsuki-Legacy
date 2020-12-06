@@ -29,11 +29,12 @@ async def user_is_ban_protected(user_id: int, message):
         return isinstance(participant.participant,
                           (ChannelParticipantAdmin, ChannelParticipantCreator))
 
-    async for user in tbot.iter_participants(message.chat_id,
-                                             filter=ChannelParticipantsAdmins):
-        if user_id == user.id:
-            return True
-    return False
+    return any(
+        user_id == user.id
+        for user in tbot.iter_participants(
+            message.chat_id, filter=ChannelParticipantsAdmins
+        )
+    )
 
 
 async def user_is_admin(user_id: int, message):
@@ -46,11 +47,12 @@ async def user_is_admin(user_id: int, message):
         return isinstance(participant.participant,
                           (ChannelParticipantAdmin, ChannelParticipantCreator))
 
-    async for user in tbot.iter_participants(message.chat_id,
-                                             filter=ChannelParticipantsAdmins):
-        if user_id == user.id:
-            return True
-    return False
+    return any(
+        user_id == user.id
+        for user in tbot.iter_participants(
+            message.chat_id, filter=ChannelParticipantsAdmins
+        )
+    )
 
 
 async def is_user_admin(user_id: int, chat_id):
@@ -82,12 +84,7 @@ async def hitsuki_is_admin(chat_id: int):
 
 
 async def is_user_in_chat(chat_id: int, user_id: int):
-    status = False
-    async for user in tbot.iter_participants(chat_id):
-        if user_id == user.id:
-            status = True
-            break
-    return status
+    return any(user_id == user.id for user in tbot.iter_participants(chat_id))
 
 
 async def can_delete_messages(message):

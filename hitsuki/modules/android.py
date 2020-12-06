@@ -371,7 +371,7 @@ async def check(c: Client, update: Update):
 
 @pbot.on_message(filters.command("twrp"))
 async def twrp(c: Client, update: Update):
-    if not len(update.command) == 2:
+    if len(update.command) != 2:
         m = "Type the device codename, example: <code>/twrp j7xelte</code>"
         await c.send_message(
             chat_id=update.chat.id,
@@ -536,11 +536,7 @@ async def bootleggers(c: Client, update: Update):
     if fetch.status_code == 200:
         nestedjson = json.loads(fetch.content)
 
-        if codename.lower() == 'x00t':
-            devicetoget = 'X00T'
-        else:
-            devicetoget = codename.lower()
-
+        devicetoget = 'X00T' if codename.lower() == 'x00t' else codename.lower()
         reply_text = ""
         devices = {}
 
@@ -548,26 +544,27 @@ async def bootleggers(c: Client, update: Update):
             devices.update({device: values})
 
         if devicetoget in devices:
+            dontneedlist = ['id', 'filename', 'download', 'xdathread']
+            peaksmod = {
+                'fullname': 'Device name',
+                'buildate': 'Build date',
+                'buildsize': 'Build size',
+                'downloadfolder': 'SourceForge folder',
+                'mirrorlink': 'Mirror link',
+                'xdathread': 'XDA thread'
+            }
             for oh, baby in devices[devicetoget].items():
-                dontneedlist = ['id', 'filename', 'download', 'xdathread']
-                peaksmod = {
-                    'fullname': 'Device name',
-                    'buildate': 'Build date',
-                    'buildsize': 'Build size',
-                    'downloadfolder': 'SourceForge folder',
-                    'mirrorlink': 'Mirror link',
-                    'xdathread': 'XDA thread'
-                }
                 if baby and oh not in dontneedlist:
                     if oh in peaksmod:
                         oh = peaksmod.get(oh, oh.title())
 
-                    if oh == 'SourceForge folder':
+                    if (
+                        oh == 'Mirror link'
+                        and baby != "Error404"
+                        or oh == 'SourceForge folder'
+                    ):
                         reply_text += f"\n**{oh}:** [Here]({baby})\n"
-                    elif oh == 'Mirror link':
-                        if not baby == "Error404":
-                            reply_text += f"\n**{oh}:** [Here]({baby})\n"
-                    else:
+                    elif oh != 'Mirror link':
                         reply_text += f"\n**{oh}:** `{baby}`"
 
             reply_text += tld(chat_id, "xda_thread").format(

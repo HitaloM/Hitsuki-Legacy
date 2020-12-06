@@ -43,9 +43,7 @@ def loggable(func):
             log_chat = sql.get_chat_log_channel(chat.id)
             if log_chat:
                 send_log(bot, log_chat, chat.id, result)
-        elif result == "":
-            pass
-        else:
+        elif result != "":
             LOGGER.warning(
                 "%s was set as loggable, but had no return statement.", func)
 
@@ -106,9 +104,7 @@ def setlog(bot: Bot, update: Update):
         try:
             message.delete()
         except BadRequest as excp:
-            if excp.message == "Message to delete not found":
-                pass
-            else:
+            if excp.message != "Message to delete not found":
                 LOGGER.exception(
                     "Error deleting message in log channel. Should work anyway though."
                 )

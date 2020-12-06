@@ -158,10 +158,15 @@ def kang(bot: Bot, update: Update, args: List[str]):
             print(e)
             return
         except TelegramError as e:
-            if e.message == "Stickerset_invalid":
-                makepack_internal(msg, user,
-                                  open('images/kangsticker.png', 'rb'),
-                                  sticker_emoji, bot, packname, packnum, chat)
+            if (
+                e.message
+                == "Internal Server Error: sticker set not found (500)"
+            ):
+                msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
+                    packname, sticker_emoji),
+                    parse_mode=ParseMode.MARKDOWN)
+            elif e.message == "Invalid sticker emojis":
+                msg.reply_text(tld(chat.id, 'stickers_kang_invalid_emoji'))
             elif e.message == "Sticker_png_dimensions":
                 im.save(kangsticker, "PNG")
                 bot.add_sticker_to_set(user_id=user.id,
@@ -172,14 +177,12 @@ def kang(bot: Bot, update: Update, args: List[str]):
                 msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
                     packname, sticker_emoji),
                     parse_mode=ParseMode.MARKDOWN)
-            elif e.message == "Invalid sticker emojis":
-                msg.reply_text(tld(chat.id, 'stickers_kang_invalid_emoji'))
             elif e.message == "Stickers_too_much":
                 msg.reply_text(tld(chat.id, 'stickers_kang_too_much'))
-            elif e.message == "Internal Server Error: sticker set not found (500)":
-                msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
-                    packname, sticker_emoji),
-                    parse_mode=ParseMode.MARKDOWN)
+            elif e.message == "Stickerset_invalid":
+                makepack_internal(msg, user,
+                                  open('images/kangsticker.png', 'rb'),
+                                  sticker_emoji, bot, packname, packnum, chat)
             print(e)
     elif args:
         try:
@@ -224,10 +227,15 @@ def kang(bot: Bot, update: Update, args: List[str]):
             print(e)
             return
         except TelegramError as e:
-            if e.message == "Stickerset_invalid":
-                makepack_internal(msg, user,
-                                  open('images/kangsticker.png', 'rb'),
-                                  sticker_emoji, bot, packname, packnum, chat)
+            if (
+                e.message
+                == "Internal Server Error: sticker set not found (500)"
+            ):
+                msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
+                    packname, sticker_emoji),
+                    parse_mode=ParseMode.MARKDOWN)
+            elif e.message == "Invalid sticker emojis":
+                msg.reply_text(tld(chat.id, 'stickers_kang_invalid_emoji'))
             elif e.message == "Sticker_png_dimensions":
                 im.save(kangsticker, "PNG")
                 bot.add_sticker_to_set(user_id=user.id,
@@ -238,20 +246,18 @@ def kang(bot: Bot, update: Update, args: List[str]):
                 msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
                     packname, sticker_emoji),
                     parse_mode=ParseMode.MARKDOWN)
-            elif e.message == "Invalid sticker emojis":
-                msg.reply_text(tld(chat.id, 'stickers_kang_invalid_emoji'))
             elif e.message == "Stickers_too_much":
                 msg.reply_text(tld(chat.id, 'stickers_kang_too_much'))
-            elif e.message == "Internal Server Error: sticker set not found (500)":
-                msg.reply_text(tld(chat.id, 'stickers_kang_success').format(
-                    packname, sticker_emoji),
-                    parse_mode=ParseMode.MARKDOWN)
+            elif e.message == "Stickerset_invalid":
+                makepack_internal(msg, user,
+                                  open('images/kangsticker.png', 'rb'),
+                                  sticker_emoji, bot, packname, packnum, chat)
             print(e)
     else:
         packs = tld(chat.id, 'stickers_kang_no_reply')
         if packnum > 0:
             firstpackname = "f" + str(user.id) + "_by_" + bot.username
-            for i in range(0, packnum + 1):
+            for i in range(packnum + 1):
                 if i == 0:
                     packs += f"[pack](t.me/addstickers/{firstpackname})\n"
                 else:

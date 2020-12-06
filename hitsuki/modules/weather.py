@@ -126,9 +126,8 @@ def weather(bot: Bot, update: Update):
             return temp[0]
 
         def sun(unix):
-            xx = datetime.fromtimestamp(unix, tz=ctimezone).strftime(
+            return datetime.fromtimestamp(unix, tz=ctimezone).strftime(
                 "%H:%M").lstrip("0").replace(" 0", " ")
-            return xx
 
         if city:
             info = f"*{cityname}, {fullc_n}*\n"

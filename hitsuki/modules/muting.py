@@ -135,12 +135,11 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chatD.get_member(int(user_id))
     except BadRequest as excp:
-        if excp.message == "User not found.":
-            message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
-            return ""
-        else:
+        if excp.message != "User not found.":
             raise
 
+        message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
+        return ""
     if is_user_ban_protected(chat, user_id, member):
         message.reply_text(tld(chat.id, "unmute_is_an_admin"))
         return ""
@@ -150,7 +149,10 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
             tld(chat.id, "unmute_not_muted").format(chatD.title))
         return ""
 
-    if member.status != 'kicked' and member.status != 'left':
+    if member.status in ['kicked', 'left']:
+        message.reply_text(tld(chat.id, "unmute_not_in_chat"))
+
+    else:
         if member.can_send_messages and member.can_send_media_messages \
                 and member.can_send_other_messages and member.can_add_web_page_previews:
             message.reply_text(
@@ -177,9 +179,6 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                                                            mention_html(
                                                                user.id, user.first_name),
                                                            mention_html(member.user.id, member.user.first_name), user_id)
-    else:
-        message.reply_text(tld(chat.id, "unmute_not_in_chat"))
-
     return ""
 
 
@@ -214,12 +213,11 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text(tld(chat.id, "mute_not_existed"))
-            return ""
-        else:
+        if excp.message != "User not found":
             raise
 
+        message.reply_text(tld(chat.id, "mute_not_existed"))
+        return ""
     if is_user_admin(chat, user_id, member):
         message.reply_text(tld(chat.id, "mute_is_admin"))
         return ""
@@ -235,11 +233,7 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
     split_reason = reason.split(None, 1)
 
     time_val = split_reason[0].lower()
-    if len(split_reason) > 1:
-        reason = split_reason[1]
-    else:
-        reason = ""
-
+    reason = split_reason[1] if len(split_reason) > 1 else ""
     mutetime = extract_time(message, time_val)
 
     if not mutetime:
@@ -386,7 +380,7 @@ def media(bot: Bot, update: Update, args: List[str]) -> str:
             tld(chat.id, "unrestrict_not_restricted").format(chatD.title))
         return ""
 
-    if member.status != 'kicked' and member.status != 'left':
+    if member.status not in ['kicked', 'left']:
         if member.can_send_messages and member.can_send_media_messages \
                 and member.can_send_other_messages and member.can_add_web_page_previews:
             message.reply_text(
@@ -450,12 +444,11 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text(tld(chat.id, "mute_not_existed"))
-            return ""
-        else:
+        if excp.message != "User not found":
             raise
 
+        message.reply_text(tld(chat.id, "mute_not_existed"))
+        return ""
     if is_user_admin(chat, user_id, member):
         message.reply_text(tld(chat.id, "restrict_is_admin"))
         return ""
@@ -471,11 +464,7 @@ def temp_nomedia(bot: Bot, update: Update, args: List[str]) -> str:
     split_reason = reason.split(None, 1)
 
     time_val = split_reason[0].lower()
-    if len(split_reason) > 1:
-        reason = split_reason[1]
-    else:
-        reason = ""
-
+    reason = split_reason[1] if len(split_reason) > 1 else ""
     mutetime = extract_time(message, time_val)
 
     if not mutetime:
@@ -538,12 +527,17 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
     res = bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
     if res:
         update.effective_message.reply_text(tld(chat.id, "muteme_muted"))
-        log = "<b>{}:</b>" \
-              "\n#MUTEME" \
-              "\n<b>• User:</b> {}" \
-              "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chat.title),
-                                                      mention_html(user.id, user.first_name), user_id)
-        return log
+        return (
+            "<b>{}:</b>"
+            "\n#MUTEME"
+            "\n<b>• User:</b> {}"
+            "\n<b>• ID:</b> <code>{}</code>".format(
+                html.escape(chat.title),
+                mention_html(user.id, user.first_name),
+                user_id,
+            )
+        )
+
 
     else:
         update.effective_message.reply_text(tld(chat.id, "mute_cant_mute"))

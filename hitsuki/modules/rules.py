@@ -55,13 +55,12 @@ def send_rules(update, chat_id, from_pm=False):
     try:
         chat = bot.get_chat(chat_id)
     except BadRequest as excp:
-        if excp.message == "Chat not found" and from_pm:
-            bot.send_message(user.id,
-                             tld(chat.id, "rules_shortcut_not_setup_properly"))
-            return
-        else:
+        if excp.message != "Chat not found" or not from_pm:
             raise
 
+        bot.send_message(user.id,
+                         tld(chat.id, "rules_shortcut_not_setup_properly"))
+        return
     rules = sql.get_rules(chat_id)
     text = tld(chat.id, "rules_display").format(escape_markdown(chat.title),
                                                 rules)

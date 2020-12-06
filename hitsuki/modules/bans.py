@@ -55,12 +55,11 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found.":
-            message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
-            return ""
-        else:
+        if excp.message != "User not found.":
             raise
 
+        message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
+        return ""
     if user_id == bot.id:
         message.reply_text(tld(chat.id, "bans_err_usr_is_bot"))
         return ""
@@ -125,12 +124,11 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found.":
-            message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
-            return ""
-        else:
+        if excp.message != "User not found.":
             raise
 
+        message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
+        return ""
     if is_user_ban_protected(chat, user_id, member):
         message.reply_text(tld(chat.id, "bans_err_usr_is_admin"))
         return ""
@@ -146,11 +144,7 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     split_reason = reason.split(None, 1)
 
     time_val = split_reason[0].lower()
-    if len(split_reason) > 1:
-        reason = split_reason[1]
-    else:
-        reason = ""
-
+    reason = split_reason[1] if len(split_reason) > 1 else ""
     bantime = extract_time(message, time_val)
 
     if not bantime:
@@ -215,12 +209,11 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found.":
-            message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
-            return ""
-        else:
+        if excp.message != "User not found.":
             raise
 
+        message.reply_text(tld(chat.id, "bans_err_usr_not_found"))
+        return ""
     if user_id == bot.id:
         message.reply_text(tld(chat.id, "bans_kick_is_bot"))
         return ""
@@ -318,12 +311,11 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text(tld(chat.id, "common_err_no_user"))
-            return ""
-        else:
+        if excp.message != "User not found":
             raise
 
+        message.reply_text(tld(chat.id, "common_err_no_user"))
+        return ""
     if is_user_in_chat(chat, user_id):
         message.reply_text(tld(chat.id, "bans_unban_user_in_chat"))
         return ""
@@ -388,10 +380,9 @@ def sban(bot: Bot, update: Update, args: List[str]) -> str:
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s",
-                             user_id, chat.title, chat.id, excp.message)
+        LOGGER.warning(update)
+        LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s",
+                         user_id, chat.title, chat.id, excp.message)
     return ""
 
 

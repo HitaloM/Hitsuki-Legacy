@@ -26,7 +26,7 @@ from hitsuki import pbot
 
 @pbot.on_message(filters.command("direct"))
 async def direct_link_generator(c: Client, update: Update):
-    if not len(update.command) == 2:
+    if len(update.command) != 2:
         m = "Usage: `/direct <url>`"
         await update.reply_text(
             parse_mode="md",

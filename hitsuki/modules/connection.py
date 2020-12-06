@@ -31,21 +31,17 @@ from hitsuki.modules.tr_engine.strings import tld
 @run_async
 def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
-    if chat.type != chat.PRIVATE:
-        if len(args) >= 1:
-            var = args[0]
-            print(var)
-            if var in ("no", "off"):
-                sql.set_allow_connect_to_chat(chat.id, False)
-                update.effective_message.reply_text(
-                    tld(chat.id, "connection_disable"))
-            elif var in ("yes", "on"):
-                sql.set_allow_connect_to_chat(chat.id, True)
-                update.effective_message.reply_text(
-                    tld(chat.id, "connection_enable"))
-            else:
-                update.effective_message.reply_text(
-                    tld(chat.id, "connection_err_wrong_arg"))
+    if chat.type != chat.PRIVATE and len(args) >= 1:
+        var = args[0]
+        print(var)
+        if var in ("no", "off"):
+            sql.set_allow_connect_to_chat(chat.id, False)
+            update.effective_message.reply_text(
+                tld(chat.id, "connection_disable"))
+        elif var in ("yes", "on"):
+            sql.set_allow_connect_to_chat(chat.id, True)
+            update.effective_message.reply_text(
+                tld(chat.id, "connection_enable"))
         else:
             update.effective_message.reply_text(
                 tld(chat.id, "connection_err_wrong_arg"))
@@ -174,10 +170,8 @@ def disconnect_chat(bot, update):
         else:
             update.effective_message.reply_text(
                 tld(chat.id, "connection_dis_fail"))
-    elif update.effective_chat.type == 'supergroup':
-        update.effective_message.reply_text(tld(chat.id, 'common_cmd_pm_only'))
     else:
-        update.effective_message.reply_text(tld(chat.id, "common_cmd_pm_only"))
+        update.effective_message.reply_text(tld(chat.id, 'common_cmd_pm_only'))
 
 
 def connected(bot, update, chat, user_id, need_admin=True):
@@ -190,24 +184,21 @@ def connected(bot, update, chat, user_id, need_admin=True):
                 and bot.get_chat_member(
                     user_id, update.effective_message.from_user.id).status in
             ('member')) or (user_id in SUDO_USERS):
-            if need_admin:
-                if bot.get_chat_member(
+            if not need_admin:
+                return conn_id
+            if bot.get_chat_member(
                         conn_id,
                         update.effective_message.from_user.id).status in (
                             'administrator',
                             'creator') or user_id in SUDO_USERS:
-                    return conn_id
-                else:
-                    update.effective_message.reply_text(
-                        tld(chat.id, "connection_err_no_admin"))
-                    return
-            else:
                 return conn_id
+            update.effective_message.reply_text(
+                tld(chat.id, "connection_err_no_admin"))
         else:
             update.effective_message.reply_text(
                 tld(chat.id, "connection_err_unknown"))
             disconnect_chat(bot, update)
-            return
+        return
     else:
         return False
 

@@ -39,21 +39,20 @@ def split_message(msg: str) -> List[str]:
     if len(msg) < MAX_MESSAGE_LENGTH:
         return [msg]
 
-    else:
-        lines = msg.splitlines(True)
-        small_msg = ""
-        result = []
-        for line in lines:
-            if len(small_msg) + len(line) < MAX_MESSAGE_LENGTH:
-                small_msg += line
-            else:
-                result.append(small_msg)
-                small_msg = line
+    lines = msg.splitlines(True)
+    small_msg = ""
+    result = []
+    for line in lines:
+        if len(small_msg) + len(line) < MAX_MESSAGE_LENGTH:
+            small_msg += line
         else:
-            # Else statement at the end of the for loop, so append the leftover string.
             result.append(small_msg)
+            small_msg = line
+    else:
+        # Else statement at the end of the for loop, so append the leftover string.
+        result.append(small_msg)
 
-        return result
+    return result
 
 
 def paginate_modules(chat_id,
@@ -156,7 +155,5 @@ def user_bot_owner(func):
         user = update.effective_user
         if user and user.id == OWNER_ID:
             return func(bot, update, *args, **kwargs)
-        else:
-            pass
 
     return is_user_bot_owner

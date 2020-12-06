@@ -147,9 +147,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
     try:
         bot.kick_chat_member(chat.id, user_chat.id)
     except BadRequest as excp:
-        if excp.message in GBAN_ERRORS:
-            pass
-
+        pass
     sql.gban_user(user_id, user_chat.username or user_chat.first_name,
                   full_reason)
 
@@ -282,9 +280,7 @@ def check_and_ban(update, user_id, should_message=True):
                         chat.id,
                         "antispam_spamwatch_banned").format(spamwatch_reason),
                         parse_mode=ParseMode.HTML)
-                    return
-                else:
-                    return
+                return
     except Exception:
         pass
 
@@ -336,7 +332,7 @@ def enforce_gban(bot: Bot, update: Update):
 @user_admin
 def antispam(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
-    if len(args) > 0:
+    if args:
         if args[0].lower() in ["on", "yes"]:
             sql.enable_antispam(chat.id)
             update.effective_message.reply_text(tld(chat.id, "antispam_on"))
@@ -379,22 +375,21 @@ def __user_info__(user_id, chat_id):
     if user_id in (777000, 1087968824):
         return ""
 
-    if user_id not in SUDO_USERS:
-
-        text = tld(chat_id, "antispam_userinfo_gbanned")
-        if is_gbanned:
-            text = text.format(tld(chat_id, "common_yes"))
-            text += tld(chat_id, "anitspam_appeal")
-            user = sql.get_gbanned_user(user_id)
-            if user.reason:
-                text += tld(chat_id, "antispam_userinfo_gban_reason").format(
-                    html.escape(user.reason))
-        else:
-            text = text.format(tld(chat_id, "common_no"))
-
-        return text
-    else:
+    if user_id in SUDO_USERS:
         return ""
+
+    text = tld(chat_id, "antispam_userinfo_gbanned")
+    if is_gbanned:
+        text = text.format(tld(chat_id, "common_yes"))
+        text += tld(chat_id, "anitspam_appeal")
+        user = sql.get_gbanned_user(user_id)
+        if user.reason:
+            text += tld(chat_id, "antispam_userinfo_gban_reason").format(
+                html.escape(user.reason))
+    else:
+        text = text.format(tld(chat_id, "common_no"))
+
+    return text
 
 
 def __migrate__(old_chat_id, new_chat_id):

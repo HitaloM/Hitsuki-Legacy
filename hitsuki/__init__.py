@@ -56,7 +56,7 @@ except Exception as eee:
     )
     sys.exit(1)
 
-if not CONFIG['is_example_config_or_not'] == "not_sample_anymore":
+if CONFIG['is_example_config_or_not'] != "not_sample_anymore":
     print("Please, use your eyes and stop being blinded.")
     sys.exit(1)
 

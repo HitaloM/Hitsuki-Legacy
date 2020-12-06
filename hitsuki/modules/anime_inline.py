@@ -249,10 +249,7 @@ async def inline_query_handler(client, query):
         else:
             buttons = None
         image = info.replace('anilist.co/anime/', 'img.anili.st/media/')
-        if image:
-            thumb = image
-        else:
-            thumb = None
+        thumb = image or None
         ms_g = f"**Name**: **{response['title']['romaji']}**(`{response['title']['native']}`)\n**ID**: `{response['id']}`"
         if response['nextAiringEpisode']:
             airing_time = response['nextAiringEpisode']['timeUntilAiring'] * 1000

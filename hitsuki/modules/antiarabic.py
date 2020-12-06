@@ -32,11 +32,11 @@ ANTIARABIC_GROUPS = 12
 @user_admin
 def antiarabic_setting(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
-    msg = update.effective_message
     user = update.effective_user
     member = chat.get_member(int(user.id))
 
     if chat.type != chat.PRIVATE:
+        msg = update.effective_message
         if len(args) >= 1:
             if args[0].lower() in ("yes", "on", "true"):
                 sql.set_chat_setting(chat.id, True)
@@ -74,14 +74,19 @@ def antiarabic(bot: Bot, update: Update):
 
     if chat.type != chat.PRIVATE:
         for c in to_match:
-            if ('\u0600' <= c <= '\u06FF' or '\u0750' <= c <= '\u077F'
-                    or '\u08A0' <= c <= '\u08FF' or '\uFB50' <= c <= '\uFDFF'
+            if (
+                (
+                    '\u0600' <= c <= '\u06FF'
+                    or '\u0750' <= c <= '\u077F'
+                    or '\u08A0' <= c <= '\u08FF'
+                    or '\uFB50' <= c <= '\uFDFF'
                     or '\uFE70' <= c <= '\uFEFF'
                     or '\U00010E60' <= c <= '\U00010E7F'
-                    or '\U0001EE00' <= c <= '\U0001EEFF'):
-                if can_delete(chat, bot.id):
-                    update.effective_message.delete()
-                    return ""
+                    or '\U0001EE00' <= c <= '\U0001EEFF'
+                )
+            ) and can_delete(chat, bot.id):
+                update.effective_message.delete()
+                return ""
 
 
 def __migrate__(old_chat_id, new_chat_id):

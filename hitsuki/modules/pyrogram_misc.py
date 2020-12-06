@@ -206,9 +206,9 @@ async def ip(c: Client, m: Message):
 
     fixed_lookup = {}
 
+    special = {"lat": "Latitude", "lon": "Longitude",
+               "isp": "ISP", "as": "AS", "asname": "AS name"}
     for key, value in lookup_json.items():
-        special = {"lat": "Latitude", "lon": "Longitude",
-                   "isp": "ISP", "as": "AS", "asname": "AS name"}
         if key in special:
             fixed_lookup[special[key]] = str(value)
             continue
@@ -224,6 +224,6 @@ async def ip(c: Client, m: Message):
     text = ""
 
     for key, value in fixed_lookup.items():
-        text = text + f"**{key}:** `{value}`\n"
+        text += f"**{key}:** `{value}`\n"
 
     await m.reply_text(text, parse_mode="markdown")

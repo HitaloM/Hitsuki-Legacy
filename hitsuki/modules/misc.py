@@ -87,11 +87,13 @@ def info(bot: Bot, update: Update, args: List[str]):
     elif not msg.reply_to_message and not args:
         user = msg.from_user
 
-    elif not msg.reply_to_message and (
-            not args or
-        (len(args) >= 1 and not args[0].startswith("@")
-         and not args[0].isdigit()
-         and not msg.parse_entities([MessageEntity.TEXT_MENTION]))):
+    elif (
+        not msg.reply_to_message
+        and len(args) >= 1
+        and not args[0].startswith("@")
+        and not args[0].isdigit()
+        and not msg.parse_entities([MessageEntity.TEXT_MENTION])
+    ):
         msg.reply_text(tld(chat.id, "misc_info_extract_error"))
         return
 
@@ -120,8 +122,6 @@ def info(bot: Bot, update: Update, args: List[str]):
             text += tld(chat.id, "misc_info_swban1")
             text += tld(chat.id, "misc_info_swban2").format(spamwatch.reason)
             text += tld(chat.id, "misc_info_swban3")
-        else:
-            pass
     except Exception:
         pass  # avoids crash if api is down
 
@@ -164,8 +164,7 @@ def echo(bot: Bot, update: Update):
 
 @run_async
 def reply_keyboard_remove(bot: Bot, update: Update):
-    reply_keyboard = []
-    reply_keyboard.append([ReplyKeyboardRemove(remove_keyboard=True)])
+    reply_keyboard = [[ReplyKeyboardRemove(remove_keyboard=True)]]
     reply_markup = ReplyKeyboardRemove(remove_keyboard=True)
     old_message = bot.send_message(
         chat_id=update.message.chat_id,
@@ -397,16 +396,10 @@ def wiki(bot: Bot, update: Update):
         return
     except wikipedia.exceptions.DisambiguationError as refer:
         refer = str(refer).split("\n")
-        if len(refer) >= 6:
-            batas = 6
-        else:
-            batas = len(refer)
+        batas = min(len(refer), 6)
         text = ""
         for x in range(batas):
-            if x == 0:
-                text += refer[x]+"\n"
-            else:
-                text += "- `"+refer[x]+"`\n"
+            text += refer[x]+"\n" if x == 0 else "- `"+refer[x]+"`\n"
         msg.reply_text(text, parse_mode="markdown")
         return
     except IndexError:
@@ -483,8 +476,7 @@ def outline(bot: Bot, update: Update, args: List[str]):
 
 def format_integer(number, thousand_separator=','):
     def reverse(string):
-        string = "".join(reversed(string))
-        return string
+        return "".join(reversed(string))
 
     s = reverse(str(number))
     count = 0

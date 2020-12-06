@@ -181,10 +181,7 @@ def new_member(bot: Bot, update: Update):
                         fullname = first_name
                     count = chat.get_members_count()
                     mention = mention_html(new_mem.id, first_name)
-                    if new_mem.username:
-                        username = "@" + escape(new_mem.username)
-                    else:
-                        username = mention
+                    username = "@" + escape(new_mem.username) if new_mem.username else mention
                     formatted_text = cust_welcome.format(
                         first=escape(first_name),
                         last=escape(new_mem.last_name or first_name),
@@ -268,11 +265,7 @@ def new_member(bot: Bot, update: Update):
                         fullname = first_name
                     count = chat.get_members_count()
                     mention = mention_html(new_mem.id, first_name)
-                    if new_mem.username:
-                        username = "@" + escape(new_mem.username)
-                    else:
-                        username = mention
-
+                    username = "@" + escape(new_mem.username) if new_mem.username else mention
                     valid_format = escape_invalid_curly_brackets(
                         cust_welcome, VALID_WELCOME_FORMATTERS)
                     res = valid_format.format(first=escape(first_name),
@@ -427,11 +420,7 @@ def left_member(bot: Bot, update: Update):
                     fullname = first_name
                 count = chat.get_members_count()
                 mention = mention_html(left_mem.id, first_name)
-                if left_mem.username:
-                    username = "@" + escape(left_mem.username)
-                else:
-                    username = mention
-
+                username = "@" + escape(left_mem.username) if left_mem.username else mention
                 formatted_text = cust_goodbye.format(
                     first=escape(first_name),
                     last=escape(left_mem.last_name or first_name),
@@ -465,11 +454,7 @@ def left_member(bot: Bot, update: Update):
                     fullname = first_name
                 count = chat.get_members_count()
                 mention = mention_html(left_mem.id, first_name)
-                if left_mem.username:
-                    username = "@" + escape(left_mem.username)
-                else:
-                    username = mention
-
+                username = "@" + escape(left_mem.username) if left_mem.username else mention
                 valid_format = escape_invalid_curly_brackets(
                     cust_goodbye, VALID_WELCOME_FORMATTERS)
                 res = valid_format.format(first=escape(first_name),
@@ -521,10 +506,7 @@ def security(bot: Bot, update: Update, args: List[str]) -> str:
                                                 parse_mode=ParseMode.MARKDOWN)
     else:
         getcur, cur_value, cust_text = sql.welcome_security(chat.id)
-        if getcur:
-            getcur = "True"
-        else:
-            getcur = "False"
+        getcur = "True" if getcur else "False"
         if cur_value[:1] == "0":
             cur_value = "None"
         text = tld(chat.id, 'welcome_mute_curr_settings').format(
@@ -629,7 +611,7 @@ def cleanservice(bot: Bot, update: Update, args: List[str]) -> str:
 def welcome(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     # if no args, show current replies.
-    if len(args) == 0 or args[0].lower() == "noformat":
+    if not args or args[0].lower() == "noformat":
         noformat = args and args[0].lower() == "noformat"
         pref, welcome_m, cust_content, welcome_type = sql.get_welc_pref(
             chat.id)
@@ -637,10 +619,7 @@ def welcome(bot: Bot, update: Update, args: List[str]):
         prev_welc = bool(prev_welc)
         cleanserv = sql.clean_service(chat.id)
         getcur, cur_value, cust_text = sql.welcome_security(chat.id)
-        if getcur:
-            welcsec = "True "
-        else:
-            welcsec = "False "
+        welcsec = "True " if getcur else "False "
         if cur_value[:1] == "0":
             welcsec += tld(chat.id, 'welcome_mute_time_short_none')
         else:
@@ -705,7 +684,7 @@ def welcome(bot: Bot, update: Update, args: List[str]):
 def goodbye(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
 
-    if len(args) == 0 or args[0] == "noformat":
+    if not args or args[0] == "noformat":
         noformat = args and args[0] == "noformat"
         pref, goodbye_m, cust_content, goodbye_type = sql.get_gdbye_pref(
             chat.id)
@@ -776,11 +755,10 @@ def set_welcome(bot: Bot, update: Update) -> str:
     msg = update.effective_message  # type: Optional[Message]
 
     # If user is not set text and not reply a message
-    if not msg.reply_to_message:
-        if len(msg.text.split()) == 1:
-            msg.reply_text(tld(chat.id, 'welcome_set_welcome_no_text'),
-                           parse_mode="markdown")
-            return ""
+    if not msg.reply_to_message and len(msg.text.split()) == 1:
+        msg.reply_text(tld(chat.id, 'welcome_set_welcome_no_text'),
+                       parse_mode="markdown")
+        return ""
 
     text, data_type, content, buttons = get_welcome_type(msg)
 
@@ -824,11 +802,10 @@ def set_goodbye(bot: Bot, update: Update) -> str:
     text, data_type, content, buttons = get_welcome_type(msg)
 
     # If user is not set text and not reply a message
-    if not msg.reply_to_message:
-        if len(msg.text.split()) == 1:
-            msg.reply_text(tld(chat.id, 'welcome_set_welcome_no_text'),
-                           parse_mode="markdown")
-            return ""
+    if not msg.reply_to_message and len(msg.text.split()) == 1:
+        msg.reply_text(tld(chat.id, 'welcome_set_welcome_no_text'),
+                       parse_mode="markdown")
+        return ""
 
     if data_type is None:
         msg.reply_text(tld(chat.id, 'welcome_set_welcome_no_datatype'))

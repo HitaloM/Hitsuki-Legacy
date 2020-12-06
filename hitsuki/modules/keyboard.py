@@ -25,7 +25,7 @@ def keyboard(bot, update):
     chat = update.effective_chat
     user = update.effective_user
     conn_id = con_sql.get_connected_chat(user.id)
-    if conn_id and not conn_id is False:
+    if conn_id and conn_id is not False:
         btn1 = "/disconnect - {}".format(tld(chat.id, "keyboard_disconnect"))
         btn2 = ""
         btn3 = ""
