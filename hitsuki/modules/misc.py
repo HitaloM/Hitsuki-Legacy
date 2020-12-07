@@ -464,21 +464,10 @@ def covid(bot: Bot, update: Update):
 
 
 @run_async
-def outline(bot: Bot, update: Update, args: List[str]):
-    message = update.effective_message
-    chat = update.effective_chat
-    if message.reply_to_message:
-        data = message.reply_to_message.text
-    elif len(args) >= 1:
-        data = message.text.split(None, 1)[1]
-    else:
-        message.reply_text(tld(chat.id, "misc_paste_invalid"))
-        return
-    if urlparse.urlparse(data).scheme:
-        update.message.reply_text("https://outline.com/" + data)
-    else:
-        update.message.reply_text("This is not a valid URL")
-        return
+def logs(bot: Bot, update: Update):
+    user = update.effective_user
+    with open('log.txt', 'rb') as f:
+        bot.send_document(document=f, filename=f.name, chat_id=user.id)
 
 
 def format_integer(number, thousand_separator=','):
@@ -534,7 +523,7 @@ PASTE_STATS_HANDLER = DisableAbleCommandHandler("pastestats",
 UD_HANDLER = DisableAbleCommandHandler("ud", ud)
 WIKI_HANDLER = DisableAbleCommandHandler("wiki", wiki)
 COVID_HANDLER = DisableAbleCommandHandler("covid", covid, admin_ok=True)
-OUTLINE_HANDLER = DisableAbleCommandHandler("outline", outline, pass_args=True)
+LOGS_HANDLER = CommandHandler("logs", logs, filters=Filters.user(OWNER_ID))
 
 dispatcher.add_handler(UD_HANDLER)
 dispatcher.add_handler(PASTE_HANDLER)
@@ -552,4 +541,4 @@ dispatcher.add_handler(
     DisableAbleCommandHandler("removebotkeyboard", reply_keyboard_remove))
 dispatcher.add_handler(WIKI_HANDLER)
 dispatcher.add_handler(COVID_HANDLER)
-dispatcher.add_handler(OUTLINE_HANDLER)
+dispatcher.add_handler(LOGS_HANDLER)
