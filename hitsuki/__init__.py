@@ -13,6 +13,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from hitsuki.modules.helper_funcs.handlers import (CustomMessageHandler,
+                                                   CustomCommandHandler,
+                                                   CustomRegexHandler)
 import logging
 import sys
 import spamwatch
@@ -152,9 +155,6 @@ WHITELIST_USERS = list(WHITELIST_USERS)
 SUPPORT_USERS = list(SUPPORT_USERS)
 
 # Load at end to ensure all prev variables have been set
-from hitsuki.modules.helper_funcs.handlers import (CustomMessageHandler,
-                                                   CustomCommandHandler,
-                                                   CustomRegexHandler)
 
 # make sure the regex handler can take extra kwargs
 tg.RegexHandler = CustomRegexHandler

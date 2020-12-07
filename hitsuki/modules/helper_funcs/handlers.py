@@ -82,7 +82,7 @@ class CustomCommandHandler(tg.CommandHandler):
         if message.text and len(message.text) > 1:
             fst_word = message.text_html.split(None, 1)[0]
             if len(fst_word) > 1 and any(
-                        fst_word.startswith(start) for start in CMD_STARTERS):
+                    fst_word.startswith(start) for start in CMD_STARTERS):
                 command = fst_word[1:].split('@')
                 command.append(
                     message.bot.username
@@ -127,7 +127,7 @@ class GbanLockHandler(tg.CommandHandler):
         if sql.is_user_gbanned(update.effective_user.id):
             return False
         if message.text and message.text.startswith('/') and len(
-                    message.text) > 1:
+                message.text) > 1:
             first_word = message.text_html.split(None, 1)[0]
             if len(first_word) > 1 and first_word.startswith('/'):
                 command = first_word[1:].split('@')

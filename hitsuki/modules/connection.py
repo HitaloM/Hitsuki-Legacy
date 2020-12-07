@@ -69,7 +69,7 @@ def connect_chat(bot, update, args):
                     and bot.get_chat_member(
                         connect_chat,
                         update.effective_message.from_user.id).status in
-                ('member')) or (user.id in SUDO_USERS):
+                    ('member')) or (user.id in SUDO_USERS):
 
                 connection_status = sql.connect(
                     update.effective_message.from_user.id, connect_chat)
@@ -183,14 +183,14 @@ def connected(bot, update, chat, user_id, need_admin=True):
             (sql.allow_connect_to_chat(connect_chat) is True)
                 and bot.get_chat_member(
                     user_id, update.effective_message.from_user.id).status in
-            ('member')) or (user_id in SUDO_USERS):
+                ('member')) or (user_id in SUDO_USERS):
             if not need_admin:
                 return conn_id
             if bot.get_chat_member(
-                        conn_id,
-                        update.effective_message.from_user.id).status in (
-                            'administrator',
-                            'creator') or user_id in SUDO_USERS:
+                conn_id,
+                update.effective_message.from_user.id).status in (
+                'administrator',
+                    'creator') or user_id in SUDO_USERS:
                 return conn_id
             update.effective_message.reply_text(
                 tld(chat.id, "connection_err_no_admin"))

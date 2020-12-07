@@ -538,7 +538,6 @@ def muteme(bot: Bot, update: Update, args: List[str]) -> str:
             )
         )
 
-
     else:
         update.effective_message.reply_text(tld(chat.id, "mute_cant_mute"))
 

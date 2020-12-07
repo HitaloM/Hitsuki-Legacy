@@ -181,7 +181,8 @@ def new_member(bot: Bot, update: Update):
                         fullname = first_name
                     count = chat.get_members_count()
                     mention = mention_html(new_mem.id, first_name)
-                    username = "@" + escape(new_mem.username) if new_mem.username else mention
+                    username = "@" + \
+                        escape(new_mem.username) if new_mem.username else mention
                     formatted_text = cust_welcome.format(
                         first=escape(first_name),
                         last=escape(new_mem.last_name or first_name),
@@ -265,7 +266,8 @@ def new_member(bot: Bot, update: Update):
                         fullname = first_name
                     count = chat.get_members_count()
                     mention = mention_html(new_mem.id, first_name)
-                    username = "@" + escape(new_mem.username) if new_mem.username else mention
+                    username = "@" + \
+                        escape(new_mem.username) if new_mem.username else mention
                     valid_format = escape_invalid_curly_brackets(
                         cust_welcome, VALID_WELCOME_FORMATTERS)
                     res = valid_format.format(first=escape(first_name),
@@ -420,7 +422,8 @@ def left_member(bot: Bot, update: Update):
                     fullname = first_name
                 count = chat.get_members_count()
                 mention = mention_html(left_mem.id, first_name)
-                username = "@" + escape(left_mem.username) if left_mem.username else mention
+                username = "@" + \
+                    escape(left_mem.username) if left_mem.username else mention
                 formatted_text = cust_goodbye.format(
                     first=escape(first_name),
                     last=escape(left_mem.last_name or first_name),
@@ -454,7 +457,8 @@ def left_member(bot: Bot, update: Update):
                     fullname = first_name
                 count = chat.get_members_count()
                 mention = mention_html(left_mem.id, first_name)
-                username = "@" + escape(left_mem.username) if left_mem.username else mention
+                username = "@" + \
+                    escape(left_mem.username) if left_mem.username else mention
                 valid_format = escape_invalid_curly_brackets(
                     cust_goodbye, VALID_WELCOME_FORMATTERS)
                 res = valid_format.format(first=escape(first_name),
