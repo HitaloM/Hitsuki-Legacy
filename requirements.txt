@@ -28,4 +28,4 @@ regex>=2020.10.28
 lxml>=4.6.1
 TgCrypto>=1.2.2
 telegraph>=1.4.1
-googletrans==3.1.0a0
+googletrans==4.0.0rc1
