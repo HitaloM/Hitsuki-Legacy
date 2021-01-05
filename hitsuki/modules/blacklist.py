@@ -162,7 +162,8 @@ def unblacklist(bot: Bot, update: Update):
 
         elif successful == len(to_unblacklist):
             msg.reply_text(
-                tld(chat.id, "blacklist_multi_del").format(successful, chat_name),
+                tld(chat.id, "blacklist_multi_del").format(
+                    successful, chat_name),
                 parse_mode=ParseMode.HTML,
             )
 
@@ -226,7 +227,8 @@ BLACKLIST_HANDLER = DisableAbleCommandHandler(
     "blacklist", blacklist, pass_args=True, admin_ok=True
 )
 ADD_BLACKLIST_HANDLER = CommandHandler("addblacklist", add_blacklist)
-UNBLACKLIST_HANDLER = CommandHandler(["unblacklist", "rmblacklist"], unblacklist)
+UNBLACKLIST_HANDLER = CommandHandler(
+    ["unblacklist", "rmblacklist"], unblacklist)
 BLACKLIST_DEL_HANDLER = MessageHandler(
     (Filters.text | Filters.command | Filters.sticker | Filters.photo) & Filters.group,
     del_blacklist,

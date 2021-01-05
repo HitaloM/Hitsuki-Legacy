@@ -71,7 +71,8 @@ def last_fm(bot: Bot, update: Update):
         return
     if first_track.get("@attr"):
         # Ensures the track is now playing
-        image = first_track.get("image")[3].get("#text")  # Grab URL of 300x300 image
+        image = first_track.get("image")[3].get(
+            "#text")  # Grab URL of 300x300 image
         artist = first_track.get("artist").get("name")
         song = first_track.get("name")
         loved = int(first_track.get("loved"))

@@ -118,14 +118,16 @@ async def inline_query_handler(client, query):
             )
             return
         squery = string.split(None, 1)[1]
-        n_title, tags, artist, total_pages, post_url, cover_image = nhentai_data(squery)
+        n_title, tags, artist, total_pages, post_url, cover_image = nhentai_data(
+            squery)
         reply_message = f"<code>{n_title}</code>\n\n<b>Tags:</b>\n{tags}\n<b>Artists:</b>\n{artist}\n<b>Pages:</b>\n{total_pages}"
         await client.answer_inline_query(
             query.id,
             results=[
                 InlineQueryResultArticle(
                     title=n_title,
-                    input_message_content=InputTextMessageContent(reply_message),
+                    input_message_content=InputTextMessageContent(
+                        reply_message),
                     description=tags,
                     thumb_url=cover_image,
                     reply_markup=InlineKeyboardMarkup(
@@ -177,7 +179,8 @@ async def inline_query_handler(client, query):
                         .replace("<br>", "")
                     )
                     msg += shorten(description, info)
-                    image = info.replace("anilist.co/anime/", "img.anili.st/media/")
+                    image = info.replace(
+                        "anilist.co/anime/", "img.anili.st/media/")
                     if trailer:
                         buttons = [
                             [

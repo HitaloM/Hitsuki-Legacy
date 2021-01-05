@@ -25,6 +25,7 @@ from haruka import dispatcher
 from haruka.modules.disable import DisableAbleCommandHandler
 from haruka.modules.tr_engine.strings import tld, tld_list
 
+
 @run_async
 def totranslate(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
@@ -100,6 +101,7 @@ def totranslate(bot: Bot, update: Update, args: List[str]):
             "The intended language is not found!")
     else:
         return
+
 
 __help__ = True
 

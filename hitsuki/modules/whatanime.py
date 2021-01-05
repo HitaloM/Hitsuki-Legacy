@@ -56,7 +56,8 @@ def calculate_eta(current, total, start_time):
     end_time = time.time()
     elapsed_time = end_time - start_time
     seconds = (elapsed_time * (total / current)) - elapsed_time
-    thing = "".join(str(timedelta(seconds=seconds)).split(".")[:-1]).split(", ")
+    thing = "".join(str(timedelta(seconds=seconds)
+                        ).split(".")[:-1]).split(", ")
     thing[-1] = thing[-1].rjust(8, "0")
     return ", ".join(thing)
 
@@ -153,7 +154,8 @@ async def whatanime(c: Client, m: Message):
                         await reply.reply_text("Cannot send preview :/")
 
             await asyncio.gather(
-                reply.edit_text(text, disable_web_page_preview=True), _send_preview()
+                reply.edit_text(
+                    text, disable_web_page_preview=True), _send_preview()
             )
 
 

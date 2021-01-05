@@ -78,7 +78,8 @@ def bot_can_delete(func):
         if can_delete(update.effective_chat, bot.id):
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text(tld(chat.id, "helpers_bot_cant_delete"))
+            update.effective_message.reply_text(
+                tld(chat.id, "helpers_bot_cant_delete"))
 
     return delete_rights
 
@@ -91,7 +92,8 @@ def can_pin(func):
         if update.effective_chat.get_member(bot.id).can_pin_messages:
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text(tld(chat.id, "helpers_bot_cant_pin"))
+            update.effective_message.reply_text(
+                tld(chat.id, "helpers_bot_cant_pin"))
 
     return pin_rights
 
@@ -134,7 +136,8 @@ def bot_admin(func):
         if is_bot_admin(update.effective_chat, bot.id):
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text(tld(chat.id, "helpers_bot_not_admin"))
+            update.effective_message.reply_text(
+                tld(chat.id, "helpers_bot_not_admin"))
 
     return is_admin
 
@@ -157,7 +160,8 @@ def user_admin(func):
             update.effective_message.delete()
 
         elif admin_sql.command_reaction(chat.id) is True:
-            update.effective_message.reply_text(tld(chat.id, "helpers_user_not_admin"))
+            update.effective_message.reply_text(
+                tld(chat.id, "helpers_user_not_admin"))
         else:
             update.effective_message.delete()
 

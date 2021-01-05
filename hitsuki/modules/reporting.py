@@ -61,7 +61,8 @@ def report_setting(bot: Bot, update: Update, args: List[str]):
                 msg.reply_text(tld(chat.id, "reports_pm_off"))
         else:
             msg.reply_text(
-                tld(chat.id, "reports_pm_pref").format(sql.user_should_report(chat.id)),
+                tld(chat.id, "reports_pm_pref").format(
+                    sql.user_should_report(chat.id)),
                 parse_mode=ParseMode.MARKDOWN,
             )
 
@@ -125,7 +126,8 @@ def report(bot: Bot, update: Update) -> str:
                     InlineKeyboardButton(
                         "➡ Message",
                         url="https://t.me/{}/{}".format(
-                            chat.username, str(message.reply_to_message.message_id)
+                            chat.username, str(
+                                message.reply_to_message.message_id)
                         ),
                     )
                 ],
@@ -221,7 +223,8 @@ def report(bot: Bot, update: Update) -> str:
                 except Unauthorized:
                     pass
                 except BadRequest as excp:  # TODO: cleanup exceptions
-                    LOGGER.exception(f"Exception while reporting user : {excp}")
+                    LOGGER.exception(
+                        f"Exception while reporting user : {excp}")
 
         message.reply_to_message.reply_text(
             tld(chat.id, "reports_success").format(

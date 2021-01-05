@@ -276,7 +276,8 @@ def migrate_chat(old_chat_id, new_chat_id):
 
         with BUTTON_LOCK:
             chat_buttons = (
-                SESSION.query(Buttons).filter(Buttons.chat_id == str(old_chat_id)).all()
+                SESSION.query(Buttons).filter(
+                    Buttons.chat_id == str(old_chat_id)).all()
             )
             for btn in chat_buttons:
                 btn.chat_id = str(new_chat_id)
