@@ -16,10 +16,9 @@
 import threading
 from typing import Union
 
-from sqlalchemy import Column, String, Boolean, UnicodeText, Integer, BigInteger
-
 from hitsuki.modules.helper_funcs.msg_types import Types
-from hitsuki.modules.sql import SESSION, BASE
+from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import BigInteger, Boolean, Column, Integer, String, UnicodeText
 
 DEFAULT_WELCOME = "Hey {first}, how are you?"
 DEFAULT_GOODBYE = "Nice knowing you!"
@@ -48,7 +47,8 @@ class Welcome(BASE):
 
     def __repr__(self):
         return "<Chat {} should Welcome new users: {}>".format(
-            self.chat_id, self.should_welcome)
+            self.chat_id, self.should_welcome
+        )
 
 
 class WelcomeButtons(BASE):
@@ -100,11 +100,13 @@ class WelcomeSecurity(BASE):
     mute_time = Column(UnicodeText, default="0")
     custom_text = Column(UnicodeText, default="Klik disini untuk mensuarakan")
 
-    def __init__(self,
-                 chat_id,
-                 security=False,
-                 mute_time="0",
-                 custom_text="Klik disini untuk mensuarakan"):
+    def __init__(
+        self,
+        chat_id,
+        security=False,
+        mute_time="0",
+        custom_text="Klik disini untuk mensuarakan",
+    ):
         self.chat_id = str(chat_id)  # ensure string
         self.security = security
         self.mute_time = mute_time
@@ -125,8 +127,10 @@ class UserRestirect(BASE):
 
     def __eq__(self, other):
         return bool(
-            isinstance(other, UserRestirect) and self.chat_id == other.chat_id
-            and self.user_id == other.user_id)
+            isinstance(other, UserRestirect)
+            and self.chat_id == other.chat_id
+            and self.user_id == other.user_id
+        )
 
 
 Welcome.__table__.create(checkfirst=True)
@@ -163,8 +167,7 @@ def rm_from_userlist(chat_id, user_id):
     with UR_LOCK:
         user_filt = SESSION.query(UserRestirect).get((str(chat_id), user_id))
         if user_filt:
-            if user_id in CHAT_USERRESTIRECT.get(str(chat_id),
-                                                 set()):  # sanity check
+            if user_id in CHAT_USERRESTIRECT.get(str(chat_id), set()):  # sanity check
                 CHAT_USERRESTIRECT.get(str(chat_id), set()).remove(user_id)
 
             SESSION.delete(user_filt)
@@ -194,10 +197,9 @@ def set_welcome_security(chat_id, security, mute_time, custom_text):
     with WS_LOCK:
         curr_setting = SESSION.query(WelcomeSecurity).get((str(chat_id)))
         if not curr_setting:
-            curr_setting = WelcomeSecurity(chat_id,
-                                           security=security,
-                                           mute_time=mute_time,
-                                           custom_text=custom_text)
+            curr_setting = WelcomeSecurity(
+                chat_id, security=security, mute_time=mute_time, custom_text=custom_text
+            )
 
         curr_setting.security = bool(security)
         curr_setting.mute_time = str(mute_time)
@@ -232,7 +234,12 @@ def get_welc_pref(chat_id):
     welc = SESSION.query(Welcome).get(str(chat_id))
     SESSION.close()
     if welc:
-        return welc.should_welcome, welc.custom_welcome, welc.custom_content, welc.welcome_type
+        return (
+            welc.should_welcome,
+            welc.custom_welcome,
+            welc.custom_content,
+            welc.welcome_type,
+        )
     else:
         # Welcome by default.
         return True, DEFAULT_WELCOME, None, Types.TEXT
@@ -242,7 +249,12 @@ def get_gdbye_pref(chat_id):
     welc = SESSION.query(Welcome).get(str(chat_id))
     SESSION.close()
     if welc:
-        return welc.should_goodbye, welc.custom_leave, welc.custom_content_leave, welc.leave_type
+        return (
+            welc.should_goodbye,
+            welc.custom_leave,
+            welc.custom_content_leave,
+            welc.leave_type,
+        )
     else:
         # Welcome by default.
         return True, DEFAULT_GOODBYE, None, Types.TEXT
@@ -294,11 +306,9 @@ def set_gdbye_preference(chat_id, should_goodbye):
         SESSION.commit()
 
 
-def set_custom_welcome(chat_id,
-                       custom_content,
-                       custom_welcome,
-                       welcome_type,
-                       buttons=None):
+def set_custom_welcome(
+    chat_id, custom_content, custom_welcome, welcome_type, buttons=None
+):
     if buttons is None:
         buttons = []
 
@@ -319,8 +329,11 @@ def set_custom_welcome(chat_id,
         SESSION.add(welcome_settings)
 
         with WELC_BTN_LOCK:
-            prev_buttons = SESSION.query(WelcomeButtons).filter(
-                WelcomeButtons.chat_id == str(chat_id)).all()
+            prev_buttons = (
+                SESSION.query(WelcomeButtons)
+                .filter(WelcomeButtons.chat_id == str(chat_id))
+                .all()
+            )
             for btn in prev_buttons:
                 SESSION.delete(btn)
 
@@ -341,11 +354,9 @@ def get_custom_welcome(chat_id):
     return ret
 
 
-def set_custom_gdbye(chat_id,
-                     custom_content_leave,
-                     custom_goodbye,
-                     goodbye_type,
-                     buttons=None):
+def set_custom_gdbye(
+    chat_id, custom_content_leave, custom_goodbye, goodbye_type, buttons=None
+):
     if buttons is None:
         buttons = []
 
@@ -366,8 +377,11 @@ def set_custom_gdbye(chat_id,
         SESSION.add(welcome_settings)
 
         with LEAVE_BTN_LOCK:
-            prev_buttons = SESSION.query(GoodbyeButtons).filter(
-                GoodbyeButtons.chat_id == str(chat_id)).all()
+            prev_buttons = (
+                SESSION.query(GoodbyeButtons)
+                .filter(GoodbyeButtons.chat_id == str(chat_id))
+                .all()
+            )
             for btn in prev_buttons:
                 SESSION.delete(btn)
 
@@ -390,18 +404,24 @@ def get_custom_gdbye(chat_id):
 
 def get_welc_buttons(chat_id):
     try:
-        return SESSION.query(WelcomeButtons).filter(
-            WelcomeButtons.chat_id == str(chat_id)).order_by(
-                WelcomeButtons.id).all()
+        return (
+            SESSION.query(WelcomeButtons)
+            .filter(WelcomeButtons.chat_id == str(chat_id))
+            .order_by(WelcomeButtons.id)
+            .all()
+        )
     finally:
         SESSION.close()
 
 
 def get_gdbye_buttons(chat_id):
     try:
-        return SESSION.query(GoodbyeButtons).filter(
-            GoodbyeButtons.chat_id == str(chat_id)).order_by(
-                GoodbyeButtons.id).all()
+        return (
+            SESSION.query(GoodbyeButtons)
+            .filter(GoodbyeButtons.chat_id == str(chat_id))
+            .order_by(GoodbyeButtons.id)
+            .all()
+        )
     finally:
         SESSION.close()
 
@@ -413,14 +433,20 @@ def migrate_chat(old_chat_id, new_chat_id):
             chat.chat_id = str(new_chat_id)
 
         with WELC_BTN_LOCK:
-            chat_buttons = SESSION.query(WelcomeButtons).filter(
-                WelcomeButtons.chat_id == str(old_chat_id)).all()
+            chat_buttons = (
+                SESSION.query(WelcomeButtons)
+                .filter(WelcomeButtons.chat_id == str(old_chat_id))
+                .all()
+            )
             for btn in chat_buttons:
                 btn.chat_id = str(new_chat_id)
 
         with LEAVE_BTN_LOCK:
-            chat_buttons = SESSION.query(GoodbyeButtons).filter(
-                GoodbyeButtons.chat_id == str(old_chat_id)).all()
+            chat_buttons = (
+                SESSION.query(GoodbyeButtons)
+                .filter(GoodbyeButtons.chat_id == str(old_chat_id))
+                .all()
+            )
             for btn in chat_buttons:
                 btn.chat_id = str(new_chat_id)
 
@@ -431,7 +457,7 @@ def __load_chat_userrestirect():
     global CHAT_USERRESTIRECT
     try:
         chats = SESSION.query(UserRestirect.chat_id).distinct().all()
-        for (chat_id, ) in chats:  # remove tuple by ( ,)
+        for (chat_id,) in chats:  # remove tuple by ( ,)
             CHAT_USERRESTIRECT[chat_id] = []
 
         all_filters = SESSION.query(UserRestirect).all()

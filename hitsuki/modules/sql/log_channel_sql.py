@@ -15,9 +15,8 @@
 
 import threading
 
-from sqlalchemy import Column, String, func, distinct
-
 from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import Column, String, distinct, func
 
 
 class GroupLogs(BASE):

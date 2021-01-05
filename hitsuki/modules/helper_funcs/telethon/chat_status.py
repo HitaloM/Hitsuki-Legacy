@@ -13,10 +13,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from telethon.tl.functions.channels import GetParticipantRequest
-from telethon.tl.types import ChannelParticipantAdmin, ChannelParticipantCreator, ChannelParticipantsAdmins
+from hitsuki import SUDO_USERS, WHITELIST_USERS, tbot
 
-from hitsuki import tbot, SUDO_USERS, WHITELIST_USERS
+from telethon.tl.functions.channels import GetParticipantRequest
+from telethon.tl.types import (
+    ChannelParticipantAdmin,
+    ChannelParticipantCreator,
+    ChannelParticipantsAdmins,
+)
 
 
 async def user_is_ban_protected(user_id: int, message):
@@ -24,13 +28,15 @@ async def user_is_ban_protected(user_id: int, message):
         return True
 
     if message.is_channel:
-        participant = await tbot(
-            GetParticipantRequest(message.chat_id, user_id))
-        return isinstance(participant.participant,
-                          (ChannelParticipantAdmin, ChannelParticipantCreator))
+        participant = await tbot(GetParticipantRequest(message.chat_id, user_id))
+        return isinstance(
+            participant.participant,
+            (ChannelParticipantAdmin, ChannelParticipantCreator),
+        )
 
-    async for user in tbot.iter_participants(message.chat_id,
-                                             filter=ChannelParticipantsAdmins):
+    async for user in tbot.iter_participants(
+        message.chat_id, filter=ChannelParticipantsAdmins
+    ):
         if user_id == user.id:
             return True
     return False
@@ -41,13 +47,15 @@ async def user_is_admin(user_id: int, message):
         return True
 
     if message.is_channel:
-        participant = await tbot(
-            GetParticipantRequest(message.chat_id, user_id))
-        return isinstance(participant.participant,
-                          (ChannelParticipantAdmin, ChannelParticipantCreator))
+        participant = await tbot(GetParticipantRequest(message.chat_id, user_id))
+        return isinstance(
+            participant.participant,
+            (ChannelParticipantAdmin, ChannelParticipantCreator),
+        )
 
-    async for user in tbot.iter_participants(message.chat_id,
-                                             filter=ChannelParticipantsAdmins):
+    async for user in tbot.iter_participants(
+        message.chat_id, filter=ChannelParticipantsAdmins
+    ):
         if user_id == user.id:
             return True
     return False
@@ -59,11 +67,14 @@ async def is_user_admin(user_id: int, chat_id):
 
     try:
         participant = await tbot(GetParticipantRequest(chat_id, user_id))
-        return isinstance(participant.participant,
-                          (ChannelParticipantAdmin, ChannelParticipantCreator))
+        return isinstance(
+            participant.participant,
+            (ChannelParticipantAdmin, ChannelParticipantCreator),
+        )
     except TypeError:
         async for user in tbot.iter_participants(
-                chat_id, filter=ChannelParticipantsAdmins):
+            chat_id, filter=ChannelParticipantsAdmins
+        ):
             if user_id == user.id:
                 return True
     return False
@@ -71,11 +82,12 @@ async def is_user_admin(user_id: int, chat_id):
 
 async def hitsuki_is_admin(chat_id: int):
     try:
-        participant = await tbot(GetParticipantRequest(chat_id, 'me'))
+        participant = await tbot(GetParticipantRequest(chat_id, "me"))
         return isinstance(participant.participant, ChannelParticipantAdmin)
     except TypeError:
         async for user in tbot.iter_participants(
-                chat_id, filter=ChannelParticipantsAdmins):
+            chat_id, filter=ChannelParticipantsAdmins
+        ):
             if user.is_self:
                 return True
     return False

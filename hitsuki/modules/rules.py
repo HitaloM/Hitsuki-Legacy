@@ -13,18 +13,16 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram import Update, Bot
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async
-from telegram.utils.helpers import escape_markdown
-
 import hitsuki.modules.sql.rules_sql as sql
 from hitsuki import dispatcher
 from hitsuki.modules.connection import connected
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.helper_funcs.string_handling import markdown_parser
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import Bot, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, Update
+from telegram.error import BadRequest
+from telegram.ext import CommandHandler, run_async
+from telegram.utils.helpers import escape_markdown
 
 
 @run_async
@@ -39,8 +37,8 @@ def get_rules(bot: Bot, update: Update):
         chat_id = conn
         from_pm = True
     else:
-        if chat.type == 'private':
-            msg.reply_text(tld(chat.id, 'common_cmd_group_only'))
+        if chat.type == "private":
+            msg.reply_text(tld(chat.id, "common_cmd_group_only"))
             return
         chat_id = chat.id
 
@@ -56,15 +54,13 @@ def send_rules(update, chat_id, from_pm=False):
         chat = bot.get_chat(chat_id)
     except BadRequest as excp:
         if excp.message == "Chat not found" and from_pm:
-            bot.send_message(user.id,
-                             tld(chat.id, "rules_shortcut_not_setup_properly"))
+            bot.send_message(user.id, tld(chat.id, "rules_shortcut_not_setup_properly"))
             return
         else:
             raise
 
     rules = sql.get_rules(chat_id)
-    text = tld(chat.id, "rules_display").format(escape_markdown(chat.title),
-                                                rules)
+    text = tld(chat.id, "rules_display").format(escape_markdown(chat.title), rules)
 
     if from_pm and rules:
         bot.send_message(user.id, text, parse_mode=ParseMode.MARKDOWN)
@@ -74,11 +70,17 @@ def send_rules(update, chat_id, from_pm=False):
         rules_text = tld(chat.id, "rules")
         update.effective_message.reply_text(
             tld(chat.id, "rules_button_click"),
-            reply_markup=InlineKeyboardMarkup([[
-                InlineKeyboardButton(text=rules_text,
-                                     url="t.me/{}?start={}".format(
-                                         bot.username, chat_id))
-            ]]))
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            text=rules_text,
+                            url="t.me/{}?start={}".format(bot.username, chat_id),
+                        )
+                    ]
+                ]
+            ),
+        )
     else:
         update.effective_message.reply_text(tld(chat.id, "rules_not_found"))
 
@@ -94,21 +96,19 @@ def set_rules(bot: Bot, update: Update):
     if conn:
         chat_id = conn
     else:
-        if chat.type == 'private':
-            msg.reply_text(tld(chat.id, 'common_cmd_group_only'))
+        if chat.type == "private":
+            msg.reply_text(tld(chat.id, "common_cmd_group_only"))
             return
         chat_id = chat.id
 
     raw_text = msg.text
-    args = raw_text.split(None,
-                          1)  # use python's maxsplit to separate cmd and args
+    args = raw_text.split(None, 1)  # use python's maxsplit to separate cmd and args
     if len(args) == 2:
         txt = args[1]
-        offset = len(txt) - len(
-            raw_text)  # set correct offset relative to command
-        markdown_rules = markdown_parser(txt,
-                                         entities=msg.parse_entities(),
-                                         offset=offset)
+        offset = len(txt) - len(raw_text)  # set correct offset relative to command
+        markdown_rules = markdown_parser(
+            txt, entities=msg.parse_entities(), offset=offset
+        )
 
         sql.set_rules(chat_id, markdown_rules)
         msg.reply_text(tld(chat.id, "rules_success"))
@@ -118,7 +118,8 @@ def set_rules(bot: Bot, update: Update):
         # set correct offset relative to command
         offset = len(txt) - len(raw_text)
         markdown_rules = markdown_parser(
-            txt, entities=msg.parse_entities(), offset=offset)
+            txt, entities=msg.parse_entities(), offset=offset
+        )
 
         sql.set_rules(chat_id, markdown_rules)
         msg.reply_text(tld(chat.id, "rules_success"))
@@ -135,13 +136,13 @@ def clear_rules(bot: Bot, update: Update):
     if conn:
         chat_id = conn
     else:
-        if chat.type == 'private':
-            msg.reply_text(tld(chat.id, 'common_cmd_group_only'))
+        if chat.type == "private":
+            msg.reply_text(tld(chat.id, "common_cmd_group_only"))
             return
         chat_id = chat.id
 
     sql.set_rules(chat_id, "")
-    update.effective_message.reply_text(tld(chat.id, 'rules_clean_success'))
+    update.effective_message.reply_text(tld(chat.id, "rules_clean_success"))
 
 
 def __stats__():

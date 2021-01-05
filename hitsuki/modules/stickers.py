@@ -13,23 +13,21 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import math
 import html
+import math
 import os
 import urllib.request as urllib
 from typing import List
 
 import requests
-from PIL import Image
 from bs4 import BeautifulSoup as bs
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram import TelegramError
-from telegram import Update, Bot
-from telegram.ext import run_async
-
 from hitsuki import dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.tr_engine.strings import tld
+from PIL import Image
+from telegram import (Bot, InlineKeyboardButton, InlineKeyboardMarkup,
+                      ParseMode, TelegramError, Update)
+from telegram.ext import run_async
 
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
 

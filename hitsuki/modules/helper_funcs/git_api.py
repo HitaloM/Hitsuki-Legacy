@@ -43,56 +43,56 @@ def getReleaseData(repoData, index):
 def getAuthor(releaseData):
     if releaseData is None:
         return None
-    return releaseData['author']['login']
+    return releaseData["author"]["login"]
 
 
 def getAuthorUrl(releaseData):
     if releaseData is None:
         return None
-    return releaseData['author']['html_url']
+    return releaseData["author"]["html_url"]
 
 
 def getReleaseName(releaseData):
     if releaseData is None:
         return None
-    return releaseData['name']
+    return releaseData["name"]
 
 
 def getReleaseDate(releaseData):
     if releaseData is None:
         return None
-    return releaseData['published_at']
+    return releaseData["published_at"]
 
 
 def getAssetsSize(releaseData):
     if releaseData is None:
         return None
-    return len(releaseData['assets'])
+    return len(releaseData["assets"])
 
 
 def getAssets(releaseData):
     if releaseData is None:
         return None
-    return releaseData['assets']
+    return releaseData["assets"]
 
 
 def getBody(releaseData):
     if releaseData is None:
         return None
-    return releaseData['body']
+    return releaseData["body"]
 
 
 def getReleaseFileName(asset):
-    return asset['name']
+    return asset["name"]
 
 
 def getReleaseFileURL(asset):
-    return asset['browser_download_url']
+    return asset["browser_download_url"]
 
 
 def getDownloadCount(asset):
-    return asset['download_count']
+    return asset["download_count"]
 
 
 def getSize(asset):
-    return asset['size']
+    return asset["size"]

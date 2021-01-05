@@ -15,11 +15,10 @@
 
 import re
 
-LINK_REGEX = re.compile(r'(?<!\\)\[.+?\]\((.*?)\)')
-BTN_URL_REGEX = re.compile(
-    r"(\[([^\[]+?)\]\(buttonurl:(?:/{0,2})(.+?)(:same)?\))")
+LINK_REGEX = re.compile(r"(?<!\\)\[.+?\]\((.*?)\)")
+BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\(buttonurl:(?:/{0,2})(.+?)(:same)?\))")
 
-FORMATS = ['**', '`', '```', '__']
+FORMATS = ["**", "`", "```", "__"]
 
 
 def message_parser(message):
@@ -50,7 +49,7 @@ def message_parser(message):
             btn_url = button[2]
             same_row = bool(button[3])
             buttons.append((btn_name, btn_url, same_row))
-        string = re.sub(BTN_URL_REGEX, '', new_string)
+        string = re.sub(BTN_URL_REGEX, "", new_string)
     else:
         string = new_string
     return string.strip(), buttons
@@ -68,11 +67,11 @@ def escape_invalid_curly_brackets(text, valids) -> str:
             else:
                 success = False
                 for v in valids:
-                    if text[idx:].startswith('{' + v + '}'):
+                    if text[idx:].startswith("{" + v + "}"):
                         success = True
                         break
                 if success:
-                    new_text += text[idx:idx + len(v) + 2]
+                    new_text += text[idx : idx + len(v) + 2]
                     idx += len(v) + 2
                     continue
                 else:

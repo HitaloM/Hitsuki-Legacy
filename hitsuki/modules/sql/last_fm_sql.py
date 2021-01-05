@@ -17,9 +17,8 @@
 
 import threading
 
-from sqlalchemy import Column, String
-
 from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import Column, String
 
 
 class LastFMUsers(BASE):
