@@ -1,5 +1,5 @@
 #    Haruka Aya (A telegram bot project)
-#    Copyright (C) 2019-2020 Akito Mizukito (Haruka Network Development)
+#    Copyright (C) 2019-2021 A Haruka Aita and Intellivoid Technologies project
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
