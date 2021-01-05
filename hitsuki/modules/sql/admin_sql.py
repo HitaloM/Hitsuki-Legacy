@@ -39,7 +39,8 @@ CHAT_LOCK = threading.RLock()
 
 def command_reaction(chat_id: Union[str, int]) -> bool:
     try:
-        chat_setting = SESSION.query(CommandReactionChatSettings).get(str(chat_id))
+        chat_setting = SESSION.query(
+            CommandReactionChatSettings).get(str(chat_id))
         if chat_setting:
             return chat_setting.comm_reaction
         return True
@@ -49,7 +50,8 @@ def command_reaction(chat_id: Union[str, int]) -> bool:
 
 def set_command_reaction(chat_id: Union[int, str], setting: bool):
     with CHAT_LOCK:
-        chat_setting = SESSION.query(CommandReactionChatSettings).get(str(chat_id))
+        chat_setting = SESSION.query(
+            CommandReactionChatSettings).get(str(chat_id))
         if not chat_setting:
             chat_setting = CommandReactionChatSettings(chat_id)
 

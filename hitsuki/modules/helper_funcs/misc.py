@@ -89,7 +89,7 @@ def paginate_modules(
 
     # can only have a certain amount of buttons side by side
     if len(pairs) > 7:
-        pairs = pairs[modulo_page * 7 : 7 * (modulo_page + 1)] + [
+        pairs = pairs[modulo_page * 7: 7 * (modulo_page + 1)] + [
             (
                 EqInlineKeyboardButton(
                     "<<", callback_data="{}_prev({})".format(prefix, modulo_page)
@@ -122,7 +122,8 @@ def send_to_list(
     for user_id in set(send_to):
         try:
             if markdown:
-                bot.send_message(user_id, message, parse_mode=ParseMode.MARKDOWN)
+                bot.send_message(user_id, message,
+                                 parse_mode=ParseMode.MARKDOWN)
             elif html:
                 bot.send_message(user_id, message, parse_mode=ParseMode.HTML)
             else:

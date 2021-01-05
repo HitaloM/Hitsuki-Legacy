@@ -282,11 +282,13 @@ def del_lockables(bot: Bot, update: Update):
                 for new_mem in new_members:
                     if new_mem.is_bot:
                         if not is_bot_admin(chat, bot.id):
-                            message.reply_text(tld(chat.id, "locks_lock_bots_no_admin"))
+                            message.reply_text(
+                                tld(chat.id, "locks_lock_bots_no_admin"))
                             return
 
                         chat.kick_member(new_mem.id)
-                        message.reply_text(tld(chat.id, "locks_lock_bots_kick"))
+                        message.reply_text(
+                            tld(chat.id, "locks_lock_bots_kick"))
             else:
                 try:
                     message.delete()
@@ -375,8 +377,10 @@ def __migrate__(old_chat_id, new_chat_id):
 __help__ = True
 
 LOCKTYPES_HANDLER = DisableAbleCommandHandler("locktypes", locktypes)
-LOCK_HANDLER = CommandHandler("lock", lock, pass_args=True, filters=Filters.group)
-UNLOCK_HANDLER = CommandHandler("unlock", unlock, pass_args=True, filters=Filters.group)
+LOCK_HANDLER = CommandHandler(
+    "lock", lock, pass_args=True, filters=Filters.group)
+UNLOCK_HANDLER = CommandHandler(
+    "unlock", unlock, pass_args=True, filters=Filters.group)
 LOCKED_HANDLER = CommandHandler("locks", list_locks, filters=Filters.group)
 
 dispatcher.add_handler(LOCK_HANDLER)

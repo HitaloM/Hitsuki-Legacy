@@ -131,7 +131,8 @@ def locale_button(bot, update):
                     InlineKeyboardButton(
                         "English (US) 🇺🇸", callback_data="set_lang_en-US"
                     ),
-                    InlineKeyboardButton("Portuguese 🇧🇷", callback_data="set_lang_pt"),
+                    InlineKeyboardButton(
+                        "Portuguese 🇧🇷", callback_data="set_lang_pt"),
                 ]
             ]
             + [

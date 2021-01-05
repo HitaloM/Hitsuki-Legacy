@@ -79,7 +79,8 @@ def getRelease(bot: Bot, update: Update, args: List[str]):
         index = int(args[1])
     url = args[0]
     text = getData(url, index)
-    msg.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    msg.reply_text(text, parse_mode=ParseMode.HTML,
+                   disable_web_page_preview=True)
     return
 
 
@@ -98,7 +99,8 @@ def hashFetch(bot: Bot, update: Update):
         )
         return
     text = getData(url, index)
-    msg.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    msg.reply_text(text, parse_mode=ParseMode.HTML,
+                   disable_web_page_preview=True)
     return
 
 
@@ -117,7 +119,8 @@ def cmdFetch(bot: Bot, update: Update, args: List[str]):
         )
         return
     text = getData(url, index)
-    msg.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
+    msg.reply_text(text, parse_mode=ParseMode.HTML,
+                   disable_web_page_preview=True)
     return
 
 
@@ -148,7 +151,8 @@ def saveRepo(bot: Bot, update: Update, args: List[str]):
         and (len(args) != 3 and not args[2].isdigit())
         or "/" not in args[1]
     ):
-        msg.reply_text("Invalid data, use <reponame> <user>/<repo> <value (optional)>")
+        msg.reply_text(
+            "Invalid data, use <reponame> <user>/<repo> <value (optional)>")
         return
     index = 0
     if len(args) == 3:
@@ -207,9 +211,11 @@ RELEASE_HANDLER = DisableAbleCommandHandler(
 FETCH_HANDLER = DisableAbleCommandHandler(
     "fetch", cmdFetch, pass_args=True, admin_ok=True
 )
-SAVEREPO_HANDLER = DisableAbleCommandHandler("saverepo", saveRepo, pass_args=True)
+SAVEREPO_HANDLER = DisableAbleCommandHandler(
+    "saverepo", saveRepo, pass_args=True)
 DELREPO_HANDLER = DisableAbleCommandHandler("delrepo", delRepo, pass_args=True)
-LISTREPO_HANDLER = DisableAbleCommandHandler("listrepo", listRepo, admin_ok=True)
+LISTREPO_HANDLER = DisableAbleCommandHandler(
+    "listrepo", listRepo, admin_ok=True)
 CHANGELOG_HANDLER = DisableAbleCommandHandler(
     "changelog", changelog, pass_args=True, admin_ok=True
 )

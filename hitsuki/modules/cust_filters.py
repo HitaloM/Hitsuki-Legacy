@@ -140,7 +140,8 @@ def filters(bot: Bot, update: Update):
         is_document = True
 
     elif msg.reply_to_message and msg.reply_to_message.photo:
-        content = msg.reply_to_message.photo[-1].file_id  # last elem = best quality
+        # last elem = best quality
+        content = msg.reply_to_message.photo[-1].file_id
         is_image = True
 
     elif msg.reply_to_message and msg.reply_to_message.audio:
@@ -223,7 +224,8 @@ def stop_filter(bot: Bot, update: Update):
             )
             raise DispatcherHandlerStop
 
-    update.effective_message.reply_text(tld(chat.id, "cust_filters_err_wrong_filter"))
+    update.effective_message.reply_text(
+        tld(chat.id, "cust_filters_err_wrong_filter"))
 
 
 @run_async
@@ -278,7 +280,8 @@ def reply_filter(bot: Bot, update: Update):
                     )
                 except BadRequest as excp:
                     if excp.message == "Unsupported url protocol":
-                        message.reply_text(tld(chat.id, "cust_filters_err_protocol"))
+                        message.reply_text(
+                            tld(chat.id, "cust_filters_err_protocol"))
                     elif excp.message == "Reply message not found":
                         bot.send_message(
                             chat.id,
@@ -293,7 +296,8 @@ def reply_filter(bot: Bot, update: Update):
                                 tld(chat.id, "cust_filters_err_badformat")
                             )
                             LOGGER.warning(
-                                "Message %s could not be parsed", str(filt.reply)
+                                "Message %s could not be parsed", str(
+                                    filt.reply)
                             )
                             LOGGER.exception(
                                 "Could not parse filter %s in chat %s",
@@ -329,7 +333,8 @@ def stop_all_filters(bot: Bot, update: Update):
     flist = sql.get_chat_triggers(chat.id)
 
     if not flist:
-        message.reply_text(tld(chat.id, "cust_filters_list_empty").format(chat.title))
+        message.reply_text(
+            tld(chat.id, "cust_filters_list_empty").format(chat.title))
         return
 
     f_flist = []
@@ -358,7 +363,8 @@ __help__ = True
 FILTER_HANDLER = DisableAbleCommandHandler("filter", filters)
 STOP_HANDLER = DisableAbleCommandHandler("stop", stop_filter)
 STOPALL_HANDLER = DisableAbleCommandHandler("stopall", stop_all_filters)
-LIST_HANDLER = DisableAbleCommandHandler("filters", list_handlers, admin_ok=True)
+LIST_HANDLER = DisableAbleCommandHandler(
+    "filters", list_handlers, admin_ok=True)
 CUST_FILTER_HANDLER = MessageHandler(CustomFilters.has_text, reply_filter)
 
 dispatcher.add_handler(FILTER_HANDLER)

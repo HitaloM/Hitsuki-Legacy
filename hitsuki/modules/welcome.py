@@ -165,7 +165,8 @@ def send(update, message, keyboard, backup_message):
 def new_member(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
 
-    should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(chat.id)
+    should_welc, cust_welcome, cust_content, welc_type = sql.get_welc_pref(
+        chat.id)
     cust_welcome = markdown_to_html(cust_welcome)
 
     if should_welc:
@@ -207,7 +208,8 @@ def new_member(bot: Bot, update: Update):
                     # edge case of empty name - occurs for some bugs.
                     first_name = new_mem.first_name or "PersonWithNoName"
                     if new_mem.last_name:
-                        fullname = "{} {}".format(first_name, new_mem.last_name)
+                        fullname = "{} {}".format(
+                            first_name, new_mem.last_name)
                     else:
                         fullname = first_name
                     count = chat.get_members_count()
@@ -229,7 +231,8 @@ def new_member(bot: Bot, update: Update):
                     # Build keyboard
                     buttons = sql.get_welc_buttons(chat.id)
                     keyb = build_keyboard(buttons)
-                    getsec, mutetime, custom_text = sql.welcome_security(chat.id)
+                    getsec, mutetime, custom_text = sql.welcome_security(
+                        chat.id)
 
                     member = chat.get_member(new_mem.id)
                     # If user ban protected don't apply security on him
@@ -307,7 +310,8 @@ def new_member(bot: Bot, update: Update):
 
                 if cust_welcome:
                     if new_mem.last_name:
-                        fullname = "{} {}".format(first_name, new_mem.last_name)
+                        fullname = "{} {}".format(
+                            first_name, new_mem.last_name)
                     else:
                         fullname = first_name
                     count = chat.get_members_count()
@@ -360,7 +364,8 @@ def new_member(bot: Bot, update: Update):
                                 canrest = False
 
                         else:
-                            mutetime = extract_time(update.effective_message, mutetime)
+                            mutetime = extract_time(
+                                update.effective_message, mutetime)
 
                             if (
                                 member.can_send_messages is None
@@ -385,14 +390,16 @@ def new_member(bot: Bot, update: Update):
                             [
                                 InlineKeyboardButton(
                                     text=str(custom_text),
-                                    callback_data="check_bot_({})".format(new_mem.id),
+                                    callback_data="check_bot_({})".format(
+                                        new_mem.id),
                                 )
                             ]
                         )
                 keyboard = InlineKeyboardMarkup(keyb)
 
                 sent = send(
-                    update, res, keyboard, sql.DEFAULT_WELCOME.format(first=first_name)
+                    update, res, keyboard, sql.DEFAULT_WELCOME.format(
+                        first=first_name)
                 )  # type: Optional[Message]
 
             prev_welc = sql.get_clean_pref(chat.id)
@@ -563,13 +570,16 @@ def security(bot: Bot, update: Update, args: List[str]) -> str:
             check = bot.getChatMember(chat.id, bot.id)
             if check.status == "member" or check["can_restrict_members"] is False:
                 text = tld(chat.id, "welcome_mute_bot_cant_mute")
-                update.effective_message.reply_text(text, parse_mode="markdown")
+                update.effective_message.reply_text(
+                    text, parse_mode="markdown")
                 return ""
             sql.set_welcome_security(chat.id, True, str(cur_value), cust_text)
-            update.effective_message.reply_text(tld(chat.id, "welcome_mute_enabled"))
+            update.effective_message.reply_text(
+                tld(chat.id, "welcome_mute_enabled"))
         elif var in ("no", "off"):
             sql.set_welcome_security(chat.id, False, str(cur_value), cust_text)
-            update.effective_message.reply_text(tld(chat.id, "welcome_mute_disabled"))
+            update.effective_message.reply_text(
+                tld(chat.id, "welcome_mute_disabled"))
         else:
             update.effective_message.reply_text(
                 tld(chat.id, "common_invalid_arg"), parse_mode=ParseMode.MARKDOWN
@@ -641,7 +651,8 @@ def security_text_reset(bot: Bot, update: Update):
     chat = update.effective_chat  # type: Optional[Chat]
     getcur, cur_value, cust_text = sql.welcome_security(chat.id)
     sql.set_welcome_security(
-        chat.id, getcur, cur_value, tld(chat.id, "welcome_mute_btn_default_text")
+        chat.id, getcur, cur_value, tld(
+            chat.id, "welcome_mute_btn_default_text")
     )
     update.effective_message.reply_text(
         tld(chat.id, "welcome_mute_btn_text_reset").format(
@@ -695,7 +706,8 @@ def welcome(bot: Bot, update: Update, args: List[str]):
     # if no args, show current replies.
     if len(args) == 0 or args[0].lower() == "noformat":
         noformat = args and args[0].lower() == "noformat"
-        pref, welcome_m, cust_content, welcome_type = sql.get_welc_pref(chat.id)
+        pref, welcome_m, cust_content, welcome_type = sql.get_welc_pref(
+            chat.id)
         prev_welc = sql.get_clean_pref(chat.id)
         prev_welc = bool(prev_welc)
         cleanserv = sql.clean_service(chat.id)
@@ -707,12 +719,14 @@ def welcome(bot: Bot, update: Update, args: List[str]):
         if cur_value[:1] == "0":
             welcsec += tld(chat.id, "welcome_mute_time_short_none")
         else:
-            welcsec += tld(chat.id, "welcome_mute_time_short").format(cur_value)
+            welcsec += tld(chat.id,
+                           "welcome_mute_time_short").format(cur_value)
 
         text = tld(chat.id, "welcome_settings").format(
             pref, prev_welc, cleanserv, welcsec, cust_text
         )
-        update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
+        update.effective_message.reply_text(
+            text, parse_mode=ParseMode.MARKDOWN)
 
         if welcome_type in (sql.Types.BUTTON_TEXT, sql.Types.TEXT):
             buttons = sql.get_welc_buttons(chat.id)
@@ -730,7 +744,8 @@ def welcome(bot: Bot, update: Update, args: List[str]):
             buttons = sql.get_welc_buttons(chat.id)
             if noformat:
                 welcome_m += revert_buttons(buttons)
-                ENUM_FUNC_MAP[welcome_type](chat.id, cust_content, caption=welcome_m)
+                ENUM_FUNC_MAP[welcome_type](
+                    chat.id, cust_content, caption=welcome_m)
 
             else:
                 keyb = build_keyboard(buttons)
@@ -747,15 +762,18 @@ def welcome(bot: Bot, update: Update, args: List[str]):
     elif len(args) >= 1:
         if args[0].lower() in ("on", "yes"):
             sql.set_welc_preference(str(chat.id), True)
-            update.effective_message.reply_text(tld(chat.id, "welcome_greet_set_on"))
+            update.effective_message.reply_text(
+                tld(chat.id, "welcome_greet_set_on"))
 
         elif args[0].lower() in ("off", "no"):
             sql.set_welc_preference(str(chat.id), False)
-            update.effective_message.reply_text(tld(chat.id, "welcome_greet_set_off"))
+            update.effective_message.reply_text(
+                tld(chat.id, "welcome_greet_set_off"))
 
         else:
             # idek what you're writing, say yes or no
-            update.effective_message.reply_text(tld(chat.id, "common_invalid_arg"))
+            update.effective_message.reply_text(
+                tld(chat.id, "common_invalid_arg"))
 
 
 @run_async
@@ -765,7 +783,8 @@ def goodbye(bot: Bot, update: Update, args: List[str]):
 
     if len(args) == 0 or args[0] == "noformat":
         noformat = args and args[0] == "noformat"
-        pref, goodbye_m, cust_content, goodbye_type = sql.get_gdbye_pref(chat.id)
+        pref, goodbye_m, cust_content, goodbye_type = sql.get_gdbye_pref(
+            chat.id)
         if cust_content is None:
             cust_content = goodbye_m
 
@@ -790,7 +809,8 @@ def goodbye(bot: Bot, update: Update, args: List[str]):
             buttons = sql.get_gdbye_buttons(chat.id)
             if noformat:
                 goodbye_m += revert_buttons(buttons)
-                ENUM_FUNC_MAP[goodbye_type](chat.id, cust_content, caption=goodbye_m)
+                ENUM_FUNC_MAP[goodbye_type](
+                    chat.id, cust_content, caption=goodbye_m)
 
             else:
                 keyb = build_keyboard(buttons)
@@ -816,7 +836,8 @@ def goodbye(bot: Bot, update: Update, args: List[str]):
 
         elif args[0].lower() in ("off", "no"):
             sql.set_gdbye_preference(str(chat.id), False)
-            update.effective_message.reply_text(tld(chat.id, "welcome_goodbye_set_off"))
+            update.effective_message.reply_text(
+                tld(chat.id, "welcome_goodbye_set_off"))
 
         else:
             # idek what you're writing, say yes or no
@@ -867,7 +888,8 @@ def reset_welcome(bot: Bot, update: Update) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     sql.set_custom_welcome(chat.id, None, sql.DEFAULT_WELCOME, sql.Types.TEXT)
-    update.effective_message.reply_text(tld(chat.id, "welcome_reset_welcome_success"))
+    update.effective_message.reply_text(
+        tld(chat.id, "welcome_reset_welcome_success"))
     return (
         "<b>{}:</b>"
         "\n#RESET_WELCOME"
@@ -918,7 +940,8 @@ def reset_goodbye(bot: Bot, update: Update) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     sql.set_custom_gdbye(chat.id, None, sql.DEFAULT_GOODBYE, sql.Types.TEXT)
-    update.effective_message.reply_text(tld(chat.id, "welcome_reset_goodbye_success"))
+    update.effective_message.reply_text(
+        tld(chat.id, "welcome_reset_goodbye_success"))
     return (
         "<b>{}:</b>"
         "\n#RESET_GOODBYE"
@@ -939,14 +962,17 @@ def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
     if not args:
         clean_pref = sql.get_clean_pref(chat.id)
         if clean_pref:
-            update.effective_message.reply_text(tld(chat.id, "welcome_clean_curr_on"))
+            update.effective_message.reply_text(
+                tld(chat.id, "welcome_clean_curr_on"))
         else:
-            update.effective_message.reply_text(tld(chat.id, "welcome_clean_curr_off"))
+            update.effective_message.reply_text(
+                tld(chat.id, "welcome_clean_curr_off"))
         return ""
 
     if args[0].lower() in ("on", "yes"):
         sql.set_clean_welcome(str(chat.id), True)
-        update.effective_message.reply_text(tld(chat.id, "welcome_clean_set_on"))
+        update.effective_message.reply_text(
+            tld(chat.id, "welcome_clean_set_on"))
         return (
             "<b>{}:</b>"
             "\n#CLEAN_WELCOME"
@@ -957,7 +983,8 @@ def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
         )
     elif args[0].lower() in ("off", "no"):
         sql.set_clean_welcome(str(chat.id), False)
-        update.effective_message.reply_text(tld(chat.id, "welcome_clean_set_off"))
+        update.effective_message.reply_text(
+            tld(chat.id, "welcome_clean_set_off"))
         return (
             "<b>{}:</b>"
             "\n#CLEAN_WELCOME"
@@ -968,7 +995,8 @@ def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
         )
     else:
         # idek what you're writing, say yes or no
-        update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!")
+        update.effective_message.reply_text(
+            "I understand 'on/yes' or 'off/no' only!")
         return ""
 
 
@@ -978,8 +1006,10 @@ def __migrate__(old_chat_id, new_chat_id):
 
 __help__ = True
 
-NEW_MEM_HANDLER = MessageHandler(Filters.status_update.new_chat_members, new_member)
-LEFT_MEM_HANDLER = MessageHandler(Filters.status_update.left_chat_member, left_member)
+NEW_MEM_HANDLER = MessageHandler(
+    Filters.status_update.new_chat_members, new_member)
+LEFT_MEM_HANDLER = MessageHandler(
+    Filters.status_update.left_chat_member, left_member)
 WELC_PREF_HANDLER = CommandHandler(
     "welcome", welcome, pass_args=True, filters=Filters.group
 )
@@ -988,8 +1018,10 @@ GOODBYE_PREF_HANDLER = CommandHandler(
 )
 SET_WELCOME = CommandHandler("setwelcome", set_welcome, filters=Filters.group)
 SET_GOODBYE = CommandHandler("setgoodbye", set_goodbye, filters=Filters.group)
-RESET_WELCOME = CommandHandler("resetwelcome", reset_welcome, filters=Filters.group)
-RESET_GOODBYE = CommandHandler("resetgoodbye", reset_goodbye, filters=Filters.group)
+RESET_WELCOME = CommandHandler(
+    "resetwelcome", reset_welcome, filters=Filters.group)
+RESET_GOODBYE = CommandHandler(
+    "resetgoodbye", reset_goodbye, filters=Filters.group)
 CLEAN_WELCOME = CommandHandler(
     "cleanwelcome", clean_welcome, pass_args=True, filters=Filters.group
 )
@@ -1009,7 +1041,8 @@ CLEAN_SERVICE_HANDLER = CommandHandler(
     "cleanservice", cleanservice, pass_args=True, filters=Filters.group
 )
 
-help_callback_handler = CallbackQueryHandler(check_bot_button, pattern=r"check_bot_")
+help_callback_handler = CallbackQueryHandler(
+    check_bot_button, pattern=r"check_bot_")
 
 dispatcher.add_handler(NEW_MEM_HANDLER)
 dispatcher.add_handler(LEFT_MEM_HANDLER)

@@ -59,7 +59,8 @@ for module_name in ALL_MODULES:
     if modname.lower() not in IMPORTED:
         IMPORTED[modname.lower()] = imported_module
     else:
-        raise Exception("Can't have two modules with the same name! Please change one")
+        raise Exception(
+            "Can't have two modules with the same name! Please change one")
 
     if hasattr(imported_module, "__help__") and imported_module.__help__:
         HELPABLE[modname.lower()] = tld(0, "modname_" + modname).strip()
@@ -84,7 +85,8 @@ for module_name in ALL_MODULES:
 # Do NOT async this!
 def send_help(chat_id, text, keyboard=None):
     if not keyboard:
-        keyboard = InlineKeyboardMarkup(paginate_modules(chat_id, 0, HELPABLE, "help"))
+        keyboard = InlineKeyboardMarkup(
+            paginate_modules(chat_id, 0, HELPABLE, "help"))
 
     dispatcher.bot.send_message(
         chat_id=chat_id,
@@ -114,7 +116,8 @@ def start(bot: Bot, update: Update, args: List[str]):
                 send_help(
                     update.effective_chat.id,
                     tld(chat.id, "send-help").format(
-                        dispatcher.bot.first_name, tld(chat.id, "cmd_multitrigger")
+                        dispatcher.bot.first_name, tld(
+                            chat.id, "cmd_multitrigger")
                     ),
                 )
 
@@ -148,7 +151,8 @@ def start(bot: Bot, update: Update, args: List[str]):
             send_start(bot, update)
     else:
         try:
-            update.effective_message.reply_text(tld(chat.id, "main_start_group"))
+            update.effective_message.reply_text(
+                tld(chat.id, "main_start_group"))
         except Exception:
             print("Nut")
 
@@ -422,9 +426,11 @@ def main():
     help_handler = DisableAbleCommandHandler("help", get_help)
     help_callback_handler = CallbackQueryHandler(help_button, pattern=r"help_")
 
-    start_callback_handler = CallbackQueryHandler(send_start, pattern=r"bot_start")
+    start_callback_handler = CallbackQueryHandler(
+        send_start, pattern=r"bot_start")
 
-    migrate_handler = MessageHandler(Filters.status_update.migrate, migrate_chats)
+    migrate_handler = MessageHandler(
+        Filters.status_update.migrate, migrate_chats)
 
     # dispatcher.add_handler(test_handler)
     dispatcher.add_handler(start_handler)
@@ -479,7 +485,8 @@ def process_update(self, update):
     try:
         cnt = CHATS_CNT.get(update.effective_chat.id, 0)
     except AttributeError:
-        self.logger.exception("An uncaught error was raised while updating process")
+        self.logger.exception(
+            "An uncaught error was raised while updating process")
         return
 
     t = CHATS_TIME.get(update.effective_chat.id, datetime.datetime(1970, 1, 1))
@@ -502,7 +509,8 @@ def process_update(self, update):
 
         # Stop processing with any other handler.
         except DispatcherHandlerStop:
-            self.logger.debug("Stopping further handlers due to DispatcherHandlerStop")
+            self.logger.debug(
+                "Stopping further handlers due to DispatcherHandlerStop")
             break
 
         # Dispatch any error.

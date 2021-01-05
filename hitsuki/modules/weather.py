@@ -43,7 +43,7 @@ def get_tz(con):
 def weather(bot: Bot, update: Update):
     message = update.effective_message
     chat_id = update.effective_chat.id
-    city = message.text[len("/weather ") :]
+    city = message.text[len("/weather "):]
     if city:
         APPID = WEATHER_API
         result = None
@@ -146,7 +146,8 @@ def weather(bot: Bot, update: Update):
             info += f"`{time}`\n\n"
             info += tld(chat_id, "weather_temp") + f"`{celsius(curtemp)}°C\n`"
             info += (
-                tld(chat_id, "weather_cond") + f"`{condmain}, {conddet}` " + f"{icon}\n"
+                tld(chat_id, "weather_cond") +
+                f"`{condmain}, {conddet}` " + f"{icon}\n"
             )
             info += tld(chat_id, "weather_hum") + f"`{humidity}%`\n"
             info += tld(chat_id, "weather_wind") + f"`{kmph[0]} km/h`\n"
