@@ -510,7 +510,6 @@ misc_help: |
   - /markdownhelp: ringkasan cepat tentang bagaimana markdown bekerja di telegram - hanya dapat dipanggil dalam obrolan pribadi.
   - /git: Mengembalikan info tentang pengguna atau organisasi GitHub.
   - /repo: Kembalikan daftar repositori pengguna atau organisasi GitHub (Terbatas pada 40)
-  - /lyrics: Temukan lirik lagu favorit Anda!
   - /paste: Buat menempelkan atau url singkat menggunakan [dogbin](https://del.dog)
   - /getpaste: Dapatkan konten tempel atau url singkat dari [dogbin](https://del.dog)
   - /pastestats: Dapatkan statistik tempel atau url singkat dari [dogbin](https://del.dog)
