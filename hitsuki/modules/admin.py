@@ -324,10 +324,12 @@ def reaction(bot: Bot, update: Update, args: List[str]) -> str:
             return ""
         elif var == "false":
             sql.set_command_reaction(chat.id, False)
-            update.effective_message.reply_text(tld(chat.id, "admin_disable_reaction"))
+            update.effective_message.reply_text(
+                tld(chat.id, "admin_disable_reaction"))
         elif var == "true":
             sql.set_command_reaction(chat.id, True)
-            update.effective_message.reply_text(tld(chat.id, "admin_enable_reaction"))
+            update.effective_message.reply_text(
+                tld(chat.id, "admin_enable_reaction"))
         else:
             update.effective_message.reply_text(
                 tld(chat.id, "admin_err_wrong_arg"), parse_mode=ParseMode.MARKDOWN
@@ -347,7 +349,8 @@ __help__ = True
 PIN_HANDLER = DisableAbleCommandHandler(
     "pin", pin, pass_args=True, filters=Filters.group
 )
-UNPIN_HANDLER = DisableAbleCommandHandler("unpin", unpin, filters=Filters.group)
+UNPIN_HANDLER = DisableAbleCommandHandler(
+    "unpin", unpin, filters=Filters.group)
 
 INVITE_HANDLER = CommandHandler("invitelink", invite)
 
@@ -358,7 +361,8 @@ REACT_HANDLER = DisableAbleCommandHandler(
     "reaction", reaction, pass_args=True, filters=Filters.group
 )
 
-ADMINLIST_HANDLER = DisableAbleCommandHandler(["adminlist", "admins"], adminlist)
+ADMINLIST_HANDLER = DisableAbleCommandHandler(
+    ["adminlist", "admins"], adminlist)
 
 dispatcher.add_handler(PIN_HANDLER)
 dispatcher.add_handler(UNPIN_HANDLER)

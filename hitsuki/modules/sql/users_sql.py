@@ -68,7 +68,8 @@ class ChatMembers(BASE):
         ForeignKey("users.user_id", onupdate="CASCADE", ondelete="CASCADE"),
         nullable=False,
     )
-    __table_args__ = (UniqueConstraint("chat", "user", name="_chat_members_uc"),)
+    __table_args__ = (UniqueConstraint(
+        "chat", "user", name="_chat_members_uc"),)
 
     def __init__(self, chat, user):
         self.chat = chat
@@ -160,7 +161,8 @@ def get_all_chats():
 def get_user_num_chats(user_id):
     try:
         return (
-            SESSION.query(ChatMembers).filter(ChatMembers.user == int(user_id)).count()
+            SESSION.query(ChatMembers).filter(
+                ChatMembers.user == int(user_id)).count()
         )
     finally:
         SESSION.close()

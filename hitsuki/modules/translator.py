@@ -87,7 +87,8 @@ def totranslate(bot: Bot, update: Update, args: List[str]):
                 parse_mode=ParseMode.MARKDOWN,
             )
         else:
-            trans_str = trl.translate(text, lang_tgt=dest_lang, lang_src=source_lang)
+            trans_str = trl.translate(
+                text, lang_tgt=dest_lang, lang_src=source_lang)
             message.reply_text(
                 f"Translated from `{source_lang}` to `{dest_lang}`:\n`{trans_str}`",
                 parse_mode=ParseMode.MARKDOWN,
@@ -96,11 +97,13 @@ def totranslate(bot: Bot, update: Update, args: List[str]):
     except IndexError:
         update.effective_message.reply_text(tld(chat.id, "translator_no_str"))
     except ValueError:
-        update.effective_message.reply_text("The intended language is not found!")
+        update.effective_message.reply_text(
+            "The intended language is not found!")
     else:
         return
 
 
 __help__ = True
 
-dispatcher.add_handler(DisableAbleCommandHandler("tr", totranslate, pass_args=True))
+dispatcher.add_handler(DisableAbleCommandHandler(
+    "tr", totranslate, pass_args=True))

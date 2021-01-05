@@ -13,6 +13,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from hitsuki.modules.helper_funcs.handlers import (
+    CustomCommandHandler,
+    CustomMessageHandler,
+    CustomRegexHandler,
+)
 import logging
 import sys
 
@@ -87,7 +92,8 @@ except ValueError:
 try:
     WHITELIST_USERS = set(int(x) for x in CONFIG["whitelist_users"] or [])
 except ValueError:
-    raise Exception("Your whitelisted users list does not contain valid integers.")
+    raise Exception(
+        "Your whitelisted users list does not contain valid integers.")
 
 DB_URI = CONFIG["database_url"]
 LOAD = CONFIG["load"]
@@ -132,17 +138,13 @@ trl = Translator()
 
 tbot = TelegramClient("hitsuki", API_KEY, API_HASH)
 
-pbot = Client("HitsukiPyro", api_id=API_KEY, api_hash=API_HASH, bot_token=TOKEN)
+pbot = Client("HitsukiPyro", api_id=API_KEY,
+              api_hash=API_HASH, bot_token=TOKEN)
 
 SUDO_USERS = list(SUDO_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)
 
 # Load at end to ensure all prev variables have been set
-from hitsuki.modules.helper_funcs.handlers import (
-    CustomCommandHandler,
-    CustomMessageHandler,
-    CustomRegexHandler,
-)
 
 # make sure the regex handler can take extra kwargs
 tg.RegexHandler = CustomRegexHandler

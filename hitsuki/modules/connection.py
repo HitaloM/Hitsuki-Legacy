@@ -35,10 +35,12 @@ def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
             print(var)
             if var in ("no", "off"):
                 sql.set_allow_connect_to_chat(chat.id, False)
-                update.effective_message.reply_text(tld(chat.id, "connection_disable"))
+                update.effective_message.reply_text(
+                    tld(chat.id, "connection_disable"))
             elif var in ("yes", "on"):
                 sql.set_allow_connect_to_chat(chat.id, True)
-                update.effective_message.reply_text(tld(chat.id, "connection_enable"))
+                update.effective_message.reply_text(
+                    tld(chat.id, "connection_enable"))
             else:
                 update.effective_message.reply_text(
                     tld(chat.id, "connection_err_wrong_arg")
@@ -48,7 +50,8 @@ def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
                 tld(chat.id, "connection_err_wrong_arg")
             )
     else:
-        update.effective_message.reply_text(tld(chat.id, "connection_err_wrong_arg"))
+        update.effective_message.reply_text(
+            tld(chat.id, "connection_err_wrong_arg"))
 
 
 @run_async
@@ -128,7 +131,8 @@ def connect_chat(bot, update, args):
                         print(history.updated)
                         print(number)
 
-                        sql.add_history(user.id, history1, history2, history3, number)
+                        sql.add_history(user.id, history1,
+                                        history2, history3, number)
                         # print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
                     else:
                         sql.add_history(user.id, connect_chat, "0", "0", 2)
@@ -136,7 +140,8 @@ def connect_chat(bot, update, args):
                     keyboard(bot, update)
 
                 else:
-                    update.effective_message.reply_text(tld(chat.id, "connection_fail"))
+                    update.effective_message.reply_text(
+                        tld(chat.id, "connection_fail"))
             else:
                 update.effective_message.reply_text(
                     tld(chat.id, "connection_err_not_allowed")
@@ -175,7 +180,8 @@ def connect_chat(bot, update, args):
                     tld(chat.id, "connection_fail"), parse_mode=ParseMode.MARKDOWN
                 )
         else:
-            update.effective_message.reply_text(tld(chat.id, "common_err_no_admin"))
+            update.effective_message.reply_text(
+                tld(chat.id, "common_err_no_admin"))
 
     else:
         update.effective_message.reply_text(tld(chat.id, "common_cmd_pm_only"))
@@ -184,7 +190,8 @@ def connect_chat(bot, update, args):
 def disconnect_chat(bot, update):
     chat = update.effective_chat  # type: Optional[Chat]
     if update.effective_chat.type == "private":
-        disconnection_status = sql.disconnect(update.effective_message.from_user.id)
+        disconnection_status = sql.disconnect(
+            update.effective_message.from_user.id)
         if disconnection_status:
             sql.disconnected_chat = update.effective_message.reply_text(
                 tld(chat.id, "connection_dis_success")
@@ -192,7 +199,8 @@ def disconnect_chat(bot, update):
             # Rebuild user's keyboard
             keyboard(bot, update)
         else:
-            update.effective_message.reply_text(tld(chat.id, "connection_dis_fail"))
+            update.effective_message.reply_text(
+                tld(chat.id, "connection_dis_fail"))
     elif update.effective_chat.type == "supergroup":
         update.effective_message.reply_text(tld(chat.id, "common_cmd_pm_only"))
     else:
@@ -204,7 +212,8 @@ def connected(bot, update, chat, user_id, need_admin=True):
     if chat.type == chat.PRIVATE and sql.get_connected_chat(user_id):
         conn_id = sql.get_connected_chat(user_id).chat_id
         if (
-            bot.get_chat_member(conn_id, user_id).status in ("administrator", "creator")
+            bot.get_chat_member(conn_id, user_id).status in (
+                "administrator", "creator")
             or (sql.allow_connect_to_chat(connect_chat) is True)
             and bot.get_chat_member(
                 user_id, update.effective_message.from_user.id
@@ -228,7 +237,8 @@ def connected(bot, update, chat, user_id, need_admin=True):
             else:
                 return conn_id
         else:
-            update.effective_message.reply_text(tld(chat.id, "connection_err_unknown"))
+            update.effective_message.reply_text(
+                tld(chat.id, "connection_err_unknown"))
             disconnect_chat(bot, update)
             return
     else:

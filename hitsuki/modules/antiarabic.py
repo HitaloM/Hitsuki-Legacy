@@ -50,7 +50,8 @@ def antiarabic_setting(bot: Bot, update: Update, args: List[str]):
                 msg.reply_text(tld(chat.id, "antiarabic_disabled"))
         else:
             msg.reply_text(
-                tld(chat.id, "antiarabic_setting").format(sql.chat_antiarabic(chat.id)),
+                tld(chat.id, "antiarabic_setting").format(
+                    sql.chat_antiarabic(chat.id)),
                 parse_mode=ParseMode.MARKDOWN,
             )
 
@@ -98,7 +99,8 @@ def __migrate__(old_chat_id, new_chat_id):
 
 __help__ = True
 
-SETTING_HANDLER = CommandHandler("antiarabic", antiarabic_setting, pass_args=True)
+SETTING_HANDLER = CommandHandler(
+    "antiarabic", antiarabic_setting, pass_args=True)
 ANTI_ARABIC = MessageHandler(
     (Filters.text | Filters.command | Filters.sticker | Filters.photo) & Filters.group,
     antiarabic,

@@ -175,7 +175,8 @@ def rmwarn_handler(bot: Bot, update: Update) -> str:
     if match:
         user_id = match.group(1)
         if not is_user_admin(chat, int(user.id)):
-            query.answer(text=tld(chat.id, "warns_remove_admin_only"), show_alert=True)
+            query.answer(
+                text=tld(chat.id, "warns_remove_admin_only"), show_alert=True)
             return ""
         res = sql.remove_warn(user_id, chat.id)
         if res:
@@ -323,10 +324,12 @@ def warns(bot: Bot, update: Update, args: List[str]):
                 update.effective_message.reply_text(msg)
         else:
             update.effective_message.reply_text(
-                tld(chat.id, "warns_list_warns_no_reason").format(num_warns, limit)
+                tld(chat.id, "warns_list_warns_no_reason").format(
+                    num_warns, limit)
             )
     else:
-        update.effective_message.reply_text(tld(chat.id, "warns_list_warns_none"))
+        update.effective_message.reply_text(
+            tld(chat.id, "warns_list_warns_none"))
 
 
 # Dispatcher handler stop - do not async
@@ -405,20 +408,23 @@ def list_warn_filters(bot: Bot, update: Update):
     all_handlers = sql.get_chat_warn_triggers(chat.id)
 
     if not all_handlers:
-        update.effective_message.reply_text(tld(chat.id, "warns_filters_list_empty"))
+        update.effective_message.reply_text(
+            tld(chat.id, "warns_filters_list_empty"))
         return
 
     filter_list = tld(chat.id, "warns_filters_list")
     for keyword in all_handlers:
         entry = " - {}\n".format(html.escape(keyword))
         if len(entry) + len(filter_list) > telegram.MAX_MESSAGE_LENGTH:
-            update.effective_message.reply_text(filter_list, parse_mode=ParseMode.HTML)
+            update.effective_message.reply_text(
+                filter_list, parse_mode=ParseMode.HTML)
             filter_list = entry
         else:
             filter_list += entry
 
     if not filter_list == tld(chat.id, "warns_filters_list"):
-        update.effective_message.reply_text(filter_list, parse_mode=ParseMode.HTML)
+        update.effective_message.reply_text(
+            filter_list, parse_mode=ParseMode.HTML)
 
 
 @run_async
@@ -462,7 +468,8 @@ def set_warn_limit(bot: Bot, update: Update, args: List[str]) -> str:
             else:
                 sql.set_warn_limit(chat.id, int(args[0]))
                 msg.reply_text(
-                    tld(chat.id, "warns_warnlimit_updated_success").format(args[0])
+                    tld(chat.id, "warns_warnlimit_updated_success").format(
+                        args[0])
                 )
                 return tld(chat.id, "warns_set_warn_limit_log_channel").format(
                     html.escape(chat.title),
@@ -540,7 +547,8 @@ RESET_WARN_HANDLER = DisableAbleCommandHandler(
     ["resetwarn", "resetwarns"], reset_warns, pass_args=True, filters=Filters.group
 )
 RMWARN_QUERY_HANDLER = CallbackQueryHandler(rmwarn_handler, pattern=r"rm_warn")
-SENDRULES_QUERY_HANDLER = CallbackQueryHandler(sendrules_handler, pattern=r"send_rules")
+SENDRULES_QUERY_HANDLER = CallbackQueryHandler(
+    sendrules_handler, pattern=r"send_rules")
 MYWARNS_HANDLER = DisableAbleCommandHandler(
     "warns", warns, pass_args=True, filters=Filters.group, admin_ok=True
 )

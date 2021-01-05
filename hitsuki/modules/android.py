@@ -203,9 +203,11 @@ async def samspecs(c: Client, update: Update):
         res = page.find_all("tr", {"class": "mdata-group-val"})
         res = res[2:]
         for info in res:
-            title = re.findall(r"<td>.*?</td>", str(info))[0].strip().replace("td", "b")
+            title = re.findall(r"<td>.*?</td>", str(info)
+                               )[0].strip().replace("td", "b")
             data = (
-                re.findall(r"<td>.*?</td>", str(info))[-1].strip().replace("td", "code")
+                re.findall(r"<td>.*?</td>", str(info)
+                           )[-1].strip().replace("td", "code")
             )
             message += "• {}: <code>{}</code>\n".format(title, data)
 
@@ -379,9 +381,11 @@ async def twrp(c: Client, update: Update):
             size = trs[i].find("span", {"class": "filesize"}).text
         m += f"📥 <b>Size:</b> <code>{size}</code>\n"
         m += f"📦 <b>File:</b> <code>{dl_file.lower()}</code>"
-        keyboard = [[InlineKeyboardButton(text="Click here to download", url=dl_link)]]
+        keyboard = [[InlineKeyboardButton(
+            text="Click here to download", url=dl_link)]]
         await c.send_message(
-            chat_id=update.chat.id, text=m, reply_markup=InlineKeyboardMarkup(keyboard)
+            chat_id=update.chat.id, text=m, reply_markup=InlineKeyboardMarkup(
+                keyboard)
         )
 
 
@@ -598,7 +602,8 @@ async def pixys(c: Client, update: Update):
         reply_text += tld(chat_id, "version").format(version)
         reply_text += tld(chat_id, "rom_type").format(romtype)
 
-        keyboard = [[InlineKeyboardButton(text=tld(chat_id, "btn_dl"), url=f"{url}")]]
+        keyboard = [[InlineKeyboardButton(
+            text=tld(chat_id, "btn_dl"), url=f"{url}")]]
         await update.reply_text(
             reply_text,
             reply_markup=InlineKeyboardMarkup(keyboard),
@@ -747,7 +752,8 @@ async def orangefox(c: Client, update: Update):
     reply_text += tld(chat_id, "fox_release_device").format(
         fullname=device["fullname"], codename=device["codename"]
     )
-    reply_text += tld(chat_id, "fox_release_version").format(release["version"])
+    reply_text += tld(chat_id,
+                      "fox_release_version").format(release["version"])
     reply_text += tld(chat_id, "fox_release_date").format(release["date"])
     reply_text += tld(chat_id, "fox_release_md5").format(release["md5"])
 
