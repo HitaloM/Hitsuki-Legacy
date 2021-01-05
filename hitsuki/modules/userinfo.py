@@ -16,16 +16,14 @@
 import html
 from typing import List
 
-from telegram import ParseMode, MAX_MESSAGE_LENGTH
-from telegram import Update, Bot
-from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import escape_markdown
-
 import hitsuki.modules.sql.userinfo_sql as sql
-from hitsuki import dispatcher, SUDO_USERS, OWNER_ID
+from hitsuki import OWNER_ID, SUDO_USERS, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import MAX_MESSAGE_LENGTH, Bot, ParseMode, Update
+from telegram.ext.dispatcher import run_async
+from telegram.utils.helpers import escape_markdown
 
 
 @run_async
@@ -42,16 +40,17 @@ def about_me(bot: Bot, update: Update, args: List[str]):
     info = sql.get_user_me_info(user.id)
 
     if info:
-        update.effective_message.reply_text("*{}*:\n{}".format(
-            user.first_name, escape_markdown(info)),
-            parse_mode=ParseMode.MARKDOWN)
+        update.effective_message.reply_text(
+            "*{}*:\n{}".format(user.first_name, escape_markdown(info)),
+            parse_mode=ParseMode.MARKDOWN,
+        )
     elif message.reply_to_message:
         username = message.reply_to_message.from_user.first_name
         update.effective_message.reply_text(
-            tld(chat.id, 'userinfo_about_not_set_they').format(username))
+            tld(chat.id, "userinfo_about_not_set_they").format(username)
+        )
     else:
-        update.effective_message.reply_text(
-            tld(chat.id, 'userinfo_about_not_set_you'))
+        update.effective_message.reply_text(tld(chat.id, "userinfo_about_not_set_you"))
 
 
 @run_async
@@ -60,7 +59,7 @@ def set_about_me(bot: Bot, update: Update):
     message = update.effective_message
     user_id = message.from_user.id
     if user_id in (777000, 1087968824):
-        message.reply_text(tld(chat.id, 'userinfo_anonymous_about'))
+        message.reply_text(tld(chat.id, "userinfo_anonymous_about"))
         return
 
     text = message.text
@@ -70,12 +69,13 @@ def set_about_me(bot: Bot, update: Update):
     if len(info) == 2:
         if len(info[1]) < MAX_MESSAGE_LENGTH // 4:
             sql.set_user_me_info(user_id, info[1])
-            message.reply_text(tld(chat.id, 'userinfo_about_set_success'))
+            message.reply_text(tld(chat.id, "userinfo_about_set_success"))
         else:
             message.reply_text(
-                tld(chat.id,
-                    'userinfo_about_too_long').format(MAX_MESSAGE_LENGTH // 4,
-                                                      len(info[1])))
+                tld(chat.id, "userinfo_about_too_long").format(
+                    MAX_MESSAGE_LENGTH // 4, len(info[1])
+                )
+            )
 
 
 @run_async
@@ -91,16 +91,17 @@ def about_bio(bot: Bot, update: Update, args: List[str]):
     info = sql.get_user_bio(user.id)
 
     if info:
-        update.effective_message.reply_text("*{}*:\n{}".format(
-            user.first_name, escape_markdown(info)),
-            parse_mode=ParseMode.MARKDOWN)
+        update.effective_message.reply_text(
+            "*{}*:\n{}".format(user.first_name, escape_markdown(info)),
+            parse_mode=ParseMode.MARKDOWN,
+        )
     elif message.reply_to_message:
         username = user.first_name
         update.effective_message.reply_text(
-            tld(chat.id, 'userinfo_bio_none_they').format(username))
+            tld(chat.id, "userinfo_bio_none_they").format(username)
+        )
     else:
-        update.effective_message.reply_text(
-            tld(chat.id, 'userinfo_bio_none_you'))
+        update.effective_message.reply_text(tld(chat.id, "userinfo_bio_none_you"))
 
 
 @run_async
@@ -112,19 +113,19 @@ def set_about_bio(bot: Bot, update: Update):
         repl_message = message.reply_to_message
         user_id = repl_message.from_user.id
         if user_id in (777000, 1087968824):
-            message.reply_text(tld(chat.id, 'userinfo_anonymous_bio'))
+            message.reply_text(tld(chat.id, "userinfo_anonymous_bio"))
             return
         if user_id == message.from_user.id:
-            message.reply_text(tld(chat.id, 'userinfo_bio_you_cant_set'))
+            message.reply_text(tld(chat.id, "userinfo_bio_you_cant_set"))
             return
         elif user_id == bot.id and sender.id not in SUDO_USERS:
-            message.reply_text(tld(chat.id, 'userinfo_bio_bot_sudo_only'))
+            message.reply_text(tld(chat.id, "userinfo_bio_bot_sudo_only"))
             return
         elif user_id in SUDO_USERS and sender.id not in SUDO_USERS:
-            message.reply_text(tld(chat.id, 'userinfo_bio_sudo_sudo_only'))
+            message.reply_text(tld(chat.id, "userinfo_bio_sudo_sudo_only"))
             return
         elif user_id == OWNER_ID:
-            message.reply_text(tld(chat.id, 'userinfo_bio_owner_nobio'))
+            message.reply_text(tld(chat.id, "userinfo_bio_owner_nobio"))
             return
 
         text = message.text
@@ -134,14 +135,17 @@ def set_about_bio(bot: Bot, update: Update):
         if len(bio) == 2:
             if len(bio[1]) < MAX_MESSAGE_LENGTH // 4:
                 sql.set_user_bio(user_id, bio[1])
-                message.reply_text("Updated {}'s bio!".format(
-                    repl_message.from_user.first_name))
+                message.reply_text(
+                    "Updated {}'s bio!".format(repl_message.from_user.first_name)
+                )
             else:
                 message.reply_text(
-                    tld(chat.id, 'userinfo_bio_too_long').format(
-                        MAX_MESSAGE_LENGTH // 4, len(bio[1])))
+                    tld(chat.id, "userinfo_bio_too_long").format(
+                        MAX_MESSAGE_LENGTH // 4, len(bio[1])
+                    )
+                )
     else:
-        message.reply_text(tld(chat.id, 'userinfo_bio_set_no_reply'))
+        message.reply_text(tld(chat.id, "userinfo_bio_set_no_reply"))
 
 
 def __user_info__(user_id, chat_id):

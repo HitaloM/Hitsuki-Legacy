@@ -16,16 +16,30 @@
 import html
 from typing import List, Optional
 
-from telegram import Message, Chat, Update, Bot, User, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.error import BadRequest, Unauthorized
-from telegram.ext import CommandHandler, RegexHandler, run_async, Filters, CallbackQueryHandler
-from telegram.utils.helpers import mention_html
-
-from hitsuki import dispatcher, LOGGER
-from hitsuki.modules.helper_funcs.chat_status import user_not_admin, user_admin
+from hitsuki import LOGGER, dispatcher
+from hitsuki.modules.helper_funcs.chat_status import user_admin, user_not_admin
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.sql import reporting_sql as sql
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import (
+    Bot,
+    Chat,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+    ParseMode,
+    Update,
+    User,
+)
+from telegram.error import BadRequest, Unauthorized
+from telegram.ext import (
+    CallbackQueryHandler,
+    CommandHandler,
+    Filters,
+    RegexHandler,
+    run_async,
+)
+from telegram.utils.helpers import mention_html
 
 REPORT_GROUP = 5
 
@@ -46,9 +60,10 @@ def report_setting(bot: Bot, update: Update, args: List[str]):
                 sql.set_user_setting(chat.id, False)
                 msg.reply_text(tld(chat.id, "reports_pm_off"))
         else:
-            msg.reply_text(tld(chat.id, "reports_pm_pref").format(
-                sql.user_should_report(chat.id)),
-                parse_mode=ParseMode.MARKDOWN)
+            msg.reply_text(
+                tld(chat.id, "reports_pm_pref").format(sql.user_should_report(chat.id)),
+                parse_mode=ParseMode.MARKDOWN,
+            )
 
     else:
         if len(args) >= 1:
@@ -60,9 +75,12 @@ def report_setting(bot: Bot, update: Update, args: List[str]):
                 sql.set_chat_setting(chat.id, False)
                 msg.reply_text(tld(chat.id, "reports_chat_off"))
         else:
-            msg.reply_text(tld(chat.id, "reports_chat_pref").format(
-                sql.chat_should_report(chat.id)),
-                parse_mode=ParseMode.MARKDOWN)
+            msg.reply_text(
+                tld(chat.id, "reports_chat_pref").format(
+                    sql.chat_should_report(chat.id)
+                ),
+                parse_mode=ParseMode.MARKDOWN,
+            )
 
 
 @run_async
@@ -83,52 +101,65 @@ def report(bot: Bot, update: Update) -> str:
             return ""
 
         if chat.username and chat.type == Chat.SUPERGROUP:
-            msg = "<b>{}:</b>" \
-                  "\n<b>• Reported user:</b> {} (<code>{}</code>)" \
-                  "\n<b>• Reported by:</b> {} (<code>{}</code>)".format(html.escape(chat.title),
-                                                                        mention_html(
-                      reported_user.id,
-                      reported_user.first_name),
-                      reported_user.id,
-                      mention_html(user.id,
-                                   user.first_name),
-                      user.id)
-            link = "\n\n<b>Link:</b> " \
-                   "<a href=\"http://telegram.me/{}/{}\">click here</a>".format(
-                       chat.username, message.message_id)
+            msg = (
+                "<b>{}:</b>"
+                "\n<b>• Reported user:</b> {} (<code>{}</code>)"
+                "\n<b>• Reported by:</b> {} (<code>{}</code>)".format(
+                    html.escape(chat.title),
+                    mention_html(reported_user.id, reported_user.first_name),
+                    reported_user.id,
+                    mention_html(user.id, user.first_name),
+                    user.id,
+                )
+            )
+            link = (
+                "\n\n<b>Link:</b> "
+                '<a href="http://telegram.me/{}/{}">click here</a>'.format(
+                    chat.username, message.message_id
+                )
+            )
 
             should_forward = True
-            keyboard = [[
-                InlineKeyboardButton(
-                    u"➡ Message",
-                    url="https://t.me/{}/{}".format(
-                        chat.username,
-                        str(message.reply_to_message.message_id)))
-            ],
+            keyboard = [
                 [
-                InlineKeyboardButton(
-                    u"⚠ Kick",
-                    callback_data="report_{}=kick={}={}".format(
-                        chat.id, reported_user.id,
-                        reported_user.first_name)),
-                InlineKeyboardButton(
-                    u"⛔️ Ban",
-                    callback_data="report_{}=banned={}={}".format(
-                        chat.id, reported_user.id,
-                        reported_user.first_name))
-            ],
+                    InlineKeyboardButton(
+                        "➡ Message",
+                        url="https://t.me/{}/{}".format(
+                            chat.username, str(message.reply_to_message.message_id)
+                        ),
+                    )
+                ],
                 [
-                InlineKeyboardButton(
-                    u"❎ Delete Message",
-                    callback_data="report_{}=delete={}={}".format(
-                        chat.id, reported_user.id,
-                        message.reply_to_message.message_id))
-            ]]
+                    InlineKeyboardButton(
+                        "⚠ Kick",
+                        callback_data="report_{}=kick={}={}".format(
+                            chat.id, reported_user.id, reported_user.first_name
+                        ),
+                    ),
+                    InlineKeyboardButton(
+                        "⛔️ Ban",
+                        callback_data="report_{}=banned={}={}".format(
+                            chat.id, reported_user.id, reported_user.first_name
+                        ),
+                    ),
+                ],
+                [
+                    InlineKeyboardButton(
+                        "❎ Delete Message",
+                        callback_data="report_{}=delete={}={}".format(
+                            chat.id,
+                            reported_user.id,
+                            message.reply_to_message.message_id,
+                        ),
+                    )
+                ],
+            ]
             reply_markup = InlineKeyboardMarkup(keyboard)
 
         else:
-            msg = "{} is calling for admins in \"{}\"!".format(
-                mention_html(user.id, user.first_name), html.escape(chat_name))
+            msg = '{} is calling for admins in "{}"!'.format(
+                mention_html(user.id, user.first_name), html.escape(chat_name)
+            )
             link = ""
             should_forward = True
 
@@ -139,59 +170,66 @@ def report(bot: Bot, update: Update) -> str:
             if sql.user_should_report(admin.user.id):
                 try:
                     if not chat.type == Chat.SUPERGROUP:
-                        bot.send_message(admin.user.id,
-                                         msg + link,
-                                         parse_mode=ParseMode.HTML,
-                                         disable_web_page_preview=True)
+                        bot.send_message(
+                            admin.user.id,
+                            msg + link,
+                            parse_mode=ParseMode.HTML,
+                            disable_web_page_preview=True,
+                        )
 
                         if should_forward:
                             message.reply_to_message.forward(admin.user.id)
 
-                            if len(
-                                    message.text.split()
-                            ) > 1:  # If user is giving a reason, send his message too
+                            if (
+                                len(message.text.split()) > 1
+                            ):  # If user is giving a reason, send his message too
                                 message.forward(admin.user.id)
 
                     if not chat.username:
-                        bot.send_message(admin.user.id,
-                                         msg + link,
-                                         parse_mode=ParseMode.HTML,
-                                         disable_web_page_preview=True)
+                        bot.send_message(
+                            admin.user.id,
+                            msg + link,
+                            parse_mode=ParseMode.HTML,
+                            disable_web_page_preview=True,
+                        )
 
                         if should_forward:
                             message.reply_to_message.forward(admin.user.id)
 
-                            if len(
-                                    message.text.split()
-                            ) > 1:  # If user is giving a reason, send his message too
+                            if (
+                                len(message.text.split()) > 1
+                            ):  # If user is giving a reason, send his message too
                                 message.forward(admin.user.id)
 
                     if chat.username and chat.type == Chat.SUPERGROUP:
-                        bot.send_message(admin.user.id,
-                                         msg + link,
-                                         parse_mode=ParseMode.HTML,
-                                         reply_markup=reply_markup,
-                                         disable_web_page_preview=True)
+                        bot.send_message(
+                            admin.user.id,
+                            msg + link,
+                            parse_mode=ParseMode.HTML,
+                            reply_markup=reply_markup,
+                            disable_web_page_preview=True,
+                        )
 
                         if should_forward:
                             message.reply_to_message.forward(admin.user.id)
 
-                            if len(
-                                    message.text.split()
-                            ) > 1:  # If user is giving a reason, send his message too
+                            if (
+                                len(message.text.split()) > 1
+                            ):  # If user is giving a reason, send his message too
                                 message.forward(admin.user.id)
 
                 except Unauthorized:
                     pass
                 except BadRequest as excp:  # TODO: cleanup exceptions
-                    LOGGER.exception(
-                        f"Exception while reporting user : {excp}")
+                    LOGGER.exception(f"Exception while reporting user : {excp}")
 
-        message.reply_to_message.reply_text(tld(
-            chat.id,
-            "reports_success").format(mention_html(user.id, user.first_name)),
+        message.reply_to_message.reply_text(
+            tld(chat.id, "reports_success").format(
+                mention_html(user.id, user.first_name)
+            ),
             parse_mode=ParseMode.HTML,
-            disable_web_page_preview=True)
+            disable_web_page_preview=True,
+        )
         return msg
 
     return ""
@@ -212,18 +250,22 @@ def buttons(bot: Bot, update):
             return ""
         except Exception as err:
             query.answer("❎ Failed to kick")
-            bot.sendMessage(text="Error: {}".format(err),
-                            chat_id=query.message.chat_id,
-                            parse_mode=ParseMode.HTML)
+            bot.sendMessage(
+                text="Error: {}".format(err),
+                chat_id=query.message.chat_id,
+                parse_mode=ParseMode.HTML,
+            )
     elif splitter[1] == "banned":
         try:
             bot.kickChatMember(splitter[0], splitter[2])
             query.answer("✅  Succesfully Banned")
             return ""
         except Exception as err:
-            bot.sendMessage(text="Error: {}".format(err),
-                            chat_id=query.message.chat_id,
-                            parse_mode=ParseMode.HTML)
+            bot.sendMessage(
+                text="Error: {}".format(err),
+                chat_id=query.message.chat_id,
+                parse_mode=ParseMode.HTML,
+            )
             query.answer("❎ Failed to ban")
     elif splitter[1] == "delete":
         try:
@@ -231,9 +273,11 @@ def buttons(bot: Bot, update):
             query.answer("✅ Message Deleted")
             return ""
         except Exception as err:
-            bot.sendMessage(text="Error: {}".format(err),
-                            chat_id=query.message.chat_id,
-                            parse_mode=ParseMode.HTML)
+            bot.sendMessage(
+                text="Error: {}".format(err),
+                chat_id=query.message.chat_id,
+                parse_mode=ParseMode.HTML,
+            )
             query.answer("❎ Failed to delete message!")
 
 

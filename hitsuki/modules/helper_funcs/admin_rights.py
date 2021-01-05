@@ -13,7 +13,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from telegram import User, Chat
+from telegram import Chat, User
 
 # This module has been ported from SkyleeBot
 # Created by @starry69 on GitHub

@@ -15,14 +15,15 @@
 
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, Integer, func, distinct
-
-from hitsuki.modules.sql import SESSION, BASE
+from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import Column, Integer, String, UnicodeText, distinct, func
 
 
 class GitHub(BASE):
     __tablename__ = "github"
-    chat_id = Column(String(14), primary_key=True)  # string because int is too large to be stored in a PSQL database.
+    chat_id = Column(
+        String(14), primary_key=True
+    )  # string because int is too large to be stored in a PSQL database.
     name = Column(UnicodeText, primary_key=True)
     value = Column(UnicodeText, nullable=False)
     backoffset = Column(Integer, nullable=False, default=0)
@@ -73,7 +74,12 @@ def rm_repo(chat_id, name):
 
 def get_all_repos(chat_id):
     try:
-        return SESSION.query(GitHub).filter(GitHub.chat_id == str(chat_id)).order_by(GitHub.name.asc()).all()
+        return (
+            SESSION.query(GitHub)
+            .filter(GitHub.chat_id == str(chat_id))
+            .order_by(GitHub.name.asc())
+            .all()
+        )
     finally:
         SESSION.close()
 
