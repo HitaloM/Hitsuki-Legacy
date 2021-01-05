@@ -70,11 +70,6 @@ except ValueError:
     raise Exception("Your 'message_dump' must be set.")
 
 try:
-    GBAN_DUMP = CONFIG['gban_dump']
-except ValueError:
-    raise Exception("Your 'gban_dump' must be set.")
-
-try:
     OWNER_USERNAME = CONFIG['owner_username']
 except ValueError:
     raise Exception("Your 'owner_username' must be set.")
@@ -83,11 +78,6 @@ try:
     SUDO_USERS = set(int(x) for x in CONFIG['sudo_users'] or [])
 except ValueError:
     raise Exception("Your sudo users list does not contain valid integers.")
-
-try:
-    SUPPORT_USERS = set(int(x) for x in CONFIG['support_users'] or [])
-except ValueError:
-    raise Exception("Your support users list does not contain valid integers.")
 
 try:
     WHITELIST_USERS = set(int(x) for x in CONFIG['whitelist_users'] or [])
@@ -128,7 +118,6 @@ tbot = TelegramClient("haruka", API_KEY, API_HASH)
 
 SUDO_USERS = list(SUDO_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)
-SUPPORT_USERS = list(SUPPORT_USERS)
 
 # Load at end to ensure all prev variables have been set
 from haruka.modules.helper_funcs.handlers import CustomCommandHandler, CustomRegexHandler

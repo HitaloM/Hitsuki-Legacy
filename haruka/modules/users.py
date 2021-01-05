@@ -24,7 +24,7 @@ from telegram.ext import MessageHandler, Filters, CommandHandler
 from telegram.ext.dispatcher import run_async
 
 import haruka.modules.sql.users_sql as sql
-from haruka import dispatcher, OWNER_ID, LOGGER, SUDO_USERS, SUPPORT_USERS
+from haruka import dispatcher, OWNER_ID, LOGGER, SUDO_USERS
 from telegram.utils.helpers import escape_markdown
 from haruka.modules.helper_funcs.filters import CustomFilters
 from haruka.modules.helper_funcs.chat_status import bot_admin
@@ -200,7 +200,6 @@ def leavechat(bot: Bot, update: Update, args: List[int]):
 def slist(bot: Bot, update: Update):
     message = update.effective_message
     text1 = "My sudo users are:"
-    text2 = "My support users are:"
     for user_id in SUDO_USERS:
         try:
             user = bot.get_chat(user_id)
@@ -212,20 +211,8 @@ def slist(bot: Bot, update: Update):
         except BadRequest as excp:
             if excp.message == 'Chat not found':
                 text1 += "\n - ({}) - not found".format(user_id)
-    for user_id in SUPPORT_USERS:
-        try:
-            user = bot.get_chat(user_id)
-            name = "[{}](tg://user?id={})".format(
-                user.first_name + (user.last_name or ""), user.id)
-            if user.username:
-                name = escape_markdown("@" + user.username)
-            text2 += "\n - `{}`".format(name)
-        except BadRequest as excp:
-            if excp.message == 'Chat not found':
-                text2 += "\n - ({}) - not found".format(user_id)
-    message.reply_text(text1 + "\n" + text2 + "\n",
-                       parse_mode=ParseMode.MARKDOWN)
-    #message.reply_text(text2 + "\n", parse_mode=ParseMode.MARKDOWN)
+
+    message.reply_text(text1 + "\n", parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
@@ -273,8 +260,7 @@ LEAVECHAT_HANDLER = CommandHandler("leavechat",
                                    filters=Filters.user(OWNER_ID))
 SLIST_HANDLER = CommandHandler("slist",
                                slist,
-                               filters=CustomFilters.sudo_filter
-                               | CustomFilters.support_filter)
+                               filters=CustomFilters.sudo_filter)
 CHAT_CHECKER_HANDLER = MessageHandler(Filters.all & Filters.group,
                                       chat_checker)
 

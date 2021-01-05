@@ -61,6 +61,7 @@ AntispamSettings.__table__.create(checkfirst=True)
 
 ANTISPAMSETTING = set()
 
+
 def enable_antispam(chat_id):
     with ASPAM_SETTING_LOCK:
         chat = SESSION.query(AntispamSettings).get(str(chat_id))
@@ -88,6 +89,7 @@ def disable_antispam(chat_id):
 
 def does_chat_gban(chat_id):
     return str(chat_id) not in GBANSTAT_LIST
+
 
 def migrate_chat(old_chat_id, new_chat_id):
     with ASPAM_SETTING_LOCK:
