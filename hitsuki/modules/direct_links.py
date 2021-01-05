@@ -44,7 +44,8 @@ async def direct_link_generator(c: Client, update: Update):
             reply.append(sourceforge(link))
         else:
             reply.append(
-                re.findall(r"\bhttps?://(.*?[^/]+)", link)[0] + " is not supported"
+                re.findall(r"\bhttps?://(.*?[^/]+)",
+                           link)[0] + " is not supported"
             )
 
     await update.reply_text("\n".join(reply))

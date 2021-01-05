@@ -123,7 +123,8 @@ def info(bot: Bot, update: Update, args: List[str]):
         text += tld(chat.id, "misc_info_name").format(html.escape(user.last_name))
 
     if user.username:
-        text += tld(chat.id, "misc_info_username").format(html.escape(user.username))
+        text += tld(chat.id,
+                    "misc_info_username").format(html.escape(user.username))
 
     text += tld(chat.id, "misc_info_user_link").format(mention_html(user.id, "link"))
 
@@ -202,7 +203,8 @@ def markdown_help(bot: Bot, update: Update):
 def stats(bot: Bot, update: Update):
     update.effective_message.reply_text(
         # This text doesn't get translated as it is internal message.
-        "<b>Current Stats:</b>\n" + "\n".join([mod.__stats__() for mod in STATS]),
+        "<b>Current Stats:</b>\n" + \
+        "\n".join([mod.__stats__() for mod in STATS]),
         parse_mode=ParseMode.HTML,
     )
 
@@ -210,7 +212,7 @@ def stats(bot: Bot, update: Update):
 @run_async
 def github(bot: Bot, update: Update):
     message = update.effective_message
-    text = message.text[len("/git ") :]
+    text = message.text[len("/git "):]
     usr = get(f"https://api.github.com/users/{text}").json()
     if usr.get("login"):
         text = f"*Username:* [{usr['login']}](https://github.com/{usr['login']})"
@@ -269,7 +271,7 @@ def github(bot: Bot, update: Update):
 @run_async
 def repo(bot: Bot, update: Update, args: List[str]):
     message = update.effective_message
-    text = message.text[len("/repo ") :]
+    text = message.text[len("/repo "):]
     usr = get(f"https://api.github.com/users/{text}/repos?per_page=40").json()
     reply_text = "*Repo*\n"
     for i in range(len(usr)):
@@ -330,7 +332,7 @@ def get_paste_content(bot: Bot, update: Update, args: List[str]):
     format_view = f"{BURL}/v/"
 
     if key.startswith(format_view):
-        key = key[len(format_view) :]
+        key = key[len(format_view):]
     elif key.startswith(format_normal):
         key = key[len(format_normal)]
 
@@ -342,7 +344,8 @@ def get_paste_content(bot: Bot, update: Update, args: List[str]):
             update.effective_message.reply_text(res["message"])
         except Exception:
             if r.status_code == 404:
-                update.effective_message.reply_text(tld(chat.id, "misc_paste_404"))
+                update.effective_message.reply_text(
+                    tld(chat.id, "misc_paste_404"))
             else:
                 update.effective_message.reply_text(
                     tld(chat.id, "misc_get_pasted_unknown")
@@ -370,9 +373,9 @@ def get_paste_stats(bot: Bot, update: Update, args: List[str]):
     format_view = f"{BURL}/v/"
 
     if key.startswith(format_view):
-        key = key[len(format_view) :]
+        key = key[len(format_view):]
     elif key.startswith(format_normal):
-        key = key[len(format_normal) :]
+        key = key[len(format_normal):]
 
     r = requests.get(f"{BURL}/documents/{key}")
 
@@ -382,7 +385,8 @@ def get_paste_stats(bot: Bot, update: Update, args: List[str]):
             update.effective_message.reply_text(res["message"])
         except Exception:
             if r.status_code == 404:
-                update.effective_message.reply_text(tld(chat.id, "misc_paste_404"))
+                update.effective_message.reply_text(
+                    tld(chat.id, "misc_paste_404"))
             else:
                 update.effective_message.reply_text(
                     tld(chat.id, "misc_get_pasted_unknown")
@@ -399,10 +403,11 @@ def get_paste_stats(bot: Bot, update: Update, args: List[str]):
 @run_async
 def ud(bot: Bot, update: Update):
     message = update.effective_message
-    text = message.text[len("/ud ") :]
+    text = message.text[len("/ud "):]
     if text == "":
         text = "Cockblocked By Steve Jobs"
-    results = get(f"http://api.urbandictionary.com/v0/define?term={text}").json()
+    results = get(
+        f"http://api.urbandictionary.com/v0/define?term={text}").json()
     reply_text = f'Word: {text}\nDefinition: {results["list"][0]["definition"]}'
     message.reply_text(reply_text)
 
@@ -471,7 +476,7 @@ def wiki(bot: Bot, update: Update):
 def covid(bot: Bot, update: Update):
     message = update.effective_message
     chat = update.effective_chat
-    country = str(message.text[len("/covid ") :])
+    country = str(message.text[len("/covid "):])
     if country == "":
         country = "world"
     if country.lower() in ["south korea", "korea"]:
@@ -537,14 +542,18 @@ def format_integer(number, thousand_separator=","):
 
 __help__ = True
 
-ID_HANDLER = DisableAbleCommandHandler("id", get_id, pass_args=True, admin_ok=True)
+ID_HANDLER = DisableAbleCommandHandler(
+    "id", get_id, pass_args=True, admin_ok=True)
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID))
-INFO_HANDLER = DisableAbleCommandHandler("info", info, pass_args=True, admin_ok=True)
+INFO_HANDLER = DisableAbleCommandHandler(
+    "info", info, pass_args=True, admin_ok=True)
 GITHUB_HANDLER = DisableAbleCommandHandler("git", github, admin_ok=True)
-REPO_HANDLER = DisableAbleCommandHandler("repo", repo, pass_args=True, admin_ok=True)
+REPO_HANDLER = DisableAbleCommandHandler(
+    "repo", repo, pass_args=True, admin_ok=True)
 
 ECHO_HANDLER = CommandHandler("echo", echo, filters=Filters.user(OWNER_ID))
-MD_HELP_HANDLER = CommandHandler("markdownhelp", markdown_help, filters=Filters.private)
+MD_HELP_HANDLER = CommandHandler(
+    "markdownhelp", markdown_help, filters=Filters.private)
 
 STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(OWNER_ID))
 PASTE_HANDLER = DisableAbleCommandHandler("paste", paste, pass_args=True)

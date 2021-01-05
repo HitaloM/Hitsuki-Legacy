@@ -134,7 +134,8 @@ def antispam(bot: Bot, update: Update, args: List[str]):
             update.effective_message.reply_text(tld(chat.id, "antispam_off"))
     else:
         update.effective_message.reply_text(
-            tld(chat.id, "antispam_err_wrong_arg").format(sql.does_chat_gban(chat.id))
+            tld(chat.id, "antispam_err_wrong_arg").format(
+                sql.does_chat_gban(chat.id))
         )
 
 

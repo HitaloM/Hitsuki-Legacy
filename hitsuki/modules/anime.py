@@ -260,7 +260,8 @@ async def anime_search(c: Client, m: Message):
         if image:
             try:
                 await m.reply_photo(
-                    image, caption=msg, reply_markup=InlineKeyboardMarkup(buttons)
+                    image, caption=msg, reply_markup=InlineKeyboardMarkup(
+                        buttons)
                 )
             except Exception:
                 msg += f" [〽️]({image})"
@@ -279,7 +280,8 @@ async def character_search(c: Client, m: Message):
     search = search[1]
     variables = {"query": search}
     json = (
-        requests.post(url, json={"query": character_query, "variables": variables})
+        requests.post(
+            url, json={"query": character_query, "variables": variables})
         .json()["data"]
         .get("Character", None)
     )
@@ -436,7 +438,8 @@ async def upcoming(c: Client, m: Message):
 @pbot.on_message(filters.command("nhentai"))
 async def nhentai(c: Client, m: Message):
     query = m.text.split(" ")[1]
-    title, tags, artist, total_pages, post_url, cover_image = nhentai_data(query)
+    title, tags, artist, total_pages, post_url, cover_image = nhentai_data(
+        query)
     await m.reply_text(
         f"<code>{title}</code>\n\n<b>Tags:</b>\n{tags}\n<b>Artists:</b>\n{artist}\n<b>Pages:</b>\n{total_pages}",
         reply_markup=InlineKeyboardMarkup(

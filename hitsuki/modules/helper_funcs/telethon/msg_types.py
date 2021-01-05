@@ -34,7 +34,7 @@ async def get_note_type(message):
     data_type = None
     content = None
     text = ""
-    split = message.text[len("/save ") :]
+    split = message.text[len("/save "):]
     splitter = re.match(NOTE_REGEX, split)
     note_name = splitter.group(1).strip('"')
 

@@ -46,7 +46,8 @@ def loggable(func):
         elif result == "":
             pass
         else:
-            LOGGER.warning("%s was set as loggable, but had no return statement.", func)
+            LOGGER.warning(
+                "%s was set as loggable, but had no return statement.", func)
 
         return result
 
@@ -124,7 +125,8 @@ def setlog(bot: Bot, update: Update):
             )
         except Unauthorized as excp:
             if excp.message == "Forbidden: bot is not a member of the channel chat":
-                bot.send_message(chat.id, tld(chat.id, "log_channel_link_success"))
+                bot.send_message(chat.id, tld(
+                    chat.id, "log_channel_link_success"))
             else:
                 LOGGER.exception("ERROR in setting the log channel.")
 

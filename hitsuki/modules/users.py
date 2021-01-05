@@ -94,7 +94,8 @@ def log_user(bot: Bot, update: Update):
     chat = update.effective_chat
     msg = update.effective_message
 
-    sql.update_user(msg.from_user.id, msg.from_user.username, chat.id, chat.title)
+    sql.update_user(msg.from_user.id, msg.from_user.username,
+                    chat.id, chat.title)
 
     if msg.reply_to_message:
         sql.update_user(
@@ -144,7 +145,8 @@ def snipe(bot: Bot, update: Update, args: List[str]):
         chat_id = str(args[0])
         del args[0]
     except TypeError:
-        update.effective_message.reply_text("Please give me a chat to echo to!")
+        update.effective_message.reply_text(
+            "Please give me a chat to echo to!")
     to_send = " ".join(args)
     if len(to_send) >= 2:
         try:
@@ -174,7 +176,8 @@ def getlink(bot: Bot, update: Update, args: List[int]):
                 links += str(chat_id) + ":\n" + invitelink + "\n"
             else:
                 links += (
-                    str(chat_id) + ":\nI don't have access to the invite link." + "\n"
+                    str(chat_id) +
+                    ":\nI don't have access to the invite link." + "\n"
                 )
         except BadRequest as excp:
             links += str(chat_id) + ":\n" + excp.message + "\n"
@@ -221,7 +224,8 @@ def leavechat(bot: Bot, update: Update, args: List[int]):
             chat_id, reply_text, parse_mode="Markdown", disable_web_page_preview=True
         )
         bot.leaveChat(chat_id)
-        update.effective_message.reply_text("I'll left group {}".format(titlechat))
+        update.effective_message.reply_text(
+            "I'll left group {}".format(titlechat))
 
     except BadRequest as excp:
         if excp.message == "Chat not found":
@@ -285,12 +289,15 @@ SNIPE_HANDLER = CommandHandler(
 GETLINK_HANDLER = CommandHandler(
     "getlink", getlink, pass_args=True, filters=Filters.user(OWNER_ID)
 )
-CHATLIST_HANDLER = CommandHandler("chatlist", chats, filters=Filters.user(OWNER_ID))
+CHATLIST_HANDLER = CommandHandler(
+    "chatlist", chats, filters=Filters.user(OWNER_ID))
 LEAVECHAT_HANDLER = CommandHandler(
     "leavechat", leavechat, pass_args=True, filters=Filters.user(OWNER_ID)
 )
-SLIST_HANDLER = CommandHandler("slist", slist, filters=CustomFilters.sudo_filter)
-CHAT_CHECKER_HANDLER = MessageHandler(Filters.all & Filters.group, chat_checker)
+SLIST_HANDLER = CommandHandler(
+    "slist", slist, filters=CustomFilters.sudo_filter)
+CHAT_CHECKER_HANDLER = MessageHandler(
+    Filters.all & Filters.group, chat_checker)
 
 dispatcher.add_handler(SNIPE_HANDLER)
 dispatcher.add_handler(GETLINK_HANDLER)

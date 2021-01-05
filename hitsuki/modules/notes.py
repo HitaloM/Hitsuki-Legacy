@@ -169,7 +169,8 @@ def get(bot, update, notename, show_none=True, no_format=False):
             else:
                 message.reply_text(tld(chat.id, "note_cannot_send"))
                 LOGGER.exception(
-                    "Could not parse message #%s in chat %s", notename, str(chat_id)
+                    "Could not parse message #%s in chat %s", notename, str(
+                        chat_id)
                 )
                 LOGGER.warning("Message was: %s", str(note.value))
 
@@ -268,7 +269,8 @@ def clear(bot: Bot, update: Update, args: List[str]):
                 parse_mode=ParseMode.MARKDOWN,
             )
         else:
-            update.effective_message.reply_text(tld(chat.id, "note_not_existed"))
+            update.effective_message.reply_text(
+                tld(chat.id, "note_not_existed"))
 
 
 @run_async
@@ -294,7 +296,8 @@ def list_notes(bot: Bot, update: Update):
     for note in note_list:
         note_name = " • `#{}`\n".format(note.name.lower())
         if len(msg) + len(note_name) > MAX_MESSAGE_LENGTH:
-            update.effective_message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
+            update.effective_message.reply_text(
+                msg, parse_mode=ParseMode.MARKDOWN)
             msg = ""
         msg += note_name
 
@@ -367,7 +370,8 @@ SAVE_HANDLER = CommandHandler("save", save)
 REMOVE_ALL_NOTES_HANDLER = CommandHandler("clearall", remove_all_notes)
 DELETE_HANDLER = CommandHandler("clear", clear, pass_args=True)
 
-LIST_HANDLER = DisableAbleCommandHandler(["notes", "saved"], list_notes, admin_ok=True)
+LIST_HANDLER = DisableAbleCommandHandler(
+    ["notes", "saved"], list_notes, admin_ok=True)
 
 dispatcher.add_handler(GET_HANDLER)
 dispatcher.add_handler(SAVE_HANDLER)

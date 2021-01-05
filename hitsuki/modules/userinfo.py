@@ -50,7 +50,8 @@ def about_me(bot: Bot, update: Update, args: List[str]):
             tld(chat.id, "userinfo_about_not_set_they").format(username)
         )
     else:
-        update.effective_message.reply_text(tld(chat.id, "userinfo_about_not_set_you"))
+        update.effective_message.reply_text(
+            tld(chat.id, "userinfo_about_not_set_you"))
 
 
 @run_async
@@ -101,7 +102,8 @@ def about_bio(bot: Bot, update: Update, args: List[str]):
             tld(chat.id, "userinfo_bio_none_they").format(username)
         )
     else:
-        update.effective_message.reply_text(tld(chat.id, "userinfo_bio_none_you"))
+        update.effective_message.reply_text(
+            tld(chat.id, "userinfo_bio_none_you"))
 
 
 @run_async
@@ -136,7 +138,8 @@ def set_about_bio(bot: Bot, update: Update):
             if len(bio[1]) < MAX_MESSAGE_LENGTH // 4:
                 sql.set_user_bio(user_id, bio[1])
                 message.reply_text(
-                    "Updated {}'s bio!".format(repl_message.from_user.first_name)
+                    "Updated {}'s bio!".format(
+                        repl_message.from_user.first_name)
                 )
             else:
                 message.reply_text(

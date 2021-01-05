@@ -95,7 +95,8 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
                 sql.set_flood(chat.id, 0)
                 message.reply_text(tld(chat.id, "flood_set_off"))
                 return tld(chat.id, "flood_logger_set_off").format(
-                    html.escape(chat.title), mention_html(user.id, user.first_name)
+                    html.escape(chat.title), mention_html(
+                        user.id, user.first_name)
                 )
 
             elif amount < 3:

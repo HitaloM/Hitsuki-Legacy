@@ -167,7 +167,8 @@ def rm_from_userlist(chat_id, user_id):
     with UR_LOCK:
         user_filt = SESSION.query(UserRestirect).get((str(chat_id), user_id))
         if user_filt:
-            if user_id in CHAT_USERRESTIRECT.get(str(chat_id), set()):  # sanity check
+            # sanity check
+            if user_id in CHAT_USERRESTIRECT.get(str(chat_id), set()):
                 CHAT_USERRESTIRECT.get(str(chat_id), set()).remove(user_id)
 
             SESSION.delete(user_filt)

@@ -104,7 +104,8 @@ if is_module_loaded(FILENAME):
                 )
 
         else:
-            update.effective_message.reply_text(tld(chat.id, "disable_err_no_cmd"))
+            update.effective_message.reply_text(
+                tld(chat.id, "disable_err_no_cmd"))
 
     @run_async
     @user_admin
@@ -126,7 +127,8 @@ if is_module_loaded(FILENAME):
                 )
 
         else:
-            update.effective_message.reply_text(tld(chat.id, "disable_err_no_cmd"))
+            update.effective_message.reply_text(
+                tld(chat.id, "disable_err_no_cmd"))
 
     @run_async
     @user_admin
@@ -182,7 +184,8 @@ if is_module_loaded(FILENAME):
     COMMANDS_HANDLER = CommandHandler(
         ["cmds", "disabled"], commands, filters=Filters.group
     )
-    TOGGLE_HANDLER = CommandHandler("listcmds", list_cmds, filters=Filters.group)
+    TOGGLE_HANDLER = CommandHandler(
+        "listcmds", list_cmds, filters=Filters.group)
 
     dispatcher.add_handler(DISABLE_HANDLER)
     dispatcher.add_handler(ENABLE_HANDLER)
