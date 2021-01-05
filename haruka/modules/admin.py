@@ -56,6 +56,11 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
         update.effective_message.reply_text(tld(chat.id, "admin_err_no_perm"))
         return
 
+    member = chatD.get_member(user.id)
+    if not member.can_promote_members and member.status != 'creator':
+        update.effective_message.reply_text(tld(chat.id, "admin_err_user_no_perm"))
+        return ""
+
     user_id = extract_user(message, args)
     if not user_id:
         message.reply_text(tld(chat.id, "common_err_no_user"))
@@ -109,11 +114,16 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
     else:
         chatD = update.effective_chat
         if chat.type == "private":
-            return
+            return ""
 
     if not chatD.get_member(bot.id).can_promote_members:
         update.effective_message.reply_text(tld(chat.id, "admin_err_no_perm"))
-        return
+        return ""
+
+    member = chatD.get_member(user.id)
+    if not member.can_promote_members and member.status != 'creator':
+        update.effective_message.reply_text(tld(chat.id, "admin_err_user_no_perm"))
+        return ""
 
     user_id = extract_user(message, args)
     if not user_id:

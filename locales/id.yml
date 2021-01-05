@@ -43,6 +43,7 @@ common_this_chat: Obrolan ini
 common_invalid_arg: Argumen yang tidak valid! Silakan ketik `on`/`yes` atau `off`/`no`!
 #Admins
 modname_admin: Admin
+admin_err_user_no_perm: Anda bukan admin yang dapat mengubah hak admin lain!
 admin_err_no_perm: Saya tidak dapat mempromosikan/menurunkan orang di sini! Pastikan saya seorang admin dan dapat menunjuk admin baru.
 admin_err_user_admin: Bagaimana saya bisa mempromosikan seseorang yang sudah menjadi admin?
 admin_err_self_promote: Saya tidak bisa mempromosikan diri saya sendiri! Suruh admin untuk melakukannya untuk saya.

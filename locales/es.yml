@@ -40,6 +40,7 @@ common_this_chat: Este chat
 common_invalid_arg: '¡Argumento no válido! Por favor escribe `on`/`yes` o `off`/`no`!'
 #Admins
 modname_admin: Admin
+admin_err_user_no_perm: ¡No eres un administrador que pueda modificar los derechos de otros administradores!
 admin_err_no_perm: '¡No puedo promocionar/degradar gente aquí! Asegúrate de que soy un administrador y puedo nombrar nuevos administradores.'
 admin_err_user_admin: '¿Cómo puedo promover a alguien que ya es administrador?'
 admin_err_self_promote: '¡No puedo promocionarme a mí mismo! Obtén un administrador para hacerlo por mí.'
