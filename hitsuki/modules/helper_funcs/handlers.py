@@ -13,19 +13,22 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import hitsuki.modules.sql.antispam_sql as sql
 import telegram.ext as tg
-from pyrate_limiter import (BucketFullException, Duration, RequestRate,
-                            Limiter, MemoryListBucket)
+from hitsuki import OWNER_ID, SUDO_USERS
+from pyrate_limiter import (
+    BucketFullException,
+    Duration,
+    Limiter,
+    MemoryListBucket,
+    RequestRate,
+)
 from telegram import Update
 
-import hitsuki.modules.sql.antispam_sql as sql
-from hitsuki import OWNER_ID, SUDO_USERS
-
-CMD_STARTERS = ('/', '!')
+CMD_STARTERS = ("/", "!")
 
 
 class AntiSpam:
-
     def __init__(self):
         self.whitelist = (list(SUDO_USERS) or []) + [OWNER_ID]
         # Values are HIGHLY experimental, its recommended you pay attention to our
@@ -40,7 +43,8 @@ class AntiSpam:
             self.min_limit,
             self.hour_limit,
             self.daily_limit,
-            bucket_class=MemoryListBucket)
+            bucket_class=MemoryListBucket,
+        )
 
     def check_user(self, user):
         """
@@ -66,19 +70,20 @@ class CustomCommandHandler(tg.CommandHandler):
         super().__init__(command, callback, **kwargs)
 
     def check_update(self, update):
-        if (isinstance(update, Update) and
-                (update.message or update.edited_message and self.allow_edited)):
+        if isinstance(update, Update) and (
+            update.message or update.edited_message and self.allow_edited
+        ):
             message = update.message or update.edited_message
 
-            if update.effective_user and int(
-                    update.effective_user.id) == 777000:
+            if update.effective_user and int(update.effective_user.id) == 777000:
                 return False
 
             if message.text and len(message.text) > 1:
                 fst_word = message.text_html.split(None, 1)[0]
                 if len(fst_word) > 1 and any(
-                        fst_word.startswith(start) for start in CMD_STARTERS):
-                    command = fst_word[1:].split('@')
+                    fst_word.startswith(start) for start in CMD_STARTERS
+                ):
+                    command = fst_word[1:].split("@")
                     command.append(
                         message.bot.username
                     )  # in case the command was sent without a username
@@ -88,12 +93,16 @@ class CustomCommandHandler(tg.CommandHandler):
                         res = any(func(message) for func in self.filters)
                     else:
                         res = self.filters(message)
-                    if command[0].lower() in self.command and command[1].lower() == message.bot.username.lower():
+                    if (
+                        command[0].lower() in self.command
+                        and command[1].lower() == message.bot.username.lower()
+                    ):
                         if SpamChecker.check_user(update.effective_user.id):
                             return None
-                    return res and (command[0].lower() in self.command
-                                    and command[1].lower()
-                                    == message.bot.username.lower())
+                    return res and (
+                        command[0].lower() in self.command
+                        and command[1].lower() == message.bot.username.lower()
+                    )
 
             return False
 
@@ -108,22 +117,23 @@ class GbanLockHandler(tg.CommandHandler):
         super().__init__(command, callback, **kwargs)
 
     def check_update(self, update):
-        if (isinstance(update, Update) and
-                (update.message or update.edited_message and self.allow_edited)):
+        if isinstance(update, Update) and (
+            update.message or update.edited_message and self.allow_edited
+        ):
             message = update.message or update.edited_message
             if sql.is_user_gbanned(update.effective_user.id):
                 return False
-            if message.text and message.text.startswith('/') and len(
-                    message.text) > 1:
+            if message.text and message.text.startswith("/") and len(message.text) > 1:
                 first_word = message.text_html.split(None, 1)[0]
-                if len(first_word) > 1 and first_word.startswith('/'):
-                    command = first_word[1:].split('@')
+                if len(first_word) > 1 and first_word.startswith("/"):
+                    command = first_word[1:].split("@")
                     command.append(
                         message.bot.username
                     )  # in case the command was sent without a username
-                    if not (command[0].lower() in self.command
-                            and command[1].lower()
-                            == message.bot.username.lower()):
+                    if not (
+                        command[0].lower() in self.command
+                        and command[1].lower() == message.bot.username.lower()
+                    ):
                         return False
                     if self.filters is None:
                         res = True
@@ -136,7 +146,6 @@ class GbanLockHandler(tg.CommandHandler):
 
 
 class CustomMessageHandler(tg.MessageHandler):
-
     def __init__(self, filters, callback, friendly="", **kwargs):
         super().__init__(filters, callback, **kwargs)
 

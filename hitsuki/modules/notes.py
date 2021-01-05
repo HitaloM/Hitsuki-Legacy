@@ -16,21 +16,19 @@
 import re
 from typing import List
 
-from telegram import Bot, Update
-from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, RegexHandler
-from telegram.ext.dispatcher import run_async
-
 import hitsuki.modules.sql.notes_sql as sql
-from hitsuki import dispatcher, MESSAGE_DUMP, LOGGER
+from hitsuki import LOGGER, MESSAGE_DUMP, dispatcher
 from hitsuki.modules.connection import connected
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.handlers import MessageHandlerChecker
 from hitsuki.modules.helper_funcs.chat_status import user_admin
+from hitsuki.modules.helper_funcs.handlers import MessageHandlerChecker
 from hitsuki.modules.helper_funcs.misc import build_keyboard, revert_buttons
 from hitsuki.modules.helper_funcs.msg_types import get_note_type
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import MAX_MESSAGE_LENGTH, Bot, InlineKeyboardMarkup, ParseMode, Update
+from telegram.error import BadRequest
+from telegram.ext import CommandHandler, RegexHandler
+from telegram.ext.dispatcher import run_async
 
 FILE_MATCHER = re.compile(r"^###file_id(!photo)?###:(.*?)(?:\s|$)")
 STICKER_MATCHER = re.compile(r"^###sticker(!photo)?###:")
@@ -51,7 +49,7 @@ ENUM_FUNC_MAP = {
     sql.Types.AUDIO.value: dispatcher.bot.send_audio,
     sql.Types.VOICE.value: dispatcher.bot.send_voice,
     sql.Types.VIDEO.value: dispatcher.bot.send_video,
-    sql.Types.VIDEO_NOTE.value: dispatcher.bot.send_video_note
+    sql.Types.VIDEO_NOTE.value: dispatcher.bot.send_video_note,
 }
 
 
@@ -91,9 +89,9 @@ def get(bot, update, notename, show_none=True, no_format=False):
     if note and note.is_reply:
         if MESSAGE_DUMP:
             try:
-                bot.forward_message(chat_id=chat_id,
-                                    from_chat_id=MESSAGE_DUMP,
-                                    message_id=note.value)
+                bot.forward_message(
+                    chat_id=chat_id, from_chat_id=MESSAGE_DUMP, message_id=note.value
+                )
             except BadRequest as excp:
                 if excp.message == "Message to forward not found":
                     message.reply_text(tld(chat.id, "note_lost"))
@@ -102,9 +100,9 @@ def get(bot, update, notename, show_none=True, no_format=False):
                     raise
         else:
             try:
-                bot.forward_message(chat_id=chat_id,
-                                    from_chat_id=chat_id,
-                                    message_id=note.value)
+                bot.forward_message(
+                    chat_id=chat_id, from_chat_id=chat_id, message_id=note.value
+                )
 
             except BadRequest as excp:
                 if excp.message == "Message to forward not found":
@@ -131,31 +129,35 @@ def get(bot, update, notename, show_none=True, no_format=False):
         keyboard = InlineKeyboardMarkup(keyb)
 
         try:
-            if note and note.msgtype in (sql.Types.BUTTON_TEXT,
-                                         sql.Types.TEXT):
+            if note and note.msgtype in (sql.Types.BUTTON_TEXT, sql.Types.TEXT):
                 try:
-                    bot.send_message(send_id,
-                                     text,
-                                     reply_to_message_id=reply_id,
-                                     parse_mode=parseMode,
-                                     disable_web_page_preview=True,
-                                     reply_markup=keyboard)
+                    bot.send_message(
+                        send_id,
+                        text,
+                        reply_to_message_id=reply_id,
+                        parse_mode=parseMode,
+                        disable_web_page_preview=True,
+                        reply_markup=keyboard,
+                    )
                 except BadRequest as excp:
                     if excp.message == "Wrong http url":
                         failtext = tld(chat.id, "note_url_invalid")
                         failtext += "\n\n```\n{}```".format(
-                            note.value + revert_buttons(buttons))
+                            note.value + revert_buttons(buttons)
+                        )
                         message.reply_text(failtext, parse_mode="markdown")
 
             else:
                 if note:
-                    ENUM_FUNC_MAP[note.msgtype](send_id,
-                                                note.file,
-                                                caption=text,
-                                                reply_to_message_id=reply_id,
-                                                parse_mode=parseMode,
-                                                disable_web_page_preview=True,
-                                                reply_markup=keyboard)
+                    ENUM_FUNC_MAP[note.msgtype](
+                        send_id,
+                        note.file,
+                        caption=text,
+                        reply_to_message_id=reply_id,
+                        parse_mode=parseMode,
+                        disable_web_page_preview=True,
+                        reply_markup=keyboard,
+                    )
 
         except BadRequest as excp:
             if excp.message == "Entity_mention_user_invalid":
@@ -166,8 +168,9 @@ def get(bot, update, notename, show_none=True, no_format=False):
                 sql.rm_note(chat_id, notename)
             else:
                 message.reply_text(tld(chat.id, "note_cannot_send"))
-                LOGGER.exception("Could not parse message #%s in chat %s",
-                                 notename, str(chat_id))
+                LOGGER.exception(
+                    "Could not parse message #%s in chat %s", notename, str(chat_id)
+                )
                 LOGGER.warning("Message was: %s", str(note.value))
 
     return
@@ -219,27 +222,25 @@ def save(bot: Bot, update: Update):
         return
 
     if not sql.get_note(chat_id, note_name):
-        sql.add_note_to_db(chat_id,
-                           note_name,
-                           text,
-                           data_type,
-                           buttons=buttons,
-                           file=content)
-        msg.reply_text(tld(chat.id,
-                           "save_success").format(note_name, chat_name,
-                                                  note_name, note_name),
-                       parse_mode=ParseMode.MARKDOWN)
+        sql.add_note_to_db(
+            chat_id, note_name, text, data_type, buttons=buttons, file=content
+        )
+        msg.reply_text(
+            tld(chat.id, "save_success").format(
+                note_name, chat_name, note_name, note_name
+            ),
+            parse_mode=ParseMode.MARKDOWN,
+        )
     else:
-        sql.add_note_to_db(chat_id,
-                           note_name,
-                           text,
-                           data_type,
-                           buttons=buttons,
-                           file=content)
-        msg.reply_text(tld(chat.id,
-                           "save_updated").format(note_name, chat_name,
-                                                  note_name, note_name),
-                       parse_mode=ParseMode.MARKDOWN)
+        sql.add_note_to_db(
+            chat_id, note_name, text, data_type, buttons=buttons, file=content
+        )
+        msg.reply_text(
+            tld(chat.id, "save_updated").format(
+                note_name, chat_name, note_name, note_name
+            ),
+            parse_mode=ParseMode.MARKDOWN,
+        )
 
 
 @run_async
@@ -262,12 +263,12 @@ def clear(bot: Bot, update: Update, args: List[str]):
         notename = args[0].lower()
 
         if sql.rm_note(chat_id, notename):
-            update.effective_message.reply_text(tld(
-                chat.id, "clear_success").format(chat_name),
-                parse_mode=ParseMode.MARKDOWN)
-        else:
             update.effective_message.reply_text(
-                tld(chat.id, "note_not_existed"))
+                tld(chat.id, "clear_success").format(chat_name),
+                parse_mode=ParseMode.MARKDOWN,
+            )
+        else:
+            update.effective_message.reply_text(tld(chat.id, "note_not_existed"))
 
 
 @run_async
@@ -293,20 +294,21 @@ def list_notes(bot: Bot, update: Update):
     for note in note_list:
         note_name = " • `#{}`\n".format(note.name.lower())
         if len(msg) + len(note_name) > MAX_MESSAGE_LENGTH:
-            update.effective_message.reply_text(msg,
-                                                parse_mode=ParseMode.MARKDOWN)
+            update.effective_message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
             msg = ""
         msg += note_name
 
     if not note_list:
-        update.effective_message.reply_text(tld(
-            chat.id, "note_none_in_chat").format(chat_name),
-            parse_mode=ParseMode.MARKDOWN)
+        update.effective_message.reply_text(
+            tld(chat.id, "note_none_in_chat").format(chat_name),
+            parse_mode=ParseMode.MARKDOWN,
+        )
 
     elif len(msg) != 0:
         msg += tld(chat.id, "note_get")
-        update.effective_message.reply_text(msg.format(chat_name),
-                                            parse_mode=ParseMode.MARKDOWN)
+        update.effective_message.reply_text(
+            msg.format(chat_name), parse_mode=ParseMode.MARKDOWN
+        )
 
 
 @run_async
@@ -321,15 +323,16 @@ def remove_all_notes(bot: Bot, update: Update):
     else:
         owner = chat.get_member(user.id)
         chat.title = chat.title
-        if owner.status != 'creator':
+        if owner.status != "creator":
             message.reply_text(tld(chat.id, "notes_must_be_creator"))
             return
 
     note_list = sql.get_all_chat_notes(chat.id)
     if not note_list:
-        message.reply_text(tld(chat.id,
-                               "note_none_in_chat").format(chat.title),
-                           parse_mode=ParseMode.MARKDOWN)
+        message.reply_text(
+            tld(chat.id, "note_none_in_chat").format(chat.title),
+            parse_mode=ParseMode.MARKDOWN,
+        )
         return
 
     x = 0
@@ -346,8 +349,9 @@ def remove_all_notes(bot: Bot, update: Update):
 
 
 def __stats__():
-    return "• <code>{}</code> notes, accross <code>{}</code> chats.".format(sql.num_notes(),
-                                                                            sql.num_chats())
+    return "• <code>{}</code> notes, accross <code>{}</code> chats.".format(
+        sql.num_notes(), sql.num_chats()
+    )
 
 
 def __migrate__(old_chat_id, new_chat_id):
@@ -363,9 +367,7 @@ SAVE_HANDLER = CommandHandler("save", save)
 REMOVE_ALL_NOTES_HANDLER = CommandHandler("clearall", remove_all_notes)
 DELETE_HANDLER = CommandHandler("clear", clear, pass_args=True)
 
-LIST_HANDLER = DisableAbleCommandHandler(["notes", "saved"],
-                                         list_notes,
-                                         admin_ok=True)
+LIST_HANDLER = DisableAbleCommandHandler(["notes", "saved"], list_notes, admin_ok=True)
 
 dispatcher.add_handler(GET_HANDLER)
 dispatcher.add_handler(SAVE_HANDLER)

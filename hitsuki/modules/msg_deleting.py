@@ -16,7 +16,10 @@
 from asyncio import sleep
 
 from hitsuki.events import register
-from hitsuki.modules.helper_funcs.telethon.chat_status import user_is_admin, can_delete_messages
+from hitsuki.modules.helper_funcs.telethon.chat_status import (
+    can_delete_messages,
+    user_is_admin,
+)
 from hitsuki.modules.tr_engine.strings import tld
 
 
@@ -55,7 +58,7 @@ async def purge(event):
 
     await event.client.delete_messages(chat, msgs)
     text = tld(chat, "purge_msg_success").format(count)
-    done = await event.respond(text, parse_mode='md')
+    done = await event.respond(text, parse_mode="md")
 
     await sleep(5)
     await done.delete()

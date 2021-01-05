@@ -8,7 +8,6 @@ api_hash: ''
 owner_id: 123456
 owner_username: "OWNER USERNAME"
 message_dump: "CHAT ID"
-gban_dump: "CHAT ID"
 load: []
 no_load: []
 strict_antispam: False
@@ -23,5 +22,4 @@ database_url: "postgres://username:password@host:5432/database_name"
 
 # Permission
 sudo_users: []
-support_users: []
 whitelist_users: []

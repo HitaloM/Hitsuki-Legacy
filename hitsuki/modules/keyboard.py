@@ -13,12 +13,11 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from telegram import ReplyKeyboardMarkup, KeyboardButton
-from telegram.ext import CommandHandler
-
 import hitsuki.modules.sql.connection_sql as con_sql
 from hitsuki import dispatcher
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import KeyboardButton, ReplyKeyboardMarkup
+from telegram.ext import CommandHandler
 
 
 def keyboard(bot, update):
@@ -64,12 +63,20 @@ def keyboard(bot, update):
 
     update.effective_message.reply_text(
         tld(chat.id, "keyboard_updated"),
-        reply_markup=ReplyKeyboardMarkup([[
-            KeyboardButton("/help"),
-            KeyboardButton("/notes - {}".format(tld(chat.id,
-                                                    "keyboard_notes")))
-        ], [KeyboardButton(btn1)], [KeyboardButton(btn2)],
-            [KeyboardButton(btn3)]]))
+        reply_markup=ReplyKeyboardMarkup(
+            [
+                [
+                    KeyboardButton("/help"),
+                    KeyboardButton(
+                        "/notes - {}".format(tld(chat.id, "keyboard_notes"))
+                    ),
+                ],
+                [KeyboardButton(btn1)],
+                [KeyboardButton(btn2)],
+                [KeyboardButton(btn3)],
+            ]
+        ),
+    )
 
 
 KEYBOARD_HANDLER = CommandHandler(["keyboard"], keyboard)
