@@ -15,9 +15,8 @@
 
 from enum import IntEnum, unique
 
-from telegram import Message
-
 from hitsuki.modules.helper_funcs.string_handling import button_markdown_parser
+from telegram import Message
 
 
 @unique
@@ -38,19 +37,20 @@ def get_note_type(msg: Message):
     content = None
     text = ""
     raw_text = msg.text or msg.caption
-    args = raw_text.split(None,
-                          2)  # use python's maxsplit to separate cmd and args
+    args = raw_text.split(None, 2)  # use python's maxsplit to separate cmd and args
     note_name = args[1]
 
     buttons = []
     # determine what the contents of the filter are - text, image, sticker, etc
     if len(args) >= 3:
         offset = len(args[2]) - len(
-            raw_text)  # set correct offset relative to command + notename
-        text, buttons = button_markdown_parser(args[2],
-                                               entities=msg.parse_entities()
-                                               or msg.parse_caption_entities(),
-                                               offset=offset)
+            raw_text
+        )  # set correct offset relative to command + notename
+        text, buttons = button_markdown_parser(
+            args[2],
+            entities=msg.parse_entities() or msg.parse_caption_entities(),
+            offset=offset,
+        )
         if buttons:
             data_type = Types.BUTTON_TEXT
         else:
@@ -76,8 +76,7 @@ def get_note_type(msg: Message):
             data_type = Types.DOCUMENT
 
         elif msg.reply_to_message.photo:
-            content = msg.reply_to_message.photo[
-                -1].file_id  # last elem = best quality
+            content = msg.reply_to_message.photo[-1].file_id  # last elem = best quality
             text, buttons = button_markdown_parser(msgtext, entities=entities)
             data_type = Types.PHOTO
 
@@ -118,7 +117,8 @@ def get_welcome_type(msg: Message):
                 args = msg.reply_to_message.caption
         else:
             args = msg.text.split(
-                None, 1)  # use python's maxsplit to separate cmd and args
+                None, 1
+            )  # use python's maxsplit to separate cmd and args
     except AttributeError:
         args = False
 
@@ -133,10 +133,11 @@ def get_welcome_type(msg: Message):
         else:
             argumen = args[1]
         offset = len(argumen) - len(
-            msg.text)  # set correct offset relative to command + notename
-        text, buttons = button_markdown_parser(argumen,
-                                               entities=msg.parse_entities(),
-                                               offset=offset)
+            msg.text
+        )  # set correct offset relative to command + notename
+        text, buttons = button_markdown_parser(
+            argumen, entities=msg.parse_entities(), offset=offset
+        )
         if buttons:
             data_type = Types.BUTTON_TEXT
         else:
@@ -153,8 +154,7 @@ def get_welcome_type(msg: Message):
         data_type = Types.DOCUMENT
 
     elif msg.reply_to_message and msg.reply_to_message.photo:
-        content = msg.reply_to_message.photo[
-            -1].file_id  # last elem = best quality
+        content = msg.reply_to_message.photo[-1].file_id  # last elem = best quality
         # text = msg.reply_to_message.caption
         data_type = Types.PHOTO
 
@@ -186,18 +186,19 @@ def get_message_type(msg: Message):
     content = None
     text = ""
     raw_text = msg.text or msg.caption
-    args = raw_text.split(None,
-                          1)  # use python's maxsplit to separate cmd and args
+    args = raw_text.split(None, 1)  # use python's maxsplit to separate cmd and args
 
     buttons = []
     # determine what the contents of the filter are - text, image, sticker, etc
     if len(args) >= 2:
         offset = len(args[1]) - len(
-            raw_text)  # set correct offset relative to command + notename
-        text, buttons = button_markdown_parser(args[1],
-                                               entities=msg.parse_entities()
-                                               or msg.parse_caption_entities(),
-                                               offset=offset)
+            raw_text
+        )  # set correct offset relative to command + notename
+        text, buttons = button_markdown_parser(
+            args[1],
+            entities=msg.parse_entities() or msg.parse_caption_entities(),
+            offset=offset,
+        )
         if buttons:
             data_type = Types.BUTTON_TEXT
         else:
@@ -223,8 +224,7 @@ def get_message_type(msg: Message):
             data_type = Types.DOCUMENT
 
         elif msg.reply_to_message.photo:
-            content = msg.reply_to_message.photo[
-                -1].file_id  # last elem = best quality
+            content = msg.reply_to_message.photo[-1].file_id  # last elem = best quality
             text, buttons = button_markdown_parser(msgtext, entities=entities)
             data_type = Types.PHOTO
 

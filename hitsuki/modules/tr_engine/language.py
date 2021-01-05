@@ -15,16 +15,14 @@
 
 import re
 
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.ext import CallbackQueryHandler
-from telegram.ext import CommandHandler
-
 from hitsuki import dispatcher
 from hitsuki.modules.connection import connected
 from hitsuki.modules.helper_funcs.chat_status import user_admin
-from hitsuki.modules.sql.locales_sql import switch_to_locale, prev_locale
+from hitsuki.modules.sql.locales_sql import prev_locale, switch_to_locale
 from hitsuki.modules.tr_engine.list_locale import list_locales
-from hitsuki.modules.tr_engine.strings import tld, LANGUAGES
+from hitsuki.modules.tr_engine.strings import LANGUAGES, tld
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
+from telegram.ext import CallbackQueryHandler, CommandHandler
 
 
 @user_admin
@@ -33,25 +31,28 @@ def locale(bot, update, args):
     message = update.effective_message
     if len(args) > 0:
         locale = args[0].lower()
-        if locale == 'en-us':
-            locale = 'en-US'
-        if locale in ['en-uk', 'en-gb']:
-            locale = 'en-GB'
+        if locale == "en-us":
+            locale = "en-US"
 
         if locale in list_locales:
             if locale in LANGUAGES:
                 switch_to_locale(chat.id, locale)
                 if chat.type == "private":
                     message.reply_text(
-                        tld(chat.id, 'language_switch_success_pm').format(
-                            list_locales[locale]))
+                        tld(chat.id, "language_switch_success_pm").format(
+                            list_locales[locale]
+                        )
+                    )
                 else:
                     message.reply_text(
-                        tld(chat.id, 'language_switch_success').format(
-                            chat.title, list_locales[locale]))
+                        tld(chat.id, "language_switch_success").format(
+                            chat.title, list_locales[locale]
+                        )
+                    )
             else:
                 text = tld(chat.id, "language_not_supported").format(
-                    list_locales[locale])
+                    list_locales[locale]
+                )
                 text += "\n\n*Currently available languages:*\n"
                 for lang in LANGUAGES:
                     locale = list_locales[lang]
@@ -69,13 +70,15 @@ def locale(bot, update, args):
         if LANGUAGE:
             locale = LANGUAGE.locale_name
             native_lang = list_locales[locale]
-            message.reply_text(tld(
-                chat.id, "language_current_locale").format(native_lang),
-                               parse_mode=ParseMode.MARKDOWN)
+            message.reply_text(
+                tld(chat.id, "language_current_locale").format(native_lang),
+                parse_mode=ParseMode.MARKDOWN,
+            )
         else:
-            message.reply_text(tld(
-                chat.id, "language_current_locale").format("English (US)"),
-                               parse_mode=ParseMode.MARKDOWN)
+            message.reply_text(
+                tld(chat.id, "language_current_locale").format("English (US)"),
+                parse_mode=ParseMode.MARKDOWN,
+            )
 
 
 @user_admin
@@ -87,8 +90,11 @@ def locale_button(bot, update):
     if lang_match:
         if lang_match[0]:
             switch_to_locale(chat.id, lang_match[0])
-            query.answer(text=tld(chat.id, 'language_switch_success_pm').
-                         format(list_locales[lang_match[0]]))
+            query.answer(
+                text=tld(chat.id, "language_switch_success_pm").format(
+                    list_locales[lang_match[0]]
+                )
+            )
         else:
             query.answer(text="Error!", show_alert=True)
 
@@ -119,23 +125,32 @@ def locale_button(bot, update):
         message_id=query.message.message_id,
         text=text,
         parse_mode=ParseMode.MARKDOWN,
-        reply_markup=InlineKeyboardMarkup([[
-            InlineKeyboardButton("English (US) 🇺🇸",
-                                 callback_data="set_lang_en-US"),
-            InlineKeyboardButton("Portuguese 🇧🇷",
-                                 callback_data="set_lang_pt")
-        ]] + [[
-            InlineKeyboardButton(f"{tld(chat.id, 'btn_go_back')}",
-                                 callback_data="bot_start")
-        ]]))
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        "English (US) 🇺🇸", callback_data="set_lang_en-US"
+                    ),
+                    InlineKeyboardButton("Portuguese 🇧🇷", callback_data="set_lang_pt"),
+                ]
+            ]
+            + [
+                [
+                    InlineKeyboardButton(
+                        f"{tld(chat.id, 'btn_go_back')}", callback_data="bot_start"
+                    )
+                ]
+            ]
+        ),
+    )
 
     # query.message.delete()
     bot.answer_callback_query(query.id)
 
 
-LOCALE_HANDLER = CommandHandler(["set_locale", "locale", "lang", "setlang"],
-                                locale,
-                                pass_args=True)
+LOCALE_HANDLER = CommandHandler(
+    ["set_locale", "locale", "lang", "setlang"], locale, pass_args=True
+)
 locale_handler = CallbackQueryHandler(locale_button, pattern="chng_lang")
 set_locale_handler = CallbackQueryHandler(locale_button, pattern=r"set_lang_")
 

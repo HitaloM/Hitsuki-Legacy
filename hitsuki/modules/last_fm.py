@@ -13,14 +13,13 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import requests
-from telegram import Bot, Update, ParseMode
-from telegram.ext import run_async, CommandHandler
-
 import hitsuki.modules.sql.last_fm_sql as sql
-from hitsuki import dispatcher, LASTFM_API_KEY
+import requests
+from hitsuki import LASTFM_API_KEY, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import Bot, ParseMode, Update
+from telegram.ext import CommandHandler, run_async
 
 # Last.fm module ported from https://github.com/rsktg
 
@@ -35,8 +34,7 @@ def set_user(bot: Bot, update: Update, args):
         sql.set_user(user, username)
         msg.reply_text(tld(chat.id, "misc_setuser_lastfm").format(username))
     else:
-        msg.reply_text(
-            tld(chat.id, "misc_setuser_lastfm_error"))
+        msg.reply_text(tld(chat.id, "misc_setuser_lastfm_error"))
 
 
 @run_async
@@ -44,8 +42,7 @@ def clear_user(bot: Bot, update: Update):
     user = update.effective_user.id
     chat = update.effective_chat
     sql.set_user(user, "")
-    update.effective_message.reply_text(
-        tld(chat.id, "misc_clearuser_lastfm"))
+    update.effective_message.reply_text(tld(chat.id, "misc_clearuser_lastfm"))
 
 
 @run_async
@@ -61,7 +58,8 @@ def last_fm(bot: Bot, update: Update):
 
     base_url = "http://ws.audioscrobbler.com/2.0"
     res = requests.get(
-        f"{base_url}?method=user.getrecenttracks&limit=3&extended=1&user={username}&api_key={LASTFM_API_KEY}&format=json")
+        f"{base_url}?method=user.getrecenttracks&limit=3&extended=1&user={username}&api_key={LASTFM_API_KEY}&format=json"
+    )
     if res.status_code != 200:
         msg.reply_text(tld(chat.id, "misc_lastfm_userwrong"))
         return
@@ -73,8 +71,7 @@ def last_fm(bot: Bot, update: Update):
         return
     if first_track.get("@attr"):
         # Ensures the track is now playing
-        image = first_track.get("image")[3].get(
-            "#text")  # Grab URL of 300x300 image
+        image = first_track.get("image")[3].get("#text")  # Grab URL of 300x300 image
         artist = first_track.get("artist").get("name")
         song = first_track.get("name")
         loved = int(first_track.get("loved"))
@@ -87,13 +84,19 @@ def last_fm(bot: Bot, update: Update):
             rep += f"<a href='{image}'>\u200c</a>"
     else:
         tracks = res.json().get("recenttracks").get("track")
-        track_dict = {tracks[i].get("artist").get(
-            "name"): tracks[i].get("name") for i in range(3)}
+        track_dict = {
+            tracks[i].get("artist").get("name"): tracks[i].get("name") for i in range(3)
+        }
         rep = tld(chat.id, "misc_lastfm_np").format(user)
         for artist, song in track_dict.items():
             rep += tld(chat.id, "misc_lastfm_scrr").format(artist, song)
-        last_user = requests.get(
-            f"{base_url}?method=user.getinfo&user={username}&api_key={LASTFM_API_KEY}&format=json").json().get("user")
+        last_user = (
+            requests.get(
+                f"{base_url}?method=user.getinfo&user={username}&api_key={LASTFM_API_KEY}&format=json"
+            )
+            .json()
+            .get("user")
+        )
         scrobbles = last_user.get("playcount")
         rep += tld(chat.id, "misc_lastfm_scr").format(scrobbles)
 

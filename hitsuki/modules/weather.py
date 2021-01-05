@@ -13,18 +13,18 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import rapidjson as json
 from datetime import datetime
-from requests import get
-from pytz import (country_timezones as c_tz,
-                  timezone as tz, country_names as c_n)
 
-from telegram import Bot, Update, ParseMode
-from telegram.ext import run_async
-
+import rapidjson as json
 from hitsuki import WEATHER_API, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.tr_engine.strings import tld
+from pytz import country_names as c_n
+from pytz import country_timezones as c_tz
+from pytz import timezone as tz
+from requests import get
+from telegram import Bot, ParseMode, Update
+from telegram.ext import run_async
 
 
 @run_async
@@ -43,13 +43,14 @@ def get_tz(con):
 def weather(bot: Bot, update: Update):
     message = update.effective_message
     chat_id = update.effective_chat.id
-    city = message.text[len('/weather '):]
+    city = message.text[len("/weather ") :]
     if city:
         APPID = WEATHER_API
         result = None
         timezone_countries = {
             timezone: country
-            for country, timezones in c_tz.items() for timezone in timezones
+            for country, timezones in c_tz.items()
+            for timezone in timezones
         }
         if "," in city:
             newcity = city.split(",")
@@ -58,36 +59,38 @@ def weather(bot: Bot, update: Update):
             else:
                 country = get_tz((newcity[1].strip()).title())
                 try:
-                    countrycode = timezone_countries[f'{country}']
+                    countrycode = timezone_countries[f"{country}"]
                 except KeyError:
                     message.reply_text(tld(chat_id, "weather_invalid"))
                     return
                 city = newcity[0].strip() + "," + countrycode.strip()
-        url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={APPID}'
+        url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={APPID}"
         request = get(url)
         result = json.loads(request.text)
         if request.status_code != 200:
             info = tld(chat_id, "weather_no_info")
-            bot.send_message(chat_id=update.effective_chat.id,
-                             text=info,
-                             parse_mode=ParseMode.MARKDOWN,
-                             disable_web_page_preview=True)
+            bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=info,
+                parse_mode=ParseMode.MARKDOWN,
+                disable_web_page_preview=True,
+            )
             return
 
-        cityname = result['name']
-        curtemp = result['main']['temp']
-        humidity = result['main']['humidity']
-        min_temp = result['main']['temp_min']
-        max_temp = result['main']['temp_max']
-        country = result['sys']['country']
-        sunrise = result['sys']['sunrise']
-        sunset = result['sys']['sunset']
-        wind = result['wind']['speed']
-        weath = result['weather'][0]
-        desc = weath['main']
-        icon = weath['id']
-        condmain = weath['main']
-        conddet = weath['description']
+        cityname = result["name"]
+        curtemp = result["main"]["temp"]
+        humidity = result["main"]["humidity"]
+        min_temp = result["main"]["temp_min"]
+        max_temp = result["main"]["temp_max"]
+        country = result["sys"]["country"]
+        sunrise = result["sys"]["sunrise"]
+        sunset = result["sys"]["sunset"]
+        wind = result["wind"]["speed"]
+        weath = result["weather"][0]
+        desc = weath["main"]
+        icon = weath["id"]
+        condmain = weath["main"]
+        conddet = weath["description"]
 
         if icon <= 232:  # Rain storm
             icon = "⛈"
@@ -109,8 +112,12 @@ def weather(bot: Bot, update: Update):
             icon = "☁️"
 
         ctimezone = tz(c_tz[country][0])
-        time = datetime.now(ctimezone).strftime(
-            "%A %d %b, %H:%M").lstrip("0").replace(" 0", " ")
+        time = (
+            datetime.now(ctimezone)
+            .strftime("%A %d %b, %H:%M")
+            .lstrip("0")
+            .replace(" 0", " ")
+        )
         fullc_n = c_n[f"{country}"]
         dirs = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
 
@@ -126,24 +133,31 @@ def weather(bot: Bot, update: Update):
             return temp[0]
 
         def sun(unix):
-            xx = datetime.fromtimestamp(unix, tz=ctimezone).strftime(
-                "%H:%M").lstrip("0").replace(" 0", " ")
+            xx = (
+                datetime.fromtimestamp(unix, tz=ctimezone)
+                .strftime("%H:%M")
+                .lstrip("0")
+                .replace(" 0", " ")
+            )
             return xx
 
         if city:
             info = f"*{cityname}, {fullc_n}*\n"
             info += f"`{time}`\n\n"
             info += tld(chat_id, "weather_temp") + f"`{celsius(curtemp)}°C\n`"
-            info += tld(chat_id, "weather_cond") + \
-                f"`{condmain}, {conddet}` " + f"{icon}\n"
+            info += (
+                tld(chat_id, "weather_cond") + f"`{condmain}, {conddet}` " + f"{icon}\n"
+            )
             info += tld(chat_id, "weather_hum") + f"`{humidity}%`\n"
             info += tld(chat_id, "weather_wind") + f"`{kmph[0]} km/h`\n"
             info += tld(chat_id, "weather_sunrise") + f"`{sun(sunrise)}`\n"
             info += tld(chat_id, "weather_sunset") + f"`{sun(sunset)}`"
-            bot.send_message(chat_id=update.effective_chat.id,
-                             text=info,
-                             parse_mode=ParseMode.MARKDOWN,
-                             disable_web_page_preview=True)
+            bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=info,
+                parse_mode=ParseMode.MARKDOWN,
+                disable_web_page_preview=True,
+            )
 
 
 __help__ = True
