@@ -15,69 +15,93 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import random
+from emoji import UNICODE_EMOJI
 from typing import Optional, List
-
-from telegram import Message, Update, Bot, ParseMode, Chat
+from google_trans_new import LANGUAGES, google_translator
+from telegram import ParseMode, Update, Bot
 from telegram.ext import run_async
 
 from haruka import dispatcher
 from haruka.modules.disable import DisableAbleCommandHandler
-from haruka.modules.helper_funcs.string_handling import remove_emoji
 from haruka.modules.tr_engine.strings import tld, tld_list
 
-from googletrans import LANGUAGES, Translator
-
-
 @run_async
-def do_translate(bot: Bot, update: Update, args: List[str]):
-    chat = update.effective_chat  # type: Optional[Chat]
-    msg = update.effective_message  # type: Optional[Message]
-    lan = " ".join(args)
+def totranslate(bot: Bot, update: Update, args: List[str]):
+    chat = update.effective_chat
+    message = update.effective_message
+    problem_lang_code = []
+    for key in LANGUAGES:
+        if "-" in key:
+            problem_lang_code.append(key)
 
-    if msg.reply_to_message and (msg.reply_to_message.audio
-                                 or msg.reply_to_message.voice) or (
-                                     args and args[0] == 'animal'):
-        reply = random.choice(tld_list(chat.id, 'translator_animal_lang'))
-
-        if args:
-            translation_type = "text"
-        else:
-            translation_type = "audio"
-
-        msg.reply_text(tld(chat.id, 'translator_animal_translated').format(
-            translation_type, reply),
-                       parse_mode=ParseMode.MARKDOWN)
-        return
-
-    if msg.reply_to_message:
-        to_translate_text = remove_emoji(msg.reply_to_message.text)
-    else:
-        msg.reply_text(tld(chat.id, "translator_no_str"))
-        return
-
-    if not args:
-        msg.reply_text(tld(chat.id, 'translator_no_args'))
-        return
-
-    translator = Translator()
     try:
-        translated = translator.translate(to_translate_text, dest=lan)
-    except ValueError as e:
-        msg.reply_text(tld(chat.id, 'translator_err').format(e))
+        if message.reply_to_message:
+            args = update.effective_message.text.split(None, 1)
+            if message.reply_to_message.text:
+                text = message.reply_to_message.text
+            elif message.reply_to_message.caption:
+                text = message.reply_to_message.caption
 
-    src_lang = LANGUAGES[f'{translated.src.lower()}'].title()
-    dest_lang = LANGUAGES[f'{translated.dest.lower()}'].title()
-    translated_text = translated.text
-    msg.reply_text(tld(chat.id,
-                       'translator_translated').format(src_lang,
-                                                       to_translate_text,
-                                                       dest_lang,
-                                                       translated_text),
-                   parse_mode=ParseMode.MARKDOWN)
+            try:
+                source_lang = args[1].split(None, 1)[0]
+            except (IndexError, AttributeError):
+                source_lang = "en"
 
+        else:
+            args = update.effective_message.text.split(None, 2)
+            text = args[2]
+            source_lang = args[1]
+
+        if source_lang.count('-') == 2:
+            for lang in problem_lang_code:
+                if lang in source_lang:
+                    if source_lang.startswith(lang):
+                        dest_lang = source_lang.rsplit("-", 1)[1]
+                        source_lang = source_lang.rsplit("-", 1)[0]
+                    else:
+                        dest_lang = source_lang.split("-", 1)[1]
+                        source_lang = source_lang.split("-", 1)[0]
+        elif source_lang.count('-') == 1:
+            for lang in problem_lang_code:
+                if lang in source_lang:
+                    dest_lang = source_lang
+                    source_lang = None
+                    break
+            if dest_lang is None:
+                dest_lang = source_lang.split("-")[1]
+                source_lang = source_lang.split("-")[0]
+        else:
+            dest_lang = source_lang
+            source_lang = None
+
+        exclude_list = UNICODE_EMOJI.keys()
+        for emoji in exclude_list:
+            if emoji in text:
+                text = text.replace(emoji, '')
+
+        trl = google_translator()
+        if source_lang is None:
+            detection = trl.detect(text)
+            trans_str = trl.translate(text, lang_tgt=dest_lang)
+            return message.reply_text(
+                f"Translated from `{detection[0]}` to `{dest_lang}`:\n`{trans_str}`",
+                parse_mode=ParseMode.MARKDOWN)
+        else:
+            trans_str = trl.translate(
+                text, lang_tgt=dest_lang, lang_src=source_lang)
+            message.reply_text(
+                f"Translated from `{source_lang}` to `{dest_lang}`:\n`{trans_str}`",
+                parse_mode=ParseMode.MARKDOWN)
+
+    except IndexError:
+        update.effective_message.reply_text(tld(chat.id, "translator_no_str"))
+    except ValueError:
+        update.effective_message.reply_text(
+            "The intended language is not found!")
+    else:
+        return
 
 __help__ = True
 
 dispatcher.add_handler(
-    DisableAbleCommandHandler("tr", do_translate, pass_args=True))
+    DisableAbleCommandHandler("tr", totranslate, pass_args=True))
