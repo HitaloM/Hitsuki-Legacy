@@ -648,41 +648,6 @@ translator_err: Terjadi kesalahan saat menerjemahkan:\n {}
 translator_help: "- /tr (kode bahasa): Dapatkan terjemahan dari pesan yang dibalas."
 translator_no_str: Balas pesan untuk diterjemahkan!
 translator_no_args: Tentukan bahasa yang Anda inginkan untuk menerjemahkan pesan balasan!
-translator_animal_translated: |
-  Berhasil menerjemahkan hewan {}!
-  Binatang Anda berkata:\n`{}`
-translator_animal_lang:
-  - Aku cinta kamu
-  - Hai!
-  - Bersulang!
-  - Jangan sentuh aku!
-  - Hei! Saya lapar!
-  - Zzz...
-  - Persegi panjang hitam apa ini?
-  - Aku ingin keluar!
-  - Guk guk! Tunggu... apakah Anda merekam saya?!
-  - Aku tidak akan bicara!
-  - Dimana temanku?
-  - Saya butuh ke kamar mandi.
-  - Tinggalkan aku sendiri!
-  - Di mana testis saya?
-  - Kakiku kesakitan!
-  - Keluar dariku, SEKARANG!
-  - Mengapa kamu melecehkan saya??!
-  - Pergi dari sini.
-  - Aku akan memakanmu!
-  - Panggil pak! Ada masalah potensial! Seseorang datang ke wilayah kita!
-  - Apakah ada orang di sana? Saya kesepian dan butuh teman.
-  - Hentikan itu!
-  - Halo yang disana!
-  - Apa ini?
-  - Hah?
-  - Aduh!
-  - Mari main!
-  - Ini menyenangkan!
-  - Aku benar-benar takut padamu.
-  - Saya akan kencing!
-  - kaMu BaU.
 #URL Blacklist
 modname_urlblacklist: Daftar Hitam Domain
 url_blacklist_success: "Menambahkan domain <code>{}</code> ke daftar hitam!"

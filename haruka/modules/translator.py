@@ -35,21 +35,6 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
     msg = update.effective_message  # type: Optional[Message]
     lan = " ".join(args)
 
-    if msg.reply_to_message and (msg.reply_to_message.audio
-                                 or msg.reply_to_message.voice) or (
-                                     args and args[0] == 'animal'):
-        reply = random.choice(tld_list(chat.id, 'translator_animal_lang'))
-
-        if args:
-            translation_type = "text"
-        else:
-            translation_type = "audio"
-
-        msg.reply_text(tld(chat.id, 'translator_animal_translated').format(
-            translation_type, reply),
-                       parse_mode=ParseMode.MARKDOWN)
-        return
-
     if msg.reply_to_message:
         to_translate_text = remove_emoji(msg.reply_to_message.text)
     else:

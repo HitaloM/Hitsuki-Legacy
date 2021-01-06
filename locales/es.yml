@@ -669,41 +669,6 @@ translator_err: Error al traducir:\n{}
 translator_help: "- /tr (código de idioma): Obtener la traducción del mensaje respondido."
 translator_no_str: Responder a un mensaje para traducir!
 translator_no_args: '¡Especifique el idioma al que desea traducir el mensaje contestado!'
-translator_animal_translated: |
-  ¡Animal traducido {} con éxito!
-  Tu animal dice:\n`{}`
-translator_animal_lang:
-  - Te amo
-  - Hi!
-  - '¡Saludos!'
-  - '¡No me toques!'
-  - '¡Oye! ¡Tengo hambre!'
-  - Ziz...
-  - '¿Qué es este rectángulo negro?'
-  - '¡Quiero salir!'
-  - '¡Madera genial! Espera... ¿estás grabando?!'
-  - '¡No hablaré!'
-  - '¿Dónde están mis amigos?'
-  - Necesito baño.
-  - '¡Déjame solo!'
-  - '¿Dónde están mis testigos?'
-  - '¡Mi pierna está perdiendo!'
-  - '¡Hazme llegar AHORA!'
-  - '¿Por qué me estás acosando?!'
-  - Fuck apagado.
-  - '¡Estoy comiendo yo!'
-  - '¡Llama al paquete! ¡Hay un problema potencial! ¡Alguien está entrando en nuestro territorio!'
-  - '¿Hay alguien allí? Soy solitario y necesito compañerismo.'
-  - '¡Detengalo!'
-  - '¡Hola!'
-  - '¿Qué es esto?'
-  - '¿Huh?'
-  - '¡Mañana!'
-  - '¡Juguemos!'
-  - '¡Esto es divertido!'
-  - Estoy realmente asustado de ustedes.
-  - '¡Estoy a punto de pasarme!'
-  - yoU TinK.
 #URL Blacklist
 modname_urlblacklist: Listas negras del dominio
 url_blacklist_success: "Añadido el dominio <code>{}</code> a la lista negra!"
