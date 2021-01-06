@@ -14,14 +14,14 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from functools import wraps
-from typing import List, Dict
 from math import ceil
-
-from telegram import MAX_MESSAGE_LENGTH, InlineKeyboardButton, Bot, ParseMode, Update
-from telegram.error import TelegramError
+from typing import Dict, List
 
 from hitsuki import LOAD, NO_LOAD, OWNER_ID
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import (MAX_MESSAGE_LENGTH, Bot, InlineKeyboardButton, ParseMode,
+                      Update)
+from telegram.error import TelegramError
 
 
 class EqInlineKeyboardButton(InlineKeyboardButton):

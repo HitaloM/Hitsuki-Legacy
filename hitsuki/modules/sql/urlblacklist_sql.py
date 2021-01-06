@@ -15,9 +15,8 @@
 
 import threading
 
-from sqlalchemy import Column, String, UnicodeText
-
 from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import Column, String, UnicodeText
 
 
 class URLBlackListFilters(BASE):

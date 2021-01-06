@@ -16,17 +16,17 @@
 import datetime
 import html
 import textwrap
+from inspect import getfullargspec
+
 import bs4
 import jikanpy
 import requests
-from telegraph import Telegraph
-from inspect import getfullargspec
-
-from pyrogram import Client, filters
-from pyrogram.types import Message, Update, InlineKeyboardMarkup, InlineKeyboardButton
-
 from hitsuki import pbot
 from hitsuki.modules.tr_engine.strings import tld
+from pyrogram import Client, filters
+from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup,
+                            Message, Update)
+from telegraph import Telegraph
 
 telegraph = Telegraph()
 telegraph.create_account(short_name='hitsuki')

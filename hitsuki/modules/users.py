@@ -13,22 +13,21 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import re
 import html
+import re
 from io import BytesIO
 from time import sleep
 from typing import List
 
-from telegram import TelegramError, Update, Bot, ParseMode
-from telegram.error import BadRequest
-from telegram.ext import MessageHandler, Filters, CommandHandler
-from telegram.ext.dispatcher import run_async
-
 import hitsuki.modules.sql.users_sql as sql
-from hitsuki import dispatcher, OWNER_ID, LOGGER, SUDO_USERS, SUPPORT_USERS
+from hitsuki import LOGGER, OWNER_ID, SUDO_USERS, dispatcher
 from hitsuki.modules.helper_funcs.chat_status import bot_admin
 from hitsuki.modules.helper_funcs.filters import CustomFilters
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import Bot, ParseMode, TelegramError, Update
+from telegram.error import BadRequest
+from telegram.ext import CommandHandler, Filters, MessageHandler
+from telegram.ext.dispatcher import run_async
 
 USERS_GROUP = 4
 CHAT_GROUP = 10
@@ -136,7 +135,7 @@ def snipe(bot: Bot, update: Update, args: List[str]):
     try:
         chat_id = str(args[0])
         del args[0]
-    except TypeError as excp:
+    except TypeError:
         update.effective_message.reply_text(
             "Please give me a chat to echo to!")
     to_send = " ".join(args)
@@ -227,7 +226,6 @@ def leavechat(bot: Bot, update: Update, args: List[int]):
 def slist(bot: Bot, update: Update):
     message = update.effective_message
     text1 = "My sudo users are:"
-    text2 = "My support users are:"
     for user_id in SUDO_USERS:
         try:
             user = bot.get_chat(user_id)
@@ -239,19 +237,8 @@ def slist(bot: Bot, update: Update):
         except BadRequest as excp:
             if excp.message == 'Chat not found':
                 text1 += "\n - ({}) - not found".format(user_id)
-    for user_id in SUPPORT_USERS:
-        try:
-            user = bot.get_chat(user_id)
-            name = "<a href='tg://user?id={}'>{}</a>".format(
-                user.id, user.first_name + (user.last_name or ""))
-            if user.username:
-                name = html.escape("@" + user.username)
-            text2 += "\n - {}".format(name)
-        except BadRequest as excp:
-            if excp.message == 'Chat not found':
-                text2 += "\n - ({}) - not found".format(user_id)
-    message.reply_text(text1 + "\n" + text2 + "\n",
-                       parse_mode=ParseMode.HTML)
+
+    message.reply_text(text1 + "\n", parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
@@ -298,8 +285,7 @@ LEAVECHAT_HANDLER = CommandHandler("leavechat",
                                    filters=Filters.user(OWNER_ID))
 SLIST_HANDLER = CommandHandler("slist",
                                slist,
-                               filters=CustomFilters.sudo_filter
-                               | CustomFilters.support_filter)
+                               filters=CustomFilters.sudo_filter)
 CHAT_CHECKER_HANDLER = MessageHandler(Filters.all & Filters.group,
                                       chat_checker)
 

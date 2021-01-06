@@ -14,18 +14,17 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
+
 import rapidjson as json
-from yaml import load, Loader
 from bs4 import BeautifulSoup
-from requests import get
-from hurry.filesize import size as sizee
-
-from pyrogram import Client, filters
-from pyrogram.types import Update, InlineKeyboardButton, InlineKeyboardMarkup
-
 from hitsuki import pbot
-from hitsuki.mwt import MWT
 from hitsuki.modules.tr_engine.strings import tld
+from hitsuki.mwt import MWT
+from hurry.filesize import size as sizee
+from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from requests import get
+from yaml import Loader, load
 
 # Greeting all bot owners that is using this module,
 # v1 - RealAkito (used to be peaktogoo) [Original module Maker]
@@ -675,7 +674,9 @@ async def phhmagisk(c: Client, update: Update):
                 text=btn, url=url)]]
         except IndexError:
             continue
-    await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
+    await update.reply_text(reply_text,
+                            reply_markup=InlineKeyboardMarkup(keyboard),
+                            disable_web_page_preview=True)
     return
 
 
@@ -775,7 +776,9 @@ async def orangefox(c: Client, update: Update):
     url = (release['url'])
     keyboard = [[InlineKeyboardButton(
         text=btn, url=url)]]
-    await update.reply_text(reply_text, reply_markup=InlineKeyboardMarkup(keyboard), disable_web_page_preview=True)
+    await update.reply_text(reply_text,
+                            reply_markup=InlineKeyboardMarkup(keyboard),
+                            disable_web_page_preview=True)
     return
 
 

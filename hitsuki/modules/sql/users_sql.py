@@ -15,10 +15,10 @@
 
 import threading
 
-from sqlalchemy import Column, Integer, UnicodeText, String, ForeignKey, UniqueConstraint, func
-
 from hitsuki import dispatcher
 from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import (Column, ForeignKey, Integer, String, UnicodeText,
+                        UniqueConstraint, func)
 
 
 class Users(BASE):

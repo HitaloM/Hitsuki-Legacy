@@ -16,7 +16,8 @@
 from asyncio import sleep
 
 from hitsuki.events import register
-from hitsuki.modules.helper_funcs.telethon.chat_status import user_is_admin, can_delete_messages
+from hitsuki.modules.helper_funcs.telethon.chat_status import (
+    can_delete_messages, user_is_admin)
 from hitsuki.modules.tr_engine.strings import tld
 
 

@@ -16,21 +16,20 @@
 import re
 from typing import List
 
-from telegram import Bot, Update
-from telegram import MAX_MESSAGE_LENGTH, ParseMode, InlineKeyboardMarkup
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, RegexHandler
-from telegram.ext.dispatcher import run_async
-
 import hitsuki.modules.sql.notes_sql as sql
-from hitsuki import dispatcher, MESSAGE_DUMP, LOGGER
+from hitsuki import LOGGER, MESSAGE_DUMP, dispatcher
 from hitsuki.modules.connection import connected
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.handlers import MessageHandlerChecker
 from hitsuki.modules.helper_funcs.chat_status import user_admin
+from hitsuki.modules.helper_funcs.handlers import MessageHandlerChecker
 from hitsuki.modules.helper_funcs.misc import build_keyboard, revert_buttons
 from hitsuki.modules.helper_funcs.msg_types import get_note_type
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import (MAX_MESSAGE_LENGTH, Bot, InlineKeyboardMarkup, ParseMode,
+                      Update)
+from telegram.error import BadRequest
+from telegram.ext import CommandHandler, RegexHandler
+from telegram.ext.dispatcher import run_async
 
 FILE_MATCHER = re.compile(r"^###file_id(!photo)?###:(.*?)(?:\s|$)")
 STICKER_MATCHER = re.compile(r"^###sticker(!photo)?###:")

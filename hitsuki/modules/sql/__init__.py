@@ -13,11 +13,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from hitsuki import DB_URI
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, scoped_session
-
-from hitsuki import DB_URI
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 
 def start() -> scoped_session:

@@ -15,9 +15,8 @@
 
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, func, distinct
-
-from hitsuki.modules.sql import SESSION, BASE
+from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import Column, String, UnicodeText, distinct, func
 
 
 class Disable(BASE):

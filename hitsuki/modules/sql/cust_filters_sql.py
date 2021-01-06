@@ -15,9 +15,9 @@
 
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, Boolean, Integer, distinct, func
-
 from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import (Boolean, Column, Integer, String, UnicodeText,
+                        distinct, func)
 
 
 class CustomFilters(BASE):

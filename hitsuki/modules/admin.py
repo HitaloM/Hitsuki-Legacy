@@ -16,22 +16,23 @@
 import html
 from typing import List
 
-from telegram import ParseMode
-from telegram import Update, Bot
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters
-from telegram.ext.dispatcher import run_async
-from telegram.utils.helpers import mention_html
-
 from hitsuki import dispatcher
 from hitsuki.modules.connection import connected
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.chat_status import bot_admin, user_admin, can_pin
-from hitsuki.modules.helper_funcs.admin_rights import user_can_pin, user_can_promote, user_can_changeinfo
+from hitsuki.modules.helper_funcs.admin_rights import (user_can_changeinfo,
+                                                       user_can_pin,
+                                                       user_can_promote)
+from hitsuki.modules.helper_funcs.chat_status import (bot_admin, can_pin,
+                                                      user_admin)
 from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.sql import admin_sql as sql
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import Bot, ParseMode, Update
+from telegram.error import BadRequest
+from telegram.ext import CommandHandler, Filters
+from telegram.ext.dispatcher import run_async
+from telegram.utils.helpers import mention_html
 
 
 @run_async
@@ -56,6 +57,12 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 
     if not chatD.get_member(bot.id).can_promote_members:
         message.reply_text(tld(chat.id, "admin_err_no_perm"))
+        return ""
+
+    member = chatD.get_member(user.id)
+    if not member.can_promote_members and member.status != 'creator':
+        update.effective_message.reply_text(
+            tld(chat.id, "admin_err_user_no_perm"))
         return ""
 
     user_id = extract_user(message, args)
@@ -113,12 +120,14 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
         if chat.type == "private":
             return ""
 
-    if user_can_promote(chat, user, bot.id) is False:
-        message.reply_text(tld(chat.id, "admin_no_promote_perm"))
-        return ""
-
     if not chatD.get_member(bot.id).can_promote_members:
         update.effective_message.reply_text(tld(chat.id, "admin_err_no_perm"))
+        return ""
+
+    member = chatD.get_member(user.id)
+    if not member.can_promote_members and member.status != 'creator':
+        update.effective_message.reply_text(
+            tld(chat.id, "admin_err_user_no_perm"))
         return ""
 
     user_id = extract_user(message, args)

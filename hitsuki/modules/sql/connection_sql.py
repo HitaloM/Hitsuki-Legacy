@@ -16,9 +16,8 @@
 import threading
 from typing import Union
 
-from sqlalchemy import Column, String, Boolean, Integer
-
-from hitsuki.modules.sql import SESSION, BASE
+from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import Boolean, Column, Integer, String
 
 
 class ChatAccessConnectionSettings(BASE):
@@ -40,7 +39,7 @@ class Connection(BASE):
 
     def __init__(self, user_id, chat_id):
         self.user_id = user_id
-        self.chat_id = str(chat_id)  #Ensure String
+        self.chat_id = str(chat_id)  # Ensure String
 
 
 class ConnectionHistory(BASE):
@@ -53,9 +52,9 @@ class ConnectionHistory(BASE):
 
     def __init__(self, user_id, chat_id1, chat_id2, chat_id3, updated):
         self.user_id = user_id
-        self.chat_id1 = str(chat_id1)  #Ensure String
-        self.chat_id2 = str(chat_id2)  #Ensure String
-        self.chat_id3 = str(chat_id3)  #Ensure String
+        self.chat_id1 = str(chat_id1)  # Ensure String
+        self.chat_id2 = str(chat_id2)  # Ensure String
+        self.chat_id3 = str(chat_id3)  # Ensure String
         self.updated = updated
 
 

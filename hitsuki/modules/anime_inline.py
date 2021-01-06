@@ -15,13 +15,12 @@
 
 import aiohttp
 import requests
-
-from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup, InlineQueryResultPhoto,
-                            InputTextMessageContent, InlineQueryResultArticle)
-
 from hitsuki import pbot
-from hitsuki.modules.anime import (url, anime_query, manga_query, t, shorten,
-                                   airing_query, character_query, nhentai_data)
+from hitsuki.modules.anime import (airing_query, anime_query, character_query,
+                                   manga_query, nhentai_data, shorten, t, url)
+from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup,
+                            InlineQueryResultArticle, InlineQueryResultPhoto,
+                            InputTextMessageContent)
 
 
 class AioHttp:

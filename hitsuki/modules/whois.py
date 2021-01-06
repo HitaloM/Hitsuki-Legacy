@@ -15,11 +15,10 @@
 
 from datetime import datetime
 
+from hitsuki import pbot
 from pyrogram import Client, filters
 from pyrogram.errors import PeerIdInvalid
-from pyrogram.types import User, Message
-
-from hitsuki import pbot
+from pyrogram.types import Message, User
 
 
 def ReplyCheck(m: Message):
@@ -58,7 +57,8 @@ def LastOnline(user: User):
     elif user.status == 'online':
         return "Currently Online"
     elif user.status == 'offline':
-        return datetime.fromtimestamp(user.status.date).strftime("%a, %d %b %Y, %H:%M:%S")
+        return datetime.fromtimestamp((user.status.date).strftime(
+            "%a, %d %b %Y, %H:%M:%S"))
 
 
 def FullName(user: User):

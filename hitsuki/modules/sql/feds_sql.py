@@ -15,9 +15,8 @@
 
 import threading
 
-from sqlalchemy import Column, String, UnicodeText, Integer, Boolean
-
-from hitsuki.modules.sql import SESSION, BASE
+from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import Boolean, Column, Integer, String, UnicodeText
 
 
 class Federations(BASE):

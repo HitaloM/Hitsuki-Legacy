@@ -13,13 +13,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import telegram.ext as tg
-from pyrate_limiter import (BucketFullException, Duration, RequestRate,
-                            Limiter, MemoryListBucket)
-from telegram import Update
-
 import hitsuki.modules.sql.antispam_sql as sql
+import telegram.ext as tg
 from hitsuki import OWNER_ID, SUDO_USERS
+from pyrate_limiter import (BucketFullException, Duration, Limiter,
+                            MemoryListBucket, RequestRate)
+from telegram import Update
 
 CMD_STARTERS = ('/', '!')
 
@@ -28,8 +27,6 @@ class AntiSpam:
 
     def __init__(self):
         self.whitelist = (list(SUDO_USERS) or []) + [OWNER_ID]
-        # Values are HIGHLY experimental, its recommended you pay attention to our
-        # commits as we will be adjusting the values over time with what suits best.
         Duration.CUSTOM = 15  # Custom duration, 15 seconds
         self.sec_limit = RequestRate(6, Duration.CUSTOM)  # 6 / Per 15 Seconds
         self.min_limit = RequestRate(20, Duration.MINUTE)  # 20 / Per minute

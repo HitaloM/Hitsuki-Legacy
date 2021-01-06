@@ -17,18 +17,17 @@ import html
 import re
 from typing import List
 
-from telegram import Update, Bot, ParseMode
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, MessageHandler, Filters, run_async
-
 import hitsuki.modules.sql.blacklist_sql as sql
-from hitsuki import dispatcher, LOGGER
+from hitsuki import LOGGER, dispatcher
 from hitsuki.modules.connection import connected
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import user_admin, user_not_admin
 from hitsuki.modules.helper_funcs.extraction import extract_text
 from hitsuki.modules.helper_funcs.misc import split_message
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import Bot, ParseMode, Update
+from telegram.error import BadRequest
+from telegram.ext import CommandHandler, Filters, MessageHandler, run_async
 
 BLACKLIST_GROUP = 11
 
@@ -64,7 +63,7 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
     split_text = split_message(filter_list)
     for text in split_text:
         if filter_list == tld(chat.id, "blacklist_active_list").format(
-                chat_name):  #We need to translate
+                chat_name):  # We need to translate
             msg.reply_text(tld(chat.id, "blacklist_no_list").format(chat_name),
                            parse_mode=ParseMode.HTML)
             return
@@ -101,7 +100,7 @@ def add_blacklist(bot: Bot, update: Update):
         if len(to_blacklist) == 1:
             msg.reply_text(tld(chat.id, "blacklist_add").format(
                 html.escape(to_blacklist[0]), chat_name),
-                           parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML)
 
         else:
             msg.reply_text(tld(chat.id,
@@ -147,14 +146,14 @@ def unblacklist(bot: Bot, update: Update):
             if successful:
                 msg.reply_text(tld(chat.id, "blacklist_del").format(
                     html.escape(to_unblacklist[0]), chat_name),
-                               parse_mode=ParseMode.HTML)
+                    parse_mode=ParseMode.HTML)
             else:
                 msg.reply_text(tld(chat.id, "blacklist_err_not_trigger"))
 
         elif successful == len(to_unblacklist):
             msg.reply_text(tld(chat.id, "blacklist_multi_del").format(
                 successful, chat_name),
-                           parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML)
 
         elif not successful:
             msg.reply_text(tld(chat.id,
@@ -168,7 +167,7 @@ def unblacklist(bot: Bot, update: Update):
                 chat.id, "blacklist_err_multidel_some_no_trigger").format(
                     successful, chat_name,
                     len(to_unblacklist) - successful),
-                           parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML)
     else:
         msg.reply_text(tld(chat.id, "blacklist_err_del_no_args"))
 
@@ -207,7 +206,7 @@ def __stats__():
 
 __help__ = True
 
-#TODO: Add blacklist alternative modes: warn, ban, kick, or mute.
+# TODO: Add blacklist alternative modes: warn, ban, kick, or mute.
 
 BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist",
                                               blacklist,

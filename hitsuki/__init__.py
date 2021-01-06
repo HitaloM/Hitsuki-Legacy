@@ -13,13 +13,16 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from hitsuki.modules.helper_funcs.handlers import (CustomCommandHandler,
+                                                   CustomMessageHandler,
+                                                   CustomRegexHandler)
 import logging
 import sys
+
 import spamwatch
 import telegram.ext as tg
 import yaml
 from googletrans import Translator
-
 from pyrogram import Client
 from telethon import TelegramClient
 
@@ -75,11 +78,6 @@ except ValueError:
     raise Exception("Your 'message_dump' must be set.")
 
 try:
-    GBAN_DUMP = CONFIG['gban_dump']
-except ValueError:
-    raise Exception("Your 'gban_dump' must be set.")
-
-try:
     OWNER_USERNAME = CONFIG['owner_username']
 except ValueError:
     raise Exception("Your 'owner_username' must be set.")
@@ -90,12 +88,7 @@ except ValueError:
     raise Exception("Your sudo users list does not contain valid integers.")
 
 try:
-    SUPPORT_USERS = {int(x) for x in CONFIG['support_users'] or []}
-except ValueError:
-    raise Exception("Your support users list does not contain valid integers.")
-
-try:
-    WHITELIST_USERS = {int(x) for x in CONFIG['whitelist_users'] or []}
+    WHITELIST_USERS = set(int(x) for x in CONFIG['whitelist_users'] or [])
 except ValueError:
     raise Exception(
         "Your whitelisted users list does not contain valid integers.")
@@ -149,12 +142,8 @@ pbot = Client("HitsukiPyro", api_id=API_KEY,
 
 SUDO_USERS = list(SUDO_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)
-SUPPORT_USERS = list(SUPPORT_USERS)
 
 # Load at end to ensure all prev variables have been set
-from hitsuki.modules.helper_funcs.handlers import (CustomMessageHandler,
-                                                   CustomCommandHandler,
-                                                   CustomRegexHandler)
 
 # make sure the regex handler can take extra kwargs
 tg.RegexHandler = CustomRegexHandler

@@ -13,18 +13,16 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from typing import Optional, List
-
-from telegram import Chat, Update, Bot, User
-from telegram import ParseMode
-from telegram.ext import CommandHandler
-from telegram.ext.dispatcher import run_async
+from typing import List, Optional
 
 import hitsuki.modules.sql.connection_sql as sql
-from hitsuki import dispatcher, SUDO_USERS
+from hitsuki import SUDO_USERS, dispatcher
 from hitsuki.modules.helper_funcs.chat_status import user_admin
 from hitsuki.modules.keyboard import keyboard
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import Bot, Chat, ParseMode, Update, User
+from telegram.ext import CommandHandler
+from telegram.ext.dispatcher import run_async
 
 
 @user_admin
@@ -73,7 +71,7 @@ def connect_chat(bot, update, args):
                     and bot.get_chat_member(
                         connect_chat,
                         update.effective_message.from_user.id).status in
-                ('member')) or (user.id in SUDO_USERS):
+                    ('member')) or (user.id in SUDO_USERS):
 
                 connection_status = sql.connect(
                     update.effective_message.from_user.id, connect_chat)
@@ -189,7 +187,7 @@ def connected(bot, update, chat, user_id, need_admin=True):
             (sql.allow_connect_to_chat(connect_chat) is True)
                 and bot.get_chat_member(
                     user_id, update.effective_message.from_user.id).status in
-            ('member')) or (user_id in SUDO_USERS):
+                ('member')) or (user_id in SUDO_USERS):
             if need_admin:
                 if bot.get_chat_member(
                         conn_id,

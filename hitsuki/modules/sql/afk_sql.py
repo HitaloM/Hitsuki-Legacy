@@ -15,9 +15,8 @@
 
 import threading
 
-from sqlalchemy import Column, UnicodeText, Boolean, Integer
-
 from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import Boolean, Column, Integer, UnicodeText
 
 
 class AFK(BASE):

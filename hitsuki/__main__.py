@@ -15,23 +15,21 @@
 
 import datetime
 import importlib
-import wikipedia
 import re
 from sys import argv
 from typing import List
 
+import wikipedia
 from pyrogram import idle
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram import Update, Bot
-from telegram.error import (Unauthorized, BadRequest, TimedOut, NetworkError,
-                            ChatMigrated, TelegramError)
-from telegram.ext import (Filters,
-                          MessageHandler, CallbackQueryHandler)
-from telegram.ext.dispatcher import (run_async, DispatcherHandlerStop,
-                                     Dispatcher)
+from telegram import (Bot, InlineKeyboardButton, InlineKeyboardMarkup,
+                      ParseMode, Update)
+from telegram.error import (BadRequest, ChatMigrated, NetworkError,
+                            TelegramError, TimedOut, Unauthorized)
+from telegram.ext import CallbackQueryHandler, Filters, MessageHandler
+from telegram.ext.dispatcher import (Dispatcher, DispatcherHandlerStop,
+                                     run_async)
 
-from hitsuki import (dispatcher, updater, LOGGER,
-                     TOKEN, tbot, pbot)
+from hitsuki import LOGGER, TOKEN, dispatcher, pbot, tbot, updater
 # Needed to dynamically load modules
 # NOTE: Module order is not guaranteed, specify that in the config file!
 from hitsuki.modules import ALL_MODULES

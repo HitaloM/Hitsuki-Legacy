@@ -13,26 +13,25 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from typing import Union, List
+from typing import List, Union
 
 from future.utils import string_types
-from telegram import ParseMode, Update, Bot
-from telegram.ext import CommandHandler, RegexHandler, Filters
-from telegram.utils.helpers import escape_markdown
-
 from hitsuki import dispatcher
 from hitsuki.modules.helper_funcs.handlers import CMD_STARTERS, SpamChecker
 from hitsuki.modules.helper_funcs.misc import is_module_loaded
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import Bot, ParseMode, Update
+from telegram.ext import CommandHandler, Filters, RegexHandler
+from telegram.utils.helpers import escape_markdown
 
 FILENAME = __name__.rsplit(".", 1)[-1]
 
 # If module is due to be loaded, then setup all the magical handlers
 if is_module_loaded(FILENAME):
-    from hitsuki.modules.helper_funcs.chat_status import user_admin, is_user_admin
-    from telegram.ext.dispatcher import run_async
-
+    from hitsuki.modules.helper_funcs.chat_status import (is_user_admin,
+                                                          user_admin)
     from hitsuki.modules.sql import disable_sql as sql
+    from telegram.ext.dispatcher import run_async
 
     DISABLE_CMDS = []
     DISABLE_OTHER = []
@@ -60,7 +59,7 @@ if is_module_loaded(FILENAME):
                     None, 1)[0][1:].split('@')[0]
 
                 if SpamChecker.check_user(user.id):
-                	return None
+                    return None
 
                 # disabled, admincmd, user admin
                 if sql.is_command_disabled(chat.id, command):
@@ -138,7 +137,7 @@ if is_module_loaded(FILENAME):
                 result += " - `{}`\n".format(escape_markdown(cmd))
             update.effective_message.reply_text(tld(
                 chat.id, "disable_able_commands").format(result),
-                                                parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
         else:
             update.effective_message.reply_text(
                 tld(chat.id, "disable_able_commands_none"))

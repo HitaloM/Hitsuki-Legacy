@@ -14,26 +14,23 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import html
-import urllib.parse as urlparse
 from datetime import datetime
-from typing import Optional, List
+from typing import List, Optional
 
 import requests
 import wikipedia
 from covid import Covid
-from requests import get
-from telegram import Message, Chat, Update, Bot, MessageEntity
-from telegram import (ParseMode, ReplyKeyboardRemove,
-                      InlineKeyboardMarkup, InlineKeyboardButton)
-from telegram.ext import CommandHandler, run_async, Filters
-from telegram.utils.helpers import escape_markdown, mention_html
-
-from hitsuki import (dispatcher, OWNER_ID, SUDO_USERS,
-                     SUPPORT_USERS, WHITELIST_USERS, sw)
+from hitsuki import OWNER_ID, SUDO_USERS, WHITELIST_USERS, dispatcher, sw
 from hitsuki.__main__ import STATS, USER_INFO
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.extraction import extract_user
 from hitsuki.modules.tr_engine.strings import tld
+from requests import get
+from telegram import (Bot, Chat, InlineKeyboardButton, InlineKeyboardMarkup,
+                      Message, MessageEntity, ParseMode, ReplyKeyboardRemove,
+                      Update)
+from telegram.ext import CommandHandler, Filters, run_async
+from telegram.utils.helpers import escape_markdown, mention_html
 
 cvid = Covid(source="worldometers")
 
@@ -89,9 +86,9 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     elif not msg.reply_to_message and (
             not args or
-        (len(args) >= 1 and not args[0].startswith("@")
-         and not args[0].isdigit()
-         and not msg.parse_entities([MessageEntity.TEXT_MENTION]))):
+            (len(args) >= 1 and not args[0].startswith("@")
+             and not args[0].isdigit()
+             and not msg.parse_entities([MessageEntity.TEXT_MENTION]))):
         msg.reply_text(tld(chat.id, "misc_info_extract_error"))
         return
 
@@ -134,9 +131,6 @@ def info(bot: Bot, update: Update, args: List[str]):
         if user.id in SUDO_USERS:
             text += tld(chat.id, "misc_info_is_sudo")
         else:
-            if user.id in SUPPORT_USERS:
-                text += tld(chat.id, "misc_info_is_support")
-
             if user.id in WHITELIST_USERS:
                 text += tld(chat.id, "misc_info_is_whitelisted")
 
@@ -386,7 +380,6 @@ def ud(bot: Bot, update: Update):
 @run_async
 def wiki(bot: Bot, update: Update):
     msg = update.effective_message
-    chat_id = update.effective_chat.id
     args = update.effective_message.text.split(None, 1)
     text = args[1]
     wikipedia.set_lang("en")

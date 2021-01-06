@@ -14,8 +14,9 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import threading
+
+from hitsuki.modules.sql import BASE, SESSION
 from sqlalchemy import Column, String, UnicodeText
-from hitsuki.modules.sql import SESSION, BASE
 
 
 class Locales(BASE):

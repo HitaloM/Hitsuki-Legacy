@@ -14,24 +14,26 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from html import escape
-from typing import Optional, List
-
-from telegram import Message, Chat, Update, Bot, User, CallbackQuery
-from telegram import ParseMode, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.error import BadRequest
-from telegram.ext import MessageHandler, Filters, CommandHandler, run_async, CallbackQueryHandler
-from telegram.utils.helpers import mention_html
+from typing import List, Optional
 
 import hitsuki.modules.sql.welcome_sql as sql
-from hitsuki import dispatcher, OWNER_ID, LOGGER, MESSAGE_DUMP, sw
-from hitsuki.modules.helper_funcs.chat_status import user_admin, is_user_ban_protected
+from hitsuki import LOGGER, MESSAGE_DUMP, OWNER_ID, dispatcher, sw
+from hitsuki.modules.helper_funcs.chat_status import (is_user_ban_protected,
+                                                      user_admin)
 from hitsuki.modules.helper_funcs.misc import build_keyboard, revert_buttons
 from hitsuki.modules.helper_funcs.msg_types import get_welcome_type
-from hitsuki.modules.helper_funcs.string_handling import markdown_parser, \
-    escape_invalid_curly_brackets, extract_time, markdown_to_html
+from hitsuki.modules.helper_funcs.string_handling import (
+    escape_invalid_curly_brackets, extract_time, markdown_parser,
+    markdown_to_html)
 from hitsuki.modules.log_channel import loggable
 from hitsuki.modules.sql.antispam_sql import is_user_gbanned
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import (Bot, CallbackQuery, Chat, InlineKeyboardButton,
+                      InlineKeyboardMarkup, Message, ParseMode, Update, User)
+from telegram.error import BadRequest
+from telegram.ext import (CallbackQueryHandler, CommandHandler, Filters,
+                          MessageHandler, run_async)
+from telegram.utils.helpers import mention_html
 
 VALID_WELCOME_FORMATTERS = [
     'first', 'last', 'fullname', 'username', 'id', 'count', 'chatname',
@@ -157,8 +159,6 @@ def new_member(bot: Bot, update: Update):
                 bot.send_message(chat.id, tld(chat.id, 'welcome_added_to_grp'))
 
             else:
-                if is_user_gbanned(new_mem.id):
-                    return
                 # If welcome message is media, send with appropriate function
                 if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
                     reply = update.message.message_id
@@ -347,7 +347,7 @@ def new_member(bot: Bot, update: Update):
             if prev_welc:
                 try:
                     bot.delete_message(chat.id, prev_welc)
-                except BadRequest as excp:
+                except BadRequest:
                     pass
 
             if sent:
@@ -387,9 +387,6 @@ def left_member(bot: Bot, update: Update):
     if should_goodbye:
         left_mem = update.effective_message.left_chat_member
         if left_mem:
-
-            if is_user_gbanned(left_mem.id):
-                return
 
             if sw is not None:
                 sw_ban = sw.get_ban(left_mem.id)

@@ -13,16 +13,15 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from telegram import MessageEntity
-from telegram import Update, Bot
-from telegram.error import BadRequest
-from telegram.ext import Filters, MessageHandler, run_async
-
 from hitsuki import dispatcher
-from hitsuki.modules.disable import DisableAbleCommandHandler, DisableAbleRegexHandler
+from hitsuki.modules.disable import (DisableAbleCommandHandler,
+                                     DisableAbleRegexHandler)
 from hitsuki.modules.sql import afk_sql as sql
 from hitsuki.modules.tr_engine.strings import tld
 from hitsuki.modules.users import get_user_id
+from telegram import Bot, MessageEntity, Update
+from telegram.error import BadRequest
+from telegram.ext import Filters, MessageHandler, run_async
 
 AFK_GROUP = 7
 AFK_REPLY_GROUP = 8

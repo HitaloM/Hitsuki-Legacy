@@ -15,15 +15,15 @@
 
 from typing import List
 
-from telegram import Update, Bot, ParseMode
-from telegram.ext import CommandHandler, MessageHandler, Filters
-from telegram.ext.dispatcher import run_async
-
 from hitsuki import dispatcher
-from hitsuki.modules.helper_funcs.chat_status import user_not_admin, user_admin, can_delete
+from hitsuki.modules.helper_funcs.chat_status import (can_delete, user_admin,
+                                                      user_not_admin)
 from hitsuki.modules.helper_funcs.extraction import extract_text
 from hitsuki.modules.sql import antiarabic_sql as sql
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import Bot, ParseMode, Update
+from telegram.ext import CommandHandler, Filters, MessageHandler
+from telegram.ext.dispatcher import run_async
 
 ANTIARABIC_GROUPS = 12
 
@@ -33,8 +33,6 @@ ANTIARABIC_GROUPS = 12
 def antiarabic_setting(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     msg = update.effective_message
-    user = update.effective_user
-    member = chat.get_member(int(user.id))
 
     if chat.type != chat.PRIVATE:
         if len(args) >= 1:
@@ -58,7 +56,6 @@ def antiarabic(bot: Bot, update: Update):
     msg = update.effective_message
     to_match = extract_text(msg)
     user = update.effective_user
-    has_arabic = False
 
     if not sql.chat_antiarabic(chat.id):
         return ""

@@ -35,8 +35,6 @@ def locale(bot, update, args):
         locale = args[0].lower()
         if locale == 'en-us':
             locale = 'en-US'
-        if locale in ['en-uk', 'en-gb']:
-            locale = 'en-GB'
 
         if locale in list_locales:
             if locale in LANGUAGES:
@@ -71,11 +69,11 @@ def locale(bot, update, args):
             native_lang = list_locales[locale]
             message.reply_text(tld(
                 chat.id, "language_current_locale").format(native_lang),
-                               parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
         else:
             message.reply_text(tld(
                 chat.id, "language_current_locale").format("English (US)"),
-                               parse_mode=ParseMode.MARKDOWN)
+                parse_mode=ParseMode.MARKDOWN)
 
 
 @user_admin

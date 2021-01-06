@@ -15,9 +15,8 @@
 
 import threading
 
+from hitsuki.modules.sql import BASE, SESSION
 from sqlalchemy import Column, Integer, UnicodeText
-
-from hitsuki.modules.sql import SESSION, BASE
 
 
 class UserInfo(BASE):

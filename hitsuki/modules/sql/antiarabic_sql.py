@@ -16,9 +16,8 @@
 import threading
 from typing import Union
 
-from sqlalchemy import Column, String, Boolean
-
-from hitsuki.modules.sql import SESSION, BASE
+from hitsuki.modules.sql import BASE, SESSION
+from sqlalchemy import Boolean, Column, String
 
 
 class AntiArabicChatSettings(BASE):

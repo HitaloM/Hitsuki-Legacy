@@ -13,18 +13,18 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import rapidjson as json
 from datetime import datetime
-from requests import get
-from pytz import (country_timezones as c_tz,
-                  timezone as tz, country_names as c_n)
 
-from telegram import Bot, Update, ParseMode
-from telegram.ext import run_async
-
+import rapidjson as json
 from hitsuki import WEATHER_API, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.tr_engine.strings import tld
+from pytz import country_names as c_n
+from pytz import country_timezones as c_tz
+from pytz import timezone as tz
+from requests import get
+from telegram import Bot, ParseMode, Update
+from telegram.ext import run_async
 
 
 @run_async

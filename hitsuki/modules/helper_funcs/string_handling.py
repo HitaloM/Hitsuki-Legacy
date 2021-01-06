@@ -20,10 +20,9 @@ from typing import Dict, List
 import bleach
 import emoji
 import markdown2
+from hitsuki.modules.tr_engine.strings import tld
 from telegram import MessageEntity
 from telegram.utils.helpers import escape_markdown
-
-from hitsuki.modules.tr_engine.strings import tld
 
 # NOTE: the url \ escape may cause double escapes
 # match * (bold) (don't escape if in url)

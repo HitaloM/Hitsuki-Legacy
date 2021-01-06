@@ -17,25 +17,30 @@ import html
 import re
 from typing import List
 
-import telegram
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode, User
-from telegram import Message, Chat, Update, Bot
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, run_async, DispatcherHandlerStop, MessageHandler, Filters, CallbackQueryHandler
-from telegram.utils.helpers import mention_html
-
 import hitsuki.modules.sql.rules_sql as rules_sql
+import telegram
 from hitsuki import dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
-from hitsuki.modules.helper_funcs.chat_status import is_user_admin, bot_admin, user_admin, \
-    can_restrict
-from hitsuki.modules.helper_funcs.extraction import extract_text, extract_user_and_text, extract_user
+from hitsuki.modules.helper_funcs.chat_status import (bot_admin, can_restrict,
+                                                      is_user_admin,
+                                                      user_admin)
+from hitsuki.modules.helper_funcs.extraction import (extract_text,
+                                                     extract_user,
+                                                     extract_user_and_text)
 from hitsuki.modules.helper_funcs.filters import CustomFilters
 from hitsuki.modules.helper_funcs.misc import split_message
 from hitsuki.modules.helper_funcs.string_handling import split_quotes
 from hitsuki.modules.log_channel import loggable
+from hitsuki.modules.rules import send_rules
 from hitsuki.modules.sql import warns_sql as sql
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import (Bot, Chat, InlineKeyboardButton, InlineKeyboardMarkup,
+                      Message, ParseMode, Update, User)
+from telegram.error import BadRequest
+from telegram.ext import (CallbackQueryHandler, CommandHandler,
+                          DispatcherHandlerStop, Filters, MessageHandler,
+                          run_async)
+from telegram.utils.helpers import mention_html
 
 WARN_HANDLER_GROUP = 9
 
@@ -139,7 +144,7 @@ def rmwarn_handler(bot: Bot, update: Update) -> str:
             update.effective_message.edit_text(tld(
                 chat.id, 'warns_remove_success').format(
                     mention_html(user.id, user.first_name)),
-                                               parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML)
             user_member = chat.get_member(user_id)
             return tld(chat.id, 'warns_remove_log_channel').format(
                 html.escape(chat.title), mention_html(user.id,
@@ -150,7 +155,7 @@ def rmwarn_handler(bot: Bot, update: Update) -> str:
             update.effective_message.edit_text(tld(
                 chat.id, 'warns_user_has_no_warns').format(
                     mention_html(user.id, user.first_name)),
-                                               parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML)
 
     return ""
 
@@ -369,7 +374,7 @@ def reply_filter(bot: Bot, update: Update) -> str:
     chat = update.effective_chat
     message = update.effective_message
     user = update.effective_user
-    if not user:  #Ignore channel
+    if not user:  # Ignore channel
         return ""
 
     if user.id == 777000:
@@ -456,7 +461,7 @@ def set_warn_strength(bot: Bot, update: Update, args: List[str]):
 def __stats__():
     return "• <code>{}</code> overall warns, across <code>{}</code> chats.\n" \
            "• <code>{}</code> warn filters, across <code>{}</code> chats.".format(sql.num_warns(), sql.num_warn_chats(),
-                                                      sql.num_warn_filters(), sql.num_warn_filter_chats())
+                                                                                  sql.num_warn_filters(), sql.num_warn_filter_chats())
 
 
 def __migrate__(old_chat_id, new_chat_id):

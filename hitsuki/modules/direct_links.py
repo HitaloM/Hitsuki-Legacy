@@ -14,14 +14,13 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
-import requests
 from random import choice
-from bs4 import BeautifulSoup
 
+import requests
+from bs4 import BeautifulSoup
+from hitsuki import pbot
 from pyrogram import Client, filters
 from pyrogram.types import Update
-
-from hitsuki import pbot
 
 
 @pbot.on_message(filters.command("direct"))

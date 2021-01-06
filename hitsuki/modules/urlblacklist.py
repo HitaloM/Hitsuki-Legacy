@@ -16,15 +16,14 @@
 import html
 
 import tldextract
-from telegram import Bot, ParseMode, Update
-from telegram.error import BadRequest
-from telegram.ext import CommandHandler, Filters, MessageHandler, run_async
-
 from hitsuki import LOGGER, dispatcher
 from hitsuki.modules.disable import DisableAbleCommandHandler
 from hitsuki.modules.helper_funcs.chat_status import user_admin, user_not_admin
 from hitsuki.modules.sql import urlblacklist_sql as sql
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import Bot, ParseMode, Update
+from telegram.error import BadRequest
+from telegram.ext import CommandHandler, Filters, MessageHandler, run_async
 
 
 @run_async
@@ -54,13 +53,13 @@ def add_blacklist_url(bot: Bot, update: Update):
                     chat.id, "url_blacklist_success").format(
                         html.escape(extract_url.domain + "." +
                                     extract_url.suffix)),
-                                   parse_mode=ParseMode.HTML)
+                    parse_mode=ParseMode.HTML)
             else:
                 message.reply_text(tld(chat.id, "url_blacklist_invalid"))
         else:
             message.reply_text(tld(chat.id, "url_blacklist_success_2").format(
                 len(blacklisted)),
-                               parse_mode=ParseMode.HTML)
+                parse_mode=ParseMode.HTML)
     else:
         message.reply_text(tld(chat.id, "url_blacklist_invalid_2"))
 

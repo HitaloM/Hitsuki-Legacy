@@ -15,11 +15,10 @@
 
 from functools import wraps
 
-from telegram import Chat, ChatMember, Update, Bot
-
 import hitsuki.modules.sql.admin_sql as admin_sql
 from hitsuki import DEL_CMDS, SUDO_USERS, WHITELIST_USERS
 from hitsuki.modules.tr_engine.strings import tld
+from telegram import Bot, Chat, ChatMember, Update
 
 
 def can_delete(chat: Chat, bot_id: int) -> bool:

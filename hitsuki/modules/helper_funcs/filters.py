@@ -16,18 +16,10 @@
 from telegram import Message
 from telegram.ext import BaseFilter
 
-from hitsuki import SUPPORT_USERS, SUDO_USERS
+from hitsuki import SUDO_USERS
 
 
 class CustomFilters(object):
-    class _Supporters(BaseFilter):
-        @staticmethod
-        def filter(message: Message):
-            return bool(message.from_user
-                        and message.from_user.id in SUPPORT_USERS)
-
-    support_filter = _Supporters()
-
     class _Sudoers(BaseFilter):
         @staticmethod
         def filter(message: Message):
