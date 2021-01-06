@@ -26,16 +26,6 @@ from haruka.modules.tr_engine.strings import tld
 from requests import get
 import rapidjson as json
 
-# Greeting all bot owners that is using this module,
-# - RealAkito (used to be peaktogoo) [Module Maker]
-# have spent so much time of their life into making this module better, stable, and well more supports.
-# Please don't remove these comment, if you're still respecting me, the module maker.
-#
-# This module was inspired by Android Helper Bot by Vachounet.
-# None of the code is taken from the bot itself, to avoid confusion.
-
-LOGGER.info("android: Original Android Modules by @RealAkito on Telegram")
-
 
 @register(pattern=r"^/los(?: |$)(\S*)")
 async def los(event):

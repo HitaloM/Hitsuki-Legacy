@@ -58,7 +58,8 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 
     member = chatD.get_member(user.id)
     if not member.can_promote_members and member.status != 'creator':
-        update.effective_message.reply_text(tld(chat.id, "admin_err_user_no_perm"))
+        update.effective_message.reply_text(
+            tld(chat.id, "admin_err_user_no_perm"))
         return ""
 
     user_id = extract_user(message, args)
@@ -122,7 +123,8 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 
     member = chatD.get_member(user.id)
     if not member.can_promote_members and member.status != 'creator':
-        update.effective_message.reply_text(tld(chat.id, "admin_err_user_no_perm"))
+        update.effective_message.reply_text(
+            tld(chat.id, "admin_err_user_no_perm"))
         return ""
 
     user_id = extract_user(message, args)

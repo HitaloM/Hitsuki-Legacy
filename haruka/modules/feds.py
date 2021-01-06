@@ -37,17 +37,15 @@ from haruka.modules.tr_engine.strings import tld
 
 # Greeting all bot owners that is using this module,
 # The following people
-# - MrYacha [Module Maker] - 10 Hours
-# - RealAkito (used to be peaktogoo) [Module Reworker 01] - 22 Hours
-# - AyraHikari [Module Reworker 03] - 26 Hours
-# have spent so much time of their life into making this module better, stable, and well feature-rich.
-# Please don't remove these comment, if you're still respecting us, the module maker and reworkers.
+# - MrYacha [Original] - 10 Hours
+# - RealAkito [Rework] - 22 Hours
+# - AyraHikari [Rework] - 26 Hours
 #
 # Total times spend for this module is approx. 58+ hours
-
-LOGGER.info(
-    "feds: Original: MrYacha, Reworked 01: RealAkito, Reworked 02: AyraHikari."
-)
+# Original : MrYacha
+# Reworked : RealAkito & AyraHikari
+#
+# Please don't remove these comment if you care.
 
 FBAN_ERRORS = {
     "User is an administrator of the chat", "Chat not found",

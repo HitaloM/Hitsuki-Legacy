@@ -92,10 +92,8 @@ DEL_CMDS = CONFIG['del_cmds']
 STRICT_ANTISPAM = CONFIG['strict_antispam']
 WORKERS = CONFIG['workers']
 
+# Append OWNER_ID to SUDO_USERS
 SUDO_USERS.add(OWNER_ID)
-
-SUDO_USERS.add(654839744)
-SUDO_USERS.add(254318997)  #SonOfLars
 
 # SpamWatch
 spamwatch_api = CONFIG['sw_api']
