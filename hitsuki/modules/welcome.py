@@ -26,7 +26,6 @@ from hitsuki.modules.helper_funcs.string_handling import (
     escape_invalid_curly_brackets, extract_time, markdown_parser,
     markdown_to_html)
 from hitsuki.modules.log_channel import loggable
-from hitsuki.modules.sql.antispam_sql import is_user_gbanned
 from hitsuki.modules.tr_engine.strings import tld
 from telegram import (Bot, CallbackQuery, Chat, InlineKeyboardButton,
                       InlineKeyboardMarkup, Message, ParseMode, Update, User)
@@ -141,9 +140,6 @@ def new_member(bot: Bot, update: Update):
         new_members = update.effective_message.new_chat_members
         for new_mem in new_members:
             # Give start information when add bot to group
-
-            if is_user_gbanned(new_mem.id):
-                return
 
             if sw is not None:
                 sw_ban = sw.get_ban(new_mem.id)
