@@ -7,7 +7,6 @@ backups/
 .pydevproject
 .directory
 .vscode
-images/kangsticker.png
-images/sticker.png
 *.backup
 haruka.session
+venv/
