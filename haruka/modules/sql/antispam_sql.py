@@ -59,6 +59,7 @@ class AntispamSettings(BASE):
 
 AntispamSettings.__table__.create(checkfirst=True)
 
+GBANSTAT_LIST = set()
 ANTISPAMSETTING = set()
 
 
@@ -91,6 +92,17 @@ def does_chat_gban(chat_id):
     return str(chat_id) not in GBANSTAT_LIST
 
 
+def __load_gban_stat_list():
+    global GBANSTAT_LIST
+    try:
+        GBANSTAT_LIST = {
+            x.chat_id
+            for x in SESSION.query(AntispamSettings).all() if not x.setting
+        }
+    finally:
+        SESSION.close()
+
+
 def migrate_chat(old_chat_id, new_chat_id):
     with ASPAM_SETTING_LOCK:
         gban = SESSION.query(AntispamSettings).get(str(old_chat_id))
@@ -99,3 +111,7 @@ def migrate_chat(old_chat_id, new_chat_id):
             SESSION.add(gban)
 
         SESSION.commit()
+
+
+# Create in memory userid to avoid disk access
+__load_gban_stat_list()
