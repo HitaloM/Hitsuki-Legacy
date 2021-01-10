@@ -76,16 +76,28 @@ def paginate_modules(chat_id,
             for x in module_dict.keys()
         ])
 
-    pairs = [
-        modules[i * 3:(i + 1) * 3] for i in range((len(modules) + 3 - 1) // 3)
-    ]
+    pairs = []
+    pair = []
 
-    round_num = len(modules) / 3
-    calc = len(modules) - round(round_num)
-    if calc == 1:
-        pairs.append((modules[-1], ))
-    elif calc == 2:
-        pairs.append((modules[-1], ))
+    for module in modules:
+        pair.append(module)
+        if len(pair) > 2:
+            pairs.append(pair)
+            pair = []
+
+    if pair:
+        pairs.append(pair)
+
+    # pairs = [
+    #     modules[i * 3:(i + 1) * 3] for i in range((len(modules) + 3 - 1) // 3)
+    # ]
+
+    # round_num = len(modules) / 3
+    # calc = len(modules) - round(round_num)
+    # if calc == 1:
+    #     pairs.append((modules[-1], ))
+    # elif calc == 2:
+    #     pairs.append((modules[-1], ))
 
     # max_num_pages = ceil(len(pairs) / 28)
     # modulo_page = page_n % max_num_pages
