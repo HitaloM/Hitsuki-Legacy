@@ -358,7 +358,7 @@ feds_info: |
   Total banned users: <code>{}</code>
   Number of groups in this federation: <code>{}</code>
 feds_admins: |
-  <b>Admins in federation '{}':<b>
+  <b>Admins in federation '{}':</b>
 feds_help: |
   Ah, group management. Everything is fun, until the spammer starts entering your group, and you have to block it. Then you need to start banning more, and more, and it hurts.
   But then you have many groups, and you don't want this spammer to be in one of your groups - how can you deal with it? Do you have to manually block it, in all your groups?

@@ -351,7 +351,7 @@ feds_info: |
   Total pengguna yang dicekal: <code>{}</code>
   Jumlah grup dalam federasi ini: <code>{}</code>
 feds_admins: |
-  <b>Admin di federasi '{}':<b>
+  <b>Admin di federasi '{}':</b>
 feds_help: |
   Ah, manajemen grup. Semuanya menyenangkan, sampai spammer mulai memasuki grup Anda, dan Anda harus memblokirnya. Maka Anda harus mulai melarang lebih banyak, dan lebih banyak lagi, dan itu menyakitkan.
   Tetapi kemudian Anda memiliki banyak grup, dan Anda tidak ingin spammer ini berada di salah satu grup Anda - bagaimana Anda bisa mengatasinya? Apakah Anda harus memblokirnya secara manual, di semua grup Anda?
