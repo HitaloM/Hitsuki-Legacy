@@ -379,8 +379,8 @@ feds_help: |
   - /chatfed: See the Federation in the current chat.
   - /fedadmins: Show Federation admin.
   - /fbanlist: Displays all users who are victimized at the Federation at this time.
-  - /fedchats: Get all the chats that are connected in the Federation.
   - /importfbans: Reply to the Federation backup message file to import the banned list to the Federation now.
+# - /fedchats: Get all the chats that are connected in the Federation.
 #TODO: To be continued
 #Keyboard
 keyboard_disconnect: Disconnect from a chat

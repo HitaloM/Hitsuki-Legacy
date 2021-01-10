@@ -376,8 +376,8 @@ feds_help: |
   - /chatfed: Lihat Federasi dalam obrolan saat ini.
   - /fedadmin: Tampilkan admin Federasi.
   - /fbanlist: Menampilkan semua pengguna yang menjadi korban di Federasi saat ini.
-  - /fedchats: Dapatkan semua obrolan yang terhubung di Federasi.
   - /importfbans: Membalas file pesan cadangan Federasi untuk mengimpor daftar yang terlarang ke Federasi sekarang.
+# - /fedchats: Dapatkan semua obrolan yang terhubung di Federasi.
 #TODO: To be continued
 #Keyboard
 keyboard_disconnect: Putuskan sambungan dari obrolan

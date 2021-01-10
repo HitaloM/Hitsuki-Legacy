@@ -381,8 +381,8 @@ feds_help: |
   - /chatfed: Ver la Federación en el chat actual.
   - /fedadmins: Mostrar administrador de la Federación.
   - /fbanlist: Muestra todos los usuarios que son víctimas en la Federación en este momento.
-  - /fedchats: Consigue todos los chats conectados en la Federación.
   - /importfbans: Responder al archivo de mensaje de copia de seguridad de la Federación para importar la lista prohibida a la Federación ahora.
+# - /fedchats: Consigue todos los chats conectados en la Federación.
 #TODO: To be continued
 #Keyboard
 keyboard_disconnect: Desconectar de un chat

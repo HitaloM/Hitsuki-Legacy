@@ -920,6 +920,6 @@ dispatcher.add_handler(FED_GET_RULES_HANDLER)
 dispatcher.add_handler(FED_CHAT_HANDLER)
 dispatcher.add_handler(FED_ADMIN_HANDLER)
 # dispatcher.add_handler(FED_NOTIF_HANDLER)
-dispatcher.add_handler(FED_CHATLIST_HANDLER)
+# dispatcher.add_handler(FED_CHATLIST_HANDLER)
 
 dispatcher.add_handler(DELETEBTN_FED_HANDLER)
