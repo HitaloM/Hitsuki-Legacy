@@ -68,14 +68,19 @@ UNFBAN_ERRORS = {
 
 
 @run_async
-def new_fed(bot: Bot, update: Update):
+def new_fed(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     user = update.effective_user
     message = update.effective_message
     if chat.type != "private":
         update.effective_message.reply_text(tld(chat.id, "common_cmd_pm_only"))
         return
-    fednam = message.text.split(None, 1)[1]
+
+    if not args:
+        update.effective_message.reply_text(tld(chat.id, "feds_err_no_args"))
+        return
+
+    fednam = args[0]
     if not fednam == '':
         fed_id = str(uuid.uuid4())
         fed_name = fednam
@@ -881,7 +886,7 @@ def get_chat(chat_id, chat_data):
 
 __help__ = True
 
-NEW_FED_HANDLER = CommandHandler("newfed", new_fed)
+NEW_FED_HANDLER = CommandHandler("newfed", new_fed, pass_args=True)
 DEL_FED_HANDLER = CommandHandler("delfed", del_fed, pass_args=True)
 JOIN_FED_HANDLER = CommandHandler("joinfed", join_fed, pass_args=True)
 LEAVE_FED_HANDLER = CommandHandler("leavefed", leave_fed, pass_args=True)
