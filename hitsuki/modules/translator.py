@@ -29,22 +29,6 @@ from telegram.ext import run_async
 def do_translate(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat  # type: Optional[Chat]
     msg = update.effective_message  # type: Optional[Message]
-    lan = " ".join(args)
-
-    if msg.reply_to_message and (msg.reply_to_message.audio
-                                 or msg.reply_to_message.voice) or (
-                                     args and args[0] == 'animal'):
-        reply = random.choice(tld_list(chat.id, 'translator_animal_lang'))
-
-        if args:
-            translation_type = "text"
-        else:
-            translation_type = "audio"
-
-        msg.reply_text(tld(chat.id, 'translator_animal_translated').format(
-            translation_type, reply),
-            parse_mode=ParseMode.MARKDOWN)
-        return
 
     if msg.reply_to_message:
         to_translate_text = remove_emoji(msg.reply_to_message.text)
@@ -55,12 +39,14 @@ def do_translate(bot: Bot, update: Update, args: List[str]):
     if not args:
         msg.reply_text(tld(chat.id, 'translator_no_args'))
         return
+    lang = args[0]
 
     translator = Translator()
     try:
-        translated = translator.translate(to_translate_text, dest=lan)
+        translated = translator.translate(to_translate_text, dest=lang)
     except ValueError as e:
         msg.reply_text(tld(chat.id, 'translator_err').format(e))
+        return
 
     src_lang = LANGUAGES[f'{translated.src.lower()}'].title()
     dest_lang = LANGUAGES[f'{translated.dest.lower()}'].title()

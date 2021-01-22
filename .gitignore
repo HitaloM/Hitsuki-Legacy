@@ -7,8 +7,6 @@ backups/
 .pydevproject
 .directory
 .vscode
-images/kangsticker.png
-images/sticker.png
 *.backup
 hitsuki.session*
 HitsukiPyro.session*

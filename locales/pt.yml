@@ -480,9 +480,9 @@ feds_help: |
   - /frules: Mostra as regras da federação.
   - /chatfed: Ver em que federação está o chat atual.
   - /fedadmins: Lista os administradores da Federação.
-  - /fedchats: Lista todos os chats que estão na federação atual.
   - /fbanlist json ou csv: Retorna a lista dos usuários banidos na federação em csv ou json.
   - /importfbans: Responda a uma lista de usuários banidos para importar para a atual federação.
+# - /fedchats: Lista todos os chats que estão na federação atual.
 #TODO: To be continued
 #Keyboard
 keyboard_disconnect: Desconectar de um chat
@@ -876,41 +876,6 @@ translator_translated: |
 translator_err: Erro ao traduzir
 translator_no_str: Responda a uma mensagem para traduzir!
 translator_no_args: 'Especifique o idioma para o qual deseja traduzir a mensagem respondida!'
-translator_animal_translated: |
-  {} animal traduzido com sucesso!
-  Seu animal diz:\n`{}`
-translator_animal_lang:
-   - Eu te amo
-   - Oi!
-   - 'Felicidades!'
-   - 'Não me toque!'
-   - 'Ouve! Tenho fome!'
-   - Ziz...
-   - 'O que é esse retângulo preto?'
-   - 'Quero sair!'
-   - 'Madeira ótima! Espere... você está gravando?!'
-   - 'Eu não vou falar!'
-   - 'Onde estão meus amigos?'
-   - Eu preciso de um banheiro.
-   - 'Deixa-me só!'
-   - 'Onde estão minhas testemunhas?'
-   - 'Minha perna está perdendo!'
-   - 'Me envie agora!'
-   - 'Por que você está me assediando?!'
-   - Foda-se.
-   - 'Estou me comendo!'
-   - 'Ligue para o pacote! Existe um problema em potencial! Alguém está entrando em nosso território!'
-   - 'Há alguém ali? Estou sozinho e preciso de companhia.'
-   - 'Pare com isso!'
-   - 'Olá!'
-   - 'O que é isso?'
-   - 'Hã?'
-   - 'Manhã!'
-   - 'Vamos jogar!'
-   - 'Isto é divertido!'
-   - 'Estou com muito medo de você.'
-   - 'Estou prestes a seguir em frente!'
-   - 'você gosta.'
 translator_help: |
   *Comandos disponíveis:*
   - /tr (código do idioma): Obtenha a tradução da mensagem respondida.\n

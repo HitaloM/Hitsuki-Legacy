@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: 'Bug report '
+title: "[BUG]"
 labels: bug
 assignees: ''
 
@@ -11,16 +11,12 @@ assignees: ''
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+The steps that are needed to reproduce this issue.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots(if any)**
+**Screenshots**
 If applicable, add screenshots to help explain your problem.
 
 **Additional context**

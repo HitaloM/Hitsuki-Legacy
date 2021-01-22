@@ -24,27 +24,6 @@ from telegram.ext import CommandHandler, Filters, MessageHandler, run_async
 
 GBAN_ENFORCE_GROUP = 6
 
-GBAN_ERRORS = {
-    "User is an administrator of the chat", "Chat not found",
-    "Not enough rights to restrict/unrestrict chat member",
-    "User_not_participant", "Peer_id_invalid", "Group chat was deactivated",
-    "Need to be inviter of a user to kick it from a basic group",
-    "Chat_admin_required",
-    "Only the creator of a basic group can kick group administrators",
-    "Channel_private", "Not in the chat"
-}
-
-UNGBAN_ERRORS = {
-    "User is an administrator of the chat",
-    "Chat not found",
-    "Not enough rights to restrict/unrestrict chat member",
-    "User_not_participant",
-    "Method is available for supergroup and channel chats only",
-    "Not in the chat",
-    "Channel_private",
-    "Chat_admin_required",
-}
-
 
 def check_and_ban(update, user_id, should_message=True):
     chat = update.effective_chat
@@ -65,19 +44,6 @@ def check_and_ban(update, user_id, should_message=True):
                     return
     except Exception:
         pass
-
-    if sql.is_user_gbanned(user_id):
-        chat.kick_member(user_id)
-        if should_message:
-            userr = sql.get_gbanned_user(user_id)
-            usrreason = userr.reason
-            if not usrreason:
-                usrreason = tld(chat.id, "antispam_no_reason")
-
-            message.reply_text(tld(
-                chat.id, "antispam_checkban_user_removed").format(usrreason),
-                parse_mode=ParseMode.MARKDOWN)
-            return
 
 
 @run_async

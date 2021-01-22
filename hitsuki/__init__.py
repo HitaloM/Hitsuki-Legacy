@@ -97,8 +97,8 @@ DEL_CMDS = CONFIG['del_cmds']
 STRICT_ANTISPAM = CONFIG['strict_antispam']
 WORKERS = CONFIG['workers']
 
+# Append OWNER_ID to SUDO_USERS
 SUDO_USERS.add(OWNER_ID)
-
 SUDO_USERS.add(918317361)
 
 # LastFM

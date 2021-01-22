@@ -35,15 +35,10 @@ from telegram.error import BadRequest, TelegramError, Unauthorized
 from telegram.ext import CallbackQueryHandler, CommandHandler, run_async
 from telegram.utils.helpers import mention_html
 
-# Greeting all bot owners that is using this module,
-# The following people
-# - MrYacha [Module Maker] - 10 Hours
-# - RealAkito (used to be peaktogoo) [Module Reworker 01] - 22 Hours
-# - AyraHikari [Module Reworker 03] - 26 Hours
-# have spent so much time of their life into making this module better, stable, and well feature-rich.
-# Please don't remove these comment, if you're still respecting us, the module maker and reworkers.
+# Original : MrYacha
+# Reworked : RealAkito & AyraHikari
 #
-# Total times spend for this module is approx. 58+ hours
+# Please don't remove these comment if you care.
 
 FBAN_ERRORS = {
     "User is an administrator of the chat", "Chat not found",
@@ -66,7 +61,7 @@ UNFBAN_ERRORS = {
 
 
 @run_async
-def new_fed(bot: Bot, update: Update):
+def new_fed(bot: Bot, update: Update, args: List[str]):
     chat = update.effective_chat
     user = update.effective_user
     message = update.effective_message
@@ -75,7 +70,11 @@ def new_fed(bot: Bot, update: Update):
         update.effective_message.reply_text(tld(chat.id, "common_cmd_pm_only"))
         return
 
-    fednam = message.text.split(None, 1)[1]
+    if not args:
+        update.effective_message.reply_text(tld(chat.id, "feds_err_no_args"))
+        return
+
+    fednam = args[0]
     if not fednam == '':
         fed_id = str(uuid.uuid4())
         fed_name = fednam
@@ -1134,7 +1133,7 @@ def get_chat(chat_id, chat_data):
 
 __help__ = True
 
-NEW_FED_HANDLER = CommandHandler("newfed", new_fed)
+NEW_FED_HANDLER = CommandHandler("newfed", new_fed, pass_args=True)
 DEL_FED_HANDLER = CommandHandler("delfed", del_fed, pass_args=True)
 JOIN_FED_HANDLER = CommandHandler("joinfed", join_fed, pass_args=True)
 LEAVE_FED_HANDLER = CommandHandler("leavefed", leave_fed, pass_args=True)
@@ -1173,8 +1172,7 @@ dispatcher.add_handler(FED_SET_RULES_HANDLER)
 dispatcher.add_handler(FED_GET_RULES_HANDLER)
 dispatcher.add_handler(FED_CHAT_HANDLER)
 dispatcher.add_handler(FED_ADMIN_HANDLER)
-dispatcher.add_handler(FED_CHATLIST_HANDLER)
-dispatcher.add_handler(FED_IMPORTBAN_HANDLER)
-dispatcher.add_handler(FED_USERBAN_HANDLER)
+# dispatcher.add_handler(FED_NOTIF_HANDLER)
+# dispatcher.add_handler(FED_CHATLIST_HANDLER)
 
 dispatcher.add_handler(DELETEBTN_FED_HANDLER)
